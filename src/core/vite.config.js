@@ -1,10 +1,10 @@
 import {node} from '../../electron-vendors.config.json';
-import {join} from 'path';
+import {join, resolve} from 'path';
 import { builtinModules } from 'module';
 import {defineConfig} from 'vite';
 import {loadAndSetEnv} from '../../scripts/loadAndSetEnv.mjs';
 
-const PACKAGE_ROOT = __dirname;
+const PACKAGE_ROOT = resolve(__dirname, '../');
 
 /**
  * Vite looks for `.env.[mode]` files only in `PACKAGE_ROOT` directory.
@@ -20,12 +20,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      'base':  join(PACKAGE_ROOT, '/base'),
     },
   },
   build: {
     sourcemap: 'inline',
     target: `node${node}`,
-    outDir: 'dist',
+    outDir: 'core/dist',
     assetsDir: '.',
     minify: process.env.MODE === 'development' ? false : 'terser',
     terserOptions: {
@@ -36,7 +37,7 @@ export default defineConfig({
       safari10: false,
     },
     lib: {
-      entry: 'src/index.ts',
+      entry: 'core/src/index.ts',
       formats: ['cjs'],
     },
     rollupOptions: {

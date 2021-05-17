@@ -1,6 +1,7 @@
 import {app, BrowserWindow} from 'electron';
 import {join} from 'path';
 import {URL} from 'url';
+import {Test} from 'base/parts/test';
 
 
 const isSingleInstance = app.requestSingleInstanceLock();
@@ -51,7 +52,7 @@ const createWindow = async () => {
    */
   mainWindow.on('ready-to-show', () => {
     mainWindow?.show();
-
+    new Test().print('sever');
     if (env.MODE === 'development') {
       // mainWindow?.webContents.openDevTools();
     }
