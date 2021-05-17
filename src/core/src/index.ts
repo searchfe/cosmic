@@ -53,18 +53,18 @@ const createWindow = async () => {
     mainWindow?.show();
 
     if (env.MODE === 'development') {
-      mainWindow?.webContents.openDevTools();
+      // mainWindow?.webContents.openDevTools();
     }
   });
 
   /**
    * URL for main window.
    * Vite dev server for development.
-   * `file://../renderer/index.html` for production and test
+   * `file://../workbench/index.html` for production and test
    */
   const pageUrl = env.MODE === 'development'
     ? env.VITE_DEV_SERVER_URL
-    : new URL('../renderer/dist/index.html', 'file://' + __dirname).toString();
+    : new URL('../../workbench/dist/index.html', 'file://' + __dirname).toString();
 
 
   await mainWindow.loadURL(pageUrl);

@@ -11,7 +11,7 @@ const config = {
     buildResources: 'buildResources',
   },
   files: [
-    'packages/**/dist/**',
+    'src/**/dist/**',
   ],
   extraMetadata: {
     version: buildVersion,

@@ -5,7 +5,7 @@
     "node": ">=v14.16",
     "npm": ">=7.7"
   },
-  "main": "packages/main/dist/index.cjs",
+  "main": "src/core/dist/index.cjs",
   "scripts": {
     "buildEnvTypes": "node scripts/buildEnvTypes.js",
     "build": "node scripts/build.js",
@@ -14,11 +14,11 @@
     "pretest": "cross-env MODE=test npm run build",
     "test": "node tests/app.spec.js",
     "watch": "node scripts/watch.js",
-    "lint": "eslint . --ext js,ts,vue",
+    "lint": "eslint . --ext js,ts,svelte",
     "pretypecheck": "npm run buildEnvTypes",
-    "typecheck-main": "tsc --noEmit -p packages/main/tsconfig.json",
-    "typecheck-preload": "tsc --noEmit -p packages/preload/tsconfig.json",
-    "typecheck-renderer": "vue-tsc --noEmit -p packages/renderer/tsconfig.json",
+    "typecheck-main": "tsc --noEmit -p src/core/tsconfig.json",
+    "typecheck-preload": "tsc --noEmit -p src/preload/tsconfig.json",
+    "typecheck-renderer": "echo 'src/workbench/tsconfig.json'",
     "typecheck": "npm run typecheck-main && npm run typecheck-preload && npm run typecheck-renderer"
   },
   "browserslist": [
@@ -29,29 +29,29 @@
     "pre-push": "npm run typecheck"
   },
   "lint-staged": {
-    "*.{js,ts,vue}": "eslint --cache --fix"
+    "*.{js,ts,svelte}": "eslint --cache --fix js,ts,svelte"
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.2.0",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
-    "@vitejs/plugin-vue": "^1.2.2",
     "cross-env": "^7.0.3",
     "electron": "^12.0.7",
     "electron-builder": "^22.11.1",
     "electron-devtools-installer": "^3.2.0",
     "eslint": "^7.26.0",
-    "eslint-plugin-vue": "^7.9.0",
+    "eslint-plugin-svelte3": "^3.2.0",
     "lint-staged": "^10.5.4",
     "simple-git-hooks": "^2.4.1",
     "spectron": "^14.0.0",
     "typescript": "^4.2.4",
-    "vite": "^2.2.4",
-    "vue-tsc": "^0.1.2"
+    "vite": "^2.2.4"
   },
   "dependencies": {
-    "electron-updater": "^4.3.8",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.7",
+    "electron-updater": "^4.3.8",
+    "inversify": "^5.1.1",
+    "reflect-metadata": "^0.1.13",
     "svelte": "^3.37.0",
     "svelte-preprocess": "^4.7.2"
   }

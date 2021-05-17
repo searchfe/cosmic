@@ -1,6 +1,6 @@
 <script lang="ts">
-  import logo from './assets/svelte.png'
-  import Counter from './lib/Counter.svelte'
+  import logo from './assets/svelte.png';
+  import Counter from './lib/Counter.svelte';
 </script>
 
 <main>
@@ -30,6 +30,7 @@
     text-align: center;
     padding: 1em;
     margin: 0 auto;
+    background-color: white;
   }
 
   img {
