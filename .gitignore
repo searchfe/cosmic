@@ -1,6 +1,7 @@
 node_modules
 .DS_Store
 dist
+release
 *.local
 thumbs.db
 types/env.d.ts
@@ -55,3 +56,5 @@ types/env.d.ts
 # Editor-based Rest Client
 .idea/httpRequests
 /.idea/csv-plugin.xml
+
+*.backup

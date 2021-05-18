@@ -1,10 +1,10 @@
-import {chrome} from '../../electron-vendors.config.json';
-import {join} from 'path';
+import {node} from '../electron-vendors.config.json';
+import {join, resolve} from 'path';
 import { builtinModules } from 'module';
 import {defineConfig} from 'vite';
-import {loadAndSetEnv} from '../../scripts/loadAndSetEnv.mjs';
+import {loadAndSetEnv} from '../scripts/loadAndSetEnv.mjs';
 
-const PACKAGE_ROOT = __dirname;
+const PACKAGE_ROOT = resolve(__dirname, './');
 
 /**
  * Vite looks for `.env.[mode]` files only in `PACKAGE_ROOT` directory.
@@ -19,13 +19,14 @@ export default defineConfig({
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
-      '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      '/@/': PACKAGE_ROOT,
+      'base':  join(PACKAGE_ROOT, '/base'),
     },
   },
   build: {
     sourcemap: 'inline',
-    target: `chrome${chrome}`,
-    outDir: 'dist',
+    target: `node${node}`,
+    outDir: '../dist/core',
     assetsDir: '.',
     minify: process.env.MODE === 'development' ? false : 'terser',
     terserOptions: {
@@ -36,12 +37,13 @@ export default defineConfig({
       safari10: false,
     },
     lib: {
-      entry: 'src/index.ts',
+      entry: 'core/index.ts',
       formats: ['cjs'],
     },
     rollupOptions: {
       external: [
         'electron',
+        'electron-updater',
         ...builtinModules,
       ],
       output: {

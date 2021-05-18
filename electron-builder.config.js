@@ -7,11 +7,11 @@ const buildVersion = `${now.getFullYear() - 2000}.${now.getMonth() + 1}.${now.ge
  */
 const config = {
   directories: {
-    output: 'dist',
+    output: 'release',
     buildResources: 'buildResources',
   },
   files: [
-    'src/**/dist/**',
+    'dist/**',
   ],
   extraMetadata: {
     version: buildVersion,

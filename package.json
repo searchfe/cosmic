@@ -5,7 +5,7 @@
     "node": ">=v14.16",
     "npm": ">=7.7"
   },
-  "main": "src/core/dist/index.cjs",
+  "main": "dist/core/index.cjs",
   "scripts": {
     "buildEnvTypes": "node scripts/buildEnvTypes.js",
     "build": "node scripts/build.js",

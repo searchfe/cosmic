@@ -38,7 +38,7 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false, // Use 'ready-to-show' event to show window
     webPreferences: {
-      preload: join(__dirname, '../../preload/dist/index.cjs'),
+      preload: join(__dirname, '../preload/index.cjs'),
       contextIsolation: env.MODE !== 'test',   // Spectron tests can't work with contextIsolation: true
       enableRemoteModule: env.MODE === 'test', // Spectron tests can't work with enableRemoteModule: false
     },
@@ -65,7 +65,7 @@ const createWindow = async () => {
    */
   const pageUrl = env.MODE === 'development'
     ? env.VITE_DEV_SERVER_URL
-    : new URL('../../workbench/dist/index.html', 'file://' + __dirname).toString();
+    : new URL('../workbench/index.html', 'file://' + __dirname).toString();
 
 
   await mainWindow.loadURL(pageUrl);

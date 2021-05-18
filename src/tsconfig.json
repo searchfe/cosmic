@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "/@/*": [
+        "./*"
+      ],
+      "base/*": [
+        "base/*"
+      ]
+    },
+  },
+  "include": [
+    "core/**/*.ts",
+    "base/**/*.ts",
+    "../types/**/*.d.ts"
+  ],
+  "exclude": [
+    "workbench/**/*.ts"
+  ]
+}

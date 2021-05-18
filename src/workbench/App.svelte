@@ -1,7 +1,7 @@
 <script lang="ts">
   import logo from './assets/svelte.png';
   import Counter from './lib/Counter.svelte';
-  import {Test} from '../../base/parts/test';
+  import {Test} from 'base/parts/test';
   new Test().print('client');
 </script>
 
