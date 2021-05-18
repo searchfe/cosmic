@@ -16,10 +16,8 @@
     "watch": "node scripts/watch.js",
     "lint": "eslint . --ext js,ts,svelte",
     "pretypecheck": "npm run buildEnvTypes",
-    "typecheck-main": "tsc --noEmit -p src/core/tsconfig.json",
-    "typecheck-preload": "tsc --noEmit -p src/preload/tsconfig.json",
-    "typecheck-renderer": "echo 'src/workbench/tsconfig.json'",
-    "typecheck": "npm run typecheck-main && npm run typecheck-preload && npm run typecheck-renderer"
+    "typecheck-main": "tsc --noEmit -p src/tsconfig.json",
+    "typecheck": "npm run typecheck-main"
   },
   "browserslist": [
     "Chrome 89"
