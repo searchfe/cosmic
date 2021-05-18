@@ -8,7 +8,7 @@ import {loadAndSetEnv} from '../scripts/loadAndSetEnv.mjs';
 import svelte from '@sveltejs/vite-plugin-svelte';
 
 
-const PACKAGE_ROOT = resolve(__dirname, './workbench');
+const PACKAGE_ROOT = resolve(__dirname, './workbench/electron-desktop');
 
 /**
  * Vite looks for `.env.[mode]` files only in `PACKAGE_ROOT` directory.
@@ -33,7 +33,7 @@ export default defineConfig({
     sourcemap: true,
     target: `chrome${chrome}`,
     polyfillDynamicImport: false,
-    outDir: '../../dist/workbench',
+    outDir: '../../../dist/desktop',
     assetsDir: './assets',
     terserOptions: {
       ecma: 2020,

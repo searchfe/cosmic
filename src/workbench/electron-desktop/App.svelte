@@ -1,6 +1,6 @@
 <script lang="ts">
   import logo from './assets/svelte.png';
-  import Counter from './lib/Counter.svelte';
+  import { Counter } from '../internal/index';
   import {Test} from 'base/parts/test';
   new Test().print('client');
 </script>
