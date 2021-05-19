@@ -1,10 +1,14 @@
-import {chrome} from '../../electron-vendors.config.json';
-import {join} from 'path';
+/* eslint-env node */
+
+import {chrome} from '../electron-vendors.config.json';
+import {join, resolve} from 'path';
 import { builtinModules } from 'module';
 import {defineConfig} from 'vite';
-import {loadAndSetEnv} from '../../scripts/loadAndSetEnv.mjs';
+import {loadAndSetEnv} from '../scripts/loadAndSetEnv.mjs';
+import svelte from '@sveltejs/vite-plugin-svelte';
 
-const PACKAGE_ROOT = __dirname;
+
+const PACKAGE_ROOT = resolve(__dirname, './workbench/electron-desktop');
 
 /**
  * Vite looks for `.env.[mode]` files only in `PACKAGE_ROOT` directory.
@@ -19,15 +23,18 @@ export default defineConfig({
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
-      '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      '/@/':  join(PACKAGE_ROOT, 'src') + '/',
+      'base':  join(__dirname, 'base') + '/',
     },
   },
+  plugins: [svelte()],
+  base: '',
   build: {
-    sourcemap: 'inline',
+    sourcemap: true,
     target: `chrome${chrome}`,
-    outDir: 'dist',
-    assetsDir: '.',
-    minify: process.env.MODE === 'development' ? false : 'terser',
+    polyfillDynamicImport: false,
+    outDir: '../../../dist/desktop',
+    assetsDir: './assets',
     terserOptions: {
       ecma: 2020,
       compress: {
@@ -35,19 +42,12 @@ export default defineConfig({
       },
       safari10: false,
     },
-    lib: {
-      entry: 'src/index.ts',
-      formats: ['cjs'],
-    },
     rollupOptions: {
       external: [
-        'electron',
         ...builtinModules,
       ],
-      output: {
-        entryFileNames: '[name].cjs',
-      },
     },
     emptyOutDir: true,
   },
 });
+

@@ -4,13 +4,13 @@ on:
     branches:
       - main
     paths:
-      - 'packages/**'
+      - 'src/**'
       - 'tests/**'
       - 'package-lock.json'
       - '.github/workflows/tests.yml'
   pull_request:
     paths:
-      - 'packages/**'
+      - 'src/**'
       - 'tests/**'
       - 'package-lock.json'
       - '.github/workflows/tests.yml'

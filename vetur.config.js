@@ -6,7 +6,7 @@ module.exports = {
   },
   projects: [
     {
-      root: './packages/renderer',
+      root: './src/renderer',
       tsconfig: './tsconfig.json',
       snippetFolder: './.vscode/vetur/snippets',
       globalComponents: [
@@ -14,11 +14,11 @@ module.exports = {
       ],
     },
     {
-      root: './packages/main',
+      root: './src/main',
       tsconfig: './tsconfig.json',
     },
     {
-      root: './packages/preload',
+      root: './src/preload',
       tsconfig: './tsconfig.json',
     },
   ],

@@ -67,7 +67,7 @@ Vite provides you with many useful features, such as: `TypeScript`, `TSX/JSX`, `
 - Code formatting rules follow the latest Vue recommendations and best practices thanks to [eslint-plugin-vue].
 - Installed [Vue.js devtools beta](https://chrome.google.com/webstore/detail/vuejs-devtools/ljjemllljcmogpfapbkkighbhhppjdbg) with Vue 3 support.
 
-See [examples of web pages for different frameworks](https://github.com/vitejs/vite/tree/main/packages/create-app).
+See [examples of web pages for different frameworks](https://github.com/vitejs/vite/tree/core/src/create-app).
 
 ### Continuous Integration
 - The configured workflow for check the types for each push and PR.
@@ -112,11 +112,11 @@ The template required a minimum [dependencies](package.json). Only **Vite** is u
 The structure of this template is very similar to the structure of a monorepo.
 
 The entire source code of the program is divided into three modules (packages) that are bundled each independently:
-- [`packages/main`](packages/main)
+- [`src/main`](src/main)
 Electron [**main script**](https://www.electronjs.org/docs/tutorial/quick-start#create-the-main-script-file).
-- [`packages/preload`](packages/preload)
+- [`src/preload`](src/preload)
 Used in `BrowserWindow.webPreferences.preload`. See [Checklist: Security Recommendations](https://www.electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content).
-- [`packages/renderer`](packages/renderer)
+- [`src/renderer`](src/renderer)
 Electron [**web page**](https://www.electronjs.org/docs/tutorial/quick-start#create-a-web-page).
 
 ### Build web resources
@@ -135,9 +135,9 @@ To do this, using the [electron-builder]:
 
 
 ### Using Node.js API in renderer
-According to [Electron's security guidelines](https://www.electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content), Node.js integration is disabled for remote content. This means that **you cannot call any Node.js api in the `packages/renderer` directly**. To do this, you **must** describe the interface in the `packages/preload` where Node.js api is allowed:
+According to [Electron's security guidelines](https://www.electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content), Node.js integration is disabled for remote content. This means that **you cannot call any Node.js api in the `src/renderer` directly**. To do this, you **must** describe the interface in the `src/preload` where Node.js api is allowed:
 ```ts
-// packages/preload/src/index.ts
+// src/preload/src/index.ts
 import {readFile} from 'fs/promises'
 
 const api = {
@@ -148,7 +148,7 @@ contextBridge.exposeInMainWorld('electron', api)
 ```
 
 ```ts
-// packages/renderer/src/App.vue
+// src/workbench/src/App.vue
 import {useElectron} from '/@/use/electron'
 
 const {readConfig} = useElectron()
