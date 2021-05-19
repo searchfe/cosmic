@@ -6,6 +6,7 @@ import { builtinModules } from 'module';
 import {defineConfig} from 'vite';
 import {loadAndSetEnv} from '../scripts/loadAndSetEnv.mjs';
 import svelte from '@sveltejs/vite-plugin-svelte';
+import sveltePreprocess from 'svelte-preprocess';
 
 
 const PACKAGE_ROOT = resolve(__dirname, './workbench/electron-desktop');
@@ -27,7 +28,11 @@ export default defineConfig({
       'base':  join(__dirname, 'base') + '/',
     },
   },
-  plugins: [svelte()],
+  plugins: [svelte(
+    {
+      preprocess: sveltePreprocess(),
+    },
+  )],
   base: '',
   build: {
     sourcemap: true,
