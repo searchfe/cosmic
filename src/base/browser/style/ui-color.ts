@@ -1,5 +1,5 @@
 import * as Color from 'color';
-import ColorRef from 'base/common/ColorRef';
+import ColorRef from 'base/common/color-ref';
 
 function makeColor(anyColorHex: string, lightColorHex?: string, darkColorHex?: string) {
   return new ColorRef(Color(anyColorHex), Color(lightColorHex), Color(darkColorHex));

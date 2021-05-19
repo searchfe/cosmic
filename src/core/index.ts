@@ -68,7 +68,7 @@ const createWindow = async () => {
     : new URL('../workbench/index.html', 'file://' + __dirname).toString();
 
 
-  await mainWindow.loadURL(pageUrl);
+  await mainWindow.loadURL(pageUrl as string);
 };
 
 
