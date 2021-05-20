@@ -1,24 +1,20 @@
-import { injectable, inject } from 'inversify';
+import { injectable, inject, ContainerModule } from 'inversify';
+import type { interfaces } from 'inversify';
+
 
 import { AppearanceType } from 'base/common/appearance';
 
-export interface UIColorHanlder {
-  updateAppearance: (type: AppearanceType) => void;
-}
-export interface UIColorRef {
-  type: AppearanceType;
-}
-
-export const UIColorElement = Symbol.for('UIColorElement');
+export const UIColorRoot = Symbol.for('UIColorElement');
 
 @injectable()
-export class UIColor implements UIColorHanlder, UIColorRef {
+export class UIColor {
   public type: AppearanceType = AppearanceType.any;
   private root: HTMLElement;
 
-  constructor(@inject(UIColorElement) root: HTMLElement) {
+  constructor(@inject(UIColorRoot) root: HTMLElement) {
+    console.log('cons', root);
     this.root = root;
-    this.root.innerHTML = 'here is color ui';
+    this.root.innerHTML = '';
   }
 
 
@@ -29,3 +25,9 @@ export class UIColor implements UIColorHanlder, UIColorRef {
 
   }
 }
+
+export const UIColorModule = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {
+  // 如果需改变入口可 使容器rebind UIColorRoot
+  bind<HTMLElement>(UIColorRoot).toDynamicValue(() => document.getElementById('head') as HTMLElement);
+  bind<UIColor>(UIColor).to(UIColor);
+});

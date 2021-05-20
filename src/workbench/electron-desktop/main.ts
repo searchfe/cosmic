@@ -2,8 +2,7 @@ import 'reflect-metadata';
 import App from './App.svelte';
 import { Container } from 'inversify';
 import 'reflect-metadata';
-import type {UIColorRef } from '../services/color';
-import {UIColor, UIColorElement} from '../services/color';
+import { UIColorModule, UIColor } from '../services/color';
 
 // const myContainer = new Container();
 
@@ -12,7 +11,10 @@ const app = new App({
 });
 
 const appContainer = new Container();
-appContainer.bind<UIColorRef>(UIColor).to(UIColor);
-appContainer.bind<HTMLElement>(UIColorElement).toDynamicValue(() => document.getElementById('') as HTMLElement);
 
+appContainer.load(UIColorModule);
+
+const uic = appContainer.get(UIColor);
+
+console.log('equal?', uic);
 export default app;

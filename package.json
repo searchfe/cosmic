@@ -14,7 +14,7 @@
     "pretest": "cross-env MODE=test npm run build",
     "test": "node tests/app.spec.js",
     "watch": "node scripts/watch.js",
-    "lint": "eslint . --ext js,ts,svelte",
+    "lint": "eslint . --ext js,ts,svelte && npm run typecheck",
     "pretypecheck": "npm run buildEnvTypes",
     "typecheck-main": "tsc --noEmit -p src/tsconfig.json",
     "typecheck": "npm run typecheck-main"
