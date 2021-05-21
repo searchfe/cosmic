@@ -3,10 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "/@/*": [
-        "./*"
-      ],
-      "base/*": [
+      "@cosmic-base/*": [
         "base/*"
       ]
     },
@@ -19,6 +16,6 @@
     "../types/**/*.d.ts"
   ],
   "exclude": [
-    // "workbench/**/*.ts"
+    "workbench/**/*.ts"
   ]
 }

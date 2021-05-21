@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "../",
+    "paths": {
+      "@cosmic-workbench/services/*": [
+        "workbench/services/*"
+      ],
+      "@cosmic-workbench/ui/*": [
+        "workbench/ui/*"
+      ],
+      "@cosmic-base/*": [
+        "base/*"
+      ]
+    }
+  },
+  "include": [
+    "workbench/*"
+  ]
+}

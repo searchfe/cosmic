@@ -1,20 +1,33 @@
 import 'reflect-metadata';
-import App from './App.svelte';
 import { Container } from 'inversify';
-import 'reflect-metadata';
-import { UIColorModule, UIColor } from '../services/color';
 
-// const myContainer = new Container();
+import App from './App.svelte';
 
+import AppearanceMode from '@cosmic-workbench/ui/components/appearance-mode.svelte';
+import { ColorSetRoot, ColorSet } from '@cosmic-workbench/ui/style/color-set.comp';
+
+import { AppearanceService } from '@cosmic-workbench/services/appearance-service';
+
+
+
+function $(dom: string){
+  return document.querySelector(dom) as HTMLElement;
+}
 const app = new App({
-  target: document.getElementById('app') as HTMLElement,
+  target: $('#app'),
 });
-
 const appContainer = new Container();
 
-appContainer.load(UIColorModule);
+appContainer.bind(AppearanceService).to(AppearanceService);
 
-const uic = appContainer.get(UIColor);
+appContainer.bind(ColorSetRoot).toDynamicValue(() => $('#head'));
+appContainer.bind(ColorSet).to(ColorSet);
 
-console.log('equal?', uic);
+const uic = appContainer.get(ColorSet);
+
+const am = new AppearanceMode({
+  target: $('#ccc'),
+  props: {appContainer},
+});
+
 export default app;
