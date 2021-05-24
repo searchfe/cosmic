@@ -24,8 +24,8 @@ export default defineConfig({
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
-      '/@/':  join(PACKAGE_ROOT, 'src') + '/',
-      'base':  join(__dirname, 'base') + '/',
+      '@cosmic-base':  join(__dirname, 'base') + '/',
+      '@cosmic-workbench':  join(__dirname, 'workbench') + '/',
     },
   },
   plugins: [svelte(

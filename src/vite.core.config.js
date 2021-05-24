@@ -19,8 +19,7 @@ export default defineConfig({
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
-      '/@/': PACKAGE_ROOT,
-      'base':  join(PACKAGE_ROOT, '/base'),
+      '@cosmic-base':  join(PACKAGE_ROOT, '/base'),
     },
   },
   build: {

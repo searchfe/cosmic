@@ -1,7 +1,7 @@
 import {app, BrowserWindow} from 'electron';
 import {join} from 'path';
 import {URL} from 'url';
-import {Test} from 'base/parts/test';
+import {Test} from '@cosmic-base/parts/test';
 
 
 const isSingleInstance = app.requestSingleInstanceLock();
