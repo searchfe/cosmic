@@ -17,7 +17,7 @@ export class ColorSet {
     ) {
     // this.root.innerHTML = '';
     this.render();
-    aps.onModeChanged((type) => this.onModeChanged(type));
+    aps.onModeChanged((type: AppearanceType) => this.onModeChanged(type));
   }
   private onModeChanged(type: AppearanceType) {
     this.type = type;

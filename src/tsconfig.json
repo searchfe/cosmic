@@ -12,7 +12,9 @@
   "include": [
     "core/**/*.ts",
     "base/**/*.ts",
-    "workbench/**/*.ts",
     "../types/**/*.d.ts"
+  ],
+  "exclude": [
+    "workbench/**/*.ts"
   ]
 }
