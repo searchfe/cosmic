@@ -8,16 +8,16 @@ import { AppearanceType } from '@cosmic-base/common/appearance';
 /** 外观设置服务 */
 export class AppearanceService {
   private type: AppearanceType = AppearanceType.any;
-  private evt = new EventEmitter2();
+  private evt = new EventEmitter2()
 
   public updateMode(type: AppearanceType) {
     if (this.type !== type) {
       this.type = type;
       this.evt.emit('onModeChanged', type);
-      console.log('update mode', type);
     }
   }
   public onModeChanged(fn: (type: AppearanceType) => void) {
     this.evt.on('onModeChanged', fn);
+
   }
 }
