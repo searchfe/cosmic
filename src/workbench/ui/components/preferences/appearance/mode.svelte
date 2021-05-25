@@ -14,6 +14,12 @@
   }
 </script>
 
+<style>
+  :root {
+    color: var(--label-color);
+  }
+</style>
+
 <h2>Size</h2>
 
 <label>
@@ -31,5 +37,7 @@
 	Dark
 </label>
 
-
+<br>
+<div>
 AppearanceType is {mod}
+</div>

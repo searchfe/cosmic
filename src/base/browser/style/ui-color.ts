@@ -14,3 +14,7 @@ export const ControlDisabledColor =   makeColor('#F9F9F9', '#F9F9F9', '#464749')
 export const GridBackgroundColor =    makeColor('#F2F2F2', '#F2F2F2', '#2E2F30');
 
 export const TextFieldBackground =    makeColor('#FFFFFF', '#F2F2F2', '#454545');
+
+export const LabelColor =             makeColor('#000000', '#000000', '#E0E0E0');
+export const SecondaryLabelColor =    makeColor('#000000', '#000000', '#808080');
+export const TertiaryLabelColor =     makeColor('#3F3F3F', '#3F3F3F', '#3F3F3F');
