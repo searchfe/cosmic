@@ -107,5 +107,3 @@ See [Contributing Guide](https://github.com/design-to-release/cosmic/wiki/Contri
 [svelte]: https://github.com/sveltejs/svelte
 [typescript]: https://github.com/microsoft/TypeScript/
 [spectron]: https://github.com/electron-userland/spectron
-<!-- [design-to-release-github]: https://github.com/design-to-release/
-[design-to-release-sponsor]: https://www.patreon.com/Kozack/ -->
