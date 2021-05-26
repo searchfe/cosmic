@@ -65,9 +65,9 @@ const createWindow = async () => {
    */
   const pageUrl = env.MODE === 'development'
     ? env.VITE_DEV_SERVER_URL
-    : new URL('../workbench/index.html', 'file://' + __dirname).toString();
+    : new URL('desktop/index.html', 'file://' + __dirname).toString();
 
-
+    console.log(env.MODE, pageUrl);
   await mainWindow.loadURL(pageUrl as string);
 };
 

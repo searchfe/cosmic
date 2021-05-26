@@ -5,7 +5,7 @@
       <entry url="file://$PROJECT_DIR$">
         <entryData>
           <resourceRoots>
-            <path value="file://$PROJECT_DIR$/src/workbench/assets" />
+            <path value="file://$PROJECT_DIR$/dist/desktop/assets" />
           </resourceRoots>
         </entryData>
       </entry>
