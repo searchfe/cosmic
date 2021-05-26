@@ -98,8 +98,11 @@ When running building, environment variables are loaded from the following files
 
 ## Contribution
 
-See [Contributing Guide](https://github.com/design-to-release/cosmic/wiki/Contributing).
+See Wiki **[Contributing](https://github.com/design-to-release/cosmic/wiki/Contributing)**
 
+* [Source Code Organization](https://github.com/design-to-release/cosmic/wiki/Source-Code-Organization)
+* User Interface
+  * [Color Set](https://github.com/design-to-release/cosmic/wiki/Color-Set)
 
 [vite]: https://github.com/vitejs/vite/
 [electron]: https://github.com/electron/electron
