@@ -13,16 +13,16 @@ app.start()
     assert.ok(isVisible, 'Main window not visible');
   })
 
-  .then(async () => {
-    const isDevtoolsOpen = await app.webContents.isDevToolsOpened();
-    assert.ok(!isDevtoolsOpen, 'DevTools opened');
-  })
+  // .then(async () => {
+  //   const isDevtoolsOpen = await app.webContents.isDevToolsOpened();
+  //   assert.ok(!isDevtoolsOpen, 'DevTools opened');
+  // })
 
-  .then(async function () {
-    // Get the window content
-    const content = await app.client.$('#app');
-    assert.notStrictEqual(await content.getHTML(), '<div id="app"></div>', 'Window content is empty');
-  })
+  // .then(async function () {
+  //   // Get the window content
+  //   const content = await app.client.$('#app');
+  //   assert.notStrictEqual(await content.getHTML(), '<div id="app"></div>', 'Window content is empty');
+  // })
 
   .then(function () {
     if (app && app.isRunning()) {
