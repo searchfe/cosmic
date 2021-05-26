@@ -15,6 +15,7 @@
     }
   },
   "include": [
-    "workbench/*"
-  ]
+    "./**/*.ts"
+  ],
+  "exclude": []
 }

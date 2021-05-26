@@ -17,7 +17,8 @@
     "lint": "eslint . --ext js,ts,svelte && npm run typecheck",
     "pretypecheck": "npm run buildEnvTypes",
     "typecheck-main": "tsc --noEmit -p src/tsconfig.json",
-    "typecheck": "npm run typecheck-main"
+    "typecheck-workbench": "tsc --noEmit -p src/workbench/tsconfig.json",
+    "typecheck": "npm run typecheck-main && npm run typecheck-workbench"
   },
   "browserslist": [
     "Chrome 89"
