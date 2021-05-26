@@ -1,1 +1,1 @@
-export { default as Button } from './compnents/button/button.svelte';
+export { default as Button } from './compnents/button/c-button.svelte';

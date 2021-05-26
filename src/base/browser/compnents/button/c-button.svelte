@@ -1,18 +1,17 @@
 <script lang="ts">
-  export let type = 'default';
-  const handleClick = (event) => {
-    console.log(type, event);
-  };
+  function onHandleClick(event: MouseEvent) {
+    console.log(event);
+  }
 </script>
 
-<button class="b-button" on:click={handleClick}>
+<button class="c-button" on:click={onHandleClick}>
   <span>
     <slot />
   </span>
 </button>
 
 <style>
-  .b-button {
+  .c-button {
     background-image: none;
     background-color: var(--bg-color, #1f1f1f);
     border: none;
@@ -36,11 +35,11 @@
     border-radius: 10%;
   }
 
-  .b-button:active {
+  .c-button:active {
     border-color: var(--bg-color, #1f1f1f);
   }
 
-  .b-button:focus {
+  .c-button:focus {
     border-color: var(--bg-color, #1f1f1f);
   }
 </style>
