@@ -1,7 +1,7 @@
 const styleContent = `
   body {
     margin: 0;
-    background: var(--grid-background-color);
+    background: var(--bg-color);
   }
 `;
 

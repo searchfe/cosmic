@@ -21,10 +21,10 @@ export const SecondaryLabelColor =    makeColor('#000000', '#000000', '#808080')
 export const TertiaryLabelColor =     makeColor('#3F3F3F', '#3F3F3F', '#3F3F3F');
 
 /** 三级背景色 */
-export const BgColor =                makeColor('#E0E0E0', '#1F1F1F', '#1F1F1F');
-export const SecondaryBgColor =       makeColor('#D7D7D7', '#282828', '#272728');
-export const TertiaryBgColor =        makeColor('#C6C6C6', '#393939', '#393939');
-export const FourthBgColor =          makeColor('#BABABA', '#454545', '#454545');
+export const BgColor =                makeColor('#E0E0E0', '#E0E0E0', '#1F1F1F');
+export const SecondaryBgColor =       makeColor('#D7D7D7', '#D7D7D7', '#272728');
+export const TertiaryBgColor =        makeColor('#C6C6C6', '#C6C6C6', '#393939');
+export const FourthBgColor =          makeColor('#BABABA', '#BABABA', '#454545');
 
 /** 辅助色 */
 export const SystemYellowColor =      makeColor('#d1905d', '#d1905d', '#d1905d');
@@ -36,6 +36,5 @@ export const SystemBlueColor =        makeColor('#729cd4', '#729cd4', '#729cd4')
 
 
 /** 组件色 */
-
 export const GridBackgroundColor =    makeColor('#F2F2F2', '#F2F2F2', '#2E2F30');
 export const TextFieldBackground =    makeColor('#FFFFFF', '#F2F2F2', '#454545');
