@@ -3,7 +3,7 @@
   "env": {
     "es2021": true,
     "node": true,
-    "browser": false
+    "browser": true
   },
   "extends": [
     "eslint:recommended",
