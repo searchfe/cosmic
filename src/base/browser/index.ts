@@ -1,0 +1,1 @@
+export { default as Button } from './compnents/button/button.svelte';
