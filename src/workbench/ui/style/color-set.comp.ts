@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 
 import type ColorRef from '@cosmic-base/common/color-ref';
 
-import { AppearanceType } from '@cosmic-base/common/appearance';
+import type { AppearanceType } from '@cosmic-base/common/appearance';
 import * as Colors from '@cosmic-base/browser/style/ui-color';
 import { AppearanceService } from '@cosmic-workbench/services/appearance-service';
 
@@ -10,7 +10,6 @@ export const ColorSetRoot = Symbol.for('UIColorElement');
 
 @injectable()
 export class ColorSet {
-  private type = AppearanceType.any;
   constructor(
     @inject(ColorSetRoot) private root: HTMLElement,
     @inject(AppearanceService) private aps: AppearanceService,
@@ -20,14 +19,14 @@ export class ColorSet {
     aps.onModeChanged((type: AppearanceType) => this.onModeChanged(type));
   }
   private onModeChanged(type: AppearanceType) {
-    this.type = type;
     this.render();
   }
   render() {
     const colorStringArray: string[] = [];
     const colors = Colors as {[key:string]: ColorRef};
+    const type = this.aps.type();
     Object.keys(colors).forEach((key) => {
-      colorStringArray.push(`-${this.fomat(key)} : ${colors[key].color(this.type).hex() };`);
+      colorStringArray.push(`-${this.fomat(key)} : ${colors[key].color(type).hex() };`);
     });
     this.root.innerHTML = `:root {
       ${colorStringArray.join('\r')}

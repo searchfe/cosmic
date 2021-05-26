@@ -7,17 +7,20 @@ import { AppearanceType } from '@cosmic-base/common/appearance';
 @injectable()
 /** 外观设置服务 */
 export class AppearanceService {
-  private type: AppearanceType = AppearanceType.any;
+  private _type: AppearanceType = AppearanceType.dark;
   private evt = new EventEmitter2()
 
   public updateMode(type: AppearanceType) {
-    if (this.type !== type) {
-      this.type = type;
+    if (this._type !== type) {
+      this._type = type;
       this.evt.emit('onModeChanged', type);
     }
   }
   public onModeChanged(fn: (type: AppearanceType) => void) {
     this.evt.on('onModeChanged', fn);
 
+  }
+  public type() {
+    return this._type;
   }
 }
