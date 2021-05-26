@@ -9,7 +9,7 @@
 ## The Repository
 
 Cosmic design is a concrete practice of [D2R](https://design-to-release.github.io/docs).
-This repository is where we develop it together with the community. Not only do we work on code and issues here, we also publish our roadmap , development guide. This source code is available to everyone under the standard (MIT license)[LICENSE.txt].
+This repository is where we develop it together with the community. Not only do we work on code and issues here, we also publish our roadmap , development guide. This source code is available to everyone under the standard [MIT license](LICENSE.txt).
 
 ## About Cosmic Design
 
