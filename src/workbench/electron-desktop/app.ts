@@ -8,6 +8,8 @@ import { AppearanceService } from '@cosmic-workbench/services/appearance-service
 
 import { initStyle } from '@cosmic-workbench/ui/style/stylesheet';
 
+import Header from '@cosmic-workbench/ui/components/header.svelte';
+
 export default class App {
   private container: Container;
   constructor(private root: HTMLElement) {
@@ -42,10 +44,17 @@ export default class App {
 
   initFrame() {
     // to do sth.
+    
   }
 
   initNavigationBar() {
     // to do sth.
+    const appHeader = document.createElement('div');
+    this.root.appendChild(appHeader);
+    const ah = new Header({
+      target: appHeader,
+      props: { appContainer: this.container },
+    });
   }
 
   initWorkArea() {
