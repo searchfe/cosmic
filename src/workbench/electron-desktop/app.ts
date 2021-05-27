@@ -9,6 +9,7 @@ import { AppearanceService } from '@cosmic-workbench/services/appearance-service
 import { initStyle } from '@cosmic-workbench/ui/style/stylesheet';
 
 import Header from '@cosmic-workbench/ui/components/header.svelte';
+import { setContext } from 'svelte';
 
 export default class App {
   private container: Container;
@@ -21,10 +22,12 @@ export default class App {
     const appRoot = document.createElement('div');
     this.root.appendChild(appRoot);
 
-
+    const map = new Map();
+    map.set('container', this.container);
     const am = new mode({
       target: appRoot,
-      props: { appContainer: this.container },
+      // props: {},
+      context: map,
     });
   }
 
@@ -44,7 +47,7 @@ export default class App {
 
   initFrame() {
     // to do sth.
-    
+
   }
 
   initNavigationBar() {

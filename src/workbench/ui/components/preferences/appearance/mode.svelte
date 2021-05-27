@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type { Container } from 'inversify';
+  import inject  from '@cosmic-base/parts/ioc/inject';
 
   import { AppearanceType } from '@cosmic-base/common/appearance';
   import { AppearanceService } from '@cosmic-workbench/services/appearance-service';
 
-  export let appContainer: Container;
-  const aps = appContainer.get(AppearanceService);
+  const aps: AppearanceService = inject(AppearanceService);
 
 	let mod = AppearanceType.any;
 

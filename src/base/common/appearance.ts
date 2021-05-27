@@ -1,5 +1,5 @@
 /** 模式类型 */
-export enum AppearanceType {
+export const enum AppearanceType {
   'any',
   'light',
   'dark'

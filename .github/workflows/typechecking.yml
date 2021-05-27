@@ -5,14 +5,14 @@ on:
       - main
     paths:
       - '**.ts'
-      - '**.vue'
+      - '**.svelte'
       - '**/tsconfig.json'
       - 'package-lock.json'
       - '.github/workflows/typechecking.yml'
   pull_request:
     paths:
       - '**.ts'
-      - '**.vue'
+      - '**.svelte'
       - '**/tsconfig.json'
       - 'package-lock.json'
       - '.github/workflows/typechecking.yml'
@@ -45,6 +45,4 @@ jobs:
       - run: npm run buildEnvTypes
 
       # Type checking is divided into three separate commands for more convenient logs
-      - run: npm run typecheck-main
-      - run: npm run typecheck-preload
-      - run: npm run typecheck-renderer
+      - run: npm run typecheck
