@@ -1,19 +1,24 @@
 {
-  "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "sourceMap": true,
-    "moduleResolution": "Node",
-    "skipLibCheck": true,
-    "strict": true,
-    "isolatedModules": true,
-    "types": [
-      "vite/client",
-      "node"
+    "extends": "@tsconfig/svelte/tsconfig.json",
+    "compilerOptions": {
+      "baseUrl": "src",
+      "paths": {
+        "@cosmic/workbench/services/*": [
+          "workbench/services/*"
+        ],
+        "@cosmic/workbench/ui/*": [
+          "workbench/ui/*"
+        ],
+        "@cosmic/core/*": [
+          "core/*"
+        ]
+      },
+      "experimentalDecorators": true,
+      "lib": ["dom"]
+    },
+    "include": [
+      "**/*.ts"
     ],
-    "typeRoots": [
-      "node_modules/@types",
-    ],
-    "lib": ["ESNext"]
-  },
-}
+    // "exclude": []
+  }
+  
