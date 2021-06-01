@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button } from '@cosmic-base/browser';
+  import { Button } from '@cosmic/core/browser';
 </script>
 
 <header class="internal-header">

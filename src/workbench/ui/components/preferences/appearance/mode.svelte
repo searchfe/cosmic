@@ -1,12 +1,11 @@
 <script lang="ts">
-  import inject  from '@cosmic-base/parts/ioc/inject';
+  import inject  from '@cosmic/core/parts/ioc/inject';
 
-  import { AppearanceType } from '@cosmic-base/common/appearance';
-  import { AppearanceService } from '@cosmic-workbench/services/appearance-service';
+  import { AppearanceType } from '@cosmic/core/common/appearance';
+  import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 
-  const aps: AppearanceService = inject(AppearanceService);
-
-	let mod = AppearanceType.any;
+  let mod = AppearanceType.any;
+  let aps = inject<AppearanceService>(AppearanceService);
 
   function changeMode() {
     aps.updateMode(mod);

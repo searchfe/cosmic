@@ -1,4 +1,6 @@
 const styleContent = `
+  html {
+  }
   body {
     margin: 0;
     background: var(--bg-color);
@@ -6,8 +8,8 @@ const styleContent = `
 `;
 
 
-export function initStyle(root: HTMLElement) {
+export const initStyle = (root: HTMLElement) => {
   const ele = document.createElement('style');
   ele.innerHTML = styleContent;
   root.appendChild(ele);
-}
+};

@@ -1,13 +1,13 @@
 import { injectable, inject, ContainerModule } from 'inversify';
 import { EventEmitter2 } from 'eventemitter2';
 
-import { AppearanceType } from '@cosmic-base/common/appearance';
+import { AppearanceType } from '@cosmic/core/common/appearance';
 
 
 @injectable()
 /** 外观设置服务 */
 export class AppearanceService {
-  private _type: AppearanceType = AppearanceType.dark;
+  private _type: AppearanceType = AppearanceType.light;
   private evt = new EventEmitter2()
 
   public updateMode(type: AppearanceType) {
