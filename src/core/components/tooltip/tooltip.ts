@@ -11,7 +11,7 @@ export default class extends _Tooltip {
     }) {
         props.props = props.props || {};
         props.props.replace = {
-            'text-sm': 'taxt-base'
+            'text-sm': 'text-base',
         };
         super(props);
     }

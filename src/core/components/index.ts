@@ -1,4 +1,4 @@
-import Button from './button/button';
+import Button from './button';
 import Checkbox from './checkbox/checkbox';
 import Switch from './switch/switch';
 import TextField from './text-field/text-field';
@@ -7,7 +7,7 @@ import Snackbar from './snackbar/snackbar';
 import List from './list/list';
 import RadioButtonGroup from './radio-button/radio-button-group';
 import Dialog from './dialog/dialog';
-import NavigationDrawer from './navigation-drawer/navigation-drawer'
+import NavigationDrawer from './navigation-drawer/navigation-drawer';
 import ProgressCircular from './progress-circular/progress-circular';
 import ProgressLinear from './progress-linear/progress-linear';
 import Chip from './chip/chip';
@@ -37,5 +37,5 @@ export {
     Header,
     Tooltip,
     Treeview,
-    DatePicker
-}
+    DatePicker,
+};

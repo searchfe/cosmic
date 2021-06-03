@@ -4,9 +4,9 @@ import { ColorSetRoot, ColorSet } from '@cosmic/workbench/ui/style/color-set.com
 
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 
-import { initStyle } from '@cosmic/workbench/ui/style/stylesheet';
+import { initStyle } from '../ui/style/stylesheet';
 
-import Navtigation from '../../core/components/navigation/navigation-bar.svelte';
+import Navigation from '../ui/components/navigation/navigation-bar.svelte';
 
 export default class App {
   private container: Container;
@@ -52,7 +52,7 @@ export default class App {
     // to do sth.
     const appHeader = document.createElement('div');
     this.root.appendChild(appHeader);
-    new Navtigation({
+    new Navigation({
       target: appHeader,
       props: { },
       context: this.context,
