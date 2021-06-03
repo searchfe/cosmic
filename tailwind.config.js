@@ -6,8 +6,10 @@ export default {
                 84: '21rem',
                 96: '24rem',
             },
-        },
-    }, // Extend Tailwind theme
+        }
+    },
+    // Extend Tailwind theme
+    
     colors: {
         primary: '#b027b0',
         secondary: '#009688',

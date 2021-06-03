@@ -6,7 +6,7 @@ import { AppearanceService } from '@cosmic/workbench/services/appearance-service
 
 import { initStyle } from '@cosmic/workbench/ui/style/stylesheet';
 
-import Navtigation from '../ui/components/navigation/navigation-bar.svelte';
+import Navtigation from '../../core/components/navigation/navigation-bar.svelte';
 
 export default class App {
   private container: Container;
