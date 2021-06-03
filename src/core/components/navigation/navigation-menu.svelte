@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import Button from 'smelte/src/components/Button';
+	import {Button} from '../smelte';
 </script>
 <div>
 	<Button>11</Button>
