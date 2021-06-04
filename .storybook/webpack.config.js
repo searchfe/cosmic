@@ -1,7 +1,7 @@
 const tailwindcss = require('tailwindcss');
 const path = require('path');
 
-const testConfig = require('smelte/tailwind.config')(require('../tailwind.config'));
+const testConfig = require('smelte/tailwind.config')(require('./tailwind.config'));
 module.exports = ({ config, mode }) => {
     const svelteLoader = config.module.rules.find(
         r => r.loader && r.loader.includes('svelte-loader'),
@@ -35,7 +35,7 @@ module.exports = ({ config, mode }) => {
         {
             test: /\.stories\.js?$/,
             loaders: [require.resolve('@storybook/source-loader')],
-            include: [path.resolve(__dirname, '../storybook')],
+            include: [path.resolve(__dirname, '../scripts/spript-stories')],
             enforce: 'pre',
         },
     );

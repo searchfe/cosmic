@@ -63,7 +63,8 @@
     "typecheck-app": "tsc --noEmit -p ./tsconfig.app.json",
     "typecheck-svelte": "tsc --noEmit -p ./tsconfig.svelte.json",
     "typecheck": "npm run typecheck-app && npm run typecheck-svelte",
-    "storybook": "start-storybook -p 4200 -c .storybook"
+    "storybook": "start-storybook -p 4200 -c .storybook",
+    "storybook:build": "build-storybook -c .storybook -o dist/docs"
   },
   "dependencies": {
     "@types/color": "^3.0.1",
@@ -85,6 +86,7 @@
     "@storybook/addon-notes": "^5.3.21",
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addon-storysource": "^6.2.9",
+    "@storybook/addon-viewport": "^6.2.9",
     "@storybook/source-loader": "^6.2.9",
     "@storybook/svelte": "^6.2.9",
     "@tsconfig/svelte": "^1.0.13",
