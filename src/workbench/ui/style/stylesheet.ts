@@ -6,10 +6,10 @@ const styleContent = `
     background: var(--bg-color);
   }
   button {
-    text-shadow: 1px 1px 1px var(--color-primary-100);
+    text-shadow: 1px 1px 1px var(--color-primary-200);
   }
   .mode-dark button{
-    text-shadow: 1.5px 1.5px 1px var(--color-primary-900);
+    text-shadow: 1px 1px 1px var(--color-primary-800);
   }
 `;
 
