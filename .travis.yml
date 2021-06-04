@@ -2,9 +2,10 @@ language: node_js
 node_js:
   - lts/*
 install:
-  - npm install
+  - npm i pnpm -g
+  - pnpm install
 script:
-  - npm storybook:build
+  - pnpm storybook:build
 deploy:
   provider: pages
   skip_cleanup: true
