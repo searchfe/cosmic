@@ -1,9 +1,10 @@
 import 'smelte/src/tailwind.css';
 import '../utils/global.css';
+import '../../../src/workbench/ui/css/global.css';
 import { storiesOf } from '@storybook/svelte';
 import { action } from '@storybook/addon-actions';
 import Button from './button-view.svelte';
-import markdownNotes from './button.stories.md'
+import markdownNotes from './button.stories.md';
 
 storiesOf('Buttons', module)
     .add(
@@ -11,13 +12,13 @@ storiesOf('Buttons', module)
         () => ({
             Component: Button,
             props: {
-                label: 'test'
+                label: 'test',
             },
             on: {
                 customEventHandler: action('This custom event handler works'),
             },
         }),
-        { notes:  { markdown: markdownNotes }  }
+        { notes:  { markdown: markdownNotes }  },
     )
     .add(
         'dark',
@@ -25,11 +26,11 @@ storiesOf('Buttons', module)
             Component: Button,
             props: {
                 label: 'test',
-                dark: true
+                dark: true,
             },
             on: {
                 customEventHandler: action('This custom event handler works'),
             },
         }),
-        { notes:  { markdown: markdownNotes }  }
-    )
+        { notes:  { markdown: markdownNotes }  },
+    );
