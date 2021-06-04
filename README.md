@@ -33,7 +33,7 @@ Electron [**web page**](https://www.electronjs.org/docs/tutorial/quick-start#cre
 
 ### Cosmic Components
 
-- [Components StoryBook](https://design-to-release.github.io/docs/components)
+- [Components StoryBook](https://design-to-release.github.io/cosmic/components)
 - [`src/core/components`](src/core/components)
 
 ### Build web resources
