@@ -26,7 +26,7 @@
     export let replace = {};
   
     const classesDefault = 'z-10 py-2 px-4 uppercase text-sm font-medium relative overflow-hidden';
-    const basicDefault = 'text-white dark:text-gray-100 duration-200 ease-in';
+    const basicDefault = 'text-gray-50 dark:text-gray-200 duration-200 ease-in';
   
     const outlinedDefault = 'bg-transparent border border-solid';
     const textDefault = 'bg-transparent border-none px-4 hover:bg-transparent';
