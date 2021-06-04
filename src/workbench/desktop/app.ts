@@ -4,8 +4,6 @@ import { ColorSetRoot, ColorSet } from '@cosmic/workbench/ui/style/color-set.com
 
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 
-import { initStyle } from '../ui/style/stylesheet';
-
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
 
 export default class App {
@@ -40,7 +38,6 @@ export default class App {
     this.root.appendChild(colorSetRoot);
     this.container.get(ColorSet);
 
-    initStyle(this.root);
   }
 
   initFrame() {
