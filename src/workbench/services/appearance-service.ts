@@ -7,7 +7,7 @@ import { AppearanceType } from '@cosmic/core/common/appearance';
 @injectable()
 /** 外观设置服务 */
 export class AppearanceService {
-  private _type: AppearanceType = AppearanceType.light;
+  private _type: AppearanceType = AppearanceType.dark;
   private evt = new EventEmitter2()
 
   public updateMode(type: AppearanceType) {

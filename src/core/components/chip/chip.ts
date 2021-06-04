@@ -11,8 +11,8 @@ export default class extends _Chip {
     }) {
         // chip 中的字体是写死的，text-sm，替换不产生作用
         props.props.replace = {
-            'text-sm': 'text-base'
-        }
+            'text-sm': 'text-base',
+        };
         super(props);
     }
 }
