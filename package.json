@@ -62,7 +62,8 @@
     "preversion": "npm-run-all -s lint format",
     "typecheck-app": "tsc --noEmit -p ./tsconfig.app.json",
     "typecheck-svelte": "tsc --noEmit -p ./tsconfig.svelte.json",
-    "typecheck": "npm run typecheck-app && npm run typecheck-svelte"
+    "typecheck": "npm run typecheck-app && npm run typecheck-svelte",
+    "storybook": "start-storybook -p 4200 -c .storybook"
   },
   "dependencies": {
     "@types/color": "^3.0.1",
@@ -76,9 +77,16 @@
     "smelte": "^1.1.5"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.3",
     "@rollup/plugin-commonjs": "^18.0.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
     "@rollup/plugin-typescript": "^8.2.1",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-notes": "^5.3.21",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/addon-storysource": "^6.2.9",
+    "@storybook/source-loader": "^6.2.9",
+    "@storybook/svelte": "^6.2.9",
     "@tsconfig/svelte": "^1.0.13",
     "@types/clean-css": "^4.2.3",
     "@types/html-minifier": "^4.0.0",
@@ -96,8 +104,12 @@
     "eslint-plugin-svelte3": "^3.2.0",
     "html-minifier": "^4.0.0",
     "jest": "^26.6.3",
+    "merge-deep": "^3.0.3",
     "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.5",
+    "postcss": "^8.3.0",
+    "postcss-import": "^14.0.2",
+    "postcss-loader": "~4.0.4",
     "prettier": "^2.2.1",
     "prettier-plugin-svelte": "^2.1.5",
     "rollup": "^2.39.0",
@@ -109,8 +121,10 @@
     "rollup-plugin-terser": "^7.0.0",
     "svelte": "^3.38.1",
     "svelte-check": "^1.1.34",
+    "svelte-loader": "^3.1.1",
     "svelte-preprocess": "^4.6.9",
     "svelte-typed-component": "^1.1.1",
+    "tailwindcss": "^2.1.4",
     "ts-jest": "^26.5.1",
     "tslib": "^2.2.0",
     "typescript": "^4.2.4"
@@ -147,8 +161,8 @@
       "category": "productivity"
     },
     "files": [
-      "build/**/*",
-      "node_modules/**/*",
+      "build/*/",
+      "node_modules/*/",
       "package.json"
     ],
     "extraResources": [
