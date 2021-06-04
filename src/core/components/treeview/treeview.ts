@@ -1,10 +1,9 @@
-import type { TextFieldProps } from 'smelte/src/components/TextField/TextField'
-import _TextField from 'smelte/src/components/TextField';
-
-export default class extends _TextField {
+import type { TreeviewProps } from 'smelte/src/components/Treeview/Treeview';
+import _Treeview from 'smelte/src/components/Treeview';
+export default class extends _Treeview {
     constructor(props: {
         target: Element;
-        props: TextFieldProps;
+        props: TreeviewProps;
         hydrate?: boolean;
         anchor?: Element;
         intro?: boolean;
@@ -12,7 +11,7 @@ export default class extends _TextField {
     }) {
         props.props = props.props || {};
         props.props.replace = {
-            'text-sm': 'taxt-base'
+            'text-sm': 'text-base',
         };
         super(props);
     }

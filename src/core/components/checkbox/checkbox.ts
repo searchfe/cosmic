@@ -1,9 +1,9 @@
-import type { TreeviewProps } from 'smelte/src/components/Treeview/Treeview';
-import _Treeview from 'smelte/src/components/Treeview';
-export default class extends _Treeview {
+import type { CheckboxProps } from 'smelte/src/components/Checkbox/Checkbox';
+import _Checkbox from 'smelte/src/components/Checkbox';
+export default class extends _Checkbox {
     constructor(props: {
         target: Element;
-        props: TreeviewProps;
+        props: CheckboxProps;
         hydrate?: boolean;
         anchor?: Element;
         intro?: boolean;
@@ -11,7 +11,7 @@ export default class extends _Treeview {
     }) {
         props.props = props.props || {};
         props.props.replace = {
-            'text-sm': 'taxt-base'
+            'text-sm': 'text-base',
         };
         super(props);
     }

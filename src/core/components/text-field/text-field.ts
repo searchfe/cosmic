@@ -1,9 +1,10 @@
-import type { ButtonProps } from 'smelte/src/components/Button/Button';
-import _Button from 'smelte/src/components/Button';
-export default class extends _Button {
+import type { TextFieldProps } from 'smelte/src/components/TextField/TextField';
+import _TextField from 'smelte/src/components/TextField';
+
+export default class extends _TextField {
     constructor(props: {
         target: Element;
-        props: ButtonProps;
+        props: TextFieldProps;
         hydrate?: boolean;
         anchor?: Element;
         intro?: boolean;
@@ -11,7 +12,7 @@ export default class extends _Button {
     }) {
         props.props = props.props || {};
         props.props.replace = {
-            'text-sm': 'text-base'
+            'text-sm': 'text-base',
         };
         super(props);
     }

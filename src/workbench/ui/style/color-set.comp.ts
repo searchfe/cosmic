@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 
 import type ColorRef from '@cosmic/core/common/color-ref';
 
-import type { AppearanceType } from '@cosmic/core/common/appearance';
+import { AppearanceType } from '@cosmic/core/common/appearance';
 import * as Colors from '@cosmic/core/browser/style/ui-color';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 
@@ -31,6 +31,11 @@ export class ColorSet {
     this.root.innerHTML = `:root {
       ${colorStringArray.join('\r')}
     }`;
+    if (this.aps.type() === AppearanceType.dark) {
+      document.body.classList.add('mode-dark');
+    } else {
+      document.body.classList.remove('mode-dark');
+    }
   }
   fomat(key: string) {
     // BackgroundColor -> -background-color

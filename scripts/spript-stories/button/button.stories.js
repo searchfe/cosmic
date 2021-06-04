@@ -1,4 +1,5 @@
-import 'smelte/src/tailwind.css'
+import 'smelte/src/tailwind.css';
+import '../utils/global.css';
 import { storiesOf } from '@storybook/svelte';
 
 import Button from './button-view.svelte';
