@@ -13,7 +13,7 @@ export default class extends _Button {
         props.props.remove = 'bg-primary-500 hover:bg-primary-400';
         props.props.basicClasses = 'bg-primary dark:bg-primary-dark  hover:bg-primary dark:hover:bg-primary-dark';
         props.props.replace = {
-            'text-sm': 'text-base',
+            'text-sm': 'text-base'
         };
         super(props);
     }
