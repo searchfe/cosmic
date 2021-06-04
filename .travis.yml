@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - lts/*
+install:
+  - pnpm install
+script:
+  - pnpm storybook:build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: dist/docs
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  on:
+    branch: main
