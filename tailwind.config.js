@@ -4,10 +4,43 @@ module.exports = {
     theme: {
         extend: {
             spacing: {
-                72: '18rem',
-                84: '21rem',
-                96: '24rem',
+                1: '0.3rem',
+                2: '0.6rem', // 标准行高
+                3: '0.8rem',
+                4: '1rem',
+                5: '1.5rem',
+                6: '2rem',
+                7: '2.5rem',
+                8: '3rem',
+                9: '3.5rem',
+                10: '5rem',
+                11: '8rem',
+                12: '12rem',
+                13: '16rem',
+                14: '20rem',
+                15: '25rem',
+                16: '32rem',
+                72: '216rem',
+                84: '252rem',
+                96: '288rem',
             },
+        },
+        fontSize: {
+            '3xs': ['0.8rem', '0.8rem'],
+            '2xs': ['0.9rem', '0.9rem'],
+            'xs': ['1rem', '1rem'], // 标准字号
+            'sm': ['1.1rem', '1.1rem'],
+            'tiny': ['1.2rem', '1.2rem'],
+            'base': ['1.4rem', '1.4rem'],
+            'lg': ['1.6rem', '1.6rem'],
+            'xl':['1.8rem', '1.8rem'],
+            '1xl': ['2.2rem', '2.2rem'],
+            '2xl': ['2.7rem', '2.7rem'],
+            '3xl': ['3.6rem', '3.6rem'],
+            '4xl': ['4.8rem', '4.8rem'],
+            '5xl': ['6.0rem', '6.0rem'],
+            '6xl': ['7.2rem', '7.2rem'],
+            '7xl': ['9.0rem', '9.0rem'],
         },
         colors: {
             cgray: {
