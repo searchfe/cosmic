@@ -1,5 +1,5 @@
 module.exports = {
-    stories: ['../scripts/spript-stories/**/*.stories.@(js|mdx)'],
+    stories: ['../scripts/stories/**/*.stories.@(js|mdx)'],
     addons: [
         '@storybook/addon-essentials',
         '@storybook/addon-storysource',
