@@ -16,7 +16,7 @@
       "experimentalDecorators": true
     },
     "include": [
-      "**/*.ts"
+      "**/*.ts", "**/*.css" 
     ]
     // "exclude": []
   }

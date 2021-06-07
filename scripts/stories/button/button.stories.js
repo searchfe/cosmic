@@ -1,6 +1,5 @@
 import 'smelte/src/tailwind.css';
-import '../utils/global.css';
-import '../../../src/workbench/ui/css/global.css';
+import '../../../src/core/components/global.css';
 import { storiesOf } from '@storybook/svelte';
 import { action } from '@storybook/addon-actions';
 import Button from './button-view.svelte';

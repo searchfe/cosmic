@@ -7,9 +7,9 @@ import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
-import tailwindConfig from './tailwind.config';
 import smelte from 'smelte/rollup-plugin-smelte';
 import copy from 'rollup-plugin-copy';
+const tailwindConfig = require('./tailwind.config');
 
 const production = !process.env.ROLLUP_WATCH;
 
