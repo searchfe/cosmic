@@ -1,11 +1,11 @@
 <script>
-  import "smelte/src/tailwind.css";
-  import "../utils/global.css";
-  import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import Button from "../../../src/core/components/button";
+  import 'smelte/src/tailwind.css';
+  import '../../../src/core/components/global.css';
+  import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
+  import Button from '../../../src/core/components/button';
   let count = 0;
   function handleClick() {
-      console.log(count)
+      console.log(count);
     count += 1;
   }
 
