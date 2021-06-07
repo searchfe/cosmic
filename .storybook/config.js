@@ -1,7 +1,7 @@
 import { configure, addParameters, addDecorator } from '@storybook/svelte';
 import { themes } from '@storybook/theming';
 
-const req = require.context('../scripts/spript-stories', true, /\.stories\.js$/);
+const req = require.context('../scripts/stories', true, /\.stories\.js$/);
 function loadStories() {
     req.keys().forEach(filename => req(filename));
 }
