@@ -63,7 +63,7 @@
     "typecheck-svelte": "tsc --noEmit -p ./tsconfig.svelte.json",
     "typecheck": "npm run typecheck-app && npm run typecheck-svelte",
     "storybook": "start-storybook -p 4200 -c .storybook --no-manager-cache",
-    "storybook:build": "build-storybook -c .storybook -o dist/docs"
+    "storybook:build": "build-storybook -c .storybook -o dist/docs/components"
   },
   "dependencies": {
     "@types/color": "^3.0.1",
