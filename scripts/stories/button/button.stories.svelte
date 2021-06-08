@@ -8,14 +8,13 @@
       console.log(count);
     count += 1;
   }
-
 </script>
 
 <Meta title="Button" component="{Button}" />
 
-<Story name="默认" >
+<!-- <Story name="默认" >
   <Button on:click="{handleClick}" class="w-40">{count}</Button>
-</Story>
+</Story> -->
 
 
 <Template let:args>

@@ -10,5 +10,6 @@ module.exports = {
         '@storybook/addon-docs',
         'storybook-dark-mode',
         '@storybook/addon-essentials',
+        '@storybook/theming'
     ]
 };
