@@ -1,10 +1,13 @@
-<script lang='ts'>
-	import {Button} from '@cosmic/core/components';
+<script lang="ts">
+  import { Select } from "@cosmic/core/components";
+  const items: any[] = [
+    { value: 1, text: "One" },
+    { value: 2, text: "Two" },
+    { value: 3, text: "Three" },
+    { value: 4, text: "Four" },
+  ];
 </script>
+
 <div>
-	<Button class='w-40' >11</Button>
-	<Button class='w-40' >打开新窗口</Button>
-	<Button class='w-40' >提交</Button>
-	<Button  >保存</Button>
+  <Select items="{items}" />
 </div>
-	
