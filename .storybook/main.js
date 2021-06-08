@@ -1,5 +1,5 @@
 module.exports = {
-    stories: ['../scripts/stories/**/*.stories.@(svelte)'],
+    stories: ['../scripts/stories/**/*.stories.@(svelte|mdx)'],
     addons: [
         '@storybook/addon-storysource',
         '@storybook/addon-actions',
