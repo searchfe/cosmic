@@ -3,14 +3,40 @@
     line-height: 100%;
 }
 body {
-  margin: 0;
-  background: var(--bg-color);
+    margin: 0;
+    background: var(--bg-color);
 }
 
 button {
     text-shadow: 1px 1px 1px var(--color-primary-500);
 }
 
-.mode-dark button{
+.mode-dark button {
     text-shadow: 1px 1px 1px var(--color-primary-800);
+}
+
+.select {
+    height: auto;
+}
+
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: url(./font/font.woff2) format("woff2");
+}
+
+.material-icons {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
 }

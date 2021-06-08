@@ -13,11 +13,6 @@
 
 <Meta title="Button" component="{Button}" />
 
-<Story name="默认" >
-  <Button on:click="{handleClick}" class="w-40">{count}</Button>
-</Story>
-
-
 <Template let:args>
   <Button {...args} on:click="{handleClick}" class="w-40">
     {count}
@@ -26,3 +21,6 @@
 
 <Story name="Primary" args={{primary:true}}></Story>
 
+<Story name="Default" >
+  <Button on:click="{handleClick}">{count}</Button>
+</Story>
