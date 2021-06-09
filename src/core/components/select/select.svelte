@@ -38,7 +38,7 @@
   export let prependClasses = () => 'absolute left-0 top-0 pb-2 pl-2 pt-1 text-xs text-gray-700 z-10';
   export let listClasses = noop;
   export let selectedClasses = noop;
-  export let itemClasses = noop;
+  export let itemClasses = () => 'bg-cgray-400 dark:bg-cgray-700 relative overflow-hidden duration-100 py-2 px-4 cursor-pointer text-gray-50 flex items-center z-10';
 
   export let add = "";
   export let remove = "";
