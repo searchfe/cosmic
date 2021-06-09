@@ -12,8 +12,9 @@
   export const text = "";
   export const item = {};
   export const to = null;
+  export const defaultClass = (i) => i;
   export const selectedClasses = (i) => i;
-  export const itemClasses = (i) => i;
+  export let itemClasses = (i) => i;
 
   const classesDefault = "text-gray-50 dark:text-gray-200 bg-cgray-400 dark:bg-cgray-600 rounded";
 
@@ -54,7 +55,7 @@
         <ListItem
           bind:value
           selectedClasses="{selectedClasses}"
-          itemClasses="{itemClasses}"
+          classes="{itemClasses}"
           {...item}
           tabindex="{i + 1}"
           id="{id(item)}"

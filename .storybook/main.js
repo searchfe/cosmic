@@ -6,7 +6,6 @@ module.exports = {
         '@storybook/addon-notes/register',
         '@storybook/addon-viewport',
         '@storybook/addon-svelte-csf',
-        '@storybook/addon-controls',
         '@storybook/addon-docs',
         'storybook-dark-mode',
         '@storybook/addon-essentials',
