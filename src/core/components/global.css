@@ -4,7 +4,10 @@
 }
 body {
     margin: 0;
-    background: var(--bg-color);
+    background: var(--color-cgray-100);
+}
+body.mode-dark{
+    background: var(--color-cgray-900);
 }
 
 button {
