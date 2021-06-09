@@ -1,5 +1,6 @@
 <script>
   import 'smelte/src/tailwind.css';
+  import '../stories.css';
   import '../../../src/core/components/global.css';
   import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
   import Button from '../../../src/core/components/button';
