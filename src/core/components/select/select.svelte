@@ -1,28 +1,28 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from "svelte";
-  import { quadOut, quadIn } from "svelte/easing";
-  import List from "../list";
-  import TextField from "../text-field/text-field";
-  import { ClassBuilder } from "smelte/src/utils/classes.js";
-  import { hideListAction } from "smelte/src/utils/hide-list-action";
+  import { createEventDispatcher, onMount } from 'svelte';
+  import { quadOut, quadIn } from 'svelte/easing';
+  import List from '../list';
+  import TextField from '../text-field/text-field';
+  import { ClassBuilder } from 'smelte/src/utils/classes.js';
+  import { hideListAction } from 'smelte/src/utils/hide-list-action';
 
-  const optionsClassesDefault = "absolute left-0 bg-white rounded shadow w-full z-20 dark:bg-dark-500";
-  const classesDefault = "cursor-pointer relative pb-2";
+  const optionsClassesDefault = 'absolute left-0 bg-white rounded shadow w-full z-20 dark:bg-dark-500';
+  const classesDefault = 'cursor-pointer relative pb-2';
 
   const noop = (i) => i;
 
   export let items = [];
-  export let value = "";
-  export const text = "";
-  export let label = "";
+  export let value = '';
+  export const text = '';
+  export let label = '';
   let selectedLabelProp = undefined;
   export { selectedLabelProp as selectedLabel };
-  export let color = "primary";
+  export let color = 'primary';
   export let outlined = false;
-  export let placeholder = "";
-  export let hint = "";
+  export let placeholder = '';
+  export let hint = '';
   export let error = false;
-  export let append = "arrow_drop_down";
+  export let append = 'arrow_drop_down';
   export let dense = false;
   export let persistentHint = false;
   export let autocomplete = false;
@@ -40,29 +40,29 @@
   export let selectedClasses = noop;
   export let itemClasses = () => 'bg-cgray-400 dark:bg-cgray-700 relative overflow-hidden duration-100 py-2 px-4 cursor-pointer text-gray-50 flex items-center z-10';
 
-  export let add = "";
-  export let remove = "";
-  export let replace = "";
+  export let add = '';
+  export let remove = '';
+  export let replace = '';
 
   let itemsProcessed = [];
 
   function process(it) {
-    return it.map((i) => (typeof i !== "object" ? { value: i, text: i } : i));
+    return it.map((i) => (typeof i !== 'object' ? { value: i, text: i } : i));
   }
 
   $: itemsProcessed = process(items);
 
   const dispatch = createEventDispatcher();
 
-  let selectedLabel = "";
+  let selectedLabel = '';
   $: {
     if (selectedLabelProp !== undefined) {
       selectedLabel = selectedLabelProp;
     } else if (value !== undefined) {
       let selectedItem = itemsProcessed.find((i) => i.value === value);
-      selectedLabel = selectedItem ? selectedItem.text : "";
+      selectedLabel = selectedItem ? selectedItem.text : '';
     } else {
-      selectedLabel = "";
+      selectedLabel = '';
     }
   }
 
@@ -87,10 +87,10 @@
   $: c = cb.flush().add(classes, true, classesDefault).add($$props.class).get();
 
   const ocb = new ClassBuilder(optionsClasses, optionsClassesDefault);
-  $: o = ocb.flush().add(optionsClasses, true, optionsClassesDefault).add("rounded-t-none", !outlined).get();
+  $: o = ocb.flush().add(optionsClasses, true, optionsClassesDefault).add('rounded-t-none', !outlined).get();
 
   $: if (dense) {
-    appendClasses = (i) => i.replace("pt-4", "pt-3");
+    appendClasses = (i) => i.replace('pt-4', 'pt-3');
   }
 
 </script>

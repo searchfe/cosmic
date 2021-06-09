@@ -1,12 +1,12 @@
 <script>
-  import "smelte/src/tailwind.css";
-  import "../../../src/core/components/global.css";
-  import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import { Select, Checkbox } from "../../../src/core/components";
+  import 'smelte/src/tailwind.css';
+  import '../../../src/core/components/global.css';
+  import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
+  import { Select, Checkbox } from '../../../src/core/components';
   let value1 = 1;
-  let value2 = "";
+  let value2 = '';
   let selectedItems = [];
-  let selectedLabel = "";
+  let selectedLabel = '';
   function valueChange({ detail }) {
     value1 = detail;
   }
@@ -16,15 +16,15 @@
       v.detail
         ? !selectedItems.some((item) => item === i) && selectedItems.push(i)
         : (selectedItems = selectedItems.filter((si) => si !== i));
-      selectedLabel = selectedItems.map((item) => item.text).join(", ");
+      selectedLabel = selectedItems.map((item) => item.text).join(', ');
     };
   }
 
   const items = [
-    { value: 1, text: "One" },
-    { value: 2, text: "Two" },
-    { value: 3, text: "Three" },
-    { value: 4, text: "Four" },
+    { value: 1, text: 'One' },
+    { value: 2, text: 'Two' },
+    { value: 3, text: 'Three' },
+    { value: 4, text: 'Four' },
   ];
 
 </script>
