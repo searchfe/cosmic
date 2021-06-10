@@ -1,11 +1,11 @@
 import Button from './button';
 import Checkbox from './checkbox';
 import Switch from './switch';
-import TextField from './text-field/text-field';
+import TextField, { Label, Wrapper, Hint, Underline } from './text-field';
 import Select from './select';
 import Snackbar from './snackbar/snackbar';
-import List, {ListItem} from './list';
-import RadioButtonGroup, {RadioButton} from './radio-button';
+import List, { ListItem } from './list';
+import RadioButtonGroup, { RadioButton } from './radio-button';
 import Dialog from './dialog';
 import NavigationDrawer from './navigation-drawer/navigation-drawer';
 import ProgressCircular from './progress-circular/progress-circular';
@@ -24,6 +24,10 @@ export {
     Checkbox,
     Switch,
     TextField,
+    Label,
+    Wrapper,
+    Hint,
+    Underline,
     Select,
     Snackbar,
     List,
