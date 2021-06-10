@@ -20,14 +20,14 @@
 <Template let:args>
   <blockquote class="pl-4 mt-2 mb-8 border-l-4 border-blue text-tiny py-2"><p>Buttons allow users to take actions, and make choices, with a single tap.</p></blockquote>
 
-  <div class="mt-5 mb-5 text-tiny">Basic</div>
+  <div class="mt-5 mb-5 text-tiny">Auto（Configurable）</div>
+  <Button class="w-40" {...args}>Button</Button>
+
+  <div class="mt-5 mb-5 text-tiny">Light</div>
   <Button class="w-40" light="true">Button</Button>
 
-  <div class="mt-5 mb-5 text-tiny">Basic</div>
+  <div class="mt-5 mb-5 text-tiny">Dark</div>
   <Button class="w-40" dark="true">Button</Button>
-
-  <div class="mt-5 mb-5 text-tiny" {...args} >Auto</div>
-  <Button class="w-40">Button</Button>
 
   <!-- <p class="mt-5 mb-5"></p>
   <Button {...args} on:click="{handleClick}" class="w-40">
@@ -41,7 +41,7 @@
       <Button class="w-40" block="true">Button</Button>
     </div>
 
-    
+
     <h6 class="mb-3 mt-6">Outlined</h6>
     <div class="py-2">
       <Button color="secondary" light block outlined>Button</Button>
