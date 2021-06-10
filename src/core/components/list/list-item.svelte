@@ -47,6 +47,7 @@
     .add("py-2", dense)
     .add("text-gray-600", disabled)
     .add($$props.class)
+    .add('active:bg-active')
     .get();
 
 </script>
