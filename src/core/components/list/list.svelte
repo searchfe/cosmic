@@ -1,22 +1,22 @@
 <script lang="ts">
-  import { ClassBuilder } from "smelte/src/utils/classes.js";
+  import { ClassBuilder } from 'smelte/src/utils/classes.js';
 
-  import ListItem from "./list-item.svelte";
+  import ListItem from './list-item.svelte';
 
   export let items = [];
-  export let value = "";
+  export let value = '';
   export let dense = false;
   export let select = false;
 
   export const level = null;
-  export const text = "";
+  export const text = '';
   export const item = {};
   export const to = null;
   export const defaultClass = (i) => i;
   export const selectedClasses = (i) => i;
   export let itemClasses = (i) => i;
 
-  const classesDefault = "text-gray-50 dark:text-gray-200 bg-cgray-400 dark:bg-cgray-600 rounded";
+  const classesDefault = 'text-gray-50 dark:text-gray-200 bg-cgray-400 dark:bg-cgray-600 rounded';
 
   export let classes = classesDefault;
 

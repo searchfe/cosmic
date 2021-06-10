@@ -38,6 +38,16 @@ module.exports = ({ config, mode }) => {
             include: [path.resolve(__dirname, '../scripts/spript-stories')],
             enforce: 'pre',
         },
+        {
+            test: /\.(jsx)$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env', '@babel/preset-react']
+                }
+            }
+        },
     );
 
     return config;

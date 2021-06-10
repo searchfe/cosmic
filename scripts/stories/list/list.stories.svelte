@@ -1,40 +1,40 @@
 <script>
-  import "smelte/src/tailwind.css";
-  import "../../../src/core/components/global.css";
-  import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import { List } from "../../../src/core/components";
+  import 'smelte/src/tailwind.css';
+  import '../../../src/core/components/global.css';
+  import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
+  import { List } from '../../../src/core/components';
   const classesDefault = 'cursor-pointer p-4 border-alert-50 my-2';
-  const selectedClassesDefault = "bg-active dark:bg-active";
+  const selectedClassesDefault = 'bg-active dark:bg-active';
   let selected;
   const listOneLine = [
     {
-      text: "Item 1",
-      icon: "favorite",
+      text: 'Item 1',
+      icon: 'favorite',
     },
     {
-      text: "Item 2",
-      icon: "favorite",
+      text: 'Item 2',
+      icon: 'favorite',
     },
     {
-      text: "Item 3",
-      icon: "favorite",
+      text: 'Item 3',
+      icon: 'favorite',
     },
   ];
   const listTwoLines = [
     {
-      text: "Item 1",
-      icon: "favorite",
-      subheading: "Subheading 1",
+      text: 'Item 1',
+      icon: 'favorite',
+      subheading: 'Subheading 1',
     },
     {
-      text: "Item 2",
-      icon: "favorite",
-      subheading: "Subheading 2",
+      text: 'Item 2',
+      icon: 'favorite',
+      subheading: 'Subheading 2',
     },
     {
-      text: "Item 3",
-      icon: "favorite",
-      subheading: "Subheading 3",
+      text: 'Item 3',
+      icon: 'favorite',
+      subheading: 'Subheading 3',
     },
   ];
   function change(event) {
@@ -64,7 +64,7 @@
         class:dark:bg-active="{selected === item.text}"
         class:bg-active='{selected === item.text}'
       >
-        {selected === item.text ? "👌" : "🙅‍"}
+        {selected === item.text ? '👌' : '🙅‍'}
         {item.text}
       </div>
     </li>

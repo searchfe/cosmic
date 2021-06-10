@@ -140,6 +140,9 @@ module.exports = {
                 DEFAULT: colors.blue[400],
                 dark: colors.blue[400],
             },
+            blue: {
+                DEFAULT: colors.blue[400],
+            },
         },
         transitionDuration:{ 100: '0ms', 200: '0ms' },
     },
