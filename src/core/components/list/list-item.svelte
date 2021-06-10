@@ -1,18 +1,18 @@
 <script lang="ts">
-  import { ClassBuilder } from "smelte/src/utils/classes.js";
-  import { createEventDispatcher } from "svelte";
-  import Icon from "smelte/src/components/Icon";
-  import createRipple from "smelte/src/components/Ripple/ripple.js";
+  import { ClassBuilder } from 'smelte/src/utils/classes.js';
+  import { createEventDispatcher } from 'svelte';
+  import Icon from 'smelte/src/components/Icon';
+  import createRipple from 'smelte/src/components/Ripple/ripple.js';
 
-  const classesDefault = "bg-cgray-400 dark:bg-cgray-600 relative overflow-hidden duration-100 py-2 px-4 cursor-pointer text-gray-50 flex items-center z-10";
-  const selectedClassesDefault = "bg-active dark:bg-active";
-  const subheadingClassesDefault = "text-gray-200 p-0 text-sm";
+  const classesDefault = 'bg-cgray-400 dark:bg-cgray-600 relative overflow-hidden duration-100 py-2 px-4 cursor-pointer text-gray-50 flex items-center z-10';
+  const selectedClassesDefault = 'bg-active dark:bg-active';
+  const subheadingClassesDefault = 'text-gray-200 p-0 text-sm';
 
-  export let icon = "";
-  export let id = "";
-  export let value = "";
-  export let text = "";
-  export let subheading = "";
+  export let icon = '';
+  export let id = '';
+  export let value = '';
+  export let text = '';
+  export let subheading = '';
   export let disabled = false;
   export let dense = false;
   export let selected = false;
@@ -24,7 +24,7 @@
 
 
 
-  export let to = "";
+  export let to = '';
   export const item = null;
   export const items = [];
   export const level = null;
@@ -44,8 +44,8 @@
   $: c = cb
     .flush()
     .add(selectedClasses, selected, selectedClassesDefault)
-    .add("py-2", dense)
-    .add("text-gray-600", disabled)
+    .add('py-2', dense)
+    .add('text-gray-600', disabled)
     .add($$props.class)
     .get();
 

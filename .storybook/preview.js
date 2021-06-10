@@ -1,5 +1,6 @@
-
 import customTheme from './theme';
+import { DocsContainer } from './docs-container';
+
 
 export const parameters = {
     darkMode: {
@@ -12,5 +13,11 @@ export const parameters = {
         lightClass: 'mode-light',
         classTarget: 'body',
         stylePreview: true
-    }
+    },
+    docs: {
+        // get theme() {
+        //     let isDarkMode = parent.document.body.classList.contains("mode-dark");
+        //     return isDarkMode ? themes.dark : themes.light;
+        container: DocsContainer,
+    }  
 };
