@@ -1,1 +1,2 @@
-export { default } from './icon.svelte';
+import Icon from './icon.svelte';
+export default Icon;

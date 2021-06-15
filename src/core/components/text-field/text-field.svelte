@@ -33,7 +33,7 @@
   export let disabled = false;
 
   const inputDefault = "pb-2 pt-2 px-4 rounded-t text-gray-50  dark:text-gray-200 w-full bg-cgray-400 dark:bg-cgray-600";
-  const classesDefault = "mt-2 mb-6 relative text-gray-600 dark:text-gray-100";
+  const classesDefault = "mt-2 mb-4 relative text-gray-600 dark:text-gray-100";
   const appendDefault = "absolute right-0 top-0 pb-2 pr-4 pt-1 text-gray-700 z-10";
   const prependDefault = "absolute left-0 top-0 pb-2 pl-2 pt-1 text-xs text-cgray-500 z-10";
 
@@ -102,8 +102,8 @@
   $: wClasses = ccb.flush()
       .add('select', select || autocomplete)
       .add('dense', dense && !outlined)
-      .remove('mb-6 mt-2', dense && !outlined)
-      .add('mb-4 mt-1', dense)
+      .remove('mb-4 mt-2', dense && !outlined)
+      .add('mb-2 mt-1', dense)
       .replace({ 'text-gray-600': 'text-error-500' }, error)
       .add('text-gray-200', disabled)
       .get();

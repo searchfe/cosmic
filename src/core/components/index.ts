@@ -19,6 +19,9 @@ import Treeview from './treeview';
 import DatePicker from './date-picker/date-picker';
 import Ripple from './ripple';
 import Menu from './menu'
+import Icon from './icon';
+import Card from './card/card';
+import Image from './image/image';
 
 export {
     Button,
@@ -47,5 +50,8 @@ export {
     DatePicker,
     ListItem,
     Ripple,
-    Menu
+    Menu,
+    Icon,
+    Card,
+    Image
 };
