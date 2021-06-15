@@ -18,6 +18,7 @@ import Tooltip from './tooltip/tooltip';
 import Treeview from './treeview';
 import DatePicker from './date-picker/date-picker';
 import Ripple from './ripple';
+import Menu from './menu'
 
 export {
     Button,
@@ -46,4 +47,5 @@ export {
     DatePicker,
     ListItem,
     Ripple,
+    Menu
 };
