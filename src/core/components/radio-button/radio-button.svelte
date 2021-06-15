@@ -48,17 +48,17 @@
   <div class="relative">
     <Ripple color={rippleColor}>
       {#if selected === value}
-        <Icon {small} class="text-{disabled ? 'gray' : color}">
+        <Icon {small} class="text-{disabled ? 'gray' : color}" extraStyle="font-size: 1.2rem">
           radio_button_checked
         </Icon>
       {:else}
-        <Icon {small} class={disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600'}>
+        <Icon {small} class="{disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600'}" extraStyle="font-size: 1.2rem">
           radio_button_unchecked
         </Icon>
       {/if}
     </Ripple>
   </div>
   <slot name="label">
-    <Label {disabled} {label} class={labelClasses} />
+    <Label {disabled} {label} class={labelClasses} checked="{selected}"/>
   </slot>
 </div>
