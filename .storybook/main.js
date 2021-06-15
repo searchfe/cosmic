@@ -3,7 +3,6 @@ module.exports = {
     addons: [
         '@storybook/addon-storysource',
         '@storybook/addon-actions',
-        '@storybook/addon-notes/register',
         '@storybook/addon-viewport',
         '@storybook/addon-svelte-csf',
         '@storybook/addon-docs',

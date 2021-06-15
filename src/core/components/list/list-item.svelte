@@ -48,6 +48,7 @@
     .add('text-gray-600', disabled)
     .add($$props.class)
     .add('active:bg-active')
+    .add('hover:bg-cgray-500')
     .get();
 
 </script>

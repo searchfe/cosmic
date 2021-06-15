@@ -2,7 +2,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import { quadOut, quadIn } from 'svelte/easing';
   import List from '../list';
-  import TextField from '../text-field/text-field';
+  import TextField from '../text-field';
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
   import { hideListAction } from 'smelte/src/utils/hide-list-action';
 
@@ -17,7 +17,7 @@
   export let label = '';
   let selectedLabelProp = undefined;
   export { selectedLabelProp as selectedLabel };
-  export let color = 'primary';
+  export let color = 'cgray';
   export let outlined = false;
   export let placeholder = '';
   export let hint = '';

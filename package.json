@@ -85,7 +85,6 @@
     "@storybook/addon-controls": "^6.2.9",
     "@storybook/addon-docs": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
-    "@storybook/addon-notes": "^5.3.21",
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addon-storysource": "^6.2.9",
     "@storybook/addon-svelte-csf": "^1.0.0",
