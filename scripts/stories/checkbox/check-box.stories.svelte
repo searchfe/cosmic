@@ -6,9 +6,9 @@
 
 </script>
 
-<Meta title="Selection Control" component="{Checkbox}" />
+<Meta title="Checkbox"/>
 
-<Template let:args>
+<Template controls="{{ hideNoControlsWarning: true }}">
   <Checkbox label="A checkbox" />
   <Checkbox color="secondary" label="A colored checkbox" />
   <Checkbox disabled label="A disabled checkbox" />
