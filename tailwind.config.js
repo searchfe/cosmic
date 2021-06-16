@@ -151,6 +151,7 @@ module.exports = {
     variants: {
         extend: {
             backgroundColor: ['active'],
+            textColor: ['hover'],
         },
     },
     colors: {

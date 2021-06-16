@@ -14,7 +14,7 @@
   export let checked = false;
   export let disabled = false;
   export let classes = classesDefault;
-  export let labelClasses = (i) => i;
+  export let labelClasses = 'text-sm';
   export let group = [];
   
   // for bind:group
@@ -63,18 +63,18 @@
     <div class="relative w-auto h-auto z-0">
       <Ripple color="{rippleColor}">
         {#if checked}
-        <Icon class="{disabled ? 'text-gray-500 dark:text-gray-600' : `text-${color} dark:text-${color}`}">
+        <Icon class="{disabled ? 'text-gray-500 dark:text-gray-600' : `text-${color} dark:text-${color}`}" extraStyle="font-size: 1.2rem">
           check_box
         </Icon>
         {:else}
-        <Icon class="{disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600 dark:text-gray-300'}">
+        <Icon class="{disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600 dark:text-gray-300'}" extraStyle="font-size: 1.2rem">
           check_box_outline_blank
         </Icon>
         {/if}
       </Ripple>
     </div>
     <slot name="label">
-      <Label disabled="{disabled}" label="{label}" class="{labelClasses}" />
+      <Label disabled="{disabled}" label="{label}" class="{labelClasses}" checked="{checked}"/>
     </slot>
   </div>
 </div>
