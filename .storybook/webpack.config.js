@@ -1,5 +1,7 @@
 const tailwindcss = require('tailwindcss');
 const path = require('path');
+const autoPreprocess = require('svelte-preprocess');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const testConfig = require('smelte/tailwind.config')(require('./tailwind.config'));
 module.exports = ({ config, mode }) => {
@@ -10,6 +12,9 @@ module.exports = ({ config, mode }) => {
         ...svelteLoader.options,
         emitCss: true,
         hotReload: false,
+        preprocess: autoPreprocess({
+            typescript: true
+        })
     };
 
     config.module.rules.push(
@@ -23,7 +28,7 @@ module.exports = ({ config, mode }) => {
                         postcssOptions: {
                             plugins: [
                                 require('postcss-import')(),
-                                tailwindcss({...testConfig}),
+                                tailwindcss({ ...testConfig }),
                                 require('autoprefixer'),
                             ]
                         }
@@ -49,6 +54,8 @@ module.exports = ({ config, mode }) => {
             }
         },
     );
-
+    config.resolve.plugins.push(new TsconfigPathsPlugin({
+        configFile: './tsconfig.svelte.json'
+    }));
     return config;
 };
