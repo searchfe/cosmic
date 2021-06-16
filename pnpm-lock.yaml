@@ -68,6 +68,7 @@ specifiers:
   svelte-waypoint: ^0.1.4
   tailwindcss: ^2.1.4
   ts-jest: ^26.5.1
+  tsconfig-paths-webpack-plugin: ^3.5.1
   tslib: ^2.2.0
   typescript: ^4.2.4
 
@@ -141,6 +142,7 @@ devDependencies:
   svelte-waypoint: 0.1.4
   tailwindcss: 2.1.4_postcss@8.3.0
   ts-jest: 26.5.6_jest@26.6.3+typescript@4.3.2
+  tsconfig-paths-webpack-plugin: 3.5.1
   tslib: 2.2.0
   typescript: 4.3.2
 
@@ -3776,6 +3778,10 @@ packages:
     resolution: {integrity: sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA==}
     dev: true
 
+  /@types/json5/0.0.29:
+    resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
+    dev: true
+
   /@types/markdown-to-jsx/6.11.3:
     resolution: {integrity: sha512-30nFYpceM/ZEvhGiqWjm5quLUxNeld0HCzJEXMZZDpq53FPkS85mTwkWtCXzCqq8s5JYLgM5W392a02xn8Bdaw==}
     dependencies:
@@ -3815,6 +3821,10 @@ packages:
 
   /@types/node/14.17.2:
     resolution: {integrity: sha512-sld7b/xmFum66AAKuz/rp/CUO8+98fMpyQ3SBfzzBNGMd/1iHBTAg9oyAvcYlAj46bpc74r91jSw2iFdnx29nw==}
+    dev: true
+
+  /@types/node/14.17.3:
+    resolution: {integrity: sha512-e6ZowgGJmTuXa3GyaPbTGxX17tnThl2aSSizrFthQ7m9uLGZBXiGhgE55cjRZTF5kjZvYn9EOPOMljdjwbflxw==}
     dev: true
 
   /@types/normalize-package-data/2.4.0:
@@ -3901,7 +3911,7 @@ packages:
   /@types/sass/1.16.0:
     resolution: {integrity: sha512-2XZovu4NwcqmtZtsBR5XYLw18T8cBCnU2USFHTnYLLHz9fkhnoEMoDsqShJIOFsFhn5aJHjweiUUdTrDGujegA==}
     dependencies:
-      '@types/node': 14.17.1
+      '@types/node': 14.17.3
     dev: true
 
   /@types/scheduler/0.16.1:
@@ -6920,6 +6930,14 @@ packages:
       graceful-fs: 4.2.6
       memory-fs: 0.5.0
       tapable: 1.1.3
+    dev: true
+
+  /enhanced-resolve/5.8.2:
+    resolution: {integrity: sha512-F27oB3WuHDzvR2DOGNTaYy0D5o0cnrv8TeI482VM4kYgQd/FT9lUQwuNsJ0oOHtBUq7eiW5ytqzp7nBFknL+GA==}
+    engines: {node: '>=10.13.0'}
+    dependencies:
+      graceful-fs: 4.2.6
+      tapable: 2.2.0
     dev: true
 
   /enquirer/2.3.6:
@@ -14159,6 +14177,11 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /tapable/2.2.0:
+    resolution: {integrity: sha512-FBk4IesMV1rBxX2tfiK8RAmogtWn53puLOQlvO8XuwlgxcYbP4mVPS9Ph4aeamSyyVjOl24aYWAuc8U5kCVwMw==}
+    engines: {node: '>=6'}
+    dev: true
+
   /tar/6.1.0:
     resolution: {integrity: sha512-DUCttfhsnLCjwoDoFcI+B2iJgYa93vBnDUATYEeRx6sntCTdN01VnqsIuTlALXla/LWooNg0yEGeB+Y8WdFxGA==}
     engines: {node: '>= 10'}
@@ -14461,6 +14484,23 @@ packages:
         optional: true
     dependencies:
       typescript: 4.3.2
+    dev: true
+
+  /tsconfig-paths-webpack-plugin/3.5.1:
+    resolution: {integrity: sha512-n5CMlUUj+N5pjBhBACLq4jdr9cPTitySCjIosoQm0zwK99gmrcTGAfY9CwxRFT9+9OleNWXPRUcxsKP4AYExxQ==}
+    dependencies:
+      chalk: 4.1.1
+      enhanced-resolve: 5.8.2
+      tsconfig-paths: 3.9.0
+    dev: true
+
+  /tsconfig-paths/3.9.0:
+    resolution: {integrity: sha512-dRcuzokWhajtZWkQsDVKbWyY+jgcLC5sqJhg2PSgf4ZkH2aHPvaOY8YWGhmjb68b5qqTfasSsDO9k7RUiEmZAw==}
+    dependencies:
+      '@types/json5': 0.0.29
+      json5: 1.0.1
+      minimist: 1.2.5
+      strip-bom: 3.0.0
     dev: true
 
   /tslib/1.14.1:
