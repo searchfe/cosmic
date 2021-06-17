@@ -2,6 +2,7 @@
   import { Icon } from '@cosmic/core/components';
   import { getContext } from 'svelte';
   import { get } from 'svelte/store';
+
   export let key: number | null = null;
   export let header = '';
   export let append = '';
@@ -49,9 +50,13 @@
       {/if}
       {header}
     </div>
-    {#if !!append}
-      <Icon reverse="{expand}">{append}</Icon>
-    {/if}
+    <slot name="left">
+      <div>
+        {#if !!append}
+          <Icon reverse="{expand}">{append}</Icon>
+        {/if}
+      </div>
+    </slot>
   </header>
   {#if expand}
     <div class="m-2 text-sm">
