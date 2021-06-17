@@ -11,6 +11,6 @@
 
 </script>
 
-<div class="w-full">
+<div class="w-full {$$props.class}">
   <slot/>
 </div>
