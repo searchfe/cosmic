@@ -11,7 +11,7 @@ import NavigationDrawer from './navigation-drawer/navigation-drawer';
 import ProgressCircular from './progress-circular/progress-circular';
 import ProgressLinear from './progress-linear/progress-linear';
 import Chip from './chip/chip';
-import Tabs from './tabs/tabs';
+import Tabs, { TabButton, Tab, Indicator } from './tabs';
 import DataTable from './data-table/data-table';
 import Header from './data-table/header';
 import Tooltip from './tooltip/tooltip';
@@ -43,6 +43,9 @@ export {
     ProgressLinear,
     Chip,
     Tabs,
+    TabButton,
+    Tab,
+    Indicator,
     DataTable,
     Header,
     Tooltip,
