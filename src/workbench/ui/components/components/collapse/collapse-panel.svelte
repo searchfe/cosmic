@@ -7,6 +7,7 @@
   export let header = '';
   export let append = '';
   export let prepend = 'arrow_drop_down';
+  export let iconClass = 'text-lg';
 
   let expand = false;
   const accordionStore: any = getContext('accordion');
@@ -46,14 +47,14 @@
   <header on:click="{changeKeyHandler}" class="{headerDefault}">
     <div class="flex flex-row items-center">
       {#if !!prepend}
-        <Icon class="mr-4" reverse="{expand}">{prepend}</Icon>
+        <Icon class="mr-4 {iconClass}">{prepend}</Icon>
       {/if}
       {header}
     </div>
     <slot name="left">
       <div>
         {#if !!append}
-          <Icon reverse="{expand}">{append}</Icon>
+          <Icon class={iconClass}>{append}</Icon>
         {/if}
       </div>
     </slot>
