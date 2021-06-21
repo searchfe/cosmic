@@ -4,7 +4,7 @@
   import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
   import { Tabs, Tab, Image } from '@cosmic/core/components';
   let loading = false;
-  const tabButtonClasses = () => '';
+  const tabButtonClasses = () => 'max-h-32'
 
 </script>
 
@@ -40,7 +40,8 @@
     <Tabs
       {...args}
       selected="1"
-      class="bg-black shadow-sm text-white rounded-t-lg flex-col max-w-10"
+      {tabButtonClasses}
+      class="shadow-sm text-white rounded-t-lg flex-col max-w-10"
       let:selected
       loading="{loading}"
       items="{[
@@ -49,7 +50,7 @@
         { id: '3', text: 'Kitties', icon: 'eject' },
       ]}"
     >
-      <div slot="content" class="flex overflow-hidden w-full  bg-cgray-500 h-full p-6" style="height: 500px">
+      <div slot="content" class="flex overflow-hidden w-full  bg-cgray-500 h-full p-6">
         <Tab id="1" selected="{selected}">this is a tab 1</Tab>
         <Tab id="2" selected="{selected}">this is a tab 2</Tab>
         <Tab id="3" selected="{selected}">this is a tab 3</Tab>

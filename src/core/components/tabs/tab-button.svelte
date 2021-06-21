@@ -24,7 +24,7 @@
   const notSelected = utils(notSelectedColor);
 
   // $: textColor = selected === id ? txt(2) : notSelected.txt();
-  $: bgColor = selected === id ? 'dark:bg-active' : '';
+  $: bgColor = selected === id ? 'dark:bg-active bg-active' : '';
   const cb = new ClassBuilder(classes, classesDefault);
 
   $: c = cb
