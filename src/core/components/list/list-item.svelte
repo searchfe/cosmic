@@ -61,7 +61,7 @@
   on:click>
   {#if icon}
     <Icon
-      class="pr-6"
+      class="pr-6 text-lg"
       small={dense}
     >
       {icon}
