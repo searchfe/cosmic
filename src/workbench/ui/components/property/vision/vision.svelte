@@ -1,8 +1,7 @@
 <script lang="ts">
   import { Title } from '@cosmic/workbench/ui/components/components';
-  import { VisionColor, VisionFontSize } from './components';
+  import { VisionColor, VisionFontSize, VisionTempelet } from './components';
   import { createEventDispatcher } from 'svelte';
-  import { each } from 'svelte/internal';
   export let vision: Object;
   const append = 'add';
 
@@ -11,6 +10,9 @@
   const titleMap = {
     color: '颜色',
     fontSize: '字号',
+    border: '边框',
+    background: '蒙层',
+    shandow: '阴影'
   };
 
   const compoentMap = {
@@ -35,7 +37,9 @@
   {#each Object.keys(vision) as key}
     <Title title="{titleMap[key]}" append="{append}" on:click="{() => add(key)}" />
     {#each vision[key] as value}
-      <svelte:component this="{compoentMap[key]}" {...value} />
+      <!-- <svelte:component this="{compoentMap[key]}" {...value} /> -->
+      <VisionTempelet title={titleMap[key]} />
     {/each}
   {/each}
+  
 </div>
