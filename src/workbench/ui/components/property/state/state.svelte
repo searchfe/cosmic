@@ -6,7 +6,6 @@
   export let stateValue = '';
   export let widgetValue = '';
   const dispatch = createEventDispatcher();
-  
 </script>
 
 <div class="flex flex-col px-4 ">
@@ -14,13 +13,17 @@
   <div class="flex border-b h-12">
     <div class="border-r flex-auto flex flex-col px-6 py-4 justify-around">
       {#each stateList as item}
-        <Button on:click="{() => dispatch('stateChange', item)}" class="w-40 {stateValue === item ? 'dark:bg-active bg-active': ''}">{item}</Button>
+        <Button
+          on:click="{() => dispatch('stateChange', item)}"
+          selected="{stateValue === item}"
+          class="w-40 {stateValue === item ? 'dark:bg-active bg-active' : ''}">{item}</Button
+        >
       {/each}
     </div>
     <div class="flex-auto flex flex-col px-4 mb-4">
       <header class="flex flex-grow-0 h-8 items-center">基础组件</header>
       <div class="flex flex-col justify-around flex-auto ">
-        <List value={widgetValue} on:change='{(event) => dispatch('widgetChange', event.detail)}' items="{widgets}" />
+        <List value="{widgetValue}" on:change="{(event) => dispatch('widgetChange', event.detail)}" items="{widgets}" />
       </div>
     </div>
   </div>
