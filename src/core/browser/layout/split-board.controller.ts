@@ -59,8 +59,11 @@ export default class SplitBoardController {
         }
     }
     private liveResize(clientX: number, clientY: number) {
+        const item = this.view.items[this.activeId];
         if (this.expandType == 1) {
-            this.view.resizeColumnAt(this.activeId, clientX);
+            this.view.resizeAt(this.activeId, item.root.offsetLeft, item.root.clientWidth, clientX);
+        } else if (this.expandType == 2) {
+            this.view.resizeAt(this.activeId, item.root.offsetTop, item.root.clientHeight, clientY);
         }
     }
     private checkExpandState(clientX: number, clientY: number) {
@@ -76,6 +79,7 @@ export default class SplitBoardController {
         if (this.startY - clientY> 25) {
             this.expandType = 2;
             this.view.setCursor('row-resize');
+            this.view.splitRowAt(this.activeId, clientY);
         }
     }
     

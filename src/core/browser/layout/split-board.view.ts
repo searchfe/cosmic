@@ -25,6 +25,7 @@ export default class SplitBoardView extends View {
     }
     private init() {
         this.root.classList.add('flex', 'flex-nowrap');
+        this.root.style.margin = '0 4px';
         const view0 = new SplitItemView().setContent(document.createElement('div'));
         const view1 = new SplitItemView().setContent(document.createElement('div'));
         this.addColumn(view0);
@@ -101,32 +102,39 @@ export default class SplitBoardView extends View {
             // new Board;
             return;
         }
-        this.expandColumn(index, clientX);
+        this.startToExpand(index, item.root.offsetLeft, item.root.clientWidth, clientX);
     }
 
-    private expandColumn(index: number, clientX: number) {
+    public splitRowAt(index: number, clientY: number) {
         const item = this.items[index];
-        const startX = item.root.offsetLeft;
-        const newSizes = this.getExpandColumnResizes(index, clientX);
+        if (!this.checkDirection(directionType.row)) {
+            // new Board;
+            return;
+        }
+        this.startToExpand(index, item.root.offsetTop, item.root.clientHeight, clientY);
+    }
 
+    private startToExpand(index: number, start: number, length: number, position: number) {
+        const newSizes = this.getExpandResizes(index, start, length, position);
         const newItem = new SplitItemView().setContent(document.createElement('div'));
         this.destorySplit();
         this.insertItemAt(newItem, index + 1);
-        this.applySplit('horizontal', newSizes);
+        this.applySplit(this.direction == directionType.col ? 'horizontal' : 'vertical', newSizes);
     }
 
     /** live resize after expanded  */
-    public resizeColumnAt(index: number, clientX: number) {
+    public resizeAt(index: number, start: number, length: number, position: number) {
         if (!this.splitInstance) return;
-        const item = this.items[index];
-        const startX = item.root.offsetLeft;
-        let maxWidth = item.root.clientWidth;
+        // const item = this.items[index];
+        let max = length;
         if (this.items[index +1]) {
-            maxWidth += this.items[index +1].root.clientWidth;
+            max += this.items[index +1].root[
+                this.direction == directionType.col ? 'clientWidth': 'clientHeight'
+            ];
         }
-        const r = (clientX - startX) / maxWidth;
-        if (clientX - startX < 30) return;
-        if (maxWidth - clientX + startX < 30) return;
+        const r = (position - start) / max;
+        if (position - start < 30) return;
+        if (max - position + start < 30) return;
         let other = 0, sum = 0;
         this.splitInstance.getSizes().forEach((size, i) => {
             sum += size;
@@ -149,11 +157,8 @@ export default class SplitBoardView extends View {
     }
 
 
-    private getExpandColumnResizes(index: number, clientX: number) {
-        const item = this.items[index];
-        const startX = item.root.offsetLeft;
-        const width = item.root.clientWidth;
-        const r =  (clientX - startX) / width;
+    private getExpandResizes(index: number, start: number, length: number, position: number) {
+        const r =  (position - start) / length;
         if (r <= 0 || r >= 1) return;
         const newSizes: number[] = [];
         this.splitInstance && this.splitInstance.getSizes().forEach((size, i) => {
@@ -167,5 +172,3 @@ export default class SplitBoardView extends View {
         return newSizes;
     }
 }
-// pointer-events
-// cursor: col-resize;
