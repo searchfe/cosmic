@@ -33,7 +33,7 @@
     .add($$props.class)
     .add("uppercase", icon)
     .add(bgColor)
-    .add(`hover:bg-${color}-500 hover:${txt(200)}`)
+    .add(`hover:bg-${color}-500 hover:${txt(200)}`, selected !== id)
     .get();
 </script>
 
