@@ -1,1 +1,13 @@
 @import '../../../core/components/global.css';
+
+html,body {
+    height:100%;
+    overflow: hidden;
+}
+
+.gutter.gutter-horizontal {
+    cursor: col-resize;
+}
+.gutter.gutter-vertical {
+    cursor: row-resize;
+}

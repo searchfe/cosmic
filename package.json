@@ -74,7 +74,8 @@
     "eventemitter2": "^6.4.4",
     "inversify": "^5.1.1",
     "reflect-metadata": "^0.1.13",
-    "smelte": "^1.1.5"
+    "smelte": "^1.1.5",
+    "split.js": "^1.6.4"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^4.0.3",

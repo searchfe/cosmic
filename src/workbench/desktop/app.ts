@@ -1,10 +1,8 @@
 import { Container } from 'inversify';
-
-import { ColorSetRoot, ColorSet } from '@cosmic/workbench/ui/style/color-set.comp';
-
+import { AppearanceType } from '@cosmic/core/common/appearance';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
-
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
+import SpliBoardView from '@cosmic/core/browser/layout/split-board.view';
 
 export default class App {
   private container: Container;
@@ -17,14 +15,7 @@ export default class App {
   }
   bootstrap() {
     this.initNavigationBar();
-    // const appRoot = document.createElement('div');
-    // this.root.appendChild(appRoot);
-
-    // const am = new mode({
-    //   target: appRoot,
-    //   // props: {},
-    //   context: map,
-    // });
+    this.initFlowTable();
   }
 
   initPreferences() {
@@ -32,12 +23,21 @@ export default class App {
   }
 
   initStyle() {
-    this.container.bind(ColorSet).to(ColorSet);
-    const colorSetRoot = document.createElement('style');
-    this.container.bind(ColorSetRoot).toDynamicValue(() => colorSetRoot);
-    this.root.appendChild(colorSetRoot);
-    this.container.get(ColorSet);
-
+    // this.container.bind(ColorSet).to(ColorSet);
+    // const colorSetRoot = document.createElement('style');
+    // this.container.bind(ColorSetRoot).toDynamicValue(() => colorSetRoot);
+    // this.root.appendChild(colorSetRoot);
+    // this.container.get(ColorSet);
+    const aps = this.container.get(AppearanceService);
+    aps.onModeChanged((type: AppearanceType) => this.initStyleMode(type));
+    this.initStyleMode(AppearanceType.dark);
+  }
+  initStyleMode(type: AppearanceType) {
+    if (type === AppearanceType.dark) {
+      document.body.classList.add('mode-dark');
+    } else {
+      document.body.classList.remove('mode-dark');
+    }
   }
 
   initFrame() {
@@ -54,6 +54,10 @@ export default class App {
       props: { },
       context: this.context,
     });
+  }
+
+  initFlowTable() {
+    this.root.appendChild(new SpliBoardView().setFlow('1').root);
   }
 
   initWorkArea() {
