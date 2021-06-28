@@ -6,7 +6,7 @@ import Split from 'split.js';
 
 export const lowBoardRoot = Symbol.for('FlowTableRoot');
 
-enum directionType {
+export enum directionType {
     'col',
     'row'
 }
@@ -15,7 +15,7 @@ enum directionType {
 /** Split Board View */
 export default class SplitBoardView extends View {
     public items: SplitItemView[] = [];
-    private direction : directionType = directionType.col;
+    public direction : directionType = directionType.col;
     private splitInstance: Split.Instance | null = null;
     private controller: SplitBoardController;
     constructor() {
@@ -24,12 +24,8 @@ export default class SplitBoardView extends View {
         this.controller = new SplitBoardController(this);
     }
     private init() {
-        this.root.classList.add('flex', 'flex-nowrap');
-        this.root.style.margin = '0 4px';
-        const view0 = new SplitItemView().setContent(document.createElement('div'));
-        const view1 = new SplitItemView().setContent(document.createElement('div'));
-        this.addColumn(view0);
-        this.addColumn(view1);
+        this.root.classList.add('split-board', 'flex', 'flex-nowrap');
+        // this.root.style.margin = '0 4px';
     }
     public addRow(item: SplitItemView) {
         if (!this.checkDirection(directionType.row)) {
@@ -95,22 +91,38 @@ export default class SplitBoardView extends View {
         this.splitInstance && this.splitInstance.destroy();
         this.splitInstance = null;
     }
-
+    // 切分列
     public splitColumnAt(index: number, clientX: number) {
         const item = this.items[index];
-        if (!this.checkDirection(directionType.col)) {
-            // new Board;
+        if (!this.checkDirection(directionType.col)) { // 列切分行
+            const newBoard = new SplitBoardView().setFlow('1');
+            const contentView = item.contentView;
+            item.replaceContent(newBoard.root);
+            const newItemView = new SplitItemView().setContent(contentView);
+            const newEmptyView = new SplitItemView().setContent(document.createElement('div'));
+            item.hideExpandButton(); // 不再使用该item的拉伸按钮
+            newBoard.addColumn(newItemView);
+            newBoard.addColumn(newEmptyView);
             return;
         }
+        // 列扩展列
         this.startToExpand(index, item.root.offsetLeft, item.root.clientWidth, clientX);
     }
-
+    // 切分行
     public splitRowAt(index: number, clientY: number) {
         const item = this.items[index];
-        if (!this.checkDirection(directionType.row)) {
-            // new Board;
+        if (!this.checkDirection(directionType.row)) { // 行切分列
+            const newBoard = new SplitBoardView().setFlow('1');
+            const contentView = item.contentView;
+            item.replaceContent(newBoard.root);
+            const newItemView = new SplitItemView().setContent(contentView);
+            const newEmptyView = new SplitItemView().setContent(document.createElement('div'));
+            item.hideExpandButton(); // 不再使用该item的拉伸按钮
+            newBoard.addRow(newItemView);
+            newBoard.addRow(newEmptyView);
             return;
         }
+        // 行切分行
         this.startToExpand(index, item.root.offsetTop, item.root.clientHeight, clientY);
     }
 

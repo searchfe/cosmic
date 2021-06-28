@@ -7,7 +7,9 @@ html,body {
 
 .gutter.gutter-horizontal {
     cursor: col-resize;
+    background-color: var(--color-cgray-900);
 }
 .gutter.gutter-vertical {
     cursor: row-resize;
+    background-color: var(--color-cgray-900);
 }

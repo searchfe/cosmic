@@ -1,7 +1,8 @@
 <script>
+    export let show = true;
 </script>
 
-<div class="split-expand" >
+<div class="split-expand" style="display:{show? '': 'none'}">
 
 </div>
 

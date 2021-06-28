@@ -1,13 +1,12 @@
 import View from '../view';
 import SplitExpand from './split-expand.svelte';
-type expandCallback = (position: number) => void;
 
 export default class SplitItemView extends View{
     private _growClassName = '';
     private _shrinkClassName = '';
     private _bgColorClassName: string[] = ['bg-cgray-100', 'dark:bg-cgray-800'];
 
-    private contentView!: HTMLElement;
+    public contentView!: HTMLElement;
     private expand!: SplitExpand;
 
     constructor() {
@@ -22,6 +21,12 @@ export default class SplitItemView extends View{
         this.root.classList.add('flex');
         contentView.classList.add('flex', 'flex-1');
         return this.prepend(contentView);
+    }
+    public replaceContent(contentView: HTMLElement) {
+        this.root.replaceChild(contentView, this.contentView);
+        this.contentView = contentView;
+        contentView.classList.add('flex', 'flex-1');
+        return this;
     }
 
     public setGrow(className = 'flex-grow') {
@@ -50,6 +55,11 @@ export default class SplitItemView extends View{
     }
     private addExpandButton() {
         this.expand = new SplitExpand({target: this.root});
+    }
+
+    public hideExpandButton() {
+        this.expand.show = false;
+        // this.expand.$destroy();
     }
 
 }

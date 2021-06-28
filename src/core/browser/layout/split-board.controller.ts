@@ -1,3 +1,4 @@
+import { directionType } from './split-board.view';
 import type SplitBoardView from './split-board.view';
 import type SplitItemView from './split-item.view';
 
@@ -39,6 +40,8 @@ export default class SplitBoardController {
             this.activeExpand();
             this.activeId = index;
         }
+        event.preventDefault();
+        event.stopPropagation();
     }
     private activeExpand() {
         this.view.root.addEventListener('mousemove', this.expandMoveHandler);
@@ -60,23 +63,34 @@ export default class SplitBoardController {
     }
     private liveResize(clientX: number, clientY: number) {
         const item = this.view.items[this.activeId];
-        if (this.expandType == 1) {
-            this.view.resizeAt(this.activeId, item.root.offsetLeft, item.root.clientWidth, clientX);
-        } else if (this.expandType == 2) {
+        if (this.expandType == 1 && this.view.direction == directionType.col) {
+            this.view.resizeAt(this.activeId, item.root.offsetLeft, item.root.clientWidth, clientX - 5); // -5px to matching cursor 
+        } else if (this.expandType == 2 && this.view.direction == directionType.row) {
             this.view.resizeAt(this.activeId, item.root.offsetTop, item.root.clientHeight, clientY);
         }
+        console.log(this.activeId, this.view);
     }
     private checkExpandState(clientX: number, clientY: number) {
+        const offsetX = this.startX - clientX;
+        const offsetY = this.startY - clientY;
+        if ( offsetX > 0 && offsetY > 0 && (offsetX > 5 || offsetY > 5)) {
+            if (offsetX > offsetY) {
+                this.view.setCursor('col-resize');
+            } else {
+                this.view.setCursor('row-resize');
+            }
+        }
         if(this.expandType) return;
-        if (clientX - this.startX > 30 || clientY - this.startY > 30) {
+        if (offsetX < -30 || offsetY < -30) {
             this.unactiveExpand();
         }
-        if (this.startX - clientX > 25) {
+        if (offsetX > 30) {
             this.expandType = 1;
             this.view.setCursor('col-resize');
             this.view.splitColumnAt(this.activeId, clientX);
+            return;
         }
-        if (this.startY - clientY> 25) {
+        if (offsetY > 30) {
             this.expandType = 2;
             this.view.setCursor('row-resize');
             this.view.splitRowAt(this.activeId, clientY);

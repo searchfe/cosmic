@@ -2,7 +2,9 @@ import { Container } from 'inversify';
 import { AppearanceType } from '@cosmic/core/common/appearance';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
-import SpliBoardView from '@cosmic/core/browser/layout/split-board.view';
+import StatusBar from '../ui/components/status/status-bar.svelte';
+import SplitBoardView from '@cosmic/core/browser/layout/split-board.view';
+import SplitItemView from '@cosmic/core/browser/layout/split-item.view';
 
 export default class App {
   private container: Container;
@@ -16,6 +18,7 @@ export default class App {
   bootstrap() {
     this.initNavigationBar();
     this.initFlowTable();
+    this.initStatusBar();
   }
 
   initPreferences() {
@@ -47,17 +50,22 @@ export default class App {
 
   initNavigationBar() {
     // to do sth.
-    const appHeader = document.createElement('div');
-    this.root.appendChild(appHeader);
     new Navigation({
-      target: appHeader,
+      target: this.root,
       props: { },
       context: this.context,
     });
   }
 
   initFlowTable() {
-    this.root.appendChild(new SpliBoardView().setFlow('1').root);
+    const splitBoard = new SplitBoardView().setFlow('1');
+    const view0 = new SplitItemView().setContent(document.createElement('div'));
+    const view1 = new SplitItemView().setContent(document.createElement('div'));
+    splitBoard.addColumn(view0);
+    splitBoard.addColumn(view1);
+  
+    this.root.appendChild(splitBoard.root);
+
   }
 
   initWorkArea() {
@@ -65,6 +73,11 @@ export default class App {
   }
 
   initStatusBar() {
+    new StatusBar({
+      target: this.root,
+      props: { },
+      context: this.context,
+    });
     // to do sth.
   }
 
