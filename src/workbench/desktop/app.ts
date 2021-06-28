@@ -1,10 +1,10 @@
 import { Container } from 'inversify';
-
-import { ColorSetRoot, ColorSet } from '@cosmic/workbench/ui/style/color-set.comp';
-
+import { AppearanceType } from '@cosmic/core/common/appearance';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
-
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
+import StatusBar from '../ui/components/status/status-bar.svelte';
+import SplitBoardView from '@cosmic/core/browser/layout/split-board.view';
+import SplitItemView from '@cosmic/core/browser/layout/split-item.view';
 
 export default class App {
   private container: Container;
@@ -17,14 +17,8 @@ export default class App {
   }
   bootstrap() {
     this.initNavigationBar();
-    // const appRoot = document.createElement('div');
-    // this.root.appendChild(appRoot);
-
-    // const am = new mode({
-    //   target: appRoot,
-    //   // props: {},
-    //   context: map,
-    // });
+    this.initFlowTable();
+    this.initStatusBar();
   }
 
   initPreferences() {
@@ -32,12 +26,21 @@ export default class App {
   }
 
   initStyle() {
-    this.container.bind(ColorSet).to(ColorSet);
-    const colorSetRoot = document.createElement('style');
-    this.container.bind(ColorSetRoot).toDynamicValue(() => colorSetRoot);
-    this.root.appendChild(colorSetRoot);
-    this.container.get(ColorSet);
-
+    // this.container.bind(ColorSet).to(ColorSet);
+    // const colorSetRoot = document.createElement('style');
+    // this.container.bind(ColorSetRoot).toDynamicValue(() => colorSetRoot);
+    // this.root.appendChild(colorSetRoot);
+    // this.container.get(ColorSet);
+    const aps = this.container.get(AppearanceService);
+    aps.onModeChanged((type: AppearanceType) => this.initStyleMode(type));
+    this.initStyleMode(AppearanceType.dark);
+  }
+  initStyleMode(type: AppearanceType) {
+    if (type === AppearanceType.dark) {
+      document.body.classList.add('mode-dark');
+    } else {
+      document.body.classList.remove('mode-dark');
+    }
   }
 
   initFrame() {
@@ -47,13 +50,22 @@ export default class App {
 
   initNavigationBar() {
     // to do sth.
-    const appHeader = document.createElement('div');
-    this.root.appendChild(appHeader);
     new Navigation({
-      target: appHeader,
+      target: this.root,
       props: { },
       context: this.context,
     });
+  }
+
+  initFlowTable() {
+    const splitBoard = new SplitBoardView().setFlow('1');
+    const view0 = new SplitItemView().setContent(document.createElement('div'));
+    const view1 = new SplitItemView().setContent(document.createElement('div'));
+    splitBoard.addColumn(view0);
+    splitBoard.addColumn(view1);
+  
+    this.root.appendChild(splitBoard.root);
+
   }
 
   initWorkArea() {
@@ -61,6 +73,11 @@ export default class App {
   }
 
   initStatusBar() {
+    new StatusBar({
+      target: this.root,
+      props: { },
+      context: this.context,
+    });
     // to do sth.
   }
 

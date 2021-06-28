@@ -59,6 +59,7 @@ specifiers:
   rollup-plugin-terser: ^7.0.0
   sb: ^6.2.9
   smelte: ^1.1.5
+  split.js: ^1.6.4
   storybook-dark-mode: ^1.0.8
   svelte: ^3.38.1
   svelte-check: ^1.1.34
@@ -82,6 +83,7 @@ dependencies:
   inversify: 5.1.1
   reflect-metadata: 0.1.13
   smelte: 1.1.5
+  split.js: 1.6.4
 
 devDependencies:
   '@fullhuman/postcss-purgecss': 4.0.3_postcss@8.3.0
@@ -13565,6 +13567,10 @@ packages:
     dependencies:
       extend-shallow: 3.0.2
     dev: true
+
+  /split.js/1.6.4:
+    resolution: {integrity: sha512-kYmQZprRJrF1IOjg/E+gdBEsKFv5kbgUE6RJVJZvrIzTOK/IHzKSqIeiJnWs7IP5D9TnpTQ2CbanuDuIWcyDUQ==}
+    dev: false
 
   /sprintf-js/1.0.3:
     resolution: {integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=}

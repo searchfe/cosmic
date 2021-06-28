@@ -1,1 +1,0 @@
-export { default as Button } from './compnents/button/c-button.svelte';
