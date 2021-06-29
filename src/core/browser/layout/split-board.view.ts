@@ -60,7 +60,7 @@ export default class SplitBoardView extends View {
         }
     }
 
-    public setCursor(type: '' | 'row-resize' | 'col-resize' | 'crosshair' = '') {
+    public setCursor(type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 's-resize' = '') {
         this.root.style.cursor = type;
     }
     private checkDirection(type: directionType) {

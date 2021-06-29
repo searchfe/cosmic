@@ -12,7 +12,7 @@ export default class SplitBoardController {
     private activeId = -1;
 
     private expandActive = false;
-    private expandType = 0; // 是否超过偏移值 0 / hor | ver
+    private expandType = 0; // 是否超过偏移值 0 / 1 expand hor | 2 expand ver | 3 merge hor | 4 merge ver
 
     constructor(private view: SplitBoardView) {
         this.expandMoveHandler = (event: MouseEvent) => {
@@ -67,13 +67,7 @@ export default class SplitBoardController {
         const item = this.view.items[this.activeId];
         if (this.expandType == 1 && this.view.direction == directionType.col) {
             // horizontal expand column
-            this.view.resizeAt(this.activeId, item.root.getBoundingClientRect().left, item.root.clientWidth, clientX); // -5px to matching cursor 
-        // } else if (this.expandType == 1 && this.view.direction == directionType.row) {
-        //     // horizontal split row
-        //     console.log('horizontal split row', this.activeId, this.view);
-        // } else if (this.expandType == 2 && this.view.direction == directionType.col) {
-        //     // vertical split column
-        //     console.log('vertical split column', this.activeId, this.view);
+            this.view.resizeAt(this.activeId, item.root.getBoundingClientRect().left, item.root.clientWidth, clientX);
         } else if (this.expandType == 2 && this.view.direction == directionType.row) {
             // vertical expand row
             this.view.resizeAt(this.activeId, item.root.getBoundingClientRect().top, item.root.clientHeight, clientY);
@@ -90,10 +84,15 @@ export default class SplitBoardController {
                 this.view.setCursor('row-resize');
             }
         }
-        if(this.expandType) return;
-        if (offsetX < -30 || offsetY < -30) {
-            this.unactiveExpand();
+        if (offsetX < -5) {
+            this.view.setCursor('e-resize');
+            return;
         }
+        if (offsetY < -5) {
+            this.view.setCursor('s-resize');
+            return;
+        }
+        if(this.expandType) return;
         if (offsetX > 30) {
             this.expandType = 1;
             this.view.setCursor('col-resize');
