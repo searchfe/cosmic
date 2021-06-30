@@ -17,7 +17,7 @@ export default class SplitBoardView extends View {
     public items: SplitItemView[] = [];
     public direction : directionType = directionType.col;
     private splitInstance: Split.Instance | null = null;
-    private controller: SplitBoardController;
+    public controller: SplitBoardController;
     constructor() {
         super();
         this.init();
@@ -60,7 +60,7 @@ export default class SplitBoardView extends View {
         }
     }
 
-    public setCursor(type: '' | 'row-resize' | 'col-resize' | 'crosshair' = '') {
+    public setCursor(type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 's-resize' = '') {
         this.root.style.cursor = type;
     }
     private checkDirection(type: directionType) {
@@ -92,7 +92,7 @@ export default class SplitBoardView extends View {
         this.splitInstance = null;
     }
     // 切分列
-    public splitColumnAt(index: number, clientX: number) {
+    public splitColumnAt(index: number, clientX: number, clientY: number) {
         const item = this.items[index];
         if (!this.checkDirection(directionType.col)) { // 列切分行
             const newBoard = new SplitBoardView().setFlow('1');
@@ -102,14 +102,16 @@ export default class SplitBoardView extends View {
             const newEmptyView = new SplitItemView().setContent(document.createElement('div'));
             item.hideExpandButton(); // 不再使用该item的拉伸按钮
             newBoard.addColumn(newItemView);
-            newBoard.addColumn(newEmptyView);
+            // newBoard.addColumn(newEmptyView);
+            newBoard.controller.setActiveState(0, clientX, clientY);
+            newBoard.controller.checkExpandState(clientX, clientY);
             return;
         }
         // 列扩展列
-        this.startToExpand(index, item.root.offsetLeft, item.root.clientWidth, clientX);
+        this.startToExpand(index, item.root.getBoundingClientRect().left, item.root.clientWidth, clientX);
     }
     // 切分行
-    public splitRowAt(index: number, clientY: number) {
+    public splitRowAt(index: number, clientX: number, clientY: number) {
         const item = this.items[index];
         if (!this.checkDirection(directionType.row)) { // 行切分列
             const newBoard = new SplitBoardView().setFlow('1');
@@ -119,11 +121,13 @@ export default class SplitBoardView extends View {
             const newEmptyView = new SplitItemView().setContent(document.createElement('div'));
             item.hideExpandButton(); // 不再使用该item的拉伸按钮
             newBoard.addRow(newItemView);
-            newBoard.addRow(newEmptyView);
+            // newBoard.addRow(newEmptyView);
+            newBoard.controller.setActiveState(0, clientX, clientY);
+            newBoard.controller.checkExpandState(clientX, clientY);
             return;
         }
         // 行切分行
-        this.startToExpand(index, item.root.offsetTop, item.root.clientHeight, clientY);
+        this.startToExpand(index, item.root.getBoundingClientRect().top, item.root.clientHeight, clientY);
     }
 
     private startToExpand(index: number, start: number, length: number, position: number) {

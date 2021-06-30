@@ -22,6 +22,7 @@ export default class SplitItemView extends View{
         contentView.classList.add('flex', 'flex-1');
         return this.prepend(contentView);
     }
+
     public replaceContent(contentView: HTMLElement) {
         this.root.replaceChild(contentView, this.contentView);
         this.contentView = contentView;
@@ -53,10 +54,11 @@ export default class SplitItemView extends View{
         this.root.classList.add(...this._bgColorClassName);
         
     }
+
     private addExpandButton() {
         this.expand = new SplitExpand({target: this.root});
     }
-
+    /** To hide expand button */
     public hideExpandButton() {
         this.expand.show = false;
         // this.expand.$destroy();
