@@ -25,12 +25,21 @@ html,body {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.wait-for-merge .split-merge{
+.wait-for-merge .split-merge.merge-n, .wait-for-merge .split-merge.merge-s{
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwcHgiIGhlaWdodD0iMTQwcHgiIHZpZXdCb3g9IjAgMCAyMDAgMTQwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPHBvbHlnb24gaWQ9Iui3r+W+hCIgcG9pbnRzPSIwIDkwIDEwMCAwIDIwMCA5MCAxNDUgOTAgMTQ1IDE0MCA1NSAxNDAgNTUgOTAiIGZpbGw9IiMwMDAwMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC9wb2x5Z29uPgo8L3N2Zz4=);
     opacity: 0.15;
 }
 
-.mode-dark .wait-for-merge .split-merge{
+.mode-dark .wait-for-merge .split-merge.merge-n,.mode-dark  .wait-for-merge .split-merge.merge-s{
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwcHgiIGhlaWdodD0iMTQwcHgiIHZpZXdCb3g9IjAgMCAyMDAgMTQwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPHBvbHlnb24gaWQ9Iui3r+W+hCIgcG9pbnRzPSIwIDkwIDEwMCAwIDIwMCA5MCAxNDUgOTAgMTQ1IDE0MCA1NSAxNDAgNTUgOTAiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC9wb2x5Z29uPgo8L3N2Zz4=);
+    opacity: 0.15;
+}
+
+.wait-for-merge .split-merge.merge-w, .wait-for-merge .split-merge.merge-e{
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQwcHgiIGhlaWdodD0iMjAwcHgiIHZpZXdCb3g9IjAgMCAxNDAgMjAwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPHBvbHlnb24gaWQ9Iui3r+W+hCIgcG9pbnRzPSI1MCAxLjIyNDY0NjhlLTE1IDE0MCAxMDAgNTAgMjAwIDUwIDE0NSAwIDE0NSAwIDU1IDUwIDU1IiBmaWxsPSIjMDAwMDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvcG9seWdvbj4KPC9zdmc+);
+    opacity: 0.15;
+}
+.mode-dark .wait-for-merge .split-merge.merge-w, .mode-dark .wait-for-merge .split-merge.merge-e{
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQwcHgiIGhlaWdodD0iMjAwcHgiIHZpZXdCb3g9IjAgMCAxNDAgMjAwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPHBvbHlnb24gaWQ9Iui3r+W+hCIgcG9pbnRzPSI1MCAxLjIyNDY0NjhlLTE1IDE0MCAxMDAgNTAgMjAwIDUwIDE0NSAwIDE0NSAwIDU1IDUwIDU1IiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvcG9seWdvbj4KPC9zdmc+);
     opacity: 0.15;
 }

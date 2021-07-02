@@ -7,7 +7,7 @@
 
 </div>
 
-<div class="split-merge"
+<div class="split-merge max-w-20"
     class:merge-w="{mergeDirection=='merge-w'}"
     class:merge-e="{mergeDirection=='merge-e'}"
     class:merge-n="{mergeDirection=='merge-n'}"
@@ -53,18 +53,17 @@
 }
 .merge-w {
     display: block;
-    transform: rotate(-90deg);
+    transform: rotate(180deg);
     right: 0;
     top: 50%;
     margin-top: -20%;
-    background-position: center top;
+    background-position: left center;
 }
 .merge-e {
     display: block;
-    transform: rotate(90deg);
     left: 0;
     top: 50%;
     margin-top: -20%;
-    background-position: center top;
+    background-position: left center;
 }
 </style>
