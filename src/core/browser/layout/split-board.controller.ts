@@ -58,6 +58,7 @@ export default class SplitBoardController {
             this.view.root.removeEventListener('mousemove', this.expandMoveHandler);
             this.view.root.removeEventListener('mouseleave', this.expandLeaveHandler);
             this.view.root.removeEventListener('mouseup', this.expandMouseUpHandler);
+            this.view.cancelForMerge();
             this.expandActive = false;
             this.expandType = 0;
             this.view.setCursor('');
@@ -77,22 +78,41 @@ export default class SplitBoardController {
     public checkExpandState(clientX: number, clientY: number) {
         const offsetX = this.startX - clientX;
         const offsetY = this.startY - clientY;
-        if ( offsetX > 0 && offsetY > 0 && (offsetX > 5 || offsetY > 5)) {
+        /** expand mode */
+        if ( this.expandType == 0 && offsetX > 0 && offsetY > 0 && (offsetX > 5 || offsetY > 5)) {
             if (offsetX > offsetY) {
                 this.view.setCursor('col-resize');
             } else {
                 this.view.setCursor('row-resize');
             }
         }
+        /** merge mode */
         if (offsetX < -5) {
+            this.expandType = 3;
             this.view.setCursor('e-resize');
+            this.view.waitForMergeAtItem(this.activeId + 1, 'e');
             return;
         }
+        if (this.expandType == 3 && offsetX > 5) {
+            this.view.setCursor('w-resize');
+            this.view.waitForMergeAtItem(this.activeId, 'w');
+            return;
+        }
+
         if (offsetY < -5) {
+            this.expandType = 4;
             this.view.setCursor('s-resize');
+            this.view.waitForMergeAtItem(this.activeId + 1, 's');
             return;
         }
+        if (this.expandType == 4 && offsetY > 5) {
+            this.view.setCursor('n-resize');
+            this.view.waitForMergeAtItem(this.activeId, 'n');
+            return;
+        }
+
         if(this.expandType) return;
+        /** do expand */
         if (offsetX > 30) {
             this.expandType = 1;
             this.view.setCursor('col-resize');
@@ -111,5 +131,5 @@ export default class SplitBoardController {
                 this.unactiveExpand();
         }
     }
-     
+
 }

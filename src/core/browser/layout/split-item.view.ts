@@ -1,5 +1,13 @@
 import View from '../view';
+import { directionType } from './split-board.view';
 import SplitExpand from './split-expand.svelte';
+
+enum directionStyles {
+    'w'= 'merge-w',
+    'e'= 'merge-e',
+    's'= 'merge-s',
+    'n'= 'merge-n'
+}
 
 export default class SplitItemView extends View{
     private _growClassName = '';
@@ -18,7 +26,7 @@ export default class SplitItemView extends View{
 
     public setContent(contentView: HTMLElement) {
         this.contentView = contentView;
-        this.root.classList.add('flex');
+        this.root.classList.add('split-item', 'flex');
         contentView.classList.add('flex', 'flex-1');
         return this.prepend(contentView);
     }
@@ -60,8 +68,18 @@ export default class SplitItemView extends View{
     }
     /** To hide expand button */
     public hideExpandButton() {
-        this.expand.show = false;
-        // this.expand.$destroy();
+        this.expand.expandHidden = true;
+    }
+
+    public waitForMerge(direction: 'w' | 'e' | 's' | 'n') {
+        this.cancelWaitForMerge();
+        this.root.classList.add('wait-for-merge');
+        this.expand.mergeDirection = directionStyles[direction];
+    }
+
+    public cancelWaitForMerge() {
+        this.root.classList.remove('wait-for-merge');
+        this.expand.mergeDirection = '';
     }
 
 }

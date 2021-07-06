@@ -18,10 +18,11 @@ import Tooltip from './tooltip/tooltip';
 import Treeview from './treeview';
 import DatePicker from './date-picker/date-picker';
 import Ripple from './ripple';
-import Menu from './menu'
+import Menu from './menu';
 import Icon from './icon';
 import Card from './card/card';
 import Image from './image/image';
+import PopupGuide from './popup-guide';
 
 export {
     Button,
@@ -56,5 +57,6 @@ export {
     Menu,
     Icon,
     Card,
-    Image
+    Image,
+    PopupGuide,
 };
