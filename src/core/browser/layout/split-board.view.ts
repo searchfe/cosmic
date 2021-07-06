@@ -18,13 +18,14 @@ export default class SplitBoardView extends View {
     public direction : directionType = directionType.col;
     private splitInstance: Split.Instance | null = null;
     public controller: SplitBoardController;
+    private _waitForMergeItem: SplitItemView | null = null;
     constructor() {
         super();
         this.init();
         this.controller = new SplitBoardController(this);
     }
     private init() {
-        this.root.classList.add('split-board', 'flex', 'flex-nowrap');
+        this.root.classList.add('split-board', 'flex', 'flex-nowrap', 'overflow-hidden');
         // this.root.style.margin = '0 4px';
     }
     public addRow(item: SplitItemView) {
@@ -60,8 +61,24 @@ export default class SplitBoardView extends View {
         }
     }
 
-    public setCursor(type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 's-resize' = '') {
+    public setCursor(type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize' = '') {
         this.root.style.cursor = type;
+    }
+    public waitForMergeAtItem(index: number, direction: 'w' | 'e' | 'n' | 's') {
+        if (this._waitForMergeItem== this.items[index]) {
+            return;
+        }
+        this.cancelForMerge();
+        if (this.items[index]) {
+            this.items[index].waitForMerge(direction);
+            this._waitForMergeItem = this.items[index];
+        }
+    }
+    public cancelForMerge() {
+        if (this._waitForMergeItem) {
+            this._waitForMergeItem.cancelWaitForMerge();
+            this._waitForMergeItem = null;
+        }
     }
     private checkDirection(type: directionType) {
         if (this.items.length > 1 && this.direction !== type) {
