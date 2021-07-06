@@ -15,17 +15,17 @@ export default class App {
     this.initPreferences();
     this.initStyle();
   }
-  bootstrap() {
+  bootstrap():void {
     this.initNavigationBar();
     this.initFlowTable();
     this.initStatusBar();
   }
 
-  initPreferences() {
+  initPreferences():void {
     this.container.bind(AppearanceService).to(AppearanceService);
   }
 
-  initStyle() {
+  initStyle():void {
     // this.container.bind(ColorSet).to(ColorSet);
     // const colorSetRoot = document.createElement('style');
     // this.container.bind(ColorSetRoot).toDynamicValue(() => colorSetRoot);
@@ -35,7 +35,7 @@ export default class App {
     aps.onModeChanged((type: AppearanceType) => this.initStyleMode(type));
     this.initStyleMode(AppearanceType.dark);
   }
-  initStyleMode(type: AppearanceType) {
+  initStyleMode(type: AppearanceType):void {
     if (type === AppearanceType.dark) {
       document.body.classList.add('mode-dark');
     } else {
@@ -43,12 +43,12 @@ export default class App {
     }
   }
 
-  initFrame() {
+  initFrame():void {
     // to do sth.
 
   }
 
-  initNavigationBar() {
+  initNavigationBar():void {
     // to do sth.
     new Navigation({
       target: this.root,
@@ -57,7 +57,7 @@ export default class App {
     });
   }
 
-  initFlowTable() {
+  initFlowTable():void {
     const splitBoard = new SplitBoardView().setFlow('1');
     const view0 = new SplitItemView().setContent(document.createElement('div'));
     const view1 = new SplitItemView().setContent(document.createElement('div'));
@@ -68,11 +68,11 @@ export default class App {
 
   }
 
-  initWorkArea() {
+  initWorkArea():void {
     // to do sth.
   }
 
-  initStatusBar() {
+  initStatusBar():void {
     new StatusBar({
       target: this.root,
       props: { },
