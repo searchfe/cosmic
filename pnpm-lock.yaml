@@ -38,6 +38,7 @@ specifiers:
   eslint-plugin-prefer-arrow: ^1.2.3
   eslint-plugin-svelte3: ^3.2.0
   eventemitter2: ^6.4.4
+  eventemitter3: ^4.0.7
   html-minifier: ^4.0.0
   inversify: ^5.1.1
   jest: ^26.6.3
@@ -80,6 +81,7 @@ dependencies:
   electron-store: 7.0.3
   electron-updater: 4.3.9
   eventemitter2: 6.4.4
+  eventemitter3: 4.0.7
   inversify: 5.1.1
   reflect-metadata: 0.1.13
   smelte: 1.1.5
