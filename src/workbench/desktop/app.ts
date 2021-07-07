@@ -61,8 +61,11 @@ export default class App {
     const splitBoard = new SplitBoardView().setFlow('1');
     const view0 = new SplitItemView().setContent(document.createElement('div'));
     const view1 = new SplitItemView().setContent(document.createElement('div'));
+    const view2 = new SplitItemView().setContent(document.createElement('div'));
     splitBoard.addColumn(view0);
     splitBoard.addColumn(view1);
+    splitBoard.addColumn(view2);
+    splitBoard.applySplit('horizontal', [20, 60, 20]);
   
     this.root.appendChild(splitBoard.root);
 

@@ -1,26 +1,53 @@
-<script>
-    export let a = 1;
+<script lang="ts">
+    import SVG from 'svelte-inline-svg';
+    import { onMount, onDestroy } from 'svelte';
+    import { throttle, angleBetween, RectWithThrottle } from './util';
+
+    export let top: string | number  = '50%';
+    export let left: string | number  = '50%';
+
+    $: id = `popup-core-${Math.random()}`;
+
+    let startDom: HTMLElement;
+    let startRect: RectWithThrottle;
+    const t = throttle((event: MouseEvent) => {
+        startDom = startDom || document.getElementById(id);
+        if (startDom && !startRect)
+            startRect = new RectWithThrottle(startDom);
+        const rect = startRect.get();
+        const centerX = (rect.left + rect.right) / 2;
+        const centerY = (rect.top + rect.bottom) / 2;
+        if (Math.abs(centerX - event.clientX)< 8 && Math.abs(centerY - event.clientY) < 8) return;
+        let r = angleBetween(centerX, centerY, event.clientX, event.clientY);
+        startDom.style.transform = `rotate(${r}deg)`;
+    }, 30);
+
+    onMount(() => {
+        window.addEventListener('mousemove', t);
+    });
+    onDestroy(() => {
+        window.removeEventListener('mousemove', t);
+    });
 </script>
-<div>
-    <div class="popup-core"></div>
+<div class="popup-core absolute" style="top:{top};left:{left};" id="{id}">
+    <!-- <div style="width:30px;height:30px;border:6px solid;border-radius: 50%;border-right-color: turquoise;"></div> -->
+    <div class='when-dark'><SVG src={require('./popup-core-dark.svg')} width=30 height=30 /></div>
+    <div class='when-light'><SVG src={require('./popup-core-light.svg')} width=30 height=30 /></div>
 </div>
 
 <style>
-    .popup-core {     
-        position: absolute;
-        left:0;
-        top:0;
-        float: left; 
-        text-indent: -9999em;     
-        border-top: 6px solid rgba(255, 200, 0, 1);     
-        border-right: 6px solid rgba(255, 200, 0, 1);     
-        border-bottom: 6px solid rgba(255, 200, 0, 1);     
-        border-left: 6px solid rgba(255, 128, 0, 1);     
-        -webkit-animation: load8 1.1s infinite linear;     
-        animation: load8 5s infinite linear;     
-  
-        border-radius: 50%;     
-        width: 30px;     
-        height: 30px; 
-    } 
+    .popup-core {
+        margin: -15px 0 0 -15px;
+        transform:translate3d(0,0,0);
+    }
+    .when-dark, .when-light {
+        display: none;
+    }
+    :global(.mode-dark) .when-dark {
+        display: block;
+    }
+    :global(.mode-light) .when-light {
+        display: block;
+    }
 </style>
+
