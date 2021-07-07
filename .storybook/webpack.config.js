@@ -13,11 +13,19 @@ module.exports = ({ config, mode }) => {
         emitCss: true,
         hotReload: false,
         preprocess: autoPreprocess({
-            typescript: true
+            typescript: true,
+            sass: true
         })
     };
 
     config.module.rules.push(
+        // {
+        //     test: /\.svg$/,
+        //     loader: 'svg-inline-loader',
+        //     options: {
+        //       removeSVGTagAttrs: true
+        //     }
+        // },
         {
             test: /\.css$/,
             loaders: [

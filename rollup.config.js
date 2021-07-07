@@ -9,6 +9,8 @@ import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import smelte from 'smelte/rollup-plugin-smelte';
 import copy from 'rollup-plugin-copy';
+// import svg from 'rollup-plugin-svg-import';
+
 const tailwindConfig = require('./tailwind.config');
 
 const production = !process.env.ROLLUP_WATCH;
@@ -48,8 +50,11 @@ export default {
         { src: 'src/public/**/*', dest: 'dist/workbench/desktop' },
       ],
     }),
+    // svg({stringify: true}),
     svelte({
-      preprocess: sveltePreprocess(),
+      preprocess: sveltePreprocess({
+        sass: true,
+      }),
       compilerOptions: {
         // enable run-time checks when not in production
         dev: !production,
