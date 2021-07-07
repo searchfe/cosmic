@@ -7,14 +7,13 @@
   
 <Meta title="Popup Guide" component="{PopupGuide}" />
   
-<Template let:args>
-    <div class="h-20"> </div>
+<Template id="normal" let:args >
+  <div class="w-1/2 h-full bg-cgray-50 dark:bg-cgray-800 relative">
     <PopupGuide></PopupGuide>
+  </div>
 </Template>
 
 
-<Story name="Primary" args="{{}}">
-      <div class="h-20"> </div>
-    <PopupGuide></PopupGuide>
+<Story name="Primary" template="normal" >
 </Story>
   

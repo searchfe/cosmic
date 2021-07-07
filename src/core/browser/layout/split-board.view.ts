@@ -92,7 +92,7 @@ export default class SplitBoardView extends View {
     // public removeRow(item: SplitItemView) {
     //     // do sth.
     // }
-    private applySplit(direction: 'vertical' | 'horizontal' = 'horizontal', sizes?: number[]) {
+    public applySplit(direction: 'vertical' | 'horizontal' = 'horizontal', sizes?: number[]) {
         this.destorySplit();
         this.splitInstance = Split(Array.prototype.slice.call(this.root.children), {
             sizes,
