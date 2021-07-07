@@ -11,7 +11,7 @@
   let value = ''
 </script>
 <div class="grid grid-cols-5 px-4">
-    <div class="col-span-1 flex items-center pr-4 justify-end">
+    <div class="col-span-1 flex items-center pr-4 justify-center">
         {title}
     </div>
     <div class="col-span-2 flex items-center">

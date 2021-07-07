@@ -44,7 +44,7 @@
 
   $: calcIndicator(selected);
 
-  const classesDefault = 'y-0 h-full items-center relative z-20';
+  const classesDefault = 'y-0 h-full items-center relative z-1';
 
   export let classes = classesDefault;
 
