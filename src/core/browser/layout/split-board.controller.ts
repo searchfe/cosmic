@@ -18,7 +18,6 @@ export default class SplitBoardController {
         this.expandMoveHandler = (event: MouseEvent) => {
             this.liveResize(event.clientX, event.clientY);
             this.checkExpandState(event.clientX, event.clientY);
-            
         };
         this.expandLeaveHandler = (event: MouseEvent) => { this.unactiveExpand(); };
         this.expandMouseUpHandler = (event: MouseEvent) => { this.unactiveExpand(); };
@@ -26,24 +25,27 @@ export default class SplitBoardController {
             this.onMouseDown(event);
         });
     }
-    public onMouseDown(event: MouseEvent) {
+    public onMouseDown(event: MouseEvent): void {
         const target = event.target as HTMLElement;
         let index = -1;
         this.view.items.forEach((item, i) => {
             if (target && item.root == target.parentElement && target.classList.contains('split-expand')) index = i;
         });
+        if (index === -1) {
+            return;
+        }
         if (index > -1) {
             this.setActiveState(index, event.clientX, event.clientY);
         }
         event.preventDefault();
         event.stopPropagation();
     }
-    public setActiveState(index: number, startX: number, startY: number ) {
-            // 锚点mousedown
-            this.startX = startX;
-            this.startY = startY;
-            this.activeExpand();
-            this.activeId = index;
+    public setActiveState(index: number, startX: number, startY: number) {
+        // 锚点mousedown
+        this.startX = startX;
+        this.startY = startY;
+        this.activeExpand();
+        this.activeId = index;
     }
     private activeExpand() {
         this.view.root.addEventListener('mousemove', this.expandMoveHandler);
@@ -73,13 +75,13 @@ export default class SplitBoardController {
             // vertical expand row
             this.view.resizeAt(this.activeId, item.root.getBoundingClientRect().top, item.root.clientHeight, clientY);
         }
-        
+
     }
     public checkExpandState(clientX: number, clientY: number) {
         const offsetX = this.startX - clientX;
         const offsetY = this.startY - clientY;
         /** expand mode */
-        if ( this.expandType == 0 && offsetX > 0 && offsetY > 0 && (offsetX > 5 || offsetY > 5)) {
+        if (this.expandType == 0 && offsetX > 0 && offsetY > 0 && (offsetX > 5 || offsetY > 5)) {
             if (offsetX > offsetY) {
                 this.view.setCursor('col-resize');
             } else {
@@ -111,7 +113,7 @@ export default class SplitBoardController {
             return;
         }
 
-        if(this.expandType) return;
+        if (this.expandType) return;
         /** do expand */
         if (offsetX > 30) {
             this.expandType = 1;
@@ -127,8 +129,8 @@ export default class SplitBoardController {
         if (
             (this.expandType == 1 && this.view.direction == directionType.row) ||
             (this.expandType == 2 && this.view.direction == directionType.col)
-            ) {
-                this.unactiveExpand();
+        ) {
+            this.unactiveExpand();
         }
     }
 

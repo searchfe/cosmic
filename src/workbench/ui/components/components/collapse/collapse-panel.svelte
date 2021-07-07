@@ -16,7 +16,6 @@
   let activeKey = get(accordionStore);
 
   activeKeyStore?.subscribe((cKey: number) => {
-    console.log(accordion);
     activeKey = cKey;
     if (accordion) {
       expand = key === activeKey ? !expand : false;
@@ -38,7 +37,6 @@
       return;
     }
     expand = !expand;
-    console.log(expand);
   }
 
 </script>

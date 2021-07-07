@@ -3,6 +3,8 @@ import { AppearanceType } from '@cosmic/core/common/appearance';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
 import StatusBar from '../ui/components/status/status-bar.svelte';
+import ResourcePage from '../ui/components/resource/resource.svelte';
+import PropertyPanel from '../ui/components/property/proterty.svelte';
 import SplitBoardView from '@cosmic/core/browser/layout/split-board.view';
 import SplitItemView from '@cosmic/core/browser/layout/split-item.view';
 
@@ -68,7 +70,24 @@ export default class App {
     splitBoard.applySplit('horizontal', [20, 60, 20]);
   
     this.root.appendChild(splitBoard.root);
+    this.initResourcePanel(view0.contentView);
+    this.initPropertyPanel(view2.contentView);
+  }
 
+  initResourcePanel(container: HTMLElement):void {
+    new ResourcePage({
+      target: container,
+      props: { },
+      context: this.context,
+    });
+  }
+
+  initPropertyPanel(container: HTMLElement):void {
+    new PropertyPanel({
+      target: container,
+      props: { },
+      context: this.context,
+    });
   }
 
   initWorkArea():void {
