@@ -1,3 +1,8 @@
-import PopupGuide from './popup-guide.svelte';
+import PopupRing from './popup-ring.svelte';
 
-export default PopupGuide;
+export interface GroupChangeEvent {
+    selected: number
+}
+export {
+    PopupRing,
+};
