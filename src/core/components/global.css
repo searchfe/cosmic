@@ -18,6 +18,10 @@ button {
     text-shadow: 1px 1px 1px var(--color-primary-800);
 }
 
+.break-keep-all {
+    word-break: keep-all;
+}
+
 .select {
     height: auto;
 }

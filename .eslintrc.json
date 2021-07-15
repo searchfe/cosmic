@@ -59,6 +59,7 @@
        */
       "quotes": [
         "warn", "single"
-      ]
+      ],
+      "no-undef": "error"
     }
   }
