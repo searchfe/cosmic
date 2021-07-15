@@ -8,6 +8,7 @@
     export let top: string | number  = '50%';
     export let left: string | number  = '50%';
     export let length = 4;
+    export let title = '';
 
     const ringGroup = new RingGroup();
     ringGroup.setPieceLength(length);
@@ -37,12 +38,12 @@
         window.removeEventListener('mousemove', t);
     });
 </script>
-<div class="popup-core absolute" style="top:{top};left:{left};" bind:this={startDom}>
+<div class="select-none popup-core absolute" style="top:{top};left:{left};" bind:this={startDom}>
     <!-- <div style="width:30px;height:30px;border:6px solid;border-radius: 50%;border-right-color: turquoise;"></div> -->
     <div class='when-dark'><SVG src={require('./popup-ring-dark.svg')} width=30 height=30 /></div>
     <div class='when-light'><SVG src={require('./popup-ring-light.svg')} width=30 height=30 /></div>
 </div>
-
+<div class="title absolute text-center select-none overflow-hidden opacity-50" style="top:{top};left:{left};">{title}</div>
 <style>
     .popup-core {
         margin: -15px 0 0 -15px;
@@ -56,6 +57,11 @@
     }
     :global(.mode-light) .when-light {
         display: block;
+    }
+    .title {
+        width: 100px;
+        margin-top: -35px;
+        margin-left: -50px;
     }
 </style>
 
