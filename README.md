@@ -36,45 +36,12 @@ Electron [**web page**](https://www.electronjs.org/docs/tutorial/quick-start#cre
 - [Components StoryBook](https://design-to-release.github.io/cosmic/components)
 - [`src/core/components`](src/core/components)
 
-### Build web resources
-
-Packages `workbench` is built in [library mode](https://vitejs.dev/guide/build.html#library-mode) as it is a simple javascript.
-`renderer` package build as regular web app.
-
-The build of web resources is performed in the [`scripts/build.js`](scripts/build.js). Its analogue is a sequential call to `pnpm run build` for each package.
-
 ### Compile App
 Next step is run  packaging and compilation a ready for distribution Electron app for macOS, Windows and Linux with "auto update" support out of the box. 
 
 To do this, using the [electron-builder]:
 - In npm script `compile`: This script is configured to compile the application as quickly as possible. It is not ready for distribution, is compiled only for the current platform and is used for debugging.
 - In GitHub Action: The application is compiled for any platform and ready-to-distribute files are automatically added to the draft GitHub release. 
-
-
-### Modes and Environment Variables
-All environment variables set as part of the `import.meta`, so you can access them as follows: `import.meta.env`. 
-
-You can also build type definitions of your variables by running `scripts/buildEnvTypes.js`. This command will create `types/env.d.ts` file with describing all environment variables for all modes.
-
-The mode option is used to specify the value of `import.meta.env.MODE` and the corresponding environment variables files that needs to be loaded.
-
-By default, there are two modes:
-  - `production` is used by default
-  - `development` is used by `npm run watch` script
-  - `test` is used by `npm test` script
-
-When running building, environment variables are loaded from the following files in your project root:
-
-```
-.env                # loaded in all cases
-.env.local          # loaded in all cases, ignored by git
-.env.[mode]         # only loaded in specified env mode
-.env.[mode].local   # only loaded in specified env mode, ignored by git
-```
-
-**Note:** only variables prefixed with `VITE_` are exposed to your code (e.g. `VITE_SOME_KEY=123`) and `SOME_KEY=123` will not.  you can access `VITE_SOME_KEY` using `import.meta.env.VITE_SOME_KEY`. This is because the `.env` files may be used by some users for server-side or build scripts and may contain sensitive information that should not be exposed in code shipped to browsers.
-
-
 
 ## Contribution
 

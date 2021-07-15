@@ -8,11 +8,13 @@ export function throttle(func: any, wait: number) {
         }
     };
 }
+
 export function angleBetween(startX: number, startY: number, endX: number, endY: number) {
     let r = 180 * Math.atan2((endY - startY) , (endX - startX)) / Math.PI + 90;
     if (r < 0) r = Math.round(r + 360);
     return r;
 }
+
 export class RectWithThrottle {
     private lastTime?: number;
     private rect?: DOMRect;
