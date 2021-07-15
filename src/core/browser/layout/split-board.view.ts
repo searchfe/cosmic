@@ -28,7 +28,7 @@ export default class SplitBoardView extends View {
         this.root.classList.add('split-board', 'flex', 'flex-nowrap', 'overflow-hidden');
         // this.root.style.margin = '0 4px';
     }
-    public addRow(item: SplitItemView) {
+    public addRow(item: SplitItemView):void {
         if (!this.checkDirection(directionType.row)) {
             console.warn('direction is not right when added row', item);
             return;
@@ -39,7 +39,7 @@ export default class SplitBoardView extends View {
         this.insertItemAt(item);
         this.applySplit('vertical');
     }
-    public addColumn(item: SplitItemView) {
+    public addColumn(item: SplitItemView): void {
         if (!this.checkDirection(directionType.col)) {
             console.warn('direction is not right when added col', item);
             return;
@@ -51,7 +51,7 @@ export default class SplitBoardView extends View {
         this.applySplit();
 
     }
-    public insertItemAt(item: SplitItemView, pos?: number) {
+    public insertItemAt(item: SplitItemView, pos?: number):void {
         pos = pos === undefined ? this.items.length : pos;
         this.items.splice(pos, 0, item);
         if(pos == 0) {
@@ -61,10 +61,10 @@ export default class SplitBoardView extends View {
         }
     }
 
-    public setCursor(type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize' = '') {
+    public setCursor(type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize' = ''):void {
         this.root.style.cursor = type;
     }
-    public waitForMergeAtItem(index: number, direction: 'w' | 'e' | 'n' | 's') {
+    public waitForMergeAtItem(index: number, direction: 'w' | 'e' | 'n' | 's'):void {
         if (this._waitForMergeItem== this.items[index]) {
             return;
         }
@@ -74,7 +74,7 @@ export default class SplitBoardView extends View {
             this._waitForMergeItem = this.items[index];
         }
     }
-    public cancelForMerge() {
+    public cancelForMerge():void {
         if (this._waitForMergeItem) {
             this._waitForMergeItem.cancelWaitForMerge();
             this._waitForMergeItem = null;
@@ -92,7 +92,7 @@ export default class SplitBoardView extends View {
     // public removeRow(item: SplitItemView) {
     //     // do sth.
     // }
-    public applySplit(direction: 'vertical' | 'horizontal' = 'horizontal', sizes?: number[]) {
+    public applySplit(direction: 'vertical' | 'horizontal' = 'horizontal', sizes?: number[]):void {
         this.destorySplit();
         this.splitInstance = Split(Array.prototype.slice.call(this.root.children), {
             sizes,
@@ -109,7 +109,7 @@ export default class SplitBoardView extends View {
         this.splitInstance = null;
     }
     // 切分列
-    public splitColumnAt(index: number, clientX: number, clientY: number) {
+    public splitColumnAt(index: number, clientX: number, clientY: number):void {
         const item = this.items[index];
         if (!this.checkDirection(directionType.col)) { // 列切分行
             const newBoard = new SplitBoardView().setFlow('1');
@@ -128,7 +128,7 @@ export default class SplitBoardView extends View {
         this.startToExpand(index, item.root.getBoundingClientRect().left, item.root.clientWidth, clientX);
     }
     // 切分行
-    public splitRowAt(index: number, clientX: number, clientY: number) {
+    public splitRowAt(index: number, clientX: number, clientY: number):void {
         const item = this.items[index];
         if (!this.checkDirection(directionType.row)) { // 行切分列
             const newBoard = new SplitBoardView().setFlow('1');
@@ -156,7 +156,7 @@ export default class SplitBoardView extends View {
     }
 
     /** live resize after expanded  */
-    public resizeAt(index: number, start: number, length: number, position: number) {
+    public resizeAt(index: number, start: number, length: number, position: number):void {
         if (!this.splitInstance) return;
         // const item = this.items[index];
         let max = length;
