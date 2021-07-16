@@ -1,6 +1,6 @@
 # Cosmic Design
 
-[![Build Status](https://api.travis-ci.com/design-to-release/cosmic.svg?branch=main)](https://travis-ci.com/design-to-release/cosmic)
+[![Build Status](https://github.com/design-to-release/cosmic/workflows/ci/badge.svg?branch=main)](https://github.com/design-to-release/cosmic/actions)
 [![GitHub issues by-label](https://img.shields.io/github/issues/design-to-release/cosmic/help%20wanted?label=issues%20need%20help&logo=github)](https://github.com/design-to-release/cosmic/issues?q=label%3A%22help+wanted%22+is%3Aopen+is%3Aissue)
 [![Minimal node version](https://img.shields.io/static/v1?label=node&message=%3E=14.16&logo=node.js&color)](https://nodejs.org/about/releases/)
 [![Minimal npm version](https://img.shields.io/static/v1?label=npm&message=%3E=7.7&logo=npm&color)](https://github.com/npm/cli/releases)
