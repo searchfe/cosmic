@@ -63,7 +63,9 @@
     "typecheck-svelte": "tsc --noEmit -p ./tsconfig.svelte.json",
     "typecheck": "npm run typecheck-app && npm run typecheck-svelte",
     "storybook": "start-storybook -p 4200 -c .storybook --no-manager-cache",
-    "storybook:build": "build-storybook -c .storybook -o dist/docs/components"
+    "storybook:build": "build-storybook -c .storybook -o dist/docs/components",
+    "compodoc": "compodoc -s",
+    "compodoc:build": "compodoc"
   },
   "dependencies": {
     "@types/color": "^3.0.1",
@@ -79,6 +81,7 @@
     "split.js": "^1.6.4"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.14",
     "@fullhuman/postcss-purgecss": "^4.0.3",
     "@rollup/plugin-commonjs": "^18.0.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
