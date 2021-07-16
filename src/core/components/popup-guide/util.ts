@@ -1,3 +1,5 @@
+import keycode from 'keycode';
+
 export function throttle(func: any, wait: number) {
     let lastTime: any;
     return function(...rest: any[]) {
@@ -31,6 +33,29 @@ export class RectWithThrottle {
                 this.lastTime = newTime;
                 this.rect = this.dom.getBoundingClientRect();
         }
-        return this.rect;'';
+        return this.rect;
     }
+}
+
+export function normalizeShortcutKey(
+    /** e.g.  "67" | "67,72" | "B" | "B,Z | "B,13""*/
+    keys: string,
+) {
+    const shortcutKeycodes: number[] = [];
+    let shortcutKeyText = '';
+    keys.split(',').forEach((key: string) => {
+        let text;
+        if (parseFloat(key).toString() == 'NaN') { // case string
+            shortcutKeycodes.push(keycode(key));
+            text = key;
+        } else { // case number
+            shortcutKeycodes.push(parseInt(key));
+            text = keycode(parseInt(key));
+        }
+        shortcutKeyText = shortcutKeyText || text.substring(0, 1).toUpperCase();
+    });
+    return {
+        keycodes: shortcutKeycodes,
+        text: shortcutKeyText,
+    };
 }

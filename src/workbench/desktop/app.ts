@@ -70,8 +70,13 @@ export default class App {
     menu.init('测试', [{
       title: '请打开文件',
       type: MenuItemType.item,
-      callback: (menuItem, context) => {
-        menu.registerItem({title: '文件', type: MenuItemType.item, callback: (menuItem, context) => console.log(menuItem)}, 1);
+      callback: (_menuItem, _context) => {
+        menu.registerItem({
+          title: '文件',
+          type: MenuItemType.item, 
+          /* eslint-disable no-console */ 
+          callback: (menuItem, context) => console.log(menuItem),
+        }, 1);
       },
     }, {
       title: '测试2',
@@ -82,6 +87,7 @@ export default class App {
     }, {
       title: '测试3',
       type: MenuItemType.item,
+      /* eslint-disable no-console */ 
       callback: (menuItem, context) => console.log(menuItem),
     }]);
   }

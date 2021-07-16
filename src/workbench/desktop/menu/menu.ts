@@ -7,7 +7,7 @@ export default class Menu {
     public readonly container!: HTMLElement;
     public readonly id!: string;
     private name!: string;
-    private menuItems!: Array<MenuItem>;
+    private menuItems!: MenuItem[];
     private menuSvelte: any;
     private readonly context = new Map<string, any>();
     private readonly meunsWritable =  writable<MenuItem[]>([]);
@@ -20,7 +20,7 @@ export default class Menu {
         this.context.set('name', this.nameWritable);
     }
 
-    public init(name: string, config: Array<MenuItemConfig>): void {
+    public init(name: string, config: MenuItemConfig[]): void {
         this.name = name;
         for (const menuItem of config) {
             this.menuItems.push(new MenuItem(menuItem));

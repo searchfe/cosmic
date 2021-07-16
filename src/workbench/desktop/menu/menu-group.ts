@@ -2,7 +2,7 @@ import Menu from './menu';
 
 export default class MenuGroup {
     private container!: HTMLElement;
-    private meuns!: Array<Menu>;
+    private meuns!: Menu[];
     constructor(container: HTMLElement) {
         this.container = container;
         this.meuns = [];

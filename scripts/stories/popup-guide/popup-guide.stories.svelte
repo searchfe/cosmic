@@ -25,8 +25,10 @@
   
 <Story name="Button" >
   <div class="pt-4"></div>
-  <PopupButton text="Front" shortcutKey="F"></PopupButton>
+  <PopupButton text="Front" shortcutKey="70" stopPropagation="true" ></PopupButton>
   <div class="pt-4"></div>
-  <PopupButton text="Back" shortcutKey="B" icon="arrow_back_ios"></PopupButton>
+  <PopupButton text="Back" shortcutKey="B,66" icon="arrow_back_ios"></PopupButton>
+  <div class="pt-4"></div>
+  <PopupButton text="Active" shortcutKey="A" stopPropagation="true" state="hover"></PopupButton>
 </Story>
   

@@ -76,6 +76,7 @@
     "eventemitter2": "^6.4.4",
     "eventemitter3": "^4.0.7",
     "inversify": "^5.1.1",
+    "keycode": "^2.2.0",
     "reflect-metadata": "^0.1.13",
     "smelte": "^1.1.5",
     "split.js": "^1.6.4"

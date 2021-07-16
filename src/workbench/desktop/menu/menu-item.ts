@@ -1,5 +1,6 @@
 import {uuid} from '../utils';
-export const enum MenuItemType {
+/* eslint-disable no-shadow */
+export enum MenuItemType {
     group,
     item
 }
@@ -17,7 +18,7 @@ export class MenuItem {
     private title!:string;
     private type!: MenuItemType;
     private callback: MenuCommonFunction;
-    private children!: Array<MenuItem>;
+    private children!: MenuItem[];
     constructor(config: MenuItemConfig) {
         this.id = uuid();
         const {title, type, callback} = config;

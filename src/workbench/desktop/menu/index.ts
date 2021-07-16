@@ -4,13 +4,13 @@ import { MenuItemType } from './menu-item';
 
 let menuGroup: MenuGroup;
 
-export default function getMenuGroup(target: HTMLElement): MenuGroup {
+const getMenuGroup = (target: HTMLElement): MenuGroup => {
     if (menuGroup) {
         return menuGroup;
     }
 
     return menuGroup = new MenuGroup(target);
-}
-
+};
+export default getMenuGroup;
 export { MenuGroup, MenuItemType };
 export type { MenuCommonFunction };
