@@ -1,0 +1,7 @@
+{
+  "tsconfig": "./tsconfig.compodoc.json",
+  "output": "./dist/docs/api",
+  "port": 4201,
+  "hideGenerator": true,
+  "open": true
+}
