@@ -72,32 +72,10 @@ const widthConfigs = {
 
 module.exports = {
     theme: {
-        extend: {
-            spacing: {
-                1: '0.3rem',
-                2: '0.6rem', // 标准上下padding
-                3: '0.8rem',
-                4: '1rem',
-                5: '1.5rem',
-                6: '2rem',
-                7: '2.5rem',
-                8: '3rem',
-                9: '3.5rem',
-                10: '5rem',
-                11: '8rem',
-                12: '12rem',
-                13: '16rem',
-                14: '20rem',
-                15: '25rem',
-                16: '32rem',
-                72: '216rem',
-                84: '252rem',
-                96: '288rem',
-            },
-        },
-        width: widthConfigs,
-        maxWidth: widthConfigs,
-        minWidth: widthConfigs,
+        spacing: widthConfigs,
+        // width: widthConfigs,
+        // maxWidth: widthConfigs,
+        // minWidth: widthConfigs,
         fontSize: {
             '3xs': ['0.9rem', '0.9rem'],
             '2xs': ['1rem', '1rem'],

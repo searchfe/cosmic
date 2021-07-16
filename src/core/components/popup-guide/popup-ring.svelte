@@ -38,30 +38,10 @@
         window.removeEventListener('mousemove', t);
     });
 </script>
-<div class="select-none popup-core absolute" style="top:{top};left:{left};" bind:this={startDom}>
+<div class="select-none popup-core absolute transform-gpu -mt-6 -ml-6" style="top:{top};left:{left};" bind:this={startDom}>
     <!-- <div style="width:30px;height:30px;border:6px solid;border-radius: 50%;border-right-color: turquoise;"></div> -->
-    <div class='when-dark'><SVG src={require('./popup-ring-dark.svg')} width=30 height=30 /></div>
-    <div class='when-light'><SVG src={require('./popup-ring-light.svg')} width=30 height=30 /></div>
+    <div class='only-dark-show'><SVG src={require('./popup-ring-dark.svg')} width=30 height=30 /></div>
+    <div class='only-light-show'><SVG src={require('./popup-ring-light.svg')} width=30 height=30 /></div>
 </div>
-<div class="title absolute text-center select-none overflow-hidden opacity-50" style="top:{top};left:{left};">{title}</div>
-<style>
-    .popup-core {
-        margin: -15px 0 0 -15px;
-        transform:translate3d(0,0,0);
-    }
-    .when-dark, .when-light {
-        display: none;
-    }
-    :global(.mode-dark) .when-dark {
-        display: block;
-    }
-    :global(.mode-light) .when-light {
-        display: block;
-    }
-    .title {
-        width: 100px;
-        margin-top: -35px;
-        margin-left: -50px;
-    }
-</style>
+<div class="title absolute text-center select-none overflow-hidden opacity-50 w-40 -mt-16 -ml-20" style="top:{top};left:{left};">{title}</div>
 

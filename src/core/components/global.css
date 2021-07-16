@@ -46,3 +46,13 @@ button {
     direction: ltr;
     -webkit-font-smoothing: antialiased;
 }
+
+.only-dark-show, .only-light-show{
+    display: none;
+}
+.mode-dark .only-dark-show{
+    display: block;
+}
+.mode-light .only-light-show{
+    display: block;
+}
