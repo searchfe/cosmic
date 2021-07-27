@@ -1,16 +1,6 @@
-import MenuGroup from './menu-group';
 import type { MenuCommonFunction } from './menu-item';
-import { MenuItemType } from './menu-item';
-
-let menuGroup: MenuGroup;
-
-const getMenuGroup = (target: HTMLElement): MenuGroup => {
-    if (menuGroup) {
-        return menuGroup;
-    }
-
-    return menuGroup = new MenuGroup(target);
-};
-export default getMenuGroup;
-export { MenuGroup, MenuItemType };
-export type { MenuCommonFunction };
+import { MenuItemType, MenuItem} from './menu-item';
+import type { MenuItemConfig } from './menu-item';
+import Menu from './menu';
+export { MenuItemType, Menu, MenuItem};
+export type { MenuCommonFunction, MenuItemConfig };
