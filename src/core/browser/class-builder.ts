@@ -5,7 +5,7 @@ interface classConfig {
 
 interface stateConfig {
     id: string,
-    classes:  classConfig[];
+    classes: classConfig[];
     weight?: number
 }
 interface WeightMap {
@@ -27,21 +27,21 @@ export class classBuilder {
             this.insertConfig(config);
         });
     }
-    public clear() {
+    public clear(): void {
         this.orderedConfigs = [];
     }
-    public addConfig(config: stateConfig) {
+    public addConfig(config: stateConfig): void {
         this.insertConfig(config);
     }
     private insertConfig(config: stateConfig) {
         const c = this.normalizeWeight(config);
         let cursor = 0;
-        while(this.orderedConfigs[cursor] !== undefined && this.orderedConfigs[cursor].weight < c.weight) {
+        while (this.orderedConfigs[cursor] && this.orderedConfigs[cursor].weight! < c.weight!) {
             cursor++;
         }
         this.orderedConfigs.splice(cursor, 0, c);
     }
-    private normalizeWeight(config: stateConfig) {
+    private normalizeWeight(config: stateConfig): stateConfig {
         if (config.weight) return config;
         config.weight = defaultWeightMap[config.id] || defaultWeightMap.undefined;
         return config;

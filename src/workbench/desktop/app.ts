@@ -1,19 +1,18 @@
 import { Container } from 'inversify';
 import { AppearanceType } from '@cosmic/core/common/appearance';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
+import { MenuGroupService } from '@cosmic/workbench/services/menu-group-service';
+import { BaseMenu } from './base-menu/base-menu';
+import {applicationMenus} from './base-menu/config';
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
 import StatusBar from '../ui/components/status/status-bar.svelte';
 import ResourcePage from '../ui/components/resource/resource.svelte';
 import PropertyPanel from '../ui/components/property/proterty.svelte';
 import SplitBoardView from '@cosmic/core/browser/layout/split-board.view';
 import SplitItemView from '@cosmic/core/browser/layout/split-item.view';
-import getMenuGroup, {MenuItemType} from './menu';
-import type { MenuGroup } from './menu';
-
 export default class App {
   private container: Container;
   private context = new Map<string, Container>();
-  private menuGroup!: MenuGroup;
   constructor(private root: HTMLElement) {
     this.container = new Container({ defaultScope: 'Singleton' });
     this.context.set('container', this.container);
@@ -28,6 +27,7 @@ export default class App {
 
   initPreferences(): void {
     this.container.bind(AppearanceService).to(AppearanceService);
+    this.container.bind(MenuGroupService).to(MenuGroupService);
   }
 
   initStyle(): void {
@@ -65,31 +65,11 @@ export default class App {
 
   initMenus(): void {
     const header = document.querySelector('#main-header');
-    this.menuGroup = getMenuGroup(header as HTMLElement);
-    const menu = this.menuGroup.getMenuInsatance();
-    menu.init('测试', [{
-      title: '请打开文件',
-      type: MenuItemType.item,
-      callback: (_menuItem, _context) => {
-        menu.registerItem({
-          title: '文件',
-          type: MenuItemType.item, 
-          /* eslint-disable no-console */ 
-          callback: (menuItem, context) => console.log(menuItem),
-        }, 1);
-      },
-    }, {
-      title: '测试2',
-      type: MenuItemType.item,
-      callback: (menuItem, context) => {
-        menu.removeItem(0);
-      },
-    }, {
-      title: '测试3',
-      type: MenuItemType.item,
-      /* eslint-disable no-console */ 
-      callback: (menuItem, context) => console.log(menuItem),
-    }]);
+    const groupMenu = this.container.get(MenuGroupService);
+    groupMenu.initContainer(header as HTMLElement);
+    for (const menu of applicationMenus) {
+      groupMenu.getMenuInsatance().init(menu.title, menu.items);
+    }
   }
 
   initFlowTable(): void {

@@ -1,13 +1,20 @@
-import Menu from './menu';
+import { injectable } from 'inversify';
+import { Menu } from '../desktop/menu';
 
-export default class MenuGroup {
+@injectable()
+export class MenuGroupService {
     private container!: HTMLElement;
     private meuns!: Menu[];
-    constructor(container: HTMLElement) {
-        this.container = container;
+    constructor() {
         this.meuns = [];
     }
 
+    public initContainer(container: HTMLElement): void {
+        if (this.container) {
+            return;
+        }
+        this.container = container;
+    }
 
     public getMenuInsatance(): Menu {
         const menuContainer = document.createElement('div');
@@ -24,6 +31,6 @@ export default class MenuGroup {
         this.container.removeChild(menu.container);
     }
 
-    
+
 
 }
