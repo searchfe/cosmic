@@ -12,7 +12,7 @@
     fontSize: '字号',
     border: '边框',
     background: '蒙层',
-    shandow: '阴影'
+    shandow: '阴影',
   };
 
   const compoentMap = {
@@ -38,8 +38,7 @@
     <Title title="{titleMap[key]}" append="{append}" on:click="{() => add(key)}" />
     {#each vision[key] as value}
       <!-- <svelte:component this="{compoentMap[key]}" {...value} /> -->
-      <VisionTempelet title={titleMap[key]} />
+      <VisionTempelet title="{titleMap[key]}" />
     {/each}
   {/each}
-  
 </div>

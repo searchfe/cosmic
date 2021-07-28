@@ -1,3 +1,9 @@
+<style>
+  .ripple {
+    position: absolute !important;
+  }
+</style>
+
 <script>
   export let color = 'primary';
   export let noHover = false;
@@ -7,14 +13,11 @@
   $: hoverClass = `hover:bg-${color}-transLight`;
 </script>
 
-<style>
-  .ripple {
-    position: absolute !important;
-  }
-</style>
-
 <span
   use:ripple
-  class="z-40 {$$props.class} p-2 rounded-full flex items-center justify-center top-0 left-0 {noHover ? "" : hoverClass}">
+  class="z-40 {$$props.class} p-2 rounded-full flex items-center justify-center top-0 left-0 {noHover
+    ? ''
+    : hoverClass}"
+>
   <slot />
 </span>

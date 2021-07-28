@@ -2,5 +2,5 @@
 export const enum AppearanceType {
   'any',
   'light',
-  'dark'
+  'dark',
 }

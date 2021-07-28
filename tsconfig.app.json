@@ -23,10 +23,8 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
   "include": ["src/app/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

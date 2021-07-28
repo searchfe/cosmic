@@ -46,9 +46,7 @@ export default {
   },
   plugins: [
     copy({
-      targets: [
-        { src: 'src/public/**/*', dest: 'dist/workbench/desktop' },
-      ],
+      targets: [{ src: 'src/public/**/*', dest: 'dist/workbench/desktop' }],
     }),
     // svg({stringify: true}),
     svelte({
@@ -61,14 +59,14 @@ export default {
         accessors: true,
       },
     }),
-		smelte({
-			purge: production,
-			output: 'dist/workbench/desktop/assets/global.css', // it defaults to static/global.css which is probably what you expect in Sapper
-			postcss: [], // Your PostCSS plugins
-			whitelist: [], // Array of classnames whitelisted from purging
-			whitelistPatterns: [], // Same as above, but list of regexes
-			tailwind: tailwindConfig, // Any other props will be applied on top of default Smelte tailwind.config.js
-		}),
+    smelte({
+      purge: production,
+      output: 'dist/workbench/desktop/assets/global.css', // it defaults to static/global.css which is probably what you expect in Sapper
+      postcss: [], // Your PostCSS plugins
+      whitelist: [], // Array of classnames whitelisted from purging
+      whitelistPatterns: [], // Same as above, but list of regexes
+      tailwind: tailwindConfig, // Any other props will be applied on top of default Smelte tailwind.config.js
+    }),
     // we'll extract any component CSS out into
     // a separate file - better for performance
     css({

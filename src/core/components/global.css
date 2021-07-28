@@ -1,58 +1,59 @@
 :root {
-    font-size: 10px;
-    line-height: 100%;
+  font-size: 10px;
+  line-height: 100%;
 }
 body {
-    margin: 0;
-    background: var(--color-cgray-100);
+  margin: 0;
+  background: var(--color-cgray-100);
 }
-body.mode-dark{
-    background: var(--color-cgray-900);
+body.mode-dark {
+  background: var(--color-cgray-900);
 }
 
 button {
-    text-shadow: 1px 1px 1px var(--color-primary-500);
+  text-shadow: 1px 1px 1px var(--color-primary-500);
 }
 
 .mode-dark button {
-    text-shadow: 1px 1px 1px var(--color-primary-800);
+  text-shadow: 1px 1px 1px var(--color-primary-800);
 }
 
 .break-keep-all {
-    word-break: keep-all;
+  word-break: keep-all;
 }
 
 .select {
-    height: auto;
+  height: auto;
 }
 
 @font-face {
-    font-family: "Material Icons";
-    font-style: normal;
-    font-weight: 400;
-    src: url(./font/font.woff2) format("woff2");
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./font/font.woff2) format('woff2');
 }
 
 .material-icons {
-    font-family: "Material Icons";
-    font-weight: normal;
-    font-style: normal;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-smoothing: antialiased;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
 }
 
-.only-dark-show, .only-light-show{
-    display: none;
+.only-dark-show,
+.only-light-show {
+  display: none;
 }
-.mode-dark .only-dark-show{
-    display: block;
+.mode-dark .only-dark-show {
+  display: block;
 }
-.mode-light .only-light-show{
-    display: block;
+.mode-light .only-light-show {
+  display: block;
 }

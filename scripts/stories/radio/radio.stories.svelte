@@ -1,9 +1,8 @@
 <script>
-  import "smelte/src/tailwind.css";
-  import "../../../src/core/components/global.css";
-  import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import {RadioButtonGroup} from "../../../src/core/components/radio-button";
-
+  import 'smelte/src/tailwind.css';
+  import '../../../src/core/components/global.css';
+  import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
+  import { RadioButtonGroup } from '../../../src/core/components/radio-button';
 </script>
 
 <Meta title="Radio" component="{RadioButtonGroup}" />

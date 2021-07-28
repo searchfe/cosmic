@@ -3,12 +3,11 @@ import { EventEmitter2 } from 'eventemitter2';
 
 import { AppearanceType } from '@cosmic/core/common/appearance';
 
-
 @injectable()
 /** 外观设置服务 */
 export class AppearanceService {
   private _type: AppearanceType = AppearanceType.dark;
-  private evt = new EventEmitter2()
+  private evt = new EventEmitter2();
 
   public updateMode(type: AppearanceType) {
     if (this._type !== type) {
@@ -18,7 +17,6 @@ export class AppearanceService {
   }
   public onModeChanged(fn: (type: AppearanceType) => void) {
     this.evt.on('onModeChanged', fn);
-
   }
   public type() {
     return this._type;

@@ -2,7 +2,6 @@
   import { Card } from '../../../../../core/components';
   export let title = '';
   export let text = '';
-
 </script>
 
 <div class="mx-2 ">

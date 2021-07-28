@@ -143,9 +143,8 @@
       'remove',
       'replace',
     ],
-    $$props,
+    $$props
   );
-
 </script>
 
 {#if href}
