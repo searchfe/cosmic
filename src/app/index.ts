@@ -23,7 +23,7 @@ const createWindow = () => {
       devTools: isProd ? false : true,
       contextIsolation: true,
       enableRemoteModule: false,
-      preload:  join(__dirname, 'preload.js'),
+      preload: join(__dirname, 'preload.js'),
     },
   });
 
@@ -31,9 +31,9 @@ const createWindow = () => {
     // process.env.NODE_ENV === "production"
     isProd
       ? // in production, use the statically build version of our application
-      `file://${join(__dirname, 'dist/workbench/desktop/', 'index.html')}`
+        `file://${join(__dirname, 'dist/workbench/desktop/', 'index.html')}`
       : // in dev, target the host and port of the local rollup web server
-      'http://localhost:5000';
+        'http://localhost:5000';
 
   mainWindow.loadURL(url).catch((err: any) => {
     logger.error(JSON.stringify(err));

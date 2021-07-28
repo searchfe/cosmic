@@ -30,7 +30,7 @@
   const customItems = [
     { value: 1, text: 'One' },
     { value: 2, text: 'Two' },
-    { value: 3, text: 'Three' }
+    { value: 3, text: 'Three' },
   ];
 </script>
 
@@ -51,7 +51,13 @@
   <Select {...args} selectedLabel="{selectedLabel}" class="w-80 h-80">
     <div slot="options" class="shadow rounded px-2 py-4 mt-0 bg-cgray-400 dark:bg-cgray-700" on:click|stopPropagation>
       {#each customItems as item}
-        <Checkbox checked="{selectedItems.includes(item)}" class="block my-2" color="red" label="{item.text}" on:change="{toggle(item)}" />
+        <Checkbox
+          checked="{selectedItems.includes(item)}"
+          class="block my-2"
+          color="red"
+          label="{item.text}"
+          on:change="{toggle(item)}"
+        />
       {/each}
     </div>
   </Select>

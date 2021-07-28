@@ -1,12 +1,12 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import { fly } from "svelte/transition";
-  import { quadOut, quadIn } from "svelte/easing";
-  import List from "../list";
-  import { ClassBuilder } from "smelte/src/utils/classes";
+  import { createEventDispatcher } from 'svelte';
+  import { fly } from 'svelte/transition';
+  import { quadOut, quadIn } from 'svelte/easing';
+  import List from '../list';
+  import { ClassBuilder } from 'smelte/src/utils/classes';
 
-  const classesDefault = "cursor-pointer relative";
-  const listClassesDefault = "absolute w-auto top-7 bg-white left-0 bg-white rounded shadow z-20 dark:bg-dark-500";
+  const classesDefault = 'cursor-pointer relative';
+  const listClassesDefault = 'absolute w-auto top-7 bg-white left-0 bg-white rounded shadow z-20 dark:bg-dark-500';
 
   export let items = [];
   export let open = false;
@@ -17,17 +17,11 @@
 
   const cb = new ClassBuilder($$props.class);
 
-  $: c = cb
-    .flush()
-    .add(classes, true, classesDefault)
-    .add($$props.class)
-    .get();
+  $: c = cb.flush().add(classes, true, classesDefault).add($$props.class).get();
 
   const lcb = new ClassBuilder(listClasses, listClassesDefault);
 
-  $: l = lcb
-      .flush()
-      .get();
+  $: l = lcb.flush().get();
 
   const dispatch = createEventDispatcher();
 
@@ -35,22 +29,14 @@
   const outProps = { y: -10, duration: 100, easing: quadOut, delay: 100 };
 </script>
 
-<svelte:window on:click={() => (open = false)} />
+<svelte:window on:click="{() => (open = false)}" />
 
-<div class={c} on:click|stopPropagation>
+<div class="{c}" on:click|stopPropagation>
   <slot name="activator" />
   <slot name="menu">
     {#if open}
-      <div class={l}>
-        <List
-          bind:value
-          select
-          dense
-          {items}
-          on:change
-          on:change={() => open = false}
-          {...listProps}
-        />
+      <div class="{l}">
+        <List bind:value select dense items="{items}" on:change on:change="{() => (open = false)}" {...listProps} />
       </div>
     {/if}
   </slot>

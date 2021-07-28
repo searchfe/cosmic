@@ -2,12 +2,12 @@
   import Label from './label.svelte';
   import { createEventDispatcher } from 'svelte';
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
-  
+
   const classesDefault = 'inline-flex items-center mb-2 cursor-pointer z-10';
-  
+
   import Icon from '../icon';
   import Ripple from '../ripple';
-  
+
   export let value = '';
   export let label = '';
   export let color = 'active';
@@ -16,14 +16,14 @@
   export let classes = classesDefault;
   export let labelClasses = 'text-sm';
   export let group = [];
-  
+
   // for bind:group
   //keep track of group array state;
   let groupstate = group.includes(value);
-  
+
   $: if (value && !disabled) {
     const groupHasValue = group.includes(value);
-    
+
     // check if group array has changed, or something else
     if (groupHasValue === groupstate) {
       // add to group array if checked
@@ -42,19 +42,18 @@
     }
   }
   const dispatch = createEventDispatcher();
-  
+
   function check() {
     if (disabled) return;
-    
+
     checked = !checked;
-    dispatch("change", checked);
+    dispatch('change', checked);
   }
-  
-  $: rippleColor = checked && !disabled ? color : "gray";
-  
+
+  $: rippleColor = checked && !disabled ? color : 'gray';
+
   const cb = new ClassBuilder(classes, classesDefault);
   $: c = cb.flush().add(classes, true, classesDefault).add($$props.class).get();
-  
 </script>
 
 <div class="{$$props.class}">
@@ -63,18 +62,24 @@
     <div class="relative w-auto h-auto z-0">
       <Ripple color="{rippleColor}">
         {#if checked}
-        <Icon class="{disabled ? 'text-gray-500 dark:text-gray-600' : `text-${color} dark:text-${color}`}" extraStyle="font-size: 1.2rem">
-          check_box
-        </Icon>
+          <Icon
+            class="{disabled ? 'text-gray-500 dark:text-gray-600' : `text-${color} dark:text-${color}`}"
+            extraStyle="font-size: 1.2rem"
+          >
+            check_box
+          </Icon>
         {:else}
-        <Icon class="{disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600 dark:text-gray-300'}" extraStyle="font-size: 1.2rem">
-          check_box_outline_blank
-        </Icon>
+          <Icon
+            class="{disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600 dark:text-gray-300'}"
+            extraStyle="font-size: 1.2rem"
+          >
+            check_box_outline_blank
+          </Icon>
         {/if}
       </Ripple>
     </div>
     <slot name="label">
-      <Label disabled="{disabled}" label="{label}" class="{labelClasses}" checked="{checked}"/>
+      <Label disabled="{disabled}" label="{label}" class="{labelClasses}" checked="{checked}" />
     </slot>
   </div>
 </div>

@@ -103,7 +103,7 @@ const copyPublicFolderAndMinify = (folderPath, destinationPath) => {
 
         const unminifiedCorrected = unminified.replace(
           '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src http://localhost:*; connect-src ws://localhost:*">',
-          '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'">',
+          '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'">'
         );
 
         const minifierOptions = {
@@ -121,7 +121,7 @@ const copyPublicFolderAndMinify = (folderPath, destinationPath) => {
           removeScriptTypeAttributes: true,
           removeStyleLinkTypeAttributes: true,
           useShortDoctype: true,
-          quoteCharacter: '\'',
+          quoteCharacter: "'",
         };
         const minified = HTMLMinifier.minify(unminifiedCorrected, minifierOptions);
         writeFileSync(newPath, minified);

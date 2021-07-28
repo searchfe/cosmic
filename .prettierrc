@@ -8,5 +8,6 @@
   "svelteBracketNewLine": true,
   "svelteAllowShorthand": false,
   "tabWidth": 2,
-  "useTabs": false
+  "useTabs": false,
+  "plugins": ["prettier-plugin-svelte"]
 }

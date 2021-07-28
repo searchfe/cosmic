@@ -23,7 +23,6 @@
   let searchItems = [];
 
   $: searchItems = items.filter((item) => item.title.includes(search));
-
 </script>
 
 <div class="grid grid-cols-3">

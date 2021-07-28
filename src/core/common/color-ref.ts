@@ -7,13 +7,13 @@ export default class ColorRef {
   private darkColor: Color;
 
   constructor(anyColor: Color, lightColor?: Color, darkColor?: Color) {
-    this.anyColor =  anyColor;
+    this.anyColor = anyColor;
     this.lightColor = lightColor || anyColor;
     this.darkColor = darkColor || anyColor;
   }
 
   public color(appearanceType: AppearanceType) {
-    switch(appearanceType) {
+    switch (appearanceType) {
       case AppearanceType.any:
         return this.anyColor;
       case AppearanceType.light:
@@ -25,4 +25,3 @@ export default class ColorRef {
     }
   }
 }
-

@@ -1,1 +1,1 @@
-export {default} from './ripple.svelte';
+export { default } from './ripple.svelte';

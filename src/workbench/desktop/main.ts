@@ -6,5 +6,4 @@ import '../ui/css/global.css';
 const app = new App(document.body);
 app.bootstrap();
 
-
 export default app;

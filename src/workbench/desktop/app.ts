@@ -3,7 +3,7 @@ import { AppearanceType } from '@cosmic/core/common/appearance';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 import { MenuGroupService } from '@cosmic/workbench/services/menu-group-service';
 import { BaseMenu } from './base-menu/base-menu';
-import {applicationMenus} from './base-menu/config';
+import { applicationMenus } from './base-menu/config';
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
 import StatusBar from '../ui/components/status/status-bar.svelte';
 import ResourcePage from '../ui/components/resource/resource.svelte';
@@ -50,7 +50,6 @@ export default class App {
 
   initFrame(): void {
     // to do sth.
-
   }
 
   initNavigationBar(): void {
@@ -115,5 +114,4 @@ export default class App {
     });
     // to do sth.
   }
-
 }

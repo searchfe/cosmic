@@ -6,7 +6,6 @@
     { value: 3, text: 'Three' },
     { value: 4, text: 'Four' },
   ];
-
 </script>
 
 <div class="flex flex-row items-center">
