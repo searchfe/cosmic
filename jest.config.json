@@ -5,6 +5,5 @@
   "testRegex": "((\\.|/)spec)\\.(jsx?|tsx?)$",
   "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
   "coverageDirectory": "coverage",
-  "preset": "ts-jest",
-  "coverageReporters": ["lcov"]
+  "preset": "ts-jest"
 }
