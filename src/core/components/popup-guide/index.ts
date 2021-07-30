@@ -2,9 +2,6 @@ import PopupRing from './popup-ring.svelte';
 import PopupButton from './popup-button.svelte';
 
 export interface GroupChangeEvent {
-    selected: number
+  selected: number;
 }
-export {
-    PopupRing,
-    PopupButton,
-};
+export { PopupRing, PopupButton };

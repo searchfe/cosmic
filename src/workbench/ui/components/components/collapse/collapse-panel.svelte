@@ -38,7 +38,6 @@
     }
     expand = !expand;
   }
-
 </script>
 
 <div class="w-full flex flex-col my-1">
@@ -52,7 +51,7 @@
     <slot name="left">
       <div>
         {#if !!append}
-          <Icon class={iconClass}>{append}</Icon>
+          <Icon class="{iconClass}">{append}</Icon>
         {/if}
       </div>
     </slot>

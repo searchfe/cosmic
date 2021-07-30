@@ -3,7 +3,7 @@
   import Self from './self/self.svelte';
   import Shandard from './standard/standard.svelte';
   import { Tabs, Tab } from '@cosmic/core/components';
-  const tabButtonClasses = () => 'max-h-32'
+  const tabButtonClasses = () => 'max-h-32';
 </script>
 
 <div class="flex flex-1 flex-row h-full dark:bg-cgray-800 bg-cgray-200 max-w-100">
@@ -11,7 +11,7 @@
     selected="1"
     class="shadow-sm text-white rounded-t-lg flex-col w-20 dark:bg-cgray-600 bg-cgray-400"
     let:selected
-    {tabButtonClasses}
+    tabButtonClasses="{tabButtonClasses}"
     items="{[
       { id: '1', text: '组件库', icon: 'alarm_on' },
       { id: '2', text: '规范库', icon: 'bug_report' },

@@ -55,7 +55,6 @@
     .add('hidden md:flex w-full max-w-2xl', navigation)
     .add('flex', !navigation)
     .get();
-
 </script>
 
 <div class="{c}" bind:this="{node}">

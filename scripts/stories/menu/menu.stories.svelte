@@ -12,7 +12,6 @@
     { value: 4, text: 'Four' },
     { value: 5, text: 'Five' },
   ];
-
 </script>
 
 <Meta title="Menu" component="{Menu}" />

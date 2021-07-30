@@ -31,10 +31,7 @@ const generateProdTSConfig = () => {
   tsconfigElectronJSON.compilerOptions.sourceMap = false;
 
   const newTsconfigSvelteJSONPath = tsconfigSvelteJSONPath.replace('tsconfig.svelte.json', 'tsconfig.svelte.prod.json');
-  const newTsconfigElectronJSONPath = tsconfigElectronJSONPath.replace(
-    'tsconfig.app.json',
-    'tsconfig.app.prod.json',
-  );
+  const newTsconfigElectronJSONPath = tsconfigElectronJSONPath.replace('tsconfig.app.json', 'tsconfig.app.prod.json');
 
   writeFileSync(newTsconfigSvelteJSONPath, JSON.stringify(tsconfigSvelteJSON));
   writeFileSync(newTsconfigElectronJSONPath, JSON.stringify(tsconfigElectronJSON));
