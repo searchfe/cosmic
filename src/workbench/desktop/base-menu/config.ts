@@ -1,7 +1,9 @@
 import type { MenuItemConfig } from '../menu';
 import { MenuItemType } from '../menu';
 
-export const applicationMenus: { title: string; items: MenuItemConfig[] }[] = [
+type ApplicationMenusType = { title: string; items: MenuItemConfig[] };
+
+export const applicationMenus: ApplicationMenusType[] = [
     {
         title: '文件',
         items: [
