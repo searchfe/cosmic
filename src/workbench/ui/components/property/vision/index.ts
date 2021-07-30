@@ -1,4 +1,3 @@
 import Vision from './vision.svelte';
 
-
-export {Vision};
+export { Vision };

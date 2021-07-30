@@ -2,9 +2,8 @@
   import 'smelte/src/tailwind.css';
   import '../../../src/core/components/global.css';
   import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
-  import {Icon} from '@cosmic/core/components'
+  import { Icon } from '@cosmic/core/components';
   import { Collapse, CollapsePanel } from '@cosmic/workbench/ui/components/components';
-
 </script>
 
 <Meta title="Collapse" component="{Collapse}" />
@@ -30,20 +29,20 @@
     <Collapse {...args}>
       <CollapsePanel append="{args.append}" prepend="{args.prepend}" header="This is panel header 1" key="{1}">
         A dog is a type of domesticated animal.
-        <div slot='left'>
-            <Icon>arrow_drop_down</Icon>
+        <div slot="left">
+          <Icon>arrow_drop_down</Icon>
         </div>
       </CollapsePanel>
       <CollapsePanel append="{args.append}" prepend="{args.prepend}" header="This is panel header 2" key="{2}">
         A dog is a type of domesticated animal.
-        <div slot='left'>
-            <Icon>arrow_drop_down</Icon>
+        <div slot="left">
+          <Icon>arrow_drop_down</Icon>
         </div>
       </CollapsePanel>
       <CollapsePanel append="{args.append}" prepend="{args.prepend}" header="This is panel header 3" key="{3}">
         A dog is a type of domesticated animal.
-        <div slot='left'>
-            <Icon>arrow_drop_down</Icon>
+        <div slot="left">
+          <Icon>arrow_drop_down</Icon>
         </div>
       </CollapsePanel>
     </Collapse>

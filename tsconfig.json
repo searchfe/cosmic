@@ -1,23 +1,16 @@
 {
-    "extends": "@tsconfig/svelte/tsconfig.json",
-    "compilerOptions": {
-      "baseUrl": "src",
-      "paths": {
-        "@cosmic/workbench/services/*": [
-          "workbench/services/*"
-        ],
-        "@cosmic/workbench/ui/*": [
-          "workbench/ui/*"
-        ],
-        "@cosmic/core/*": [
-          "core/*"
-        ]
-      },
-      "experimentalDecorators": true
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@cosmic/workbench/services/*": ["workbench/services/*"],
+      "@cosmic/workbench/ui/*": ["workbench/ui/*"],
+      "@cosmic/core/*": ["core/*"]
     },
-    "include": [
-      "**/*.ts", "**/*.css" 
-    ]
-    // "exclude": []
-  }
-  
+    "experimentalDecorators": true,
+    "types": ["jest"],
+    "isolatedModules": false,
+    "module": "ESNext"
+  },
+  "include": ["**/*.ts", "**/*.css"]
+}

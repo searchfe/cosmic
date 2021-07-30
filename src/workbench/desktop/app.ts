@@ -49,7 +49,6 @@ export default class App {
 
   initFrame(): void {
     // to do sth.
-
   }
 
   initNavigationBar(): void {
@@ -114,5 +113,4 @@ export default class App {
     });
     // to do sth.
   }
-
 }

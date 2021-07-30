@@ -8,9 +8,8 @@
   const activeKeyStore = writable(activeKey);
   setContext('accordion', accordionStore);
   setContext('activeKey', activeKeyStore);
-
 </script>
 
 <div class="w-full {$$props.class}">
-  <slot/>
+  <slot />
 </div>

@@ -34,11 +34,13 @@
   export let inputWrapperClasses = noop;
   export let appendClasses = () => 'absolute right-0 top-0 pb-2 pr-4 pt-1 text-gray-50 z-10';
   export let labelClasses = noop;
-  export let inputClasses = () => 'pb-2 pt-2 px-4 rounded-t bg-cgray-400 text-gray-50 g-cgray-500 dark:bg-cgray-600 dark:text-gray-200 w-full';
+  export let inputClasses = () =>
+    'pb-2 pt-2 px-4 rounded-t bg-cgray-400 text-gray-50 g-cgray-500 dark:bg-cgray-600 dark:text-gray-200 w-full';
   export let prependClasses = () => 'absolute left-0 top-0 pb-2 pl-2 pt-1 text-xs text-gray-700 z-10';
   export let listClasses = noop;
   export let selectedClasses = noop;
-  export let itemClasses = () => 'bg-cgray-400 dark:bg-cgray-700 relative overflow-hidden duration-100 py-2 px-4 cursor-pointer text-gray-50 flex items-center z-10';
+  export let itemClasses = () =>
+    'bg-cgray-400 dark:bg-cgray-700 relative overflow-hidden duration-100 py-2 px-4 cursor-pointer text-gray-50 flex items-center z-10';
 
   export let add = '';
   export let remove = '';
@@ -92,7 +94,6 @@
   $: if (dense) {
     appendClasses = (i) => i.replace('pt-4', 'pt-3');
   }
-
 </script>
 
 <div class="{c}" use:hideListAction="{onHideListPanel}">

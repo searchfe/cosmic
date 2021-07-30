@@ -37,7 +37,6 @@
   const cb = new ClassBuilder($$props.class);
 
   $: c = cb.flush().add(classes, true, classesDefault).add($$props.class).get();
-
 </script>
 
 <ul class="{c}" class:rounded-t-none="{select}">
