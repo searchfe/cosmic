@@ -4,28 +4,38 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest, windows-latest]
+        node: [14.x, 16.x]
 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: ${{ matrix.node }}
       - name: Cache pnpm modules
         uses: actions/cache@v2
         env:
           cache-name: cache-pnpm-modules
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ matrix.os }}-build-${{ env.cache-name }}-${{ matrix.node }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+            ${{ matrix.os }}-build-${{ env.cache-name }}-${{ matrix.node }}-
       - uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.0.2
+          version: 6.10.3
           run_install: true
 
       - run: pnpm format:check
       - run: pnpm lint
-      - run: pnpm test
+      - run: pnpm test -- --coverage
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
+        with:
+          name: ${{ matrix.os }}-${{ matrix.node }}
+          files: ./coverage/lcov.info
 
