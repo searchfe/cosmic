@@ -8,10 +8,10 @@ export enum MenuItemType {
 export type MenuCommonFunction = (menu: MenuItem, context: any) => void;
 
 export interface MenuItemConfig {
-    title: string;
-    type: MenuItemType;
-    callback: MenuCommonFunction;
-    command?: string;
+  title: string;
+  type: MenuItemType;
+  callback: MenuCommonFunction;
+  command?: string;
 }
 
 export class MenuItem {
