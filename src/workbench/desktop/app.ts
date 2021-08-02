@@ -2,7 +2,7 @@ import { Container } from 'inversify';
 import { AppearanceType } from '@cosmic/core/common/appearance';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 import { MenuGroupService } from '@cosmic/workbench/services/menu-group-service';
-import {applicationMenus} from './base-menu/config';
+import { applicationMenus } from './base-menu/config';
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
 import StatusBar from '../ui/components/status/status-bar.svelte';
 import ResourcePage from '../ui/components/resource/resource.svelte';
