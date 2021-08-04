@@ -1,9 +1,10 @@
 {
-  "transform": {
-    "^.+\\.(t|j)sx?$": "ts-jest"
-  },
-  "testRegex": "((\\.|/)spec)\\.(jsx?|tsx?)$",
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+  "rootDir": "src",
   "coverageDirectory": "coverage",
-  "preset": "ts-jest"
+  "testMatch": ["<rootDir>/**/*.spec.{ts,tsx,js,jsx}", "<rootDir>/*.spec.{ts,tsx,js,jsx}"],
+  "transform": {
+    "^.+\\.(t|j)sx?$": ["@swc/jest"]
+  },
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+  "testEnvironment": "jsdom"
 }
