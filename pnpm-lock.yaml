@@ -18,6 +18,7 @@ specifiers:
   '@storybook/source-loader': ^6.2.9
   '@storybook/svelte': ^6.2.9
   '@storybook/theming': ^6.2.9
+  '@swc/jest': ^0.1.4
   '@tsconfig/svelte': ^1.0.13
   '@types/clean-css': ^4.2.3
   '@types/color': ^3.0.1
@@ -112,6 +113,7 @@ devDependencies:
   '@storybook/source-loader': 6.2.9
   '@storybook/svelte': 6.2.9_9a7baf1ebd9f8076b495d554476c7200
   '@storybook/theming': 6.2.9
+  '@swc/jest': registry.nlark.com/@swc/jest/0.1.4
   '@tsconfig/svelte': 1.0.13
   '@types/clean-css': 4.2.4
   '@types/html-minifier': 4.0.0
@@ -2720,8 +2722,8 @@ packages:
       morgan: 1.10.0
       object-assign: 4.1.1
       open: 8.2.1
-      proxy-middleware: 0.15.0
-      send: 0.17.1
+      proxy-middleware: registry.nlark.com/proxy-middleware/0.15.0
+      send: registry.nlark.com/send/0.17.1
       serve-index: 1.9.1
     dev: true
 
@@ -7552,7 +7554,7 @@ packages:
     dev: true
 
   /cors/2.8.5:
-    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
+    resolution: {integrity: sha1-6sEdpRWS3Ya58G9uesKTs9+HXSk=, tarball: cors/download/cors-2.8.5.tgz}
     engines: {node: '>= 0.10'}
     dependencies:
       object-assign: 4.1.1
@@ -8114,7 +8116,7 @@ packages:
     dev: true
 
   /depd/1.1.2:
-    resolution: {integrity: sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=}
+    resolution: {integrity: sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=, tarball: depd/download/depd-1.1.2.tgz}
     engines: {node: '>= 0.6'}
     dev: true
 
@@ -8131,7 +8133,7 @@ packages:
     dev: true
 
   /destroy/1.0.4:
-    resolution: {integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=}
+    resolution: {integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=, tarball: destroy/download/destroy-1.0.4.tgz}
     dev: true
 
   /detab/2.0.4:
@@ -8459,10 +8461,6 @@ packages:
       version-range: 1.1.0
     dev: true
 
-  /ee-first/1.1.1:
-    resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
-    dev: true
-
   /ejs/3.1.6:
     resolution: {integrity: sha512-9lt9Zse4hPucPkoP7FHDF0LQAlGyF9JVpnClFLFH3aSSbxmyoqINRpp/9wePWJTUl4KOQwRL72Iw3InHPDkoGw==}
     engines: {node: '>=0.10.0'}
@@ -8620,7 +8618,7 @@ packages:
     dev: true
 
   /encodeurl/1.0.2:
-    resolution: {integrity: sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=}
+    resolution: {integrity: sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=, tarball: encodeurl/download/encodeurl-1.0.2.tgz}
     engines: {node: '>= 0.8'}
     dev: true
 
@@ -8809,7 +8807,7 @@ packages:
     dev: true
 
   /escape-html/1.0.3:
-    resolution: {integrity: sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=}
+    resolution: {integrity: sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=, tarball: escape-html/download/escape-html-1.0.3.tgz}
     dev: true
 
   /escape-string-regexp/1.0.5:
@@ -9130,7 +9128,7 @@ packages:
     dev: true
 
   /etag/1.8.1:
-    resolution: {integrity: sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=}
+    resolution: {integrity: sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=, tarball: etag/download/etag-1.8.1.tgz}
     engines: {node: '>= 0.6'}
     dev: true
 
@@ -9693,7 +9691,7 @@ packages:
     dev: true
 
   /fresh/0.5.2:
-    resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=}
+    resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=, tarball: fresh/download/fresh-0.5.2.tgz}
     engines: {node: '>= 0.6'}
     dev: true
 
@@ -10478,7 +10476,7 @@ packages:
     dev: true
 
   /http-errors/1.7.3:
-    resolution: {integrity: sha512-ZTTX0MWrsQ2ZAhA1cejAwDLycFsd7I7nVtnkT3Ol0aqodaKW+0CTZDQ1uBv5whptCnc8e8HeRRJxRs0kmm/Qfw==}
+    resolution: {integrity: sha1-bGGeT5xgMIw4UZSYwU+7EKrOuwY=, tarball: http-errors/download/http-errors-1.7.3.tgz}
     engines: {node: '>= 0.6'}
     dependencies:
       depd: 1.1.2
@@ -12787,11 +12785,11 @@ packages:
     dev: true
 
   /ms/2.0.0:
-    resolution: {integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=}
+    resolution: {integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=, tarball: ms/download/ms-2.0.0.tgz}
     dev: true
 
   /ms/2.1.1:
-    resolution: {integrity: sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==}
+    resolution: {integrity: sha1-MKWGTrPrsKZvLr5tcnrwagnYbgo=, tarball: ms/download/ms-2.1.1.tgz}
     dev: true
 
   /ms/2.1.2:
@@ -13080,7 +13078,7 @@ packages:
     dev: true
 
   /object-assign/4.1.1:
-    resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
+    resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=, tarball: object-assign/download/object-assign-4.1.1.tgz}
     engines: {node: '>=0.10.0'}
 
   /object-copy/0.1.0:
@@ -13174,10 +13172,10 @@ packages:
       es-abstract: 1.18.3
 
   /on-finished/2.3.0:
-    resolution: {integrity: sha1-IPEzZIGwg811M3mSoWlxqi2QaUc=}
+    resolution: {integrity: sha1-IPEzZIGwg811M3mSoWlxqi2QaUc=, tarball: on-finished/download/on-finished-2.3.0.tgz}
     engines: {node: '>= 0.8'}
     dependencies:
-      ee-first: 1.1.1
+      ee-first: registry.nlark.com/ee-first/1.1.1
     dev: true
 
   /on-headers/1.0.2:
@@ -14361,11 +14359,6 @@ packages:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: true
 
-  /proxy-middleware/0.15.0:
-    resolution: {integrity: sha1-o/3xvvtzD5UZZYcqwvYHTGFHelY=}
-    engines: {node: '>=0.8.0'}
-    dev: true
-
   /prr/1.0.1:
     resolution: {integrity: sha1-0/wRS6BplaRexok/SEzrHXj19HY=}
     dev: true
@@ -14533,7 +14526,7 @@ packages:
     dev: true
 
   /range-parser/1.2.1:
-    resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
+    resolution: {integrity: sha1-PPNwI9GZ4cJNGlW4SADC8+ZGgDE=, tarball: range-parser/download/range-parser-1.2.1.tgz}
     engines: {node: '>= 0.6'}
     dev: true
 
@@ -15674,7 +15667,7 @@ packages:
     dev: true
 
   /setprototypeof/1.1.1:
-    resolution: {integrity: sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==}
+    resolution: {integrity: sha1-fpWsskqpL1iF4KvvW6ExMw1K5oM=, tarball: setprototypeof/download/setprototypeof-1.1.1.tgz}
     dev: true
 
   /sha.js/2.4.11:
@@ -16032,7 +16025,7 @@ packages:
     dev: true
 
   /statuses/1.5.0:
-    resolution: {integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=}
+    resolution: {integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=, tarball: statuses/download/statuses-1.5.0.tgz}
     engines: {node: '>= 0.6'}
     dev: true
 
@@ -16862,7 +16855,7 @@ packages:
     dev: true
 
   /toidentifier/1.0.0:
-    resolution: {integrity: sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==}
+    resolution: {integrity: sha1-fhvjRw8ed5SLxD2Uo8j013UrpVM=, tarball: toidentifier/download/toidentifier-1.0.0.tgz}
     engines: {node: '>=0.6'}
     dev: true
 
@@ -17553,7 +17546,7 @@ packages:
     dev: true
 
   /vary/1.1.2:
-    resolution: {integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=}
+    resolution: {integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=, tarball: vary/download/vary-1.1.2.tgz}
     engines: {node: '>= 0.8'}
     dev: true
 
@@ -18006,4 +17999,194 @@ packages:
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
+    dev: true
+
+  registry.nlark.com/@napi-rs/triples/1.0.3:
+    resolution: {integrity: sha1-dtbQw/TRYBPGHkXfyl/x5sMa5Tw=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@napi-rs/triples/download/@napi-rs/triples-1.0.3.tgz}
+    name: '@napi-rs/triples'
+    version: 1.0.3
+    dev: true
+
+  registry.nlark.com/@node-rs/helper/1.2.1:
+    resolution: {integrity: sha1-4HmwXyH/QynYLE4fccApDk7Nxww=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@node-rs/helper/download/@node-rs/helper-1.2.1.tgz}
+    name: '@node-rs/helper'
+    version: 1.2.1
+    dependencies:
+      '@napi-rs/triples': registry.nlark.com/@napi-rs/triples/1.0.3
+    dev: true
+
+  registry.nlark.com/@swc/core-android-arm64/1.2.73:
+    resolution: {integrity: sha1-OGD/iqC1Q1MLLp8+5+wgP3w/qbY=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-android-arm64/download/@swc/core-android-arm64-1.2.73.tgz?cache=0&sync_timestamp=1628066810840&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-android-arm64%2Fdownload%2F%40swc%2Fcore-android-arm64-1.2.73.tgz}
+    name: '@swc/core-android-arm64'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-darwin-arm64/1.2.73:
+    resolution: {integrity: sha1-18pkLQIbr5Y8VzikwF6JWWMhhMc=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-darwin-arm64/download/@swc/core-darwin-arm64-1.2.73.tgz?cache=0&sync_timestamp=1628066808013&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-darwin-arm64%2Fdownload%2F%40swc%2Fcore-darwin-arm64-1.2.73.tgz}
+    name: '@swc/core-darwin-arm64'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-darwin-x64/1.2.73:
+    resolution: {integrity: sha1-ZMrb5eAl36RkEyf+hLh21CL03Oc=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-darwin-x64/download/@swc/core-darwin-x64-1.2.73.tgz?cache=0&sync_timestamp=1628066801276&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-darwin-x64%2Fdownload%2F%40swc%2Fcore-darwin-x64-1.2.73.tgz}
+    name: '@swc/core-darwin-x64'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-freebsd-x64/1.2.73:
+    resolution: {integrity: sha1-SgZvyyUOqzo2eHijZHqG8qtdW/w=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-freebsd-x64/download/@swc/core-freebsd-x64-1.2.73.tgz?cache=0&sync_timestamp=1628066813442&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-freebsd-x64%2Fdownload%2F%40swc%2Fcore-freebsd-x64-1.2.73.tgz}
+    name: '@swc/core-freebsd-x64'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-linux-arm-gnueabihf/1.2.73:
+    resolution: {integrity: sha1-4rz5AzjSza9HRrkMiToWT2s/Vsc=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-linux-arm-gnueabihf/download/@swc/core-linux-arm-gnueabihf-1.2.73.tgz?cache=0&sync_timestamp=1628066805597&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-linux-arm-gnueabihf%2Fdownload%2F%40swc%2Fcore-linux-arm-gnueabihf-1.2.73.tgz}
+    name: '@swc/core-linux-arm-gnueabihf'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-linux-arm64-gnu/1.2.73:
+    resolution: {integrity: sha1-6Q3AySe61RosAow6DZV87PIS/Vk=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-linux-arm64-gnu/download/@swc/core-linux-arm64-gnu-1.2.73.tgz?cache=0&sync_timestamp=1628066802845&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-linux-arm64-gnu%2Fdownload%2F%40swc%2Fcore-linux-arm64-gnu-1.2.73.tgz}
+    name: '@swc/core-linux-arm64-gnu'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-linux-arm64-musl/1.2.73:
+    resolution: {integrity: sha1-3xqmSMcVEHJKGkw2p4omSmhSLPg=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-linux-arm64-musl/download/@swc/core-linux-arm64-musl-1.2.73.tgz?cache=0&sync_timestamp=1628066816314&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-linux-arm64-musl%2Fdownload%2F%40swc%2Fcore-linux-arm64-musl-1.2.73.tgz}
+    name: '@swc/core-linux-arm64-musl'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-linux-x64-gnu/1.2.73:
+    resolution: {integrity: sha1-G62bDbX4SWv2NEANewq6RfVSXPI=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-linux-x64-gnu/download/@swc/core-linux-x64-gnu-1.2.73.tgz?cache=0&sync_timestamp=1628066800561&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-linux-x64-gnu%2Fdownload%2F%40swc%2Fcore-linux-x64-gnu-1.2.73.tgz}
+    name: '@swc/core-linux-x64-gnu'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-linux-x64-musl/1.2.73:
+    resolution: {integrity: sha1-PVfmwmEvi5rAZUuXc3xu7KCeHK4=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-linux-x64-musl/download/@swc/core-linux-x64-musl-1.2.73.tgz?cache=0&sync_timestamp=1628066801903&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-linux-x64-musl%2Fdownload%2F%40swc%2Fcore-linux-x64-musl-1.2.73.tgz}
+    name: '@swc/core-linux-x64-musl'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-win32-arm64-msvc/1.2.73:
+    resolution: {integrity: sha1-3adXrvjEAM7Mpeb/yQEpf+nF+go=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-win32-arm64-msvc/download/@swc/core-win32-arm64-msvc-1.2.73.tgz?cache=0&sync_timestamp=1628066817710&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-win32-arm64-msvc%2Fdownload%2F%40swc%2Fcore-win32-arm64-msvc-1.2.73.tgz}
+    name: '@swc/core-win32-arm64-msvc'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-win32-ia32-msvc/1.2.73:
+    resolution: {integrity: sha1-eTLDNOC4IFXqsQ4RVB52+5na7Kk=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-win32-ia32-msvc/download/@swc/core-win32-ia32-msvc-1.2.73.tgz?cache=0&sync_timestamp=1628066804363&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-win32-ia32-msvc%2Fdownload%2F%40swc%2Fcore-win32-ia32-msvc-1.2.73.tgz}
+    name: '@swc/core-win32-ia32-msvc'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core-win32-x64-msvc/1.2.73:
+    resolution: {integrity: sha1-+T7rlgo4RsHdN/EfzrtW+RpAI3c=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core-win32-x64-msvc/download/@swc/core-win32-x64-msvc-1.2.73.tgz?cache=0&sync_timestamp=1628066799876&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore-win32-x64-msvc%2Fdownload%2F%40swc%2Fcore-win32-x64-msvc-1.2.73.tgz}
+    name: '@swc/core-win32-x64-msvc'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dev: true
+    optional: true
+
+  registry.nlark.com/@swc/core/1.2.73:
+    resolution: {integrity: sha1-U3ZYecGYFfX7qM+fAHtCEoqTcS4=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/core/download/@swc/core-1.2.73.tgz?cache=0&sync_timestamp=1628066820284&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40swc%2Fcore%2Fdownload%2F%40swc%2Fcore-1.2.73.tgz}
+    name: '@swc/core'
+    version: 1.2.73
+    engines: {node: '>=10'}
+    dependencies:
+      '@node-rs/helper': registry.nlark.com/@node-rs/helper/1.2.1
+    optionalDependencies:
+      '@swc/core-android-arm64': registry.nlark.com/@swc/core-android-arm64/1.2.73
+      '@swc/core-darwin-arm64': registry.nlark.com/@swc/core-darwin-arm64/1.2.73
+      '@swc/core-darwin-x64': registry.nlark.com/@swc/core-darwin-x64/1.2.73
+      '@swc/core-freebsd-x64': registry.nlark.com/@swc/core-freebsd-x64/1.2.73
+      '@swc/core-linux-arm-gnueabihf': registry.nlark.com/@swc/core-linux-arm-gnueabihf/1.2.73
+      '@swc/core-linux-arm64-gnu': registry.nlark.com/@swc/core-linux-arm64-gnu/1.2.73
+      '@swc/core-linux-arm64-musl': registry.nlark.com/@swc/core-linux-arm64-musl/1.2.73
+      '@swc/core-linux-x64-gnu': registry.nlark.com/@swc/core-linux-x64-gnu/1.2.73
+      '@swc/core-linux-x64-musl': registry.nlark.com/@swc/core-linux-x64-musl/1.2.73
+      '@swc/core-win32-arm64-msvc': registry.nlark.com/@swc/core-win32-arm64-msvc/1.2.73
+      '@swc/core-win32-ia32-msvc': registry.nlark.com/@swc/core-win32-ia32-msvc/1.2.73
+      '@swc/core-win32-x64-msvc': registry.nlark.com/@swc/core-win32-x64-msvc/1.2.73
+    dev: true
+
+  registry.nlark.com/@swc/jest/0.1.4:
+    resolution: {integrity: sha1-GuQeI7me/oD8+SiXzIA9l5stjko=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@swc/jest/download/@swc/jest-0.1.4.tgz}
+    name: '@swc/jest'
+    version: 0.1.4
+    dependencies:
+      '@swc/core': registry.nlark.com/@swc/core/1.2.73
+    dev: true
+
+  registry.nlark.com/debug/2.6.9:
+    resolution: {integrity: sha1-XRKFFd8TT/Mn6QpMk/Tgd6U2NB8=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/debug/download/debug-2.6.9.tgz}
+    name: debug
+    version: 2.6.9
+    dependencies:
+      ms: 2.0.0
+    dev: true
+
+  registry.nlark.com/ee-first/1.1.1:
+    resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/ee-first/download/ee-first-1.1.1.tgz}
+    name: ee-first
+    version: 1.1.1
+    dev: true
+
+  registry.nlark.com/mime/1.6.0:
+    resolution: {integrity: sha1-Ms2eXGRVO9WNGaVor0Uqz/BJgbE=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/mime/download/mime-1.6.0.tgz}
+    name: mime
+    version: 1.6.0
+    engines: {node: '>=4'}
+    hasBin: true
+    dev: true
+
+  registry.nlark.com/proxy-middleware/0.15.0:
+    resolution: {integrity: sha1-o/3xvvtzD5UZZYcqwvYHTGFHelY=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/proxy-middleware/download/proxy-middleware-0.15.0.tgz}
+    name: proxy-middleware
+    version: 0.15.0
+    engines: {node: '>=0.8.0'}
+    dev: true
+
+  registry.nlark.com/send/0.17.1:
+    resolution: {integrity: sha1-wdiwWfeQD3Rm3Uk4vcROEd2zdsg=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/send/download/send-0.17.1.tgz}
+    name: send
+    version: 0.17.1
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      debug: registry.nlark.com/debug/2.6.9
+      depd: 1.1.2
+      destroy: 1.0.4
+      encodeurl: 1.0.2
+      escape-html: 1.0.3
+      etag: 1.8.1
+      fresh: 0.5.2
+      http-errors: 1.7.3
+      mime: registry.nlark.com/mime/1.6.0
+      ms: 2.1.1
+      on-finished: 2.3.0
+      range-parser: 1.2.1
+      statuses: 1.5.0
     dev: true
