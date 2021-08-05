@@ -1,6 +1,5 @@
-import { directionType } from './split-board.view';
-import type SplitBoardView from './split-board.view';
-import type SplitItemView from './split-item.view';
+import { directionType } from './type';
+import type { ISplitBoardView } from './type';
 
 export default class SplitBoardController {
   private expandMoveHandler!: (event: MouseEvent) => void;
@@ -14,7 +13,7 @@ export default class SplitBoardController {
   private expandActive = false;
   private expandType = 0; // 是否超过偏移值 0 / 1 expand hor | 2 expand ver | 3 merge hor | 4 merge ver
 
-  constructor(private view: SplitBoardView) {
+  constructor(private view: ISplitBoardView) {
     this.expandMoveHandler = (event: MouseEvent) => {
       this.liveResize(event.clientX, event.clientY);
       this.checkExpandState(event.clientX, event.clientY);

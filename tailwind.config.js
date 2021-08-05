@@ -36,8 +36,7 @@ const widthConfigs = {
   80: '20rem',
   96: '24rem',
   100: '30rem',
-  auto: 'auto',
-  px: '1px',
+  'px': '1px',
   '1/2': '50%',
   '1/3': '33.333333%',
   '2/3': '66.666667%',
@@ -66,8 +65,8 @@ const widthConfigs = {
   '11/12': '91.666667%',
   full: '100%',
   screen: '100vw',
-  min: 'min-content',
-  max: 'max-content',
+  // min: 'min-content',
+  // max: 'max-content',
 };
 
 module.exports = {

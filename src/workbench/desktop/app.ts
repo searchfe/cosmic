@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { AppearanceType } from '@cosmic/core/common/appearance';
+import { AppearanceType } from '@cosmic/core/common';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 import { MenuGroupService } from '@cosmic/workbench/services/menu-group-service';
 import { applicationMenus } from './base-menu/config';
@@ -7,8 +7,7 @@ import Navigation from '../ui/components/navigation/navigation-bar.svelte';
 import StatusBar from '../ui/components/status/status-bar.svelte';
 import ResourcePage from '../ui/components/resource/resource.svelte';
 import PropertyPanel from '../ui/components/property/proterty.svelte';
-import SplitBoardView from '@cosmic/core/browser/layout/split-board.view';
-import SplitItemView from '@cosmic/core/browser/layout/split-item.view';
+import { SplitBoardView, SplitItemView } from '@cosmic/core/browser';
 export default class App {
   private container: Container;
   private context = new Map<string, Container>();

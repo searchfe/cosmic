@@ -10,6 +10,8 @@
     "experimentalDecorators": true,
     "types": ["jest"],
     "isolatedModules": false,
+    "noImplicitThis": false,
+    "strictPropertyInitialization": false,
     "module": "ESNext"
   },
   "include": ["**/*.ts", "**/*.css"]

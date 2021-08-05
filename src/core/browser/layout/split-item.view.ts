@@ -1,5 +1,4 @@
 import View from '../view';
-import { directionType } from './split-board.view';
 import SplitExpand from './split-expand.svelte';
 
 enum directionStyles {

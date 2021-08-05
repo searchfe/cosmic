@@ -5,9 +5,9 @@
 </style>
 
 <script lang="ts">
-  import inject from '@cosmic/core/parts/ioc/inject';
+  import { inject } from '@cosmic/core/parts';
 
-  import { AppearanceType } from '@cosmic/core/common/appearance';
+  import { AppearanceType } from '@cosmic/core/common';
   import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 
   let mod = AppearanceType.any;

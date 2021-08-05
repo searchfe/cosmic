@@ -1,103 +1,41 @@
-import svelte from 'rollup-plugin-svelte';
-import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import sveltePreprocess from 'svelte-preprocess';
-import typescript from '@rollup/plugin-typescript';
-import css from 'rollup-plugin-css-only';
-import smelte from 'smelte/rollup-plugin-smelte';
-import copy from 'rollup-plugin-copy';
-// import svg from 'rollup-plugin-svg-import';
+import { configs as externalConfig, externals, importmap as externalMap } from './scripts/rollup-external.config';
+import { configs as internalConfig, internals, importmap as internalMap } from './scripts/rollup-internal.config';
+import { pluginsOptions } from './scripts/rollup-plugin-svelte';
+import { syncFile } from './scripts/rollup-plugin-sync';
+import { writeFileSync } from 'fs';
 
-const tailwindConfig = require('./tailwind.config');
 
 const production = !process.env.ROLLUP_WATCH;
 
-// function serve() {
-//   let server;
-
-//   function toExit() {
-//     if (server) server.kill(0);
-//   }
-
-//   return {
-//     writeBundle() {
-//       if (server) return;
-//       server = require("child_process").spawn("npm", ["run", "start:frontend"], {
-//         stdio: ["ignore", "inherit", "inherit"],
-//         shell: true,
-//       });
-
-//       process.on("SIGTERM", toExit);
-//       process.on("exit", toExit);
-//     },
-//   };
-// }
-
-export default {
+export default [
+  ...externalConfig(),
+  ...internalConfig(),
+  {
   input: 'src/workbench/desktop/main.ts',
   output: {
     sourcemap: !production,
-    format: 'iife',
+    format: 'es',
     name: 'fluide',
     file: 'dist/workbench/desktop/main.js',
   },
+  external: [...externals, ...internals],
   plugins: [
-    copy({
-      targets: [{ src: 'src/public/**/*', dest: 'dist/workbench/desktop' }],
+    syncFile('src/public', 'dist/workbench/desktop', { html: true, ico: true, js: true }, (src, dest, text) => {
+      if (src !== 'src/public/index.html') return;
+      const data = { imports: {...externalMap().imports, ...internalMap().imports} };
+      return text.toString().replace('__importmap_config__', JSON.stringify(data,null,''));
     }),
-    // svg({stringify: true}),
-    svelte({
-      preprocess: sveltePreprocess({
-        sass: true,
-      }),
-      compilerOptions: {
-        // enable run-time checks when not in production
-        dev: !production,
-        accessors: true,
-      },
-    }),
-    smelte({
-      purge: production,
-      output: 'dist/workbench/desktop/assets/global.css', // it defaults to static/global.css which is probably what you expect in Sapper
-      postcss: [], // Your PostCSS plugins
-      whitelist: [], // Array of classnames whitelisted from purging
-      whitelistPatterns: [], // Same as above, but list of regexes
-      tailwind: tailwindConfig, // Any other props will be applied on top of default Smelte tailwind.config.js
-    }),
-    // we'll extract any component CSS out into
-    // a separate file - better for performance
-    css({
-      output: 'assets/main.css',
-      mangle: production ? true : false,
-      compress: production ? true : false,
-    }),
-
-    // If you have external dependencies installed from
-    // npm, you'll most likely need these plugins. In
-    // some cases you'll need additional configuration -
-    // consult the documentation for details:
-    // https://github.com/rollup/plugins/tree/master/packages/commonjs
-    resolve({
-      browser: true,
-      dedupe: ['svelte'],
-    }),
-    commonjs({}),
-    typescript({
-      tsconfig: production ? './tsconfig.svelte.prod.json' : './tsconfig.svelte.json',
-      sourceMap: !production,
-      inlineSources: !production,
-    }),
-
+    ...pluginsOptions('workbench/desktop', true),
     // In dev mode, call `npm run start` once
     // the bundle has been generated
     !production &&
       serve({
         host: 'localhost',
         port: 5000,
-        contentBase: 'dist/workbench/desktop',
+        contentBase: 'dist/',
         // verbose: true,
       }),
 
@@ -120,4 +58,4 @@ export default {
   watch: {
     clearScreen: false,
   },
-};
+}];

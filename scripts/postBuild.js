@@ -103,7 +103,7 @@ const copyPublicFolderAndMinify = (folderPath, destinationPath) => {
 
         const unminifiedCorrected = unminified.replace(
           '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src http://localhost:*; connect-src ws://localhost:*">',
-          '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'">'
+          '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'">',
         );
 
         const minifierOptions = {
@@ -121,7 +121,7 @@ const copyPublicFolderAndMinify = (folderPath, destinationPath) => {
           removeScriptTypeAttributes: true,
           removeStyleLinkTypeAttributes: true,
           useShortDoctype: true,
-          quoteCharacter: "'",
+          quoteCharacter: '\'',
         };
         const minified = HTMLMinifier.minify(unminifiedCorrected, minifierOptions);
         writeFileSync(newPath, minified);
@@ -146,9 +146,16 @@ const cleanTsconfig = () => {
 };
 
 const bundledElectronPath = join(__dirname, '..', 'build');
+const buildSveltePath = join(bundledElectronPath,'..', 'public');
+const publicPath = join(bundledElectronPath, 'public');
+mkdirSync(bundledElectronPath);
+mkdirSync(buildSveltePath);
+mkdirSync(publicPath);
+
 
 const jsFiles = getAllJSFiles(bundledElectronPath);
 minifyJSFiles(jsFiles);
 
-copyPublicFolderAndMinify(join(__dirname, '..', 'public'), join(bundledElectronPath, 'public'));
+copyPublicFolderAndMinify(buildSveltePath, publicPath);
 cleanTsconfig();
+rmdirSync(buildSveltePath);

@@ -1,5 +1,5 @@
 import Color from 'color';
-import ColorRef from '@cosmic/core/common/color-ref';
+import ColorRef from '../../common/color-ref';
 
 function makeColor(anyColorHex: string, lightColorHex?: string, darkColorHex?: string) {
   return new ColorRef(Color(anyColorHex), Color(lightColorHex), Color(darkColorHex));

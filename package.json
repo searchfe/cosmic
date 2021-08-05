@@ -115,6 +115,7 @@
     "eslint-plugin-jsdoc": "^32.0.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-svelte3": "^3.2.0",
+    "fast-glob": "^3.2.7",
     "html-minifier": "^4.0.0",
     "jest": "^27.0.6",
     "@swc/jest": "^0.1.4",

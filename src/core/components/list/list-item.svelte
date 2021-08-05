@@ -49,7 +49,6 @@
     .add('break-keep-all')
     .add('hover:bg-cgray-500', !selected)
     .get();
-  console.log(c);
 </script>
 
 <!-- use:ripple  -->

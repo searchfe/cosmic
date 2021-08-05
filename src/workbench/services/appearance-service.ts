@@ -1,7 +1,7 @@
 import { injectable, inject, ContainerModule } from 'inversify';
 import { EventEmitter2 } from 'eventemitter2';
 
-import { AppearanceType } from '@cosmic/core/common/appearance';
+import { AppearanceType } from '@cosmic/core/common';
 
 @injectable()
 /** 外观设置服务 */

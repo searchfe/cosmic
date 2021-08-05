@@ -41,6 +41,7 @@ specifiers:
   eslint-plugin-prefer-arrow: ^1.2.3
   eslint-plugin-svelte3: ^3.2.0
   eventemitter2: ^6.4.4
+  fast-glob: ^3.2.7
   html-minifier: ^4.0.0
   inversify: ^5.1.1
   jest: ^27.0.6
@@ -129,6 +130,7 @@ devDependencies:
   eslint-plugin-jsdoc: 32.3.4_eslint@7.27.0
   eslint-plugin-prefer-arrow: 1.2.3_eslint@7.27.0
   eslint-plugin-svelte3: 3.2.0_eslint@7.27.0+svelte@3.38.2
+  fast-glob: 3.2.7
   html-minifier: 4.0.0
   jest: 27.0.6
   less: 4.1.1
