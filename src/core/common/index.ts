@@ -1,5 +1,3 @@
 import { AppearanceType } from './appearance';
 
-export {
-    AppearanceType,
-};
+export { AppearanceType };

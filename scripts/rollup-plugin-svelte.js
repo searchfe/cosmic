@@ -11,15 +11,16 @@ import { syncFile } from './rollup-plugin-sync';
 
 import smelte from './rollup-plugin-smelte.js';
 
-
 const tailwindConfig = require('./tailwind.config');
 
 const production = !process.env.ROLLUP_WATCH;
 
-export function pluginsOptions (path, separateCss) {
-    return [
-      syncFile(`src/${path}`, `dist/${path}`, null, (a, b) => {console.log(a, b);}),
-      svelte({
+export function pluginsOptions(path, separateCss) {
+  return [
+    syncFile(`src/${path}`, `dist/${path}`, null, (a, b) => {
+      console.log(a, b);
+    }),
+    svelte({
       preprocess: sveltePreprocess({
         sass: true,
       }),
@@ -37,17 +38,16 @@ export function pluginsOptions (path, separateCss) {
       whitelist: [], // Array of classnames whitelisted from purging
       whitelistPatterns: [], // Same as above, but list of regexes
       tailwind: tailwindConfig, // Any other props will be applied on top of default Smelte tailwind.config.js
-      
     }),
     // we'll extract any component CSS out into
     // a separate file - better for performance
-  
+
     // separateCss && css({
     //   output: 'main.css',
     //   mangle: production ? true : false,
     //   compress: production ? true : false,
     // }),
-  
+
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
     // some cases you'll need additional configuration -
@@ -62,6 +62,6 @@ export function pluginsOptions (path, separateCss) {
       tsconfig: production ? './tsconfig.svelte.prod.json' : './tsconfig.svelte.json',
       sourceMap: !production,
       inlineSources: !production,
-    })];
-  }
-  
+    }),
+  ];
+}

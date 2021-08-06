@@ -58,7 +58,7 @@
     "lint:electron": "eslint -c eslint.app.json --ext .js,.ts src/app",
     "lint:svelte": "eslint -c eslint.svelte.json --ext .js,.ts,.svelte src/workbench",
     "lint": "npm-run-all -s lint:electron lint:svelte",
-    "prepublishOnly": "npm-run-all -s test lint",
+    "prepublishOnly": "npm-run-all -s test lint format",
     "preversion": "npm-run-all -s lint format",
     "typecheck-app": "tsc --noEmit -p ./tsconfig.app.json",
     "typecheck-svelte": "tsc --noEmit -p ./tsconfig.svelte.json",

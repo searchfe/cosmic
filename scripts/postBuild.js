@@ -146,12 +146,11 @@ const cleanTsconfig = () => {
 };
 
 const bundledElectronPath = join(__dirname, '..', 'build');
-const buildSveltePath = join(bundledElectronPath,'..', 'public');
+const buildSveltePath = join(bundledElectronPath, '..', 'public');
 const publicPath = join(bundledElectronPath, 'public');
 mkdirSync(bundledElectronPath);
 mkdirSync(buildSveltePath);
 mkdirSync(publicPath);
-
 
 const jsFiles = getAllJSFiles(bundledElectronPath);
 minifyJSFiles(jsFiles);

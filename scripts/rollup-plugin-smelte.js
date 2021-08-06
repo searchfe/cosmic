@@ -50,9 +50,11 @@ const postcssProcessor = ({
 
 function moveGlobalCssToStatic({ dir, file }, output) {
   let directory;
-  if (dir && !file) { // single file asset
+  if (dir && !file) {
+    // single file asset
     directory = dir;
-  } else if (!dir && file) { // chunks
+  } else if (!dir && file) {
+    // chunks
     directory = path.dirname(file);
   }
 
@@ -65,7 +67,7 @@ function moveGlobalCssToStatic({ dir, file }, output) {
   if (fs.existsSync(path.resolve(directory, cssFile))) {
     fs.copyFileSync(path.resolve(directory, cssFile), path.resolve(output));
     fs.unlinkSync(path.resolve(directory, cssFile));
-  
+
     console.log(
       `rollup-plugin-smelte: 
         moved ${cssFile} 
@@ -75,10 +77,9 @@ function moveGlobalCssToStatic({ dir, file }, output) {
   }
 }
 
-const plugins = config => postcssProcessor(config || {});
+const plugins = (config) => postcssProcessor(config || {});
 
-export default (config = {}) =>
-{
+export default (config = {}) => {
   const defaultOutput = './static/global.css';
   const pcss = postcss({
     plugins: plugins(config),
@@ -91,7 +92,7 @@ export default (config = {}) =>
   // to move the global.css file located under rollup.config.js's rollup.output to config parameter's output
 
   const old_writeBundle = pcss.writeBundle;
-  pcss.writeBundle = function() {
+  pcss.writeBundle = function () {
     if (old_writeBundle) {
       old_writeBundle.apply(this, arguments);
     }

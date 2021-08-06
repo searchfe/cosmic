@@ -9,52 +9,52 @@ const production = !process.env.ROLLUP_WATCH;
 export const externals = ['reflect-metadata', 'color'];
 
 function normalize() {
-    const list = [];
-    externals.forEach(moduleId => {
-        const config = require(`${moduleId}/package.json`);
-        if (!config) return;
-        const srcPath = `node_modules/${moduleId}/${config.main || 'index.js'}`;
-        if(!existsSync(srcPath))return;
-        list.push({
-            moduleId: moduleId,
-            src: srcPath,
-            path: 'core/external',
-            main: `/${moduleId}.js`,
-        });
+  const list = [];
+  externals.forEach((moduleId) => {
+    const config = require(`${moduleId}/package.json`);
+    if (!config) return;
+    const srcPath = `node_modules/${moduleId}/${config.main || 'index.js'}`;
+    if (!existsSync(srcPath)) return;
+    list.push({
+      moduleId: moduleId,
+      src: srcPath,
+      path: 'core/external',
+      main: `/${moduleId}.js`,
     });
-    return list;
+  });
+  return list;
 }
 
-function options(config){
-    return {
-        input: config.src,
-        output: {
-            sourcemap: !production,
-            format: 'es',
-            file: `dist/${config.path}${config.main || ''}`,
-        },
-        plugins: [
-        resolve({
-            browser: true,
+function options(config) {
+  return {
+    input: config.src,
+    output: {
+      sourcemap: !production,
+      format: 'es',
+      file: `dist/${config.path}${config.main || ''}`,
+    },
+    plugins: [
+      resolve({
+        browser: true,
+      }),
+      commonjs({}),
+      production &&
+        terser({
+          compress: true,
+          mangle: true,
         }),
-        commonjs({}),
-        production &&
-            terser({
-            compress: true,
-            mangle: true,
-            }),
-        ],
-    };
+    ],
+  };
 }
 export function configs() {
-    return normalize().map(config => options(config));
+  return normalize().map((config) => options(config));
 }
 export function importmap() {
-    const imports = {};
-    normalize().forEach(c => {
-        if (c) imports[c.moduleId] = '/' + c.path + (c.main || '');
-    });
-    return {
-        imports,
-    }; 
+  const imports = {};
+  normalize().forEach((c) => {
+    if (c) imports[c.moduleId] = '/' + c.path + (c.main || '');
+  });
+  return {
+    imports,
+  };
 }
