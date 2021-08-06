@@ -72,7 +72,7 @@ function moveGlobalCssToStatic({ dir, file }, output) {
       `rollup-plugin-smelte: 
         moved ${cssFile} 
         from ${path.resolve(directory, cssFile)} 
-        to ${path.resolve(output)}`,
+        to ${path.resolve(output)}`
     );
   }
 }

@@ -57,7 +57,7 @@
     "format": "npm run format:check -- --write",
     "lint:electron": "eslint -c eslint.app.json --ext .js,.ts src/app",
     "lint:svelte": "eslint -c eslint.svelte.json --ext .js,.ts,.svelte src/workbench src/core src/modules",
-    "lint:scripts": "eslint --ext .js scripts/", 
+    "lint:scripts": "eslint --ext .js scripts/",
     "lint": "npm-run-all -s lint:electron lint:svelte lint:scripts",
     "prepublishOnly": "npm-run-all -s test lint format",
     "preversion": "npm-run-all -s lint format",
@@ -155,7 +155,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
-    "pre-push": "npm run typecheck"
+    "pre-push": "npm run typecheck && npm run format:check"
   },
   "lint-staged": {
     "src/app/**/*.{js,ts,svelte}": "eslint -c eslint.app.json",
