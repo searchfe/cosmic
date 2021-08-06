@@ -17,7 +17,7 @@ export function syncFile(src, dest, extnames, transform) {
     name: 'copy',
     buildEnd: function () {
       const files = fg.sync([`${src}/**/*.{${list.join(',')}}`]);
-      console.log('----->', src, files);
+      console.log('copy----->', src, files);
       files.forEach((file) => {
         const r = new RegExp(`^${src}`);
         const d = file.replace(r, dest);

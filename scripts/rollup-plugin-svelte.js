@@ -17,9 +17,7 @@ const production = !process.env.ROLLUP_WATCH;
 
 export function pluginsOptions(path, separateCss) {
   return [
-    syncFile(`src/${path}`, `dist/${path}`, null, (a, b) => {
-      console.log(a, b);
-    }),
+    syncFile(`src/${path}`, `dist/${path}`),
     svelte({
       preprocess: sveltePreprocess({
         sass: true,
