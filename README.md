@@ -31,6 +31,8 @@ The entire source code of the program is divided into three modules (packages) t
   Include common dependencies, such as components, utils, ipc.
 - [`src/app`](src/app)
   Electron [**main script**](https://www.electronjs.org/docs/tutorial/quick-start#create-the-main-script-file).
+- [`src/modules`](src/modules)
+  Modules of tools
 - [`src/workbench`](src/workbench)
   Electron [**web page**](https://www.electronjs.org/docs/tutorial/quick-start#create-a-web-page).
 
