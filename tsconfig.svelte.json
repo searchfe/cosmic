@@ -20,6 +20,6 @@
     "esModuleInterop": true,
     "isolatedModules": true
   },
-  "include": ["src/workbench/**/*", "src/core/**/*"],
+  "include": ["src/workbench/**/*", "src/core/**/*", "src/modules/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts", "__sapper__/*", "public/*", "dist/*"]
 }
