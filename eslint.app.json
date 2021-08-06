@@ -98,16 +98,7 @@
     "eol-last": "off",
     "eqeqeq": ["error", "smart"],
     "guard-for-in": "error",
-    "id-blacklist": [
-      "error",
-      "any",
-      "Number",
-      "number",
-      "String",
-      "string",
-      "Boolean",
-      "boolean"
-    ],
+    "id-blacklist": ["error", "any", "Number", "number", "String", "string", "Boolean", "boolean"],
     "id-match": "error",
     "jsdoc/check-alignment": "error",
     "jsdoc/check-indentation": "error",
