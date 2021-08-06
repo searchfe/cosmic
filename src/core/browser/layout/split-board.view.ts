@@ -49,7 +49,7 @@ export default class SplitBoardView extends View implements ISplitBoardView {
   public insertItemAt(item: SplitItemView, pos?: number): void {
     pos = pos === undefined ? this.items.length : pos;
     this.items.splice(pos, 0, item);
-    if (pos == 0) {
+    if (pos === 0) {
       this.root.appendChild(item.root);
     } else {
       this.items[pos - 1].root.after(item.root);
@@ -57,12 +57,12 @@ export default class SplitBoardView extends View implements ISplitBoardView {
   }
 
   public setCursor(
-    type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize' = '',
+    type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize' = ''
   ): void {
     this.root.style.cursor = type;
   }
   public waitForMergeAtItem(index: number, direction: 'w' | 'e' | 'n' | 's'): void {
-    if (this._waitForMergeItem == this.items[index]) {
+    if (this._waitForMergeItem === this.items[index]) {
       return;
     }
     this.cancelForMerge();
@@ -97,12 +97,12 @@ export default class SplitBoardView extends View implements ISplitBoardView {
       minSize: 15,
       direction,
       snapOffset: 0,
-      gutterStyle: () => (direction == 'vertical' ? { height: '3px' } : { width: '3px' }),
+      gutterStyle: () => (direction === 'vertical' ? { height: '3px' } : { width: '3px' }),
     });
   }
 
   private destorySplit() {
-    this.splitInstance && this.splitInstance.destroy();
+    if (this.splitInstance) this.splitInstance.destroy();
     this.splitInstance = null;
   }
   // 切分列
@@ -151,7 +151,7 @@ export default class SplitBoardView extends View implements ISplitBoardView {
     const newItem = new SplitItemView().setContent(document.createElement('div'));
     this.destorySplit();
     this.insertItemAt(newItem, index + 1);
-    this.applySplit(this.direction == directionType.col ? 'horizontal' : 'vertical', newSizes);
+    this.applySplit(this.direction === directionType.col ? 'horizontal' : 'vertical', newSizes);
   }
 
   /** live resize after expanded  */
@@ -160,25 +160,25 @@ export default class SplitBoardView extends View implements ISplitBoardView {
     // const item = this.items[index];
     let max = length;
     if (this.items[index + 1]) {
-      max += this.items[index + 1].root[this.direction == directionType.col ? 'clientWidth' : 'clientHeight'];
+      max += this.items[index + 1].root[this.direction === directionType.col ? 'clientWidth' : 'clientHeight'];
     }
     const r = (position - start) / max;
     if (position - start < 30) return;
     if (max - position + start < 30) return;
-    let other = 0,
-      sum = 0;
+    let other = 0;
+    let sum = 0;
     this.splitInstance.getSizes().forEach((size, i) => {
       sum += size;
-      if (i == index || i == index + 1) return;
+      if (i === index || i === index + 1) return;
       other += size;
     });
     let newSize = 0;
     const newSizes: number[] = [];
     this.splitInstance.getSizes().forEach((size, i) => {
-      if (index == i) {
+      if (index === i) {
         newSize = (sum - other) * r;
         newSizes.push(newSize);
-      } else if (index + 1 == i) {
+      } else if (index + 1 === i) {
         newSizes.push(sum - other - newSize);
       } else if (index !== i) {
         newSizes.push(size);
@@ -191,7 +191,7 @@ export default class SplitBoardView extends View implements ISplitBoardView {
     const r = (position - start) / length;
     if (r <= 0 || r >= 1) return undefined;
     const newSizes: number[] = [];
-    this.splitInstance &&
+    if (this.splitInstance) {
       this.splitInstance.getSizes().forEach((size, i) => {
         if (index !== i) {
           newSizes.push(size);
@@ -200,6 +200,7 @@ export default class SplitBoardView extends View implements ISplitBoardView {
         const w = size * r;
         newSizes.push(w, size - w);
       });
+    }
     return newSizes;
   }
 }

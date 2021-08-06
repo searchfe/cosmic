@@ -106,9 +106,7 @@
       "String",
       "string",
       "Boolean",
-      "boolean",
-      "Undefined",
-      "undefined"
+      "boolean"
     ],
     "id-match": "error",
     "jsdoc/check-alignment": "error",
@@ -132,7 +130,7 @@
     "no-irregular-whitespace": "off",
     "no-multiple-empty-lines": "off",
     "no-new-wrappers": "error",
-    "no-shadow": [
+    "@typescript-eslint/no-shadow": [
       "error",
       {
         "hoist": "all"
@@ -147,7 +145,7 @@
     "no-var": "error",
     "object-shorthand": "error",
     "one-var": ["error", "never"],
-    "prefer-arrow/prefer-arrow-functions": "error",
+    "prefer-arrow/prefer-arrow-functions": "off",
     "prefer-const": "error",
     "quote-props": "off",
     "radix": "error",

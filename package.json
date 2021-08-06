@@ -56,8 +56,9 @@
     "format:check": "prettier --check \"{src,scripts}/**/**/*.{ts,svelte,css,md,json,js}\" \"*.{ts,svelte,css,md,json,js}\"",
     "format": "npm run format:check -- --write",
     "lint:electron": "eslint -c eslint.app.json --ext .js,.ts src/app",
-    "lint:svelte": "eslint -c eslint.svelte.json --ext .js,.ts,.svelte src/workbench",
-    "lint": "npm-run-all -s lint:electron lint:svelte",
+    "lint:svelte": "eslint -c eslint.svelte.json --ext .js,.ts,.svelte src/workbench src/core src/modules",
+    "lint:scripts": "eslint --ext .js scripts/", 
+    "lint": "npm-run-all -s lint:electron lint:svelte lint:scripts",
     "prepublishOnly": "npm-run-all -s test lint format",
     "preversion": "npm-run-all -s lint format",
     "typecheck-app": "tsc --noEmit -p ./tsconfig.app.json",
@@ -157,7 +158,9 @@
     "pre-push": "npm run typecheck"
   },
   "lint-staged": {
-    "*.{js,ts,svelte}": "eslint --cache --fix"
+    "src/app/**/*.{js,ts,svelte}": "eslint -c eslint.app.json",
+    "src/{core,app,parts,modules,workbench}/**/*.{js,ts,svelte}": "eslint -c eslint.svelte.json",
+    "scripts/**/*.js": "eslint"
   },
   "build": {
     "productName": "Electron Svelte Typescript",

@@ -32,7 +32,7 @@ export default class SplitBoardController {
     const target = event.target as HTMLElement;
     let index = -1;
     this.view.items.forEach((item, i) => {
-      if (target && item.root == target.parentElement && target.classList.contains('split-expand')) index = i;
+      if (target && item.root === target.parentElement && target.classList.contains('split-expand')) index = i;
     });
     if (index === -1) {
       return;
@@ -71,10 +71,10 @@ export default class SplitBoardController {
   }
   private liveResize(clientX: number, clientY: number) {
     const item = this.view.items[this.activeId];
-    if (this.expandType == 1 && this.view.direction == directionType.col) {
+    if (this.expandType === 1 && this.view.direction === directionType.col) {
       // horizontal expand column
       this.view.resizeAt(this.activeId, item.root.getBoundingClientRect().left, item.root.clientWidth, clientX);
-    } else if (this.expandType == 2 && this.view.direction == directionType.row) {
+    } else if (this.expandType === 2 && this.view.direction === directionType.row) {
       // vertical expand row
       this.view.resizeAt(this.activeId, item.root.getBoundingClientRect().top, item.root.clientHeight, clientY);
     }
@@ -83,7 +83,7 @@ export default class SplitBoardController {
     const offsetX = this.startX - clientX;
     const offsetY = this.startY - clientY;
     /** expand mode */
-    if (this.expandType == 0 && offsetX > 0 && offsetY > 0 && (offsetX > 5 || offsetY > 5)) {
+    if (this.expandType === 0 && offsetX > 0 && offsetY > 0 && (offsetX > 5 || offsetY > 5)) {
       if (offsetX > offsetY) {
         this.view.setCursor('col-resize');
       } else {
@@ -97,7 +97,7 @@ export default class SplitBoardController {
       this.view.waitForMergeAtItem(this.activeId + 1, 'e');
       return;
     }
-    if (this.expandType == 3 && offsetX > 5) {
+    if (this.expandType === 3 && offsetX > 5) {
       this.view.setCursor('w-resize');
       this.view.waitForMergeAtItem(this.activeId, 'w');
       return;
@@ -109,7 +109,7 @@ export default class SplitBoardController {
       this.view.waitForMergeAtItem(this.activeId + 1, 's');
       return;
     }
-    if (this.expandType == 4 && offsetY > 5) {
+    if (this.expandType === 4 && offsetY > 5) {
       this.view.setCursor('n-resize');
       this.view.waitForMergeAtItem(this.activeId, 'n');
       return;
@@ -129,8 +129,8 @@ export default class SplitBoardController {
       this.view.splitRowAt(this.activeId, clientX, clientY);
     }
     if (
-      (this.expandType == 1 && this.view.direction == directionType.row) ||
-      (this.expandType == 2 && this.view.direction == directionType.col)
+      (this.expandType === 1 && this.view.direction === directionType.row) ||
+      (this.expandType === 2 && this.view.direction === directionType.col)
     ) {
       this.unactiveExpand();
     }

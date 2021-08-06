@@ -1,6 +1,6 @@
 import keycode from 'keycode';
 
-export function throttle(func: any, wait: number) {
+export const throttle = (func: any, wait: number) => {
   let lastTime: any;
   return function (...rest: any[]) {
     if (!lastTime || new Date().getTime() - lastTime > wait) {
@@ -8,7 +8,7 @@ export function throttle(func: any, wait: number) {
       func(...rest);
     }
   };
-}
+};
 
 export function angleBetween(startX: number, startY: number, endX: number, endY: number) {
   let r = (180 * Math.atan2(endY - startY, endX - startX)) / Math.PI + 90;
@@ -43,14 +43,14 @@ export function normalizeShortcutKey(
   let shortcutKeyText = '';
   keys.split(',').forEach((key: string) => {
     let text;
-    if (parseFloat(key).toString() == 'NaN') {
+    if (parseFloat(key).toString() === 'NaN') {
       // case string
       shortcutKeycodes.push(keycode(key));
       text = key;
     } else {
       // case number
-      shortcutKeycodes.push(parseInt(key));
-      text = keycode(parseInt(key));
+      shortcutKeycodes.push(parseInt(key, 10));
+      text = keycode(parseInt(key, 10));
     }
     shortcutKeyText = shortcutKeyText || text.substring(0, 1).toUpperCase();
   });

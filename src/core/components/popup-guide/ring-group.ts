@@ -13,7 +13,7 @@ export default class RingGroup {
   /** return if updated */
   public update(currentOffsetAngle: number) {
     let selected = Math.floor(currentOffsetAngle / this.pieceAngle + 0.5);
-    if (selected == this.length) selected = 0;
+    if (selected === this.length) selected = 0;
     if (this.selected !== selected) {
       this.selected = selected;
       return true;
