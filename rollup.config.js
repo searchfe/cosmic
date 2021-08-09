@@ -6,7 +6,7 @@ import { configs as internalConfig, internals, importmap as internalMap } from '
 import { configs as moduleConfig, modules, importmap as moduleMap } from './scripts/rollup-module.config';
 import { pluginsOptions } from './scripts/rollup-plugin-svelte';
 import { syncFile } from './scripts/rollup-plugin-sync';
-import { writeFileSync } from 'fs';
+import { jsonFiles, importmap as jsonMap, jsonSync } from './scripts/rollup-json.config';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -22,13 +22,21 @@ export default [
       name: 'fluide',
       file: 'dist/workbench/desktop/main.js',
     },
-    external: [...externals, ...internals, ...modules],
+    external: [...externals, ...internals, ...modules, ...jsonFiles],
     plugins: [
       syncFile('src/public', 'dist/workbench/desktop', { html: true, ico: true, js: true }, (src, dest, text) => {
         if (src !== 'src/public/index.html') return;
-        const data = { imports: { ...externalMap().imports, ...internalMap().imports, ...moduleMap().imports } };
+        const data = {
+          imports: {
+            ...externalMap().imports,
+            ...internalMap().imports,
+            ...moduleMap().imports,
+            ...jsonMap().imports,
+          },
+        };
         return text.toString().replace('__importmap_config__', JSON.stringify(data, null, ''));
       }),
+      jsonSync,
       ...pluginsOptions('workbench/desktop', true),
       // In dev mode, call `npm run start` once
       // the bundle has been generated

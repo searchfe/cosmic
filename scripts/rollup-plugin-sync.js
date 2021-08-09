@@ -3,6 +3,9 @@ import fg from 'fast-glob';
 import { ensureDirSync, copyFileSync, readFileSync, writeFileSync } from 'fs-extra';
 
 export function syncFile(src, dest, extnames, transform) {
+  if (extnames && extnames.default === 'false') {
+    extnames = {};
+  }
   extnames = {
     woff2: true,
     svg: true,
@@ -24,10 +27,11 @@ export function syncFile(src, dest, extnames, transform) {
         ensureDirSync(dirname(d));
         let rs;
         if (transform) {
-          rs = transform(file, dest, readFileSync(file));
+          rs = transform(file, d, readFileSync(file));
+          if (rs && !Array.isArray(rs)) rs = [d, rs];
         }
         if (rs) {
-          writeFileSync(d, rs);
+          writeFileSync(rs[0], rs[1]);
         } else {
           copyFileSync(file, d);
         }

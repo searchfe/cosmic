@@ -7,6 +7,7 @@
       "@cosmic/workbench/ui/*": ["workbench/ui/*"],
       "@cosmic/core/*": ["core/*"]
     },
+    "resolveJsonModule": true,
     "experimentalDecorators": true,
     "types": ["jest"],
     "isolatedModules": false,

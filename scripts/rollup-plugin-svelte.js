@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
+import json from '@rollup/plugin-json';
 import { syncFile } from './rollup-plugin-sync';
 
 // import css from 'rollup-plugin-css-only';
@@ -61,5 +62,6 @@ export function pluginsOptions(path, separateCss) {
       sourceMap: !production,
       inlineSources: !production,
     }),
+    json(),
   ];
 }

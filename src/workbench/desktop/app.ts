@@ -8,6 +8,9 @@ import StatusBar from '../ui/components/status/status-bar.svelte';
 import ResourcePage from '../ui/components/resource/resource.svelte';
 import PropertyPanel from '../ui/components/property/proterty.svelte';
 import { SplitBoardView, SplitItemView } from '@cosmic/core/browser';
+
+import config from 'workbench/desktop/app.config.json';
+
 export default class App {
   private container: Container;
   private context = new Map<string, Container>();
@@ -21,6 +24,11 @@ export default class App {
     this.initNavigationBar();
     this.initFlowTable();
     this.initStatusBar();
+    this.initModules();
+  }
+
+  initModules(): void {
+    console.log(config);
   }
 
   initPreferences(): void {
