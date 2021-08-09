@@ -23,6 +23,7 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "resolveJsonModule": true,
     "types": ["node"]
   },
   "include": ["src/app/**/*"],
