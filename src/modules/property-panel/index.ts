@@ -1,7 +1,7 @@
 import Component from './index.svelte';
 import { SVController } from '@cosmic/core/parts';
 
-export default class ResourceExplorer extends SVController<null> {
+export default class PropertyPanel extends SVController<null> {
   initWithComponent(target: Element) {
     return new Component({
       target,

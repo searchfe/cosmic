@@ -1,5 +1,6 @@
 import { Container } from 'inversify';
 import { AppearanceType } from '@cosmic/core/common';
+import { ModuleFactory } from '@cosmic/core/parts';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
 import { MenuGroupService } from '@cosmic/workbench/services/menu-group-service';
 import { applicationMenus } from './base-menu/config';
@@ -7,7 +8,6 @@ import Navigation from '../ui/components/navigation/navigation-bar.svelte';
 import StatusBar from '../ui/components/status/status-bar.svelte';
 import ResourcePage from '../ui/components/resource/resource.svelte';
 import PropertyPanel from '../ui/components/property/proterty.svelte';
-import { SplitBoardView, SplitItemView } from '@cosmic/core/browser';
 
 import config from 'workbench/desktop/app.config.json';
 
@@ -20,28 +20,28 @@ export default class App {
     this.initPreferences();
     this.initStyle();
   }
-  bootstrap(): void {
+  async bootstrap() {
     this.initNavigationBar();
-    this.initFlowTable();
     this.initStatusBar();
-    this.initModules();
+    await this.initModules();
   }
 
-  initModules(): void {
-    console.log(config);
+  async initModules() {
+    const moduleFactory = new ModuleFactory(this.container);
+    this.container.bind('ModuleFactory').toDynamicValue(() => moduleFactory);
+
+    const workbench = await moduleFactory.load(config.workbench.id, config.workbench);
+    workbench.viewWillAppear();
+    this.root.appendChild(workbench.view());
+    workbench.viewDidAppear();
   }
 
-  initPreferences(): void {
+  initPreferences() {
     this.container.bind(AppearanceService).to(AppearanceService);
     this.container.bind(MenuGroupService).to(MenuGroupService);
   }
 
-  initStyle(): void {
-    // this.container.bind(ColorSet).to(ColorSet);
-    // const colorSetRoot = document.createElement('style');
-    // this.container.bind(ColorSetRoot).toDynamicValue(() => colorSetRoot);
-    // this.root.appendChild(colorSetRoot);
-    // this.container.get(ColorSet);
+  initStyle() {
     const aps = this.container.get(AppearanceService);
     aps.onModeChanged((type: AppearanceType) => this.initStyleMode(type));
     this.initStyleMode(AppearanceType.dark);
@@ -75,21 +75,6 @@ export default class App {
     for (const menu of applicationMenus) {
       groupMenu.getMenuInsatance().init(menu.title, menu.items);
     }
-  }
-
-  initFlowTable(): void {
-    const splitBoard = new SplitBoardView().setFlow('1');
-    const view0 = new SplitItemView().setContent(document.createElement('div'));
-    const view1 = new SplitItemView().setContent(document.createElement('div'));
-    const view2 = new SplitItemView().setContent(document.createElement('div'));
-    splitBoard.addColumn(view0);
-    splitBoard.addColumn(view1);
-    splitBoard.addColumn(view2);
-    splitBoard.applySplit('horizontal', [20, 60, 20]);
-
-    this.root.appendChild(splitBoard.root);
-    this.initResourcePanel(view0.contentView);
-    this.initPropertyPanel(view2.contentView);
   }
 
   initResourcePanel(container: HTMLElement): void {
