@@ -1,3 +1,36 @@
 {
-  "workbench": []
+  "workbench": {
+    "id": "modules/workbench",
+    "type": "col",
+    "minWidth": 1280,
+    "scale": [20, 40, 20, 20],
+    "modules": [
+      {
+        "id": "modules/resource-explorer"
+      },
+      {
+        "id": "modules/shape-canvas"
+      },
+      {
+        "id": "modules/property-panel"
+      },
+      {
+        "id": "modules/workbench",
+        "type": "row",
+        "minWidth": 1280,
+        "scale": [20, 60, 20],
+        "modules": [
+          {
+            "id": "modules/resource-explorer"
+          },
+          {
+            "id": "modules/shape-canvas"
+          },
+          {
+            "id": "modules/property-panel"
+          }
+        ]
+      }
+    ]
+  }
 }

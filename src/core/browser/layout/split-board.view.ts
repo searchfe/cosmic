@@ -24,6 +24,13 @@ export default class SplitBoardView extends View implements ISplitBoardView {
     this.root.classList.add('split-board', 'flex', 'flex-nowrap', 'overflow-hidden');
     // this.root.style.margin = '0 4px';
   }
+  addItem(item: SplitItemView): void {
+    if (this.direction === directionType.row) {
+      this.addRow(item);
+    } else {
+      this.addColumn(item);
+    }
+  }
   public addRow(item: SplitItemView): void {
     if (!this.checkDirection(directionType.row)) {
       console.warn('direction is not right when added row', item);
