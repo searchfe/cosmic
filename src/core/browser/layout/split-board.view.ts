@@ -3,18 +3,19 @@ import { injectable, inject } from 'inversify';
 import SplitItemView from './split-item.view';
 import SplitBoardController from './split-board.controller';
 import Split from 'split.js';
-import type { ISplitBoardView } from './type';
+import type { ISplitBoardView, ItemGenerateDelegate } from './type';
 import { directionType } from './type';
 export const lowBoardRoot = Symbol.for('FlowTableRoot');
 
 @injectable()
 /** Split Board View */
-export default class SplitBoardView extends View implements ISplitBoardView {
-  public items: SplitItemView[] = [];
+export default class SplitBoardView<T extends SplitItemView> extends View implements ISplitBoardView {
+  public items: T[] = [];
   public direction: directionType = directionType.col;
   private splitInstance: Split.Instance | null = null;
   public controller: SplitBoardController;
-  private _waitForMergeItem: SplitItemView | null = null;
+  public itemGenerateDelegate: ItemGenerateDelegate<T>;
+  private _waitForMergeItem: T | null = null;
   constructor() {
     super();
     this.init();
@@ -24,14 +25,14 @@ export default class SplitBoardView extends View implements ISplitBoardView {
     this.root.classList.add('split-board', 'flex', 'flex-nowrap', 'overflow-hidden');
     // this.root.style.margin = '0 4px';
   }
-  addItem(item: SplitItemView): void {
+  addItem(item: T): void {
     if (this.direction === directionType.row) {
       this.addRow(item);
     } else {
       this.addColumn(item);
     }
   }
-  public addRow(item: SplitItemView): void {
+  public addRow(item: T): void {
     if (!this.checkDirection(directionType.row)) {
       console.warn('direction is not right when added row', item);
       return;
@@ -42,7 +43,7 @@ export default class SplitBoardView extends View implements ISplitBoardView {
     this.insertItemAt(item);
     this.applySplit('vertical');
   }
-  public addColumn(item: SplitItemView): void {
+  public addColumn(item: T): void {
     if (!this.checkDirection(directionType.col)) {
       console.warn('direction is not right when added col', item);
       return;
@@ -53,7 +54,7 @@ export default class SplitBoardView extends View implements ISplitBoardView {
     this.insertItemAt(item);
     this.applySplit();
   }
-  public insertItemAt(item: SplitItemView, pos?: number): void {
+  public insertItemAt(item: T, pos?: number): void {
     pos = pos === undefined ? this.items.length : pos;
     this.items.splice(pos, 0, item);
     if (pos === 0) {
@@ -155,9 +156,14 @@ export default class SplitBoardView extends View implements ISplitBoardView {
 
   private startToExpand(index: number, start: number, length: number, position: number) {
     const newSizes = this.getExpandResizes(index, start, length, position);
-    const newItem = new SplitItemView().setContent(document.createElement('div'));
+    let newItem: SplitItemView;
+    if (this.itemGenerateDelegate) {
+      newItem = this.itemGenerateDelegate.expandNewItem(this.items[index], index);
+    } else {
+      newItem = new SplitItemView().setContent(document.createElement('div'));
+    }
     this.destorySplit();
-    this.insertItemAt(newItem, index + 1);
+    this.insertItemAt(newItem as T, index + 1);
     this.applySplit(this.direction === directionType.col ? 'horizontal' : 'vertical', newSizes);
   }
 

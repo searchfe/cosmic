@@ -1,9 +1,10 @@
 import { Container } from 'inversify';
 import { AppearanceType } from '@cosmic/core/common';
 import { ModuleFactory } from '@cosmic/core/parts';
+import { Controller } from '@cosmic/core/browser';
 import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
-import { MenuGroupService } from '@cosmic/workbench/services/menu-group-service';
-import { applicationMenus } from './base-menu/config';
+// import { MenuGroupService } from '@cosmic/workbench/services/menu-group-service';
+// import { applicationMenus } from './base-menu/config';
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
 import StatusBar from '../ui/components/status/status-bar.svelte';
 import ResourcePage from '../ui/components/resource/resource.svelte';
@@ -31,14 +32,16 @@ export default class App {
     this.container.bind('ModuleFactory').toDynamicValue(() => moduleFactory);
 
     const workbench = await moduleFactory.load(config.workbench.id, config.workbench);
-    workbench.viewWillAppear();
-    this.root.appendChild(workbench.view());
-    workbench.viewDidAppear();
+    if (workbench instanceof Controller) {
+      workbench.viewWillAppear();
+      this.root.appendChild(workbench.view());
+      workbench.viewDidAppear();
+    }
   }
 
   initPreferences() {
     this.container.bind(AppearanceService).to(AppearanceService);
-    this.container.bind(MenuGroupService).to(MenuGroupService);
+    // this.container.bind(MenuGroupService).to(MenuGroupService);
   }
 
   initStyle() {
@@ -69,12 +72,12 @@ export default class App {
   }
 
   initMenus(): void {
-    const header = document.querySelector('#main-header');
-    const groupMenu = this.container.get(MenuGroupService);
-    groupMenu.initContainer(header as HTMLElement);
-    for (const menu of applicationMenus) {
-      groupMenu.getMenuInsatance().init(menu.title, menu.items);
-    }
+    // const header = document.querySelector('#main-header');
+    // const groupMenu = this.container.get(MenuGroupService);
+    // groupMenu.initContainer(header as HTMLElement);
+    // for (const menu of applicationMenus) {
+    //   groupMenu.getMenuInsatance().init(menu.title, menu.items);
+    // }
   }
 
   initResourcePanel(container: HTMLElement): void {

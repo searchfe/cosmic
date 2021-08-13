@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { Menu } from '../desktop/menu';
+import { Menu } from './menu';
 
 @injectable()
 export class MenuGroupService {

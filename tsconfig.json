@@ -5,7 +5,10 @@
     "paths": {
       "@cosmic/workbench/services/*": ["workbench/services/*"],
       "@cosmic/workbench/ui/*": ["workbench/ui/*"],
-      "@cosmic/core/*": ["core/*"]
+      "@cosmic/core/browser": ["core/browser"],
+      "@cosmic/core/common": ["core/common"],
+      "@cosmic/core/components": ["core/components"],
+      "@cosmic/core/parts": ["core/parts"]
     },
     "resolveJsonModule": true,
     "experimentalDecorators": true,

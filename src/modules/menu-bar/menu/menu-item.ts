@@ -1,4 +1,4 @@
-import { uuid } from '../utils';
+import { uuid } from '@cosmic/core/common';
 /* eslint-disable no-shadow */
 export enum MenuItemType {
   group,

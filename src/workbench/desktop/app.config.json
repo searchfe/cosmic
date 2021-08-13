@@ -32,5 +32,22 @@
         ]
       }
     ]
+  },
+  "menu": {
+    "title": "文件",
+    "items": [
+      {
+        "title": "打开文件",
+        "type": "group"
+      },
+      {
+        "title": "保存",
+        "type": "group"
+      },
+      {
+        "title": "另存为",
+        "type": "group"
+      }
+    ]
   }
 }
