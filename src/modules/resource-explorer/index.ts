@@ -1,24 +1,13 @@
 import Component from './index.svelte';
-import { SVController } from '@cosmic/core/parts';
+import { SvelteModule } from '@cosmic/core/parts';
 
-export default class ResourceExplorer extends SVController<null> {
+export default class ResourceExplorer extends SvelteModule<unknown> {
   initWithComponent(target: Element) {
     return new Component({
       target,
     });
   }
-
-  viewWillAppear(): void {
-    /** to be completed */
-  }
-  viewDidAppear(): void {
-    /** to be completed */
-  }
-
-  viewWillDisappear(): void {
-    /** to be completed */
-  }
-  viewDidDisappear(): void {
-    /** to be completed */
+  serialize() {
+    return {};
   }
 }

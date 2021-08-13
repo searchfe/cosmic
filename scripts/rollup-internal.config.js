@@ -5,12 +5,15 @@ import { pluginsOptions } from './rollup-plugin-svelte';
 
 const production = !process.env.ROLLUP_WATCH;
 
+let paths = ['core/browser', 'core/common', 'core/components', 'core/parts'];
+export const internals = paths.map((path) => {
+  return '@cosmic/' + path;
+});
 /** 不参与workbench构建的依赖，会编译到core/中 */
-export const internals = ['core/browser', 'core/common', 'core/components', 'core/parts'];
 
 function normalize() {
   const list = [];
-  internals.forEach((moduleId) => {
+  paths.forEach((moduleId) => {
     list.push({
       moduleId: moduleId,
       src: `src/${moduleId}/index.ts`,

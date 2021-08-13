@@ -1,3 +1,4 @@
 import { AppearanceType } from './appearance';
+import uuid from './uuid';
 
-export { AppearanceType };
+export { AppearanceType, uuid };

@@ -6,6 +6,10 @@ export enum directionType {
   'row',
 }
 
+export interface ItemGenerateDelegate<T extends SplitItemView> {
+  expandNewItem: (oldItem: T, index: number) => T;
+}
+
 export interface ISplitBoardView extends View {
   items: SplitItemView[];
   direction: directionType;

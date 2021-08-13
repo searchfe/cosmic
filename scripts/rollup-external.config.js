@@ -6,14 +6,14 @@ import { terser } from 'rollup-plugin-terser';
 const production = !process.env.ROLLUP_WATCH;
 
 /** 不参与全部构建的外部依赖，会编译到core/external/中 */
-export const externals = ['reflect-metadata', 'color'];
+export const externals = ['tslib', 'reflect-metadata', 'color', 'inversify'];
 
 function normalize() {
   const list = [];
   externals.forEach((moduleId) => {
     const config = require(`${moduleId}/package.json`);
     if (!config) return;
-    const srcPath = `node_modules/${moduleId}/${config.main || 'index.js'}`;
+    const srcPath = `node_modules/${moduleId}/${config['jsnext:main'] || config.module || config.main || 'index.js'}`;
     if (!existsSync(srcPath)) return;
     list.push({
       moduleId: moduleId,

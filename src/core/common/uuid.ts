@@ -11,4 +11,4 @@ const uuid = (): string => {
   const _uuid = s.join('');
   return _uuid;
 };
-export { uuid };
+export default uuid;

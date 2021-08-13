@@ -1,5 +1,5 @@
-import type { MenuGroupService } from '@cosmic/workbench/services/menu-group-service';
-import type { Menu, MenuItemConfig } from '../menu';
+import type { MenuGroupService } from './menu-group-service';
+import type { Menu, MenuItemConfig } from './menu';
 
 export class BaseMenu {
   private menuInstance!: Menu;
