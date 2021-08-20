@@ -28,8 +28,10 @@ specifiers:
   '@types/node': ^14.17.1
   '@typescript-eslint/eslint-plugin': ^4.15.1
   '@typescript-eslint/parser': ^4.15.1
+  canvaskit-wasm: ~0.28.1
   clean-css: ^5.0.1
   color: ^3.1.3
+  copy-webpack-plugin: '6.4'
   cross-env: ^7.0.3
   electron: ^12.0.6
   electron-builder: ^22.10.5
@@ -85,6 +87,7 @@ specifiers:
 
 dependencies:
   '@types/color': 3.0.1
+  canvaskit-wasm: 0.28.1
   color: 3.1.3
   electron-log: 4.3.5
   electron-store: 7.0.3
@@ -124,6 +127,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 4.26.0_025fc50e542c8e957dec903a5ef525ba
   '@typescript-eslint/parser': 4.26.0_eslint@7.27.0+typescript@4.3.2
   clean-css: 5.1.2
+  copy-webpack-plugin: 6.4.1
   cross-env: 7.0.3
   electron: 12.0.9
   electron-builder: 22.10.5
@@ -7091,6 +7095,10 @@ packages:
     resolution: {integrity: sha512-zWEwIVqnzPkSAXOUlQnPW2oKoYb2aLQ4Q5ejdjBcnH63rfypaW34CxaeBn1VMya2XaEU3P/R2qHpWyj+l0BT1A==}
     dev: true
 
+  /canvaskit-wasm/0.28.1:
+    resolution: {integrity: sha512-f5nt1T00MXGVvs+7c7DRA8YoFAbd0ABgzd2sZvikqefWrxveh29BWprl043r/bCggDbpMu1XpCz86fdVDH041g==}
+    dev: false
+
   /capture-exit/2.0.0:
     resolution: {integrity: sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g==}
     engines: {node: 6.* || 8.* || >= 10.*}
@@ -7641,6 +7649,25 @@ packages:
     resolution: {integrity: sha512-i13qo6kIHTTpCm8/Wup+0b1mVWETvu2kIMzKoK8FpkLkFxlt0znUAHcMzox+T8sPlqtZXq3CulEjQHsYiGFJUw==}
     dependencies:
       toggle-selection: 1.0.6
+    dev: true
+
+  /copy-webpack-plugin/6.4.1:
+    resolution: {integrity: sha512-MXyPCjdPVx5iiWyl40Va3JGh27bKzOTNY3NjUTrosD2q7dR/cLD0013uqJ3BpFbUjyONINjb6qI7nDIJujrMbA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.37.0 || ^5.0.0
+    dependencies:
+      cacache: 15.2.0
+      fast-glob: 3.2.7
+      find-cache-dir: 3.3.1
+      glob-parent: 5.1.2
+      globby: 11.0.3
+      loader-utils: 2.0.0
+      normalize-path: 3.0.0
+      p-limit: 3.1.0
+      schema-utils: 3.0.0
+      serialize-javascript: 5.0.1
+      webpack-sources: 1.4.3
     dev: true
 
   /core-js-compat/3.13.1:
@@ -10198,7 +10225,7 @@ packages:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.2.5
+      fast-glob: 3.2.7
       ignore: 5.1.8
       merge2: 1.4.1
       slash: 3.0.0
@@ -15747,6 +15774,12 @@ packages:
 
   /serialize-javascript/4.0.0:
     resolution: {integrity: sha512-GaNA54380uFefWghODBWEGisLZFj00nS5ACs6yHa9nLqlLpVLO8ChDGeKRjZnV4Nh4n0Qi7nhYZD/9fCPzEqkw==}
+    dependencies:
+      randombytes: 2.1.0
+    dev: true
+
+  /serialize-javascript/5.0.1:
+    resolution: {integrity: sha512-SaaNal9imEO737H2c05Og0/8LUXG7EnsZyMa8MzkmuHoELfT6txuj0cMqRj6zfPKnmQ1yasR4PCJc8x+M4JSPA==}
     dependencies:
       randombytes: 2.1.0
     dev: true

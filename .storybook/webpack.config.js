@@ -2,6 +2,7 @@ const tailwindcss = require('tailwindcss');
 const path = require('path');
 const autoPreprocess = require('svelte-preprocess');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const testConfig = require('smelte/tailwind.config')(require('./tailwind.config'));
 module.exports = ({ config, mode }) => {
@@ -65,5 +66,16 @@ module.exports = ({ config, mode }) => {
     config.resolve.plugins.push(new TsconfigPathsPlugin({
         configFile: './tsconfig.svelte.json'
     }));
+    config.plugins.push(new CopyPlugin({
+        patterns: [
+            {
+                from: path.join(__dirname, '..', 'node_modules/canvaskit-wasm/bin/canvaskit.wasm'),
+                to: 'bin'
+            }
+        ]
+    }));
+    config.node = Object.assign(config.node || {}, {
+        fs: 'empty'
+    });
     return config;
 };
