@@ -81,7 +81,8 @@
     "keycode": "^2.2.0",
     "reflect-metadata": "^0.1.13",
     "smelte": "^1.1.5",
-    "split.js": "^1.6.4"
+    "split.js": "^1.6.4",
+    "ts-mixer": "~6.0.0"
   },
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.14",

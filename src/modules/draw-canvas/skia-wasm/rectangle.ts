@@ -1,49 +1,60 @@
-import type {RectangleNode} from '../types/shape';
-import {getCanvasKit} from './canvas-kit';
-import type {Surface} from 'canvaskit-wasm';
+import type { RectangleNode } from '../types/shape';
+import type { Path } from 'canvaskit-wasm';
+import { Mixin } from 'ts-mixer';
+import { DefaultShapeMixin } from './mixin/shape';
+import type { Context } from './context';
 
-export class Rectangle implements RectangleNode {
-    readonly type = 'RECTANGLE';
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    topLeftRadius: number;
-    topRightRadius: number;
-    bottomLeftRadius: number;
-    bottomRightRadius: number;
+export class Rectangle extends Mixin(DefaultShapeMixin) implements RectangleNode {
+  readonly type = 'RECTANGLE';
+  private rect: Path;
+  private _width: number;
+  private _height: number;
 
-    constructor(options: Partial<RectangleNode>) {
-        const {x, y, width, height, topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius} = options;
-        // this.x = x;
-        // this.y = y;
-        this.x = 100;
-        this.y = 100;
-        this.width = width;
-        this.height = height;
-        this.topLeftRadius = topLeftRadius;
-        this.topRightRadius = topRightRadius;
-        this.bottomLeftRadius = bottomLeftRadius;
-        this.bottomRightRadius = bottomRightRadius;
-    }
+  constructor(context: Context) {
+    super();
+    this.context = context;
+  }
 
-    render(canvas) {
-        return getCanvasKit().then(canvasKit => {
-            console.log(canvasKit)
-            const surface:Surface = canvasKit.MakeCanvasSurface(canvas.id);
-            const paint = new canvasKit.Paint();
-            paint.setStyle(canvasKit.PaintStyle.Fill);
-            paint.setAntiAlias(true);
-            paint.setColor(canvasKit.Color(66, 129, 164, 1.0));
-            paint.setPathEffect(canvasKit.PathEffect.MakeCorner(20));
-            if (!surface) {
-                throw 'Could not make surface';
-            }
-            const rrect = canvasKit.RRectXY([100, 10, 140, 62], 50, 80);
-            const rrectPath = new canvasKit.Path().addRRect(rrect, true);
-            surface.getCanvas().drawPath(rrectPath, paint);
-            surface.flush();
-            console.log(surface.width());
-        });
-    }
+  get width(): number {
+    return this._width;
+  }
+
+  set width(width: number) {
+    this._width = width;
+    this.updateRect();
+  }
+
+  get height(): number {
+    return this._height;
+  }
+
+  set height(height: number) {
+    this._height = height;
+    this.updateRect();
+  }
+
+  get borderRaidus(): number {
+    return this.cornerRadius;
+  }
+
+  set borderRaidus(borderRaidus: number) {
+    this.cornerRadius = borderRaidus;
+    this.updateRect();
+  }
+
+  private updateRect() {
+    const left = this.x;
+    const top = this.y;
+    const right = this._width + this.x;
+    const bottom = this._height + this.y;
+    const rrect = this.context.ck.RRectXY([left, top, right, bottom], this.cornerRadius, this.cornerRadius);
+    this.rect = new this.context.ck.Path().addRRect(rrect, true);
+  }
+
+  draw(): void {
+    // TODO: use mixin to handle paint and stroke
+    // TODO: set default fills
+    this.context.getCanvas().drawPath(this.rect, this.fills[0]);
+    this.context.draw();
+  }
 }

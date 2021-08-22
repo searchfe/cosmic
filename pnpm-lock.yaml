@@ -81,6 +81,7 @@ specifiers:
   svelte-waypoint: ^0.1.4
   svg-inline-loader: ^0.8.2
   tailwindcss: ^2.1.4
+  ts-mixer: ~6.0.0
   tsconfig-paths-webpack-plugin: ^3.5.1
   tslib: ^2.2.0
   typescript: ^4.2.4
@@ -98,6 +99,7 @@ dependencies:
   reflect-metadata: 0.1.13
   smelte: 1.1.5
   split.js: 1.6.4
+  ts-mixer: 6.0.0
 
 devDependencies:
   '@compodoc/compodoc': 1.1.14
@@ -17086,6 +17088,10 @@ packages:
   /ts-essentials/2.0.12:
     resolution: {integrity: sha512-3IVX4nI6B5cc31/GFFE+i8ey/N2eA0CZDbo6n0yrz0zDX8ZJ8djmU1p+XRz7G3is0F3bB3pu2pAroFdAWQKU3w==}
     dev: true
+
+  /ts-mixer/6.0.0:
+    resolution: {integrity: sha512-nXIb1fvdY5CBSrDIblLn73NW0qRDk5yJ0Sk1qPBF560OdJfQp9jhl+0tzcY09OZ9U+6GpeoI9RjwoIKFIoB9MQ==}
+    dev: false
 
   /ts-morph/11.0.3:
     resolution: {integrity: sha512-ymuPkndv9rzqTLiHWMkVrFXWcN4nBiBGhRP/kTC9F5amAAl7BNLfyrsTzMD1o9A0zishKoF1KQT/0yyFhJnPgA==}

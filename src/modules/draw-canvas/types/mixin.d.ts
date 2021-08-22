@@ -1,19 +1,10 @@
 interface LayoutMixin {
-    // readonly absoluteTransform: Transform
-    // relativeTransform: Transform
-    x: number
-    y: number
-    // rotation: number // In degrees
+  x: number;
+  y: number;
 
-    width: number
-    height: number
-    // constrainProportions: boolean
-
-    // resize(width: number, height: number): void
-    // resizeWithoutConstraints(width: number, height: number): void
-    // rescale(scale: number): void
+  width: number;
+  height: number;
 }
 
-export interface DefaultShapeMixin extends LayoutMixin {
-
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface DefaultShapeMixin extends LayoutMixin {}
