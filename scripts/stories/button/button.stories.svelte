@@ -2,7 +2,7 @@
   import 'smelte/src/tailwind.css';
   import '../../../src/core/components/global.css';
   import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
-  import Button from '../../../src/core/components/button';
+  import { Button, ButtonShortcut } from '../../../src/core/components';
   let count = 0;
   function handleClick() {
     console.log(count);
@@ -22,13 +22,13 @@
   </blockquote>
 
   <div class="mt-5 mb-5 text-tiny">Auto（Configurable）</div>
-  <Button class="w-40" {...args}>Button</Button>
+  <Button class="w-40 uppercase" {...args}>Button</Button>
 
   <div class="mt-5 mb-5 text-tiny">Light</div>
-  <Button class="w-40" light="true">Button</Button>
+  <Button class="w-40 uppercase" light="true">Button</Button>
 
   <div class="mt-5 mb-5 text-tiny">Dark</div>
-  <Button class="w-40" dark="true">Button</Button>
+  <Button class="w-40 uppercase" dark="true">Button</Button>
 
   <!-- <p class="mt-5 mb-5"></p>
   <Button {...args} on:click="{handleClick}" class="w-40">
@@ -37,23 +37,23 @@
 
   <div class="max-w-xs">
     <div class="mt-5 mb-5 text-tiny">Block</div>
-    <div class="w-">
-      <Button class="w-40" block="true">Button</Button>
+    <div class="w-40">
+      <Button class="w-40 uppercase" block="true">Button</Button>
     </div>
 
     <h6 class="mb-3 mt-6">Outlined</h6>
     <div class="py-2">
-      <Button color="secondary" light block outlined>Button</Button>
+      <Button color="secondary" class="uppercase" light block outlined>Button</Button>
     </div>
 
     <h6 class="mb-3 mt-6">Text</h6>
     <div class="py-2">
-      <Button text>Button</Button>
+      <Button class="uppercase" text>Button</Button>
     </div>
 
     <h6 class="mb-3 mt-6">Disabled</h6>
     <div class="py-2">
-      <Button block disabled>Button</Button>
+      <Button class="uppercase" block disabled>Button</Button>
     </div>
 
     <h6 class="mb-3 mt-6">
@@ -71,3 +71,14 @@
 </Template>
 
 <Story name="Primary" args="{{ primary: true }}" />
+
+<Story name="Button With ShortcutKey">
+  <div class="pt-4"></div>
+  <ButtonShortcut text="Front" shortcutKey="70" stopPropagation="true" />
+  <div class="pt-4"></div>
+  <ButtonShortcut text="Back" shortcutKey="B,66" icon="arrow_back_ios" />
+  <div class="pt-4"></div>
+  <ButtonShortcut text="Back" shortcutKey="B,66" icon="blank" />
+  <div class="pt-4"></div>
+  <ButtonShortcut text="Active" shortcutKey="A" stopPropagation="true" state="hover" />
+</Story>

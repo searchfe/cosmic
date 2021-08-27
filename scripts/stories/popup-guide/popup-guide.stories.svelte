@@ -2,7 +2,7 @@
   import 'smelte/src/tailwind.css';
   import '../../../src/core/components/global.css';
   import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
-  import { PopupRing, PopupButton, GroupChangeEvent } from '../../../src/core/components';
+  import { PopupRing, GroupChangeEvent } from '../../../src/core/components';
 
   $: selected = -1;
   function handleChange(event) {
@@ -20,12 +20,3 @@
 </Template>
 
 <Story name="Ring" template="normal" args="{{ title: 'Ring' }}" />
-
-<Story name="Button">
-  <div class="pt-4"></div>
-  <PopupButton text="Front" shortcutKey="70" stopPropagation="true" />
-  <div class="pt-4"></div>
-  <PopupButton text="Back" shortcutKey="B,66" icon="arrow_back_ios" />
-  <div class="pt-4"></div>
-  <PopupButton text="Active" shortcutKey="A" stopPropagation="true" state="hover" />
-</Story>

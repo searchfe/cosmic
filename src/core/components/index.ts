@@ -23,7 +23,8 @@ import Icon from './icon';
 import Card from './card/card';
 import Image from './image/image';
 import type { GroupChangeEvent } from './popup-guide';
-import { PopupRing, PopupButton } from './popup-guide';
+import { PopupRing } from './popup-guide';
+import { ButtonShortcut } from './button-shortcut';
 
 export {
   Button,
@@ -60,7 +61,7 @@ export {
   Card,
   Image,
   PopupRing,
-  PopupButton,
+  ButtonShortcut,
 };
 
 export type { GroupChangeEvent };
