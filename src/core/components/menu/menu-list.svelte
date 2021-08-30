@@ -1,7 +1,8 @@
 <script lang="ts">
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
+  import { ButtonShortcut } from '../button-shortcut';
 
-  import ListItem from './list-item.svelte';
+  import MenuItem from './menu-item.svelte';
 
   export let items = [];
   export let value = '';
@@ -61,10 +62,11 @@
         selected="{value === id(item)}"
         dense="{dense}"
       >
-        <ListItem
+        <MenuItem
           bind:value
-          selectedClasses="{selectedClasses}"
-          classes="{itemClasses}"
+          selectedClasses=""
+          hoverClasses=""
+          classes="{itemClasses} w-full"
           {...item}
           tabindex="{i + 1}"
           id="{id(item)}"
@@ -73,8 +75,18 @@
           on:change
           on:click
         >
-          {getText(item)}
-        </ListItem>
+          <ButtonShortcut
+            slot="button"
+            text="{getText(item)}"
+            shortcutKey="{item.shortcutKey}"
+            stopPropagation="true"
+            value="{item}"
+            icon="{item.icon || 'blank'}"
+            classDefault="px-4 py-2 rounded-none"
+            on:change
+            on:click
+          />
+        </MenuItem>
       </slot>
     {/if}
   {/each}

@@ -27,9 +27,9 @@
   export let add = '';
   export let replace = {};
 
-  const classesDefault = 'z-10 py-2 px-4 uppercase text-xs font-normal relative overflow-hidden';
+  const classesDefault = 'z-10 py-2 px-4 text-xs font-normal relative overflow-hidden';
   const basicDefault = 'text-gray-50 dark:text-gray-200 duration-200 ease-in';
-
+  const bgClassesDefault = '';
   const outlinedDefault = 'bg-transparent border border-solid';
   const textDefault = 'bg-transparent border-none px-4 hover:bg-transparent';
   const iconDefault = 'p-4 flex items-center select-none';
@@ -41,6 +41,7 @@
 
   export let classes = classesDefault;
   export let basicClasses = basicDefault;
+  export let bgClasses = bgClassesDefault;
   export let outlinedClasses = outlinedDefault;
   export let textClasses = textDefault;
   export let iconClasses = iconDefault;
@@ -92,6 +93,7 @@
   $: classes = cb
     .flush()
     .add(basicClasses, basic, basicDefault)
+    .add(bgClasses, basic, bgClassesDefault)
     .add(`${bg(bgc0)} dark:${bg(bgc1)} hover:${bg(lighter)}`, basic)
     .add(elevationClasses, elevation, elevationDefault)
     .add(outlinedClasses, outlined, outlinedDefault)

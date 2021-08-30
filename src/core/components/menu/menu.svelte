@@ -2,11 +2,11 @@
   import { createEventDispatcher } from 'svelte';
   import { fly } from 'svelte/transition';
   import { quadOut, quadIn } from 'svelte/easing';
-  import List from '../list';
+  import List from './menu-list.svelte';
   import { ClassBuilder } from 'smelte/src/utils/classes';
 
   const classesDefault = 'cursor-pointer relative';
-  const listClassesDefault = 'absolute w-auto top-7 bg-white left-0 bg-white rounded shadow z-20 dark:bg-dark-500';
+  const listClassesDefault = 'absolute w-auto top-8 bg-white left-0 bg-white rounded shadow z-20 dark:bg-dark-500';
 
   export let items = [];
   export let open = false;
@@ -36,7 +36,18 @@
   <slot name="menu">
     {#if open}
       <div class="{l}">
-        <List bind:value select dense items="{items}" on:change on:change="{() => (open = false)}" {...listProps} />
+        <List
+          bind:value
+          select
+          dense
+          items="{items}"
+          on:change
+          on:change="{(e) => {
+            open = false;
+            value = e.detail;
+          }}"
+          {...listProps}
+        />
       </div>
     {/if}
   </slot>
