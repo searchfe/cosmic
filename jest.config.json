@@ -1,7 +1,6 @@
 {
-  "rootDir": "src",
   "coverageDirectory": "coverage",
-  "testMatch": ["<rootDir>/**/*.spec.{ts,tsx,js,jsx}", "<rootDir>/*.spec.{ts,tsx,js,jsx}"],
+  "testMatch": ["<rootDir>/src/**/*.spec.{ts,tsx,js,jsx}", "<rootDir>/src/*.spec.{ts,tsx,js,jsx}"],
   "transform": {
     "^.+\\.(t|j)sx?$": ["@swc/jest"]
   },

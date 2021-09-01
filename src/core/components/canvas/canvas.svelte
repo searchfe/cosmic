@@ -4,7 +4,7 @@
   import { Context } from '../../../modules/draw-canvas/skia-wasm/context';
   import { getCanvasKit } from '../../../modules/draw-canvas/skia-wasm/canvas-kit';
   onMount(() => {
-    getCanvasKit().then(CK => {
+    getCanvasKit().then((CK) => {
       const canvas = document.getElementById('canvas') as HTMLCanvasElement;
       const surface = CK.MakeCanvasSurface(canvas);
       const rect = new Rectangle(new Context(CK, surface));
