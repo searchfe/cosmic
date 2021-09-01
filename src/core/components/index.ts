@@ -25,6 +25,7 @@ import Image from './image/image';
 import type { GroupChangeEvent } from './popup-guide';
 import { PopupRing } from './popup-guide';
 import { ButtonShortcut } from './button-shortcut';
+import Canvas from './canvas';
 
 export {
   Button,
@@ -62,6 +63,7 @@ export {
   Image,
   PopupRing,
   ButtonShortcut,
+  Canvas,
 };
 
 export type { GroupChangeEvent };
