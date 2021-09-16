@@ -55,6 +55,7 @@ export class Rectangle extends Mixin(DefaultShapeMixin) implements RectangleNode
     // TODO: use mixin to handle paint and stroke
     // TODO: set default fills
     this.context.getCanvas().drawPath(this.rect, this.fills[0]);
+    this.context.getCanvas().drawPath(this.rect, this.strokes[0]);
     this.context.draw();
   }
 }
