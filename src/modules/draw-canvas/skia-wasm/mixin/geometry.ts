@@ -5,7 +5,7 @@ import { Base } from './base';
 export class GeometryMixin extends Base {
   // TODO 确认完更新策略好设置正确的类型
   fills: Paint[] = [];
-  private strokes: Paint[];
+  strokes: Paint[] = [];
   strokeWeight: number;
   strokeMiterLimit: number;
   strokeAlign: 'CENTER' | 'INSIDE' | 'OUTSIDE';
@@ -27,5 +27,19 @@ export class GeometryMixin extends Base {
     paint.setStyle(this.context.ck.PaintStyle.Fill);
     paint.setAntiAlias(true);
     this.fills.push(paint);
+  }
+
+  get border(): string {
+    return this.strokes.toString();
+  }
+
+  set border(border: string) {
+    const { ck } = this.context;
+    const paint = new ck.Paint();
+    paint.setStyle(ck.PaintStyle.Stroke);
+    paint.setStrokeWidth(20);
+    paint.setColor(ck.parseColorString('#ee0033'));
+    paint.setAntiAlias(true);
+    this.strokes.push(paint);
   }
 }
