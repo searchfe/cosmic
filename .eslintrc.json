@@ -27,6 +27,7 @@
     "svelte3/typescript": true // load TypeScript as peer dependency
   },
   "rules": {
+    "svelte/unused-export-let": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/consistent-type-imports": "error",
