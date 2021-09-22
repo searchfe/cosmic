@@ -17,8 +17,8 @@
   }
 </script>
 
-<div on:click={onClick} bind:this={instance}>
-  <div class="flex flex-row" class:selected={isSelected}>
+<div bind:this={instance}>
+  <div class="flex flex-row" class:selected={isSelected} on:click|stopPropagation={onClick}>
     <div>{header}</div>
     <div>{extra}</div>
   </div>
