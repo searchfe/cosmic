@@ -4,9 +4,15 @@ import { terser } from 'rollup-plugin-terser';
 import { configs as externalConfig, externals, importmap as externalMap } from './scripts/rollup-external.config';
 import { configs as internalConfig, internals, importmap as internalMap } from './scripts/rollup-internal.config';
 import { configs as moduleConfig, modules, importmap as moduleMap } from './scripts/rollup-module.config';
+import {
+  configs as packSmelteConfig,
+  importMap as smelteMap,
+  smelteExtractConfig,
+} from './scripts/rollup-smelte-extract.config';
 import { pluginsOptions } from './scripts/rollup-plugin-svelte';
 import { syncFile } from './scripts/rollup-plugin-sync';
 import { jsonFiles, importmap as jsonMap, jsonSync } from './scripts/rollup-json.config';
+import { importDeclarationExtractPlugin } from './scripts/rollup-plugin-import-extract';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -22,7 +28,7 @@ export default [
       name: 'fluide',
       file: 'dist/workbench/desktop/main.js',
     },
-    external: [...externals, ...internals, ...modules, ...jsonFiles],
+    external: [...externals, ...internals, ...modules, ...jsonFiles, smelteExtractConfig.packedName],
     plugins: [
       syncFile('src/public', 'dist/workbench/desktop', { html: true, ico: true, js: true }, (src, dest, text) => {
         if (src !== 'src/public/index.html') return;
@@ -32,12 +38,14 @@ export default [
             ...internalMap().imports,
             ...moduleMap().imports,
             ...jsonMap().imports,
+            ...smelteMap().imports,
           },
         };
         return text.toString().replace('__importmap_config__', JSON.stringify(data, null, ''));
       }),
       jsonSync,
       ...pluginsOptions('workbench/desktop', true),
+      production && importDeclarationExtractPlugin(smelteExtractConfig),
       // In dev mode, call `npm run start` once
       // the bundle has been generated
       !production &&
@@ -68,4 +76,5 @@ export default [
       clearScreen: false,
     },
   },
+  ...packSmelteConfig(),
 ];

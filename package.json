@@ -79,6 +79,7 @@
     "eventemitter2": "^6.4.4",
     "inversify": "^5.1.1",
     "keycode": "^2.2.0",
+    "magic-string": "^0.25.7",
     "reflect-metadata": "^0.1.13",
     "smelte": "^1.1.5",
     "split.js": "^1.6.4",

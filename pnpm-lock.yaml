@@ -50,6 +50,7 @@ specifiers:
   jest: ^27.0.6
   keycode: ^2.2.0
   less: ^4.1.1
+  magic-string: ^0.25.7
   merge-deep: ^3.0.3
   nodemon: ^2.0.7
   npm-run-all: ^4.1.5
@@ -96,6 +97,7 @@ dependencies:
   eventemitter2: 6.4.4
   inversify: 5.1.1
   keycode: 2.2.0
+  magic-string: 0.25.7
   reflect-metadata: 0.1.13
   smelte: 1.1.5
   split.js: 1.6.4
@@ -12510,7 +12512,6 @@ packages:
     resolution: {integrity: sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==}
     dependencies:
       sourcemap-codec: 1.4.8
-    dev: true
 
   /make-dir/2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
@@ -16082,7 +16083,6 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
-    dev: true
 
   /space-separated-tokens/1.1.5:
     resolution: {integrity: sha512-q/JSVd1Lptzhf5bkYm4ob4iWPjx0KiRe3sRFBNrVqbJkFaBm5vbbowy1mymoPNLRa52+oadOhJ+K49wsSeSjTA==}
