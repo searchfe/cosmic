@@ -10,7 +10,7 @@ interface RoutesValue {
   paramNames: string[];
 }
 
-export const ROUTES: {[key in ROUTES_ENUM]: RoutesValue} = {
+export const ROUTES: { [key in ROUTES_ENUM]: RoutesValue } = {
   [ROUTES_ENUM.INDEX]: {
     path: '/',
     paramNames: [],

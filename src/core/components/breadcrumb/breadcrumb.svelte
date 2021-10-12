@@ -1,6 +1,7 @@
 <script lang="typescript" context="module">
   export const BREADCRUMB = { name: 'breadcrumb' };
 </script>
+
 <script lang="typescript">
   import { setContext } from 'svelte';
 
@@ -8,7 +9,6 @@
   export let separator = 'navigate_next';
 
   setContext(BREADCRUMB, { separator });
-
 </script>
 
 <nav class="text-h3 font-semibold">

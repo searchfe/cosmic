@@ -16,32 +16,27 @@
   const containerClassBuilder = new ClassBuilder(containerClassesDefault);
   const listClassBuilder = new ClassBuilder(listClassesDefault);
 
-  $: containerComputedClass = containerClassBuilder.flush()
-    .add($$props.class)
-    .get();
+  $: containerComputedClass = containerClassBuilder.flush().add($$props.class).get();
 
-  $: listComputedClass = listClassBuilder.flush()
-    .add(listClasses)
-    .get();
+  $: listComputedClass = listClassBuilder.flush().add(listClasses).get();
 
   const dispatch = createEventDispatcher();
-
 </script>
 
 <svelte:window on:click="{() => (open = false)}" />
 
-<div class={containerComputedClass} on:click|stopPropagation>
+<div class="{containerComputedClass}" on:click|stopPropagation>
   <slot name="activator" />
   <slot name="menu">
     {#if open}
-      <div class={listComputedClass}>
+      <div class="{listComputedClass}">
         <List
           bind:value
           select
           dense
-          theme={theme}
-          items={items}
-          noTopRadius={Boolean($$slots.activator)}
+          theme="{theme}"
+          items="{items}"
+          noTopRadius="{Boolean($$slots.activator)}"
           on:change
           on:change="{(e) => {
             open = false;

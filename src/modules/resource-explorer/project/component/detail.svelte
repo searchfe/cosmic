@@ -14,9 +14,8 @@
 <div class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-10">
   {#if !$store.fetching && $store.data.projects}
     {#each $store.data.projects as project}
-      <DirCard data={project}/>
+      <DirCard data="{project}" />
     {/each}
   {/if}
-  <FileCard></FileCard>
+  <FileCard />
 </div>
-

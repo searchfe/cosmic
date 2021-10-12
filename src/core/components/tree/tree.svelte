@@ -4,7 +4,7 @@
   import type { TreeNode } from './type';
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
 
-	export let data: TreeNode;
+  export let data: TreeNode;
 
   const defaultContainerClasses = '';
   const defaultNodeClasses = 'h-12 pr-3 flex items-center text-sm text-black hover:bg-cgray-100';
@@ -20,40 +20,33 @@
   const containerClassBuilder = new ClassBuilder(defaultContainerClasses);
   const nodeClassBuilder = new ClassBuilder(defaultNodeClasses);
 
-	const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
 
-	const { label, children, key } = data;
+  const { label, children, key } = data;
   const _expansionState: Record<string, boolean> = {};
-	let expanded = _expansionState[key] || false;
-  
-	const toggleExpansion = (e) => {
-		expanded = _expansionState[key] = !expanded;
+  let expanded = _expansionState[key] || false;
+
+  const toggleExpansion = (e) => {
+    expanded = _expansionState[key] = !expanded;
     dispatch('click', { selectedKey: key });
-	}
+  };
 
   function onClickExtra() {
-    dispatch('click-extra', { clickedKey: key })
+    dispatch('click-extra', { clickedKey: key });
   }
 
-	$: arrowStatus = expanded ? 'arrow_drop_down' : 'arrow_right';
+  $: arrowStatus = expanded ? 'arrow_drop_down' : 'arrow_right';
 
-  $: containerComputedClass = containerClassBuilder
-    .flush()
-    .add(containerClass)
-    .get();
-  
-  $: nodeComputedClass = nodeClassBuilder
-    .flush()
-    .add(nodeClass)
-    .get();
+  $: containerComputedClass = containerClassBuilder.flush().add(containerClass).get();
 
+  $: nodeComputedClass = nodeClassBuilder.flush().add(nodeClass).get();
 </script>
 
-<div class={containerComputedClass}>
+<div class="{containerComputedClass}">
   <div
-    class={nodeComputedClass}
-    style={`padding-left: ${primaryIndent}rem;`}
-    on:click|stopPropagation={toggleExpansion}
+    class="{nodeComputedClass}"
+    style="{`padding-left: ${primaryIndent}rem;`}"
+    on:click|stopPropagation="{toggleExpansion}"
   >
     {#if children && children.length}
       <div class="flex-none">
@@ -62,15 +55,13 @@
       {#if treeIcon}
         <Icon small classes="mr-1.5">{treeIcon}</Icon>
       {/if}
-      {:else}
-        {#if leafIcon}
-          <Icon small classes="mr-1.5">{leafIcon}</Icon>
-        {/if}
+    {:else if leafIcon}
+      <Icon small classes="mr-1.5">{leafIcon}</Icon>
     {/if}
-    
+
     <span class="flex-auto">{label}</span>
     {#if extraIcon}
-      <div class="flex-none" on:click|stopPropagation={onClickExtra}>
+      <div class="flex-none" on:click|stopPropagation="{onClickExtra}">
         <Icon small>{extraIcon}</Icon>
       </div>
     {/if}
@@ -78,10 +69,10 @@
   {#if expanded && children && children.length}
     {#each children as child}
       <svelte:self
-        extraIcon={extraIcon}
-        data={child}
-        primaryIndent={primaryIndent + indentStep}
-        indentStep={indentStep}
+        extraIcon="{extraIcon}"
+        data="{child}"
+        primaryIndent="{primaryIndent + indentStep}"
+        indentStep="{indentStep}"
         on:click-extra
         on:click
       />

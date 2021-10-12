@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 // import CanvasKitInit from '/node_modules/canvaskit-wasm/bin/canvaskit.js'
 // import type { CanvasKit } from 'canvaskit-wasm';

@@ -7,7 +7,8 @@
   const lightTheme = 'bg-white text-black';
   const darkTheme = 'bg-black text-white';
 
-  const defaultContainerClass = 'flex items-center h-12 inline-block z-10 min-w-28 w-auto hover:shadow shadow text-sm font-normal';
+  const defaultContainerClass =
+    'flex items-center h-12 inline-block z-10 min-w-28 w-auto hover:shadow shadow text-sm font-normal';
 
   export let theme: 'dark' | 'light' = 'light';
   export let text = '';
@@ -19,15 +20,16 @@
   export let value = '';
   export let disabled = false;
   export let classes = 'rounded';
-  
+
   let keyConf = normalizeShortcutKey(shortcutKey);
 
   const containerClassBuilder = new ClassBuilder(defaultContainerClass);
 
-  $: containerComputedClass = containerClassBuilder.flush()
-      .add(theme === 'light' ? lightTheme : darkTheme)
-      .add(classes)
-      .get();
+  $: containerComputedClass = containerClassBuilder
+    .flush()
+    .add(theme === 'light' ? lightTheme : darkTheme)
+    .add(classes)
+    .get();
 
   const dispatch = createEventDispatcher();
 
@@ -66,7 +68,7 @@
   });
 </script>
 
-<div class={containerComputedClass} on:click="{change}" >
+<div class="{containerComputedClass}" on:click="{change}">
   <slot name="icon">
     {#if icon == 'blank'}
       <i class="float-left material-icons material-icons-round icon pr-1 min-w-min leading-none  w-8 h-2"></i>

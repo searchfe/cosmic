@@ -11,5 +11,5 @@
 </script>
 
 <section class="flex flex-auto {$$props.class} {$hasSider ? 'flex-row' : 'flex-col'}">
-  <slot/>
+  <slot />
 </section>

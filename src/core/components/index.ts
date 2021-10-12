@@ -21,7 +21,7 @@ export { default as Ripple } from './ripple';
 export { default as Menu } from './menu';
 export { default as Icon } from './icon';
 export { default as Card } from './card/card';
-export { default as Image} from './image/image';
+export { default as Image } from './image/image';
 export { PopupRing } from './popup-guide';
 export { ButtonShortcut } from './button-shortcut';
 export { default as Canvas } from './canvas';

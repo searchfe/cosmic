@@ -23,22 +23,13 @@
 
   let hovering = false;
 
-  const {onClickItem, selectedSet} = getContext(COLLAPSE);
+  const { onClickItem, selectedSet } = getContext(COLLAPSE);
 
   $: isSelected = $selectedSet.has(key.toString());
 
-  $: headerComputedClass = headerClassesBuilder
-    .flush()
-    .add(headerClass)
-    .add('bg-cgray-100', isSelected)
-    .get();
+  $: headerComputedClass = headerClassesBuilder.flush().add(headerClass).add('bg-cgray-100', isSelected).get();
 
-  $: contentComputedClass = contentClassesBuilder
-    .flush()
-    .add(contentClass)
-    .add('hidden', !isSelected)
-    .get();
-
+  $: contentComputedClass = contentClassesBuilder.flush().add(contentClass).add('hidden', !isSelected).get();
 
   function onClick() {
     onClickItem(key.toString());
@@ -54,21 +45,21 @@
 </script>
 
 <div
-  class={headerComputedClass}
-  on:click|stopPropagation={onClick}
-  on:mouseenter={onMouseEnter}
-  on:mouseleave={onMouseLeave}
+  class="{headerComputedClass}"
+  on:click|stopPropagation="{onClick}"
+  on:mouseenter="{onMouseEnter}"
+  on:mouseleave="{onMouseLeave}"
 >
   <div class="mr-4 flex-none">
-    <slot name="prefix"  {isSelected}></slot>
+    <slot name="prefix" isSelected="{isSelected}" />
   </div>
   <div class="flex-auto">{header}</div>
   {#if $$slots.extra}
-    <div class="flex-none" on:click|stopPropagation class:invisible={!hovering}>
-      <slot name="extra"></slot>
+    <div class="flex-none" on:click|stopPropagation class:invisible="{!hovering}">
+      <slot name="extra" />
     </div>
   {/if}
 </div>
-<div class={contentComputedClass}>
+<div class="{contentComputedClass}">
   <slot />
 </div>

@@ -74,18 +74,16 @@ const widthConfigs = {
 };
 
 module.exports = {
-  plugins: [
-    require('tailwindcss-typography')
-  ],
+  plugins: [require('tailwindcss-typography')],
   theme: {
     spacing: widthConfigs,
     // width: widthConfigs,
     // maxWidth: widthConfigs,
     // minWidth: widthConfigs,
     fontSize: {
-      'h1': ['2.4rem', '2.4rem'],
-      'h2': ['2rem', '2rem'],
-      'h3': ['1.6rem', '1.6rem'],
+      h1: ['2.4rem', '2.4rem'],
+      h2: ['2rem', '2rem'],
+      h3: ['1.6rem', '1.6rem'],
       '3xs': ['0.9rem', '0.9rem'],
       '2xs': ['1rem', '1rem'],
       xs: ['1.1rem', '1.1rem'], // 标准字号
@@ -135,7 +133,7 @@ module.exports = {
         90: {
           light: '#f5f5f5',
           dark: '#1c1c20',
-        }
+        },
       },
       blue: {
         light: '#546bff',
@@ -175,16 +173,16 @@ module.exports = {
       none: 'none',
     },
     borderRadius: {
-      'none': '0',
-      'sm': '0.125rem',
+      none: '0',
+      sm: '0.125rem',
       DEFAULT: '0.25rem',
-      'md': '0.375rem',
-      'lg': '0.5rem',
-      'xl': '0.75rem',
+      md: '0.375rem',
+      lg: '0.5rem',
+      xl: '0.75rem',
       '2xl': '1rem',
       '3xl': '1.5rem',
       '4xl': '1.8rem',
-      'full': '9999px',
+      full: '9999px',
     },
     textShadow: {
       none: 'none',
@@ -196,7 +194,7 @@ module.exports = {
       backgroundColor: ['active'],
       textColor: ['active', 'hover'],
       opacity: ['active', 'hover'],
-      boxShadow: ['active', 'hover']
+      boxShadow: ['active', 'hover'],
     },
   },
   darkMode: 'media',

@@ -35,7 +35,9 @@ export default [
             ...jsonMap().imports,
           },
         };
-        return text.toString().replace('__importmap_config__', JSON.stringify(data, null, ''))
+        return text
+          .toString()
+          .replace('__importmap_config__', JSON.stringify(data, null, ''))
           .replace('process.env.NODE_ENV', JSON.stringify(production ? 'production' : ''));
       }),
       // urql should replace process

@@ -13,7 +13,7 @@
       rect.y = 10;
       rect.borderRaidus = 20;
       rect.background = '#ff00ff';
-      rect.border = 'fff'
+      rect.border = 'fff';
       rect.width = 100;
       rect.height = 100;
       rect.draw();

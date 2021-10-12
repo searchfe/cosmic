@@ -30,7 +30,7 @@
   $: a = acb.flush().add(actionsClasses, true, actionsClassesDefault).get();
 </script>
 
-<div class="fixed w-full h-full top-0 left-0 z-30" class:hidden={!value}>
+<div class="fixed w-full h-full top-0 left-0 z-30" class:hidden="{!value}">
   <Scrim opacity="{opacity}" on:click="{() => !persistent && (value = false)}" />
   <div class="h-full w-full absolute flex items-center justify-center">
     <div in:scale="{transitionProps}" class="{c}" style="width: {width}; height: {height}">

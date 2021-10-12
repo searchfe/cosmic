@@ -16,7 +16,7 @@
   let changeSet;
   const dispatch = createEventDispatcher();
   // all items selected status, key is itemKey, value is boolean.
-  const selectedSet = readable<Set<string>>(new Set, function start(set) {
+  const selectedSet = readable<Set<string>>(new Set(), function start(set) {
     changeSet = set;
     return () => {
       changeSet = undefined;
@@ -24,11 +24,12 @@
   });
 
   function selectItem(
-    keys: string[], 
-    { toogle = false, replace = false }: Record<string, unknown> = { toogle: false, replace: false }) {
+    keys: string[],
+    { toogle = false, replace = false }: Record<string, unknown> = { toogle: false, replace: false }
+  ) {
     if (keys.length === 0) {
       // empty array will clear all
-      activeKey = []
+      activeKey = [];
       return;
     }
     if (accordion) {
@@ -41,16 +42,14 @@
     if (toogle) {
       selectedSetCopy = new Set($selectedSet);
       // toogle mode set opposite value
-      keys.forEach(k => {
+      keys.forEach((k) => {
         if (selectedSetCopy.has(k)) {
           selectedSetCopy.delete(k);
-        }
-        else {
+        } else {
           selectedSetCopy.add(k);
         }
       });
-    }
-    else {
+    } else {
       selectedSetCopy = new Set(replace ? keys : keys.concat(...$selectedSet));
     }
     activeKey = [...selectedSetCopy];
@@ -60,15 +59,15 @@
     if (!Array.isArray(keys)) {
       return [keys.toString()];
     }
-    return keys.map(k => k.toString());
+    return keys.map((k) => k.toString());
   }
 
   setContext(COLLAPSE, {
     onClickItem(key: string) {
-      selectItem([key], {toogle: true});
+      selectItem([key], { toogle: true });
       dispatch('change', { activeKey });
     },
-    selectedSet
+    selectedSet,
   });
 
   // data flow: activeKey change -> changeSet() -> view layer
@@ -79,12 +78,10 @@
   onMount(() => {
     // TODO
     let currentActiveKey = (Array.isArray(activeKey) && activeKey.length) === 0 ? defaultActiveKey : activeKey;
-    selectItem(formateActiveKey(currentActiveKey), {replace: true});
+    selectItem(formateActiveKey(currentActiveKey), { replace: true });
   });
-
-  
-</script> 
+</script>
 
 <div class="collapse">
-  <slot></slot>
+  <slot />
 </div>

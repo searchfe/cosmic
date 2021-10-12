@@ -39,13 +39,14 @@
 
   const cb = new ClassBuilder(classesDefault);
 
-  $: c = cb.flush()
+  $: c = cb
+    .flush()
     .add($$props.class)
     .add(theme === 'light' ? lightTheme : darkTheme)
     .get();
 </script>
 
-<ul class="{c}" class:rounded-t-none={noTopRadius}>
+<ul class="{c}" class:rounded-t-none="{noTopRadius}">
   {#each items as item, i}
     {#if item.to !== undefined}
       <slot>
@@ -59,14 +60,14 @@
       <slot>
         <MenuItem
           bind:value
-          selectedClasses={selectedClasses}
-          hoverClasses={hoverClasses}
+          selectedClasses="{selectedClasses}"
+          hoverClasses="{hoverClasses}"
           class="{itemClasses} w-full"
           {...item}
-          tabindex={i + 1}
-          id={id(item)}
-          selected={value === id(item)}
-          dense={dense}
+          tabindex="{i + 1}"
+          id="{id(item)}"
+          selected="{value === id(item)}"
+          dense="{dense}"
           on:change
           on:click
         >
@@ -78,7 +79,7 @@
             value="{item}"
             icon="{item.icon || 'blank'}"
             classes="rounded-none"
-            theme={theme}
+            theme="{theme}"
             on:change
             on:click
           />

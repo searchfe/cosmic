@@ -9,7 +9,7 @@
   const defaultMenuClasses = 'absolute right-0';
 
   export let classes = 'relative';
-  export let menuClasses  = '';
+  export let menuClasses = '';
 
   const containerClassBuilder = new ClassBuilder(defaultContainerClasses);
   const menuClassBuilder = new ClassBuilder(defaultMenuClasses);
@@ -21,15 +21,9 @@
 
   let open = false;
 
-  $: containerComputedClass = containerClassBuilder
-    .flush()
-    .add(classes)
-    .get();
+  $: containerComputedClass = containerClassBuilder.flush().add(classes).get();
 
-  $: menuComputedClass = menuClassBuilder
-    .flush()
-    .add(menuClasses)
-    .get();
+  $: menuComputedClass = menuClassBuilder.flush().add(menuClasses).get();
 
   function onClick(e) {
     open = !open;
@@ -37,7 +31,7 @@
   }
 </script>
 
-<div class={containerComputedClass} on:click|stopPropagation>
-  <Icon on:click={onClick}>more_horiz</Icon>
-  <Menu class={menuComputedClass} theme="dark" open={open} items={items} on:change/>
+<div class="{containerComputedClass}" on:click|stopPropagation>
+  <Icon on:click="{onClick}">more_horiz</Icon>
+  <Menu class="{menuComputedClass}" theme="dark" open="{open}" items="{items}" on:change />
 </div>

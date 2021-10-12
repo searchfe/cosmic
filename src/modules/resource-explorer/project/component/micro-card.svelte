@@ -1,39 +1,3 @@
-<script lang="typescript">
-  import { push } from 'svelte-spa-router';
-  import { Icon } from '@cosmic/core/components';
-  import Card from '../../common/components/card.svelte';
-  import type { Project } from '../../common/types/graphql';
-  import { urlFor, ROUTES_ENUM } from '../../routes';
-
-  export let data: Project;
-
-  export let avatar = 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1805669441,154121004&fm=30&app=106&f=JPEG?w=312&h=208&s=D5383ED766AB32B0D234CD2603003069';
-  export let userAvatars: string[] = [avatar, avatar, avatar];
-  export let info = '协作 30';
-
-  function projectClickHandler() {
-    push(urlFor(ROUTES_ENUM.PROJECT_DETAIL, { projectId: data.id }));
-  }
-</script>
-
-<Card classes="overflow-hidden p-6" on:click={projectClickHandler}>
-  <img class="avatar" src={avatar} alt="projcet avatra" />
-  <div class="name">
-    {data.name}
-  </div>
-  <div class="meta flex justify-between items-end">
-    <div class="user-avatar-list flex justify-between">
-      {#each userAvatars as uer}
-        <img class="user-avatar" src={uer} alt="" />
-      {/each}
-    </div>
-    <div class="info">
-      {info}
-    </div>
-  </div>
-  <Icon classes="absolute top-6 right-6" >more_horiz</Icon>
-</Card>
-
 <style>
   .avatar {
     width: 40px;
@@ -72,3 +36,40 @@
     right: 14px;
   }
 </style>
+
+<script lang="typescript">
+  import { push } from 'svelte-spa-router';
+  import { Icon } from '@cosmic/core/components';
+  import Card from '../../common/components/card.svelte';
+  import type { Project } from '../../common/types/graphql';
+  import { urlFor, ROUTES_ENUM } from '../../routes';
+
+  export let data: Project;
+
+  export let avatar =
+    'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1805669441,154121004&fm=30&app=106&f=JPEG?w=312&h=208&s=D5383ED766AB32B0D234CD2603003069';
+  export let userAvatars: string[] = [avatar, avatar, avatar];
+  export let info = '协作 30';
+
+  function projectClickHandler() {
+    push(urlFor(ROUTES_ENUM.PROJECT_DETAIL, { projectId: data.id }));
+  }
+</script>
+
+<Card classes="overflow-hidden p-6" on:click="{projectClickHandler}">
+  <img class="avatar" src="{avatar}" alt="projcet avatra" />
+  <div class="name">
+    {data.name}
+  </div>
+  <div class="meta flex justify-between items-end">
+    <div class="user-avatar-list flex justify-between">
+      {#each userAvatars as uer}
+        <img class="user-avatar" src="{uer}" alt="" />
+      {/each}
+    </div>
+    <div class="info">
+      {info}
+    </div>
+  </div>
+  <Icon classes="absolute top-6 right-6">more_horiz</Icon>
+</Card>

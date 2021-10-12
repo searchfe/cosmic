@@ -3,7 +3,8 @@ import { operationStore, mutation } from '@urql/svelte';
 
 // TODO: it gql increases a lot, split it
 export const queryProjects = (project: QueryProjectDTO = {}) => {
-  return operationStore<{projects: Project[]}, { project: QueryProjectDTO}>(`
+  return operationStore<{ projects: Project[] }, { project: QueryProjectDTO }>(
+    `
     query ($project: QueryProjectDTO) {
       projects(project: $project) {
         id,
@@ -12,11 +13,14 @@ export const queryProjects = (project: QueryProjectDTO = {}) => {
         parent
       }
     }
-  `, { project }, { requestPolicy: 'cache-first' });
+  `,
+    { project },
+    { requestPolicy: 'cache-first' }
+  );
 };
 
 export const createProject = () => {
-  return mutation<{createProject: {id: string}}, {project: CreateProjectDTO}>({
+  return mutation<{ createProject: { id: string } }, { project: CreateProjectDTO }>({
     query: `
       mutation ($project: CreateProjectDTO!) {
         createProject(project: $project) {
