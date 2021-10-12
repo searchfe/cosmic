@@ -3,17 +3,17 @@
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
   import { COLLAPSE } from './collapse.svelte';
 
-  export let headerClass = '';
+  export let headerClass = 'pl-8 font-semibold';
   export let contentClass = '';
   export let header = '';
   export let key = '';
-  export let forceShowExtra = false;
+  export let isSelected = false;
 
   const defaultHeaderClasses = `
     collapse-item-header box-border 
-    h-12 py-3.5 pl-8 pr-3
+    h-12 py-3.5 pr-3
     flex flex-row justify-start items-center 
-    rounded-md font-semibold text-sm 
+    rounded-md text-sm 
     hover:bg-cgray-100
   `;
   const defaultContentClasses = '';
@@ -22,19 +22,10 @@
   const contentClassesBuilder = new ClassBuilder(defaultContentClasses);
 
   let hovering = false;
-  let extraShouldShow = false;
 
   const {onClickItem, selectedSet} = getContext(COLLAPSE);
 
   $: isSelected = $selectedSet.has(key.toString());
-  $: {
-    if (forceShowExtra) {
-      extraShouldShow = true;
-      hovering = false; // 需要重置，确保hovering点击后重新判断
-    } else {
-      extraShouldShow = hovering;
-    }
-  }
 
   $: headerComputedClass = headerClassesBuilder
     .flush()
@@ -65,15 +56,15 @@
 <div
   class={headerComputedClass}
   on:click|stopPropagation={onClick}
-  on:mouseenter|stopPropagation={onMouseEnter}
-  on:mouseleave|stopPropagation={onMouseLeave}
+  on:mouseenter={onMouseEnter}
+  on:mouseleave={onMouseLeave}
 >
   <div class="mr-4 flex-none">
-    <slot name="prefix"></slot>
+    <slot name="prefix"  {isSelected}></slot>
   </div>
   <div class="flex-auto">{header}</div>
   {#if $$slots.extra}
-    <div class="flex-none" class:invisible={!extraShouldShow}>
+    <div class="flex-none" on:click|stopPropagation class:invisible={!hovering}>
       <slot name="extra"></slot>
     </div>
   {/if}

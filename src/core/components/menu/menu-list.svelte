@@ -4,22 +4,24 @@
 
   import MenuItem from './menu-item.svelte';
 
+  const lightTheme = 'bg-white text-black';
+  const darkTheme = 'bg-black text-white';
+
   export let items = [];
   export let value = '';
   export let dense = false;
-  export let select = false;
+  export let noTopRadius = false;
+  export let theme: 'dark' | 'light' = 'light';
 
   export const level = null;
   export const text = '';
   export const item = {};
   export const to = null;
-  export const defaultClass = (i) => i;
-  export const selectedClasses = (i) => i;
-  export let itemClasses = (i) => i;
+  export let selectedClasses = '';
+  export let hoverClasses = '';
+  export let itemClasses = '';
 
-  const classesDefault = 'text-gray-50 dark:text-gray-200 bg-cgray-400 dark:bg-cgray-600 rounded';
-
-  export let classes = classesDefault;
+  const classesDefault = 'overflow-hidden rounded-xl py-4';
 
   function id(i) {
     if (i.id !== undefined) return i.id;
@@ -35,43 +37,36 @@
     return i;
   }
 
-  const cb = new ClassBuilder($$props.class);
+  const cb = new ClassBuilder(classesDefault);
 
-  $: c = cb.flush().add(classes, true, classesDefault).add($$props.class).get();
+  $: c = cb.flush()
+    .add($$props.class)
+    .add(theme === 'light' ? lightTheme : darkTheme)
+    .get();
 </script>
 
-<ul class="{c}" class:rounded-t-none="{select}">
+<ul class="{c}" class:rounded-t-none={noTopRadius}>
   {#each items as item, i}
     {#if item.to !== undefined}
-      <slot name="item" item="{item}" dense="{dense}" value="{value}">
+      <slot>
         <a tabindex="{i + 1}" href="{item.to}">
-          <ListItem bind:value {...item} id="{id(item)}" dense="{dense}" on:change>
+          <MenuItem bind:value {...item} id="{id(item)}" dense="{dense}" on:change>
             {item.text}
-          </ListItem>
+          </MenuItem>
         </a>
       </slot>
     {:else}
-      <slot
-        name="item"
-        value="{value}"
-        selectedClasses="{selectedClasses}"
-        classes="{itemClasses}"
-        item="{item}"
-        tabindex="{i + 1}"
-        id="{id(item)}"
-        selected="{value === id(item)}"
-        dense="{dense}"
-      >
+      <slot>
         <MenuItem
           bind:value
-          selectedClasses=""
-          hoverClasses=""
-          classes="{itemClasses} w-full"
+          selectedClasses={selectedClasses}
+          hoverClasses={hoverClasses}
+          class="{itemClasses} w-full"
           {...item}
-          tabindex="{i + 1}"
-          id="{id(item)}"
-          selected="{value === id(item)}"
-          dense="{dense}"
+          tabindex={i + 1}
+          id={id(item)}
+          selected={value === id(item)}
+          dense={dense}
           on:change
           on:click
         >
@@ -82,7 +77,8 @@
             stopPropagation="true"
             value="{item}"
             icon="{item.icon || 'blank'}"
-            classDefault="px-4 py-2 rounded-none"
+            classes="rounded-none"
+            theme={theme}
             on:change
             on:click
           />

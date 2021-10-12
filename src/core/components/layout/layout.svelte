@@ -10,6 +10,6 @@
   setContext(LAYOUT, { hasSider });
 </script>
 
-<section class="flex flex-auto {$hasSider ? 'flex-row' : 'flex-col'}">
+<section class="flex flex-auto {$$props.class} {$hasSider ? 'flex-row' : 'flex-col'}">
   <slot/>
 </section>

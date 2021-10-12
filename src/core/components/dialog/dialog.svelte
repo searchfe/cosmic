@@ -4,43 +4,43 @@
   import { Scrim } from 'smelte/src/components/Util/index.js';
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
 
-  const classesDefault = 'items-center z-50 rounded bg-white dark:bg-dark-400 p-4 shadow';
-  const titleClassesDefault = 'text-lg font-bold pb-4';
-  const actionsClassesDefault = 'flex w-full justify-end pt-4';
+  const classesDefault = 'box-border text-black items-center z-50 rounded-4xl bg-white p-24 shadow-dialog';
+  const titleClassesDefault = 'text-h2 font-bold pb-16';
+  const actionsClassesDefault = 'w-full';
 
   export let value;
-  export let classes = classesDefault;
-  export let titleClasses = titleClassesDefault;
-  export let actionsClasses = actionsClassesDefault;
+  export let classes = '';
+  export let titleClasses = '';
+  export let actionsClasses = '';
   export let opacity = 0.5;
   export let persistent = false;
+  export let width = 'auto';
+  export let height = 'auto';
 
   export let transitionProps = { duration: 150, easing: quadIn, delay: 150 };
 
-  const cb = new ClassBuilder(classes, classesDefault);
-  const tcb = new ClassBuilder(titleClasses, titleClassesDefault);
-  const acb = new ClassBuilder(actionsClasses, actionsClassesDefault);
+  const cb = new ClassBuilder(classesDefault);
+  const tcb = new ClassBuilder(titleClassesDefault);
+  const acb = new ClassBuilder(actionsClassesDefault);
 
-  $: c = cb.flush().add(classes, true, classesDefault).add($$props.class).get();
+  $: c = cb.flush().add(classes, true, classesDefault).get();
 
   $: t = tcb.flush().add(titleClasses, true, actionsClassesDefault).get();
 
   $: a = acb.flush().add(actionsClasses, true, actionsClassesDefault).get();
 </script>
 
-{#if value}
-  <div class="fixed w-full h-full top-0 left-0 z-30">
-    <Scrim opacity="{opacity}" on:click="{() => !persistent && (value = false)}" />
-    <div class="h-full w-full absolute flex items-center justify-center">
-      <div in:scale="{transitionProps}" class="{c}">
-        <div class="{t}">
-          <slot name="title" />
-        </div>
-        <slot />
-        <div class="{a}">
-          <slot name="actions" />
-        </div>
+<div class="fixed w-full h-full top-0 left-0 z-30" class:hidden={!value}>
+  <Scrim opacity="{opacity}" on:click="{() => !persistent && (value = false)}" />
+  <div class="h-full w-full absolute flex items-center justify-center">
+    <div in:scale="{transitionProps}" class="{c}" style="width: {width}; height: {height}">
+      <div class="{t}">
+        <slot name="title" />
+      </div>
+      <slot />
+      <div class="{a}">
+        <slot name="actions" />
       </div>
     </div>
   </div>
-{/if}
+</div>

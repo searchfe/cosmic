@@ -7,13 +7,15 @@
 	export let data: TreeNode;
 
   const defaultContainerClasses = '';
-  const defaultNodeClasses = 'h-12 pr-3 flex items-center text-sm text-cblack-text hover:bg-cgray-100';
+  const defaultNodeClasses = 'h-12 pr-3 flex items-center text-sm text-black hover:bg-cgray-100';
 
   export let containerClass = '';
   export let nodeClass = '';
   export let extraIcon = '';
   export let primaryIndent = 0;
   export let indentStep = 2.25;
+  export let treeIcon = '';
+  export let leafIcon = '';
 
   const containerClassBuilder = new ClassBuilder(defaultContainerClasses);
   const nodeClassBuilder = new ClassBuilder(defaultNodeClasses);
@@ -24,7 +26,7 @@
   const _expansionState: Record<string, boolean> = {};
 	let expanded = _expansionState[key] || false;
   
-	const toggleExpansion = () => {
+	const toggleExpansion = (e) => {
 		expanded = _expansionState[key] = !expanded;
     dispatch('click', { selectedKey: key });
 	}
@@ -57,7 +59,15 @@
       <div class="flex-none">
         <Icon>{arrowStatus}</Icon>
       </div>
+      {#if treeIcon}
+        <Icon small classes="mr-1.5">{treeIcon}</Icon>
+      {/if}
+      {:else}
+        {#if leafIcon}
+          <Icon small classes="mr-1.5">{leafIcon}</Icon>
+        {/if}
     {/if}
+    
     <span class="flex-auto">{label}</span>
     {#if extraIcon}
       <div class="flex-none" on:click|stopPropagation={onClickExtra}>
@@ -65,7 +75,7 @@
       </div>
     {/if}
   </div>
-  {#if expanded}
+  {#if expanded && children && children.length}
     {#each children as child}
       <svelte:self
         extraIcon={extraIcon}
@@ -73,6 +83,7 @@
         primaryIndent={primaryIndent + indentStep}
         indentStep={indentStep}
         on:click-extra
+        on:click
       />
     {/each}
   {/if}

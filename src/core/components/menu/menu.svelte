@@ -1,46 +1,47 @@
-<script>
+<script lang="typescript">
   import { createEventDispatcher } from 'svelte';
-  import { fly } from 'svelte/transition';
-  import { quadOut, quadIn } from 'svelte/easing';
   import List from './menu-list.svelte';
   import { ClassBuilder } from 'smelte/src/utils/classes';
 
-  const classesDefault = 'cursor-pointer relative';
-  const listClassesDefault = 'absolute w-auto top-8 bg-white left-0 bg-white rounded shadow z-20 dark:bg-dark-500';
+  const containerClassesDefault = 'cursor-pointer bg-none';
+  const listClassesDefault = 'w-auto z-20';
 
   export let items = [];
   export let open = false;
   export let value = null;
-  export let classes = classesDefault;
-  export let listClasses = listClassesDefault;
+  export let listClasses = '';
   export let listProps = {};
+  export let theme: 'dark' | 'light' = 'light';
 
-  const cb = new ClassBuilder($$props.class);
+  const containerClassBuilder = new ClassBuilder(containerClassesDefault);
+  const listClassBuilder = new ClassBuilder(listClassesDefault);
 
-  $: c = cb.flush().add(classes, true, classesDefault).add($$props.class).get();
+  $: containerComputedClass = containerClassBuilder.flush()
+    .add($$props.class)
+    .get();
 
-  const lcb = new ClassBuilder(listClasses, listClassesDefault);
-
-  $: l = lcb.flush().get();
+  $: listComputedClass = listClassBuilder.flush()
+    .add(listClasses)
+    .get();
 
   const dispatch = createEventDispatcher();
 
-  const inProps = { y: 10, duration: 200, easing: quadIn };
-  const outProps = { y: -10, duration: 100, easing: quadOut, delay: 100 };
 </script>
 
 <svelte:window on:click="{() => (open = false)}" />
 
-<div class="{c}" on:click|stopPropagation>
+<div class={containerComputedClass} on:click|stopPropagation>
   <slot name="activator" />
   <slot name="menu">
     {#if open}
-      <div class="{l}">
+      <div class={listComputedClass}>
         <List
           bind:value
           select
           dense
-          items="{items}"
+          theme={theme}
+          items={items}
+          noTopRadius={Boolean($$slots.activator)}
           on:change
           on:change="{(e) => {
             open = false;

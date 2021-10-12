@@ -1,4 +1,4 @@
-<script>
+<script lang="typescript">
   /**
    * 按钮用于开始一个即是操作
    * @component
@@ -16,43 +16,38 @@
   export let small = false;
   export let light = false;
   export let dark = false;
-  export let flat = false;
   export let iconClass = '';
   export let color = 'cgray';
   export let href = null;
   export let fab = false;
-  export let type = 'button';
+  export let type = 'normal';
 
   export let remove = '';
   export let add = '';
   export let replace = {};
 
-  const classesDefault = 'z-10 py-2 px-4 text-xs font-normal relative overflow-hidden';
-  const basicDefault = 'text-gray-50 dark:text-gray-200 duration-200 ease-in';
-  const bgClassesDefault = '';
-  const outlinedDefault = 'bg-transparent border border-solid';
-  const textDefault = 'bg-transparent border-none px-4 hover:bg-transparent';
+  const typeMap = {
+    normal: 'text-black bg-gray-10 border-gray-20 hover:text-blue active:text-blue-active',
+    primary: 'text-white bg-blue border-blue-90 hover:bg-blue-hover active:text-white-active',
+  };
+
+  const boxDefault = 'w-48 h-16';
+  const basicClasses = 'relative overflow-hidden text-base font-normal box-border z-10 py-2 px-4 duration-200 ease-in';
+
   const iconDefault = 'p-4 flex items-center select-none';
   const fabDefault = 'hover:bg-transparent';
   const smallDefault = 'pt-1 pb-1 pl-2 pr-2 text-xs';
   const disabledDefault =
     'bg-gray-300 text-gray-500 dark:bg-dark-400 pointer-events-none hover:bg-gray-300 cursor-default';
-  const elevationDefault = 'hover:shadow shadow';
 
-  export let classes = classesDefault;
-  export let basicClasses = basicDefault;
-  export let bgClasses = bgClassesDefault;
-  export let outlinedClasses = outlinedDefault;
-  export let textClasses = textDefault;
+  export let classes = '';
   export let iconClasses = iconDefault;
   export let fabClasses = fabDefault;
   export let smallClasses = smallDefault;
   export let disabledClasses = disabledDefault;
-  export let elevationClasses = elevationDefault;
 
   fab = fab || (text && icon);
-  const basic = !outlined && !text && !fab;
-  const elevation = (basic || icon) && !disabled && !flat && !text;
+  // const basic = !outlined && !text && !fab;
 
   let Classes = (i) => i;
   let iClasses = (i) => i;
@@ -63,27 +58,27 @@
     shade = dark ? -400 : shade;
   }
 
-  let bgc0 = 0;
-  let bgc1 = 0;
-  let lighter = 0;
+  // let bgc0 = 0;
+  // let bgc1 = 0;
+  // let lighter = 0;
 
-  if (light) {
-    bgc0 = 400;
-    bgc1 = 400;
-    lighter = 500;
-  } else if (dark) {
-    bgc0 = 600;
-    bgc1 = 600;
-    lighter = 500;
-  } else {
-    bgc0 = 400;
-    bgc1 = 600;
-    lighter = 500;
-  }
+  // if (light) {
+  //   bgc0 = 400;
+  //   bgc1 = 400;
+  //   lighter = 500;
+  // } else if (dark) {
+  //   bgc0 = 600;
+  //   bgc1 = 600;
+  //   lighter = 500;
+  // } else {
+  //   bgc0 = 400;
+  //   bgc1 = 600;
+  //   lighter = 500;
+  // }
 
   const { bg, border, txt } = utils(color);
 
-  const cb = new ClassBuilder(classes, classesDefault);
+  const cb = new ClassBuilder(basicClasses);
   let iconCb;
 
   if (icon) {
@@ -92,24 +87,21 @@
 
   $: classes = cb
     .flush()
-    .add(basicClasses, basic, basicDefault)
-    .add(bgClasses, basic, bgClassesDefault)
-    .add(`${bg(bgc0)} dark:${bg(bgc1)} hover:${bg(lighter)}`, basic)
-    .add(elevationClasses, elevation, elevationDefault)
-    .add(outlinedClasses, outlined, outlinedDefault)
-    .add(`${border(lighter)} ${txt(bgc0)} hover:${bg('trans')} dark-hover:${bg('transDark')}`, outlined)
-    .add(`${txt(lighter)}`, text)
-    .add(textClasses, text, textDefault)
+    .add(classes)
+    .add(typeMap[type])
+    // .add(`${bg(bgc0)} dark:${bg(bgc1)} hover:${bg(lighter)}`, basic)
+    // .add(`${border(lighter)} ${txt(bgc0)} hover:${bg('trans')} dark-hover:${bg('transDark')}`, outlined)
+    // .add(`${txt(lighter)}`, text)
     .add(iconClasses, icon, iconDefault)
     .remove('py-2', icon)
-    .remove(txt(lighter), fab)
+    // .remove(txt(lighter), fab)
     .add(disabledClasses, disabled, disabledDefault)
     .add(smallClasses, small, smallDefault)
     .add('flex items-center justify-center h-8 w-8', small && icon)
     .add('border-solid', outlined)
     .add('rounded-full', icon)
-    .add('w-full', block)
-    .add('rounded', basic || outlined || text)
+    .add(block ? 'w-full' : boxDefault)
+    .add('rounded', outlined || text)
     .add('button', !icon)
     .add(fabClasses, fab, fabDefault)
     .add(`hover:${bg('transLight')}`, fab)
@@ -117,7 +109,6 @@
     .remove(remove)
     .replace(replace)
     .add(add)
-    .add('active:bg-active')
     .get();
 
   $: if (iconCb) {
@@ -154,7 +145,6 @@
     <button
       class="{classes}"
       {...props}
-      type="{type}"
       disabled="{disabled}"
       on:click="{() => (value = !value)}"
       on:click
@@ -171,12 +161,12 @@
   <button
     class="{classes}"
     {...props}
-    type="{type}"
     disabled="{disabled}"
     on:click="{() => (value = !value)}"
     on:click
     on:mouseover
     on:*
+    style="text-shadow: none;"
   >
     {#if icon}
       <Icon class="{iClasses}" small="{small}">{icon}</Icon>

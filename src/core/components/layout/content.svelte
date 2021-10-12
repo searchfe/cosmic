@@ -2,7 +2,7 @@
 
 </script>
 
-<main class={`content bg-cgray-200 flex-auto ${$$props.class}`}>
+<main class={`content bg-cgray-100 flex-auto ${$$props.class}`}>
   <slot />
 </main>
 

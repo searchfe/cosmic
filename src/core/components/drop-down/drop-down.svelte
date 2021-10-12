@@ -2,45 +2,42 @@
   import { createEventDispatcher } from 'svelte';
   import { DropdownTrigger } from './type';
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
+  import Menu from '../menu';
+  import Icon from '../icon';
 
-  const defaultContainerClasses = 'inline-block relative';
-  const defaultMenuClasses = '';
+  const defaultContainerClasses = 'inline-block';
+  const defaultMenuClasses = 'absolute right-0';
 
-  let containerClasses = defaultContainerClasses;
-  let menuClasses = defaultMenuClasses;
+  export let classes = 'relative';
+  export let menuClasses  = '';
 
-  const containerClassBuilder = new ClassBuilder(containerClasses, defaultContainerClasses);
-  const menuClassBuilder = new ClassBuilder(menuClasses, defaultMenuClasses);
+  const containerClassBuilder = new ClassBuilder(defaultContainerClasses);
+  const menuClassBuilder = new ClassBuilder(defaultMenuClasses);
 
   export let trigger: DropdownTrigger = DropdownTrigger.CLICK;
+  export let items = [];
 
   const dispatch = createEventDispatcher();
 
+  let open = false;
 
-  let showContent = false;
-
-  $: containerClasses = containerClassBuilder
+  $: containerComputedClass = containerClassBuilder
     .flush()
-    .add($$props.class)
+    .add(classes)
     .get();
 
-  $: menuClasses = menuClassBuilder
+  $: menuComputedClass = menuClassBuilder
     .flush()
-    .add()
+    .add(menuClasses)
     .get();
 
-  function onClick() {
-    showContent = !showContent;
-    console.log(1111)
-    dispatch('click');
+  function onClick(e) {
+    open = !open;
+    dispatch('visible-change', { visible: open });
   }
 </script>
 
-<div class={containerClasses}>
-  <div on:click|stopPropagation={onClick}>
-    <slot />
-  </div>
-  <div class="absolute top-full" class:hidden={!showContent}>
-    <slot name="dropdown" />
-  </div>
+<div class={containerComputedClass} on:click|stopPropagation>
+  <Icon on:click={onClick}>more_horiz</Icon>
+  <Menu class={menuComputedClass} theme="dark" open={open} items={items} on:change/>
 </div>
