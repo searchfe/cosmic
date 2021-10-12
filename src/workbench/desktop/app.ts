@@ -22,8 +22,8 @@ export default class App {
     this.initStyle();
   }
   async bootstrap() {
-    this.initNavigationBar();
-    this.initStatusBar();
+    // this.initNavigationBar();
+    // this.initStatusBar();
     await this.initModules();
   }
 

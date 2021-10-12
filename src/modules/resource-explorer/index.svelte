@@ -1,4 +1,5 @@
-<script>
+<script lang="typescript" context="module">
+  import Explorer from './explorer.svelte';
 </script>
 
-<div>Resource Explorer</div>
+<Explorer />
