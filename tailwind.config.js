@@ -61,8 +61,12 @@ const widthConfigs = {
   '7/12': '58.333333%',
   '8/12': '66.666667%',
   '9/12': '75%',
+  '1/10': '10%',
+  '9/10': '10%',
   '10/12': '83.333333%',
   '11/12': '91.666667%',
+  '1/29': '3.5%',
+  '17/100': '17%',
   full: '100%',
   screen: '100vw',
   // min: 'min-content',
@@ -70,6 +74,9 @@ const widthConfigs = {
 };
 
 module.exports = {
+  plugins: [
+    require('tailwindcss-typography')
+  ],
   theme: {
     spacing: widthConfigs,
     // width: widthConfigs,
@@ -110,8 +117,32 @@ module.exports = {
         800: colors.trueGray[800],
         900: colors.trueGray[900],
       },
-      cblack: {
-        text: '#1f1f1f',
+      gray: {
+        10: '#f5f5f5',
+        20: '#d8d8d8',
+        30: '#bababa',
+      },
+      black: {
+        light: '#1f1f1f',
+        DEFAULT: '#1f1f1f',
+        dark: '#ffffff',
+      },
+      white: {
+        light: '#ffffff',
+        DEFAULT: '#ffffff',
+        dark: '#25252b',
+        active: 'rgba(255,255,255,0.7)',
+        90: {
+          light: '#f5f5f5',
+          dark: '#1c1c20',
+        }
+      },
+      blue: {
+        light: '#546bff',
+        DEFAULT: '#546bff',
+        hover: '#7184ff',
+        active: 'rgba(84,107,255,0.7)',
+        90: '#3388ff',
       },
       error: {
         light: colors.red[400],
@@ -128,9 +159,6 @@ module.exports = {
         DEFAULT: colors.blue[400],
         dark: colors.blue[400],
       },
-      blue: {
-        DEFAULT: colors.blue[400],
-      },
     },
     transitionDuration: { 100: '0ms', 200: '0ms' },
     boxShadow: {
@@ -141,8 +169,24 @@ module.exports = {
       lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
       '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-     '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+      '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
       inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+      dialog: '0 1px 2px 0 rgba(0, 0, 0, 0.5)',
+      none: 'none',
+    },
+    borderRadius: {
+      'none': '0',
+      'sm': '0.125rem',
+      DEFAULT: '0.25rem',
+      'md': '0.375rem',
+      'lg': '0.5rem',
+      'xl': '0.75rem',
+      '2xl': '1rem',
+      '3xl': '1.5rem',
+      '4xl': '1.8rem',
+      'full': '9999px',
+    },
+    textShadow: {
       none: 'none',
     },
   },
@@ -150,17 +194,10 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['active'],
-      textColor: ['hover'],
+      textColor: ['active', 'hover'],
+      opacity: ['active', 'hover'],
+      boxShadow: ['active', 'hover']
     },
   },
-  colors: {
-    primary: colors.trueGray[500],
-    secondary: '#009688',
-    error: colors.red[600],
-    success: '#4caf50',
-    alert: colors.blue[300],
-    blue: '#2196f3',
-    dark: '#212121',
-  },
-  darkMode: true,
+  darkMode: 'media',
 };
