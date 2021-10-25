@@ -14,18 +14,18 @@
   export let reverse = false;
   export let tip = false;
   export let color = 'default';
-  export let extraStyle = '';
+  export let classes = '';
 </script>
 
 <i
   aria-hidden="true"
-  class="material-icons icon text-xl select-none {$$props.class} duration-200 ease-in"
+  class="material-icons icon text-xl select-none {classes} duration-200 ease-in"
   class:reverse
   class:tip
   on:click
   class:text-base="{small}"
   class:text-xs="{xs}"
-  style="{extraStyle}; {color ? `color: ${color}` : ''}"
+  style="{color ? `color: ${color}` : ''}"
 >
   <slot />
 </i>

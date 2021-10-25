@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
+import replace from '@rollup/plugin-replace';
 import json from '@rollup/plugin-json';
 import { syncFile } from './rollup-plugin-sync';
 
@@ -19,6 +20,9 @@ const production = !process.env.ROLLUP_WATCH;
 export function pluginsOptions(path, separateCss) {
   return [
     syncFile(`src/${path}`, `dist/${path}`),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify(production ? 'production' : ''),
+    }),
     svelte({
       preprocess: sveltePreprocess({
         sass: true,

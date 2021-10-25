@@ -5,6 +5,7 @@ import { configs as externalConfig, externals, importmap as externalMap } from '
 import { configs as internalConfig, internals, importmap as internalMap } from './scripts/rollup-internal.config';
 import { configs as moduleConfig, modules, importmap as moduleMap } from './scripts/rollup-module.config';
 import { pluginsOptions } from './scripts/rollup-plugin-svelte';
+import replace from '@rollup/plugin-replace';
 import { syncFile } from './scripts/rollup-plugin-sync';
 import { jsonFiles, importmap as jsonMap, jsonSync } from './scripts/rollup-json.config';
 
@@ -34,7 +35,14 @@ export default [
             ...jsonMap().imports,
           },
         };
-        return text.toString().replace('__importmap_config__', JSON.stringify(data, null, ''));
+        return text
+          .toString()
+          .replace('__importmap_config__', JSON.stringify(data, null, ''))
+          .replace('process.env.NODE_ENV', JSON.stringify(production ? 'production' : ''));
+      }),
+      // urql should replace process
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(production ? 'production' : ''),
       }),
       jsonSync,
       ...pluginsOptions('workbench/desktop', true),

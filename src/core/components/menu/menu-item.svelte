@@ -4,8 +4,7 @@
   import Icon from 'smelte/src/components/Icon';
   import createRipple from 'smelte/src/components/Ripple/ripple.js';
 
-  const classesDefault =
-    'bg-cgray-400 dark:bg-cgray-600 relative overflow-hidden duration-100 cursor-pointer text-gray-50 flex items-center z-10';
+  const classesDefault = 'relative overflow-hidden duration-100 cursor-pointer flex items-center z-10';
   const selectedClassesDefault = 'bg-active dark:bg-active';
   const subheadingClassesDefault = 'text-gray-200 p-0 text-sm';
   const lineBreakClassesDedault = 'border-b border-cgray-500 border-opacity-60';
@@ -38,11 +37,10 @@
   function change() {
     if (disabled) return;
     value = id;
-    dispatch('change', item, to);
+    dispatch('change', { item, to });
   }
 
-  export let classes = defaultClass;
-  const cb = new ClassBuilder(classes, classesDefault);
+  const cb = new ClassBuilder(classesDefault);
 
   $: c = cb
     .flush()
@@ -51,7 +49,6 @@
     .add('py-1', dense)
     .add('text-gray-600', disabled)
     .add($$props.class)
-    // .add('active:bg-active')
     .add('break-keep-all')
     .add(hoverClasses, !selected)
     .get();
