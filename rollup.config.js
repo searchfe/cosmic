@@ -9,7 +9,9 @@ import replace from '@rollup/plugin-replace';
 import { syncFile } from './scripts/rollup-plugin-sync';
 import { jsonFiles, importmap as jsonMap, jsonSync } from './scripts/rollup-json.config';
 
-const production = !process.env.ROLLUP_WATCH;
+import { relative, join } from 'path';
+
+const production = process.env.NODE_ENV === 'production';
 
 export default [
   ...externalConfig(),
@@ -35,6 +37,10 @@ export default [
             ...jsonMap().imports,
           },
         };
+        const relativePath = relative('/workbench/desktop', '/');
+        for (const [k, v] of Object.entries(data.imports)) {
+          data.imports[k] = join(relativePath, v);
+        }
         return text
           .toString()
           .replace('__importmap_config__', JSON.stringify(data, null, ''))

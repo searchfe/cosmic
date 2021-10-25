@@ -14,7 +14,7 @@ export const modules = paths
   .filter((path) => existsSync(resolve('src/modules', path, 'index.ts')))
   .map((path) => 'modules/' + path);
 
-const production = !process.env.ROLLUP_WATCH;
+const production = process.env.NODE_ENV === 'production';
 function normalize() {
   const list = [];
   modules.forEach((moduleId) => {

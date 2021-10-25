@@ -48,8 +48,7 @@
     "postinstall": "electron-builder install-app-deps",
     "preinstall": "npx only-allow pnpm",
     "preinstall:all": "npx only-allow pnpm",
-    "prepack": "npm run build",
-    "pack": "electron-builder --dir",
+    "pack": "run-s install:hoist \"dist -- --dir\"",
     "predist": "npm run build",
     "dist": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder",
     "postdist": "node scripts/cleanBuilds.js",
@@ -67,16 +66,16 @@
     "storybook": "start-storybook -p 4200 -c .storybook --no-manager-cache",
     "storybook:build": "build-storybook -c .storybook -o dist/docs/components",
     "compodoc": "compodoc -s",
-    "compodoc:build": "compodoc"
+    "compodoc:build": "compodoc",
+    "install:hoist": "pnpm i --shamefully-hoist"
   },
   "dependencies": {
-    "@types/color": "^3.0.1",
     "@urql/svelte": "~1.3.0",
     "canvaskit-wasm": "~0.28.1",
     "color": "^3.1.3",
-    "electron-log": "^4.3.1",
-    "electron-store": "^7.0.2",
-    "electron-updater": "^4.3.5",
+    "electron-log": "^4.4.1",
+    "electron-store": "^8.0.1",
+    "electron-updater": "^4.3.9",
     "eventemitter2": "^6.4.4",
     "graphql": "~15.6.0",
     "install": "~0.13.0",
@@ -112,6 +111,7 @@
     "@swc/jest": "^0.1.4",
     "@tsconfig/svelte": "^1.0.13",
     "@types/clean-css": "^4.2.3",
+    "@types/color": "^3.0.1",
     "@types/html-minifier": "^4.0.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^14.17.1",
@@ -120,8 +120,8 @@
     "clean-css": "^5.0.1",
     "copy-webpack-plugin": "6.4",
     "cross-env": "^7.0.3",
-    "electron": "^12.0.6",
-    "electron-builder": "^22.10.5",
+    "electron": "^15.3.0",
+    "electron-builder": "^22.13.1",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-jsdoc": "^32.0.1",
@@ -171,45 +171,5 @@
     "src/app/**/*.{js,ts,svelte}": "eslint -c eslint.app.json",
     "src/{core,app,parts,modules,workbench}/**/*.{js,ts,svelte}": "eslint -c eslint.svelte.json",
     "scripts/**/*.js": "eslint"
-  },
-  "build": {
-    "productName": "Electron Svelte Typescript",
-    "appId": "electron.svelte.typescript",
-    "copyright": "Copyright © 2021 ${author}",
-    "win": {
-      "target": [
-        "nsis"
-      ]
-    },
-    "mac": {
-      "target": [
-        "dmg"
-      ],
-      "category": "productivity",
-      "type": "distribution",
-      "hardenedRuntime": "true"
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "snap"
-      ],
-      "category": "productivity"
-    },
-    "files": [
-      "build/*/",
-      "node_modules/*/",
-      "package.json"
-    ],
-    "extraResources": [
-      "assets/**"
-    ],
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "design-to-release",
-        "repo": "cosmic"
-      }
-    ]
   }
 }
