@@ -1,7 +1,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import { existsSync } from 'fs';
-import { terser } from 'rollup-plugin-terser';
 
 const production = process.env.NODE_ENV === 'production';
 
@@ -38,11 +37,6 @@ function options(config) {
         browser: true,
       }),
       commonjs({}),
-      production &&
-        terser({
-          compress: true,
-          mangle: true,
-        }),
     ],
   };
 }
