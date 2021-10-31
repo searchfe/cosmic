@@ -9,7 +9,7 @@
 <div class="flex flex-1 flex-row h-full dark:bg-cgray-800 bg-cgray-200 max-w-100">
   <Tabs
     selected="1"
-    class="shadow-sm text-white rounded-t-lg flex-col w-20 dark:bg-cgray-600 bg-cgray-400"
+    class="shadow-sm text-white rounded-t-xl flex-col w-20 dark:bg-cgray-600 bg-cgray-400"
     let:selected
     tabButtonClasses="{tabButtonClasses}"
     items="{[

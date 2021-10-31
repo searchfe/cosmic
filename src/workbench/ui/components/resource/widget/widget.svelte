@@ -2,7 +2,7 @@
   import { TextField } from '@cosmic/core/components';
   import { Collapse, CollapsePanel } from '../../components';
   import WidgetList from '../utils/list.svelte';
-  const pClass = 'text-sm py-4 px-2 dark:text-cgray-500 text-cgaray-700 cursor-default';
+  const pClass = 'text-base py-4 px-2 dark:text-cgray-500 text-cgaray-700 cursor-default';
   let searchValue = '';
 </script>
 

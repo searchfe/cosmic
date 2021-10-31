@@ -58,7 +58,7 @@
     <div class="extra">{extra}</div>
   </div>
   <div style="top: 76%;" class="w-full absolute h-1/5 px-6">
-    <div class="overflow-hidden w-full height-full grid grid-cols-4 gap-x-1 rounded-lg">
+    <div class="overflow-hidden w-full height-full grid grid-cols-4 gap-x-1 rounded-xl">
       {#each detailIMGS as img}
         <img class="img" src="{img}" alt="" />
       {/each}

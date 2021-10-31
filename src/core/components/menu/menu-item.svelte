@@ -6,7 +6,7 @@
 
   const classesDefault = 'relative overflow-hidden duration-100 cursor-pointer flex items-center z-10';
   const selectedClassesDefault = 'bg-active dark:bg-active';
-  const subheadingClassesDefault = 'text-gray-200 p-0 text-sm';
+  const subheadingClassesDefault = 'text-gray-200 p-0 text-base';
   const lineBreakClassesDedault = 'border-b border-cgray-500 border-opacity-60';
   const hoverClassesDedault = 'hover:bg-cgray-500';
 
@@ -59,7 +59,7 @@
   <div class="flex flex-col p-0">
     <slot name="button">
       {#if icon}
-        <Icon class="pr-6 text-lg" small="{dense}">
+        <Icon class="pr-6 text-h3" small="{dense}">
           {icon}
         </Icon>
       {/if}

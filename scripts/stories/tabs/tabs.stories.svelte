@@ -12,7 +12,7 @@
   <div style="max-width: 400px" class="dark:bg-cgray-600 bg-cgray-400">
     <Tabs
       selected="1"
-      class="bg-black shadow-sm text-white rounded-t-lg"
+      class="bg-black shadow-sm text-white rounded-t-xl"
       let:selected
       loading="{loading}"
       items="{[
@@ -36,7 +36,7 @@
       {...args}
       selected="1"
       tabButtonClasses="{tabButtonClasses}"
-      class="shadow-sm text-white rounded-t-lg flex-col max-w-10"
+      class="shadow-sm text-white rounded-t-xl flex-col max-w-10"
       let:selected
       loading="{loading}"
       items="{[

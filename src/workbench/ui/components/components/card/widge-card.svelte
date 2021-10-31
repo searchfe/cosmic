@@ -14,7 +14,7 @@
     <div slot="media">
       <img src="https://placekitten.com/60/60" alt="" />
     </div>
-    <div slot="text" class="py-1 flex justify-center items-center text-sm">
+    <div slot="text" class="py-1 flex justify-center items-center text-base">
       {text}
     </div>
   </Card>

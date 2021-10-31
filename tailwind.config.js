@@ -1,10 +1,13 @@
 const colors = require('tailwindcss/colors');
 
+// 加 * 为目前在用规范，其余的可后续酌情删除
 const widthConfigs = {
   0: '0rem',
   0.5: '0.125rem',
+  0.8: '0.2rem', // *
   1: '0.25rem',
   1.5: '0.375rem',
+  1.6: '0.4rem', // *
   2: '0.5rem',
   2.5: '0.625rem',
   3: '0.75rem',
@@ -84,20 +87,9 @@ module.exports = {
       h1: ['2.4rem', '2.4rem'],
       h2: ['2rem', '2rem'],
       h3: ['1.6rem', '1.6rem'],
-      '3xs': ['0.9rem', '0.9rem'],
-      '2xs': ['1rem', '1rem'],
-      xs: ['1.1rem', '1.1rem'], // 标准字号
-      sm: ['1.2rem', '1.2rem'],
-      tiny: ['1.4rem', '1.4rem'],
-      base: ['1.6rem', '1.6rem'],
+      base: ['1.2rem', '1.2rem'],
       lg: ['1.8rem', '1.8rem'],
       xl: ['2.2rem', '2.2rem'],
-      '2xl': ['2.7rem', '2.7rem'],
-      '3xl': ['3.6rem', '3.6rem'],
-      '4xl': ['4.8rem', '4.8rem'],
-      '5xl': ['6.0rem', '6.0rem'],
-      '6xl': ['7.2rem', '7.2rem'],
-      '7xl': ['9.0rem', '9.0rem'],
     },
     colors: {
       cgray: {
@@ -116,31 +108,26 @@ module.exports = {
         900: colors.trueGray[900],
       },
       gray: {
-        10: '#f5f5f5',
-        20: '#d8d8d8',
-        30: '#bababa',
+        100: '#f5f5f5',
+        200: 'rgba(31,31,31,0.06)',
+        300: 'rgba(31,31,31,0.1)',
+        400: 'rgba(31,31,31,0.3)',
+        500: 'rgba(31,31,31,0.7)',
+        600: '#25252b',
+        700: '#1f1f1f',
+        800: '#1c1c20',
       },
       black: {
-        light: '#1f1f1f',
         DEFAULT: '#1f1f1f',
-        dark: '#ffffff',
       },
       white: {
-        light: '#ffffff',
         DEFAULT: '#ffffff',
-        dark: '#25252b',
-        active: 'rgba(255,255,255,0.7)',
-        90: {
-          light: '#f5f5f5',
-          dark: '#1c1c20',
-        },
+        700: 'rgba(255,255,255,0.7)',
       },
       blue: {
-        light: '#546bff',
         DEFAULT: '#546bff',
-        hover: '#7184ff',
-        active: 'rgba(84,107,255,0.7)',
-        90: '#3388ff',
+        100: 'rgba(84,107,255,0.7)',
+        200: '#546bff',
       },
       error: {
         light: colors.red[400],
@@ -174,14 +161,9 @@ module.exports = {
     },
     borderRadius: {
       none: '0',
-      sm: '0.125rem',
-      DEFAULT: '0.25rem',
-      md: '0.375rem',
-      lg: '0.5rem',
-      xl: '0.75rem',
-      '2xl': '1rem',
-      '3xl': '1.5rem',
-      '4xl': '1.8rem',
+      DEFAULT: '0.4rem',
+      xl: '0.8rem',
+      '3xl': '1.6rem',
       full: '9999px',
     },
     textShadow: {

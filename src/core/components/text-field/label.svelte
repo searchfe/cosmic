@@ -5,7 +5,7 @@
   .label-transition {
     transition: font-size 0.05s, line-height 0.1s;
   }
-  :global(label.text-xs) {
+  :global(label.text-base) {
     font-size: 0.7rem;
   }
 </style>
@@ -41,8 +41,8 @@
     .flush()
     .add(txt(), focused && !error)
     .add('text-error-500', focused && error)
-    .add('label-top text-xs', labelOnTop)
-    .add('text-xs', focused)
+    .add('label-top text-base', labelOnTop)
+    .add('text-base', focused)
     .remove('pt-4 pb-2 px-4 px-1 pt-0', labelOnTop && outlined)
     .add(`ml-3 p-1 pt-0 mt-0 bg-${bgColor} dark:bg-cgray-600`, labelOnTop && outlined)
     .remove('px-4', prepend)
