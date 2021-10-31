@@ -27,16 +27,16 @@
   export let replace = {};
 
   const typeMap = {
-    normal: 'text-black bg-gray-10 border-gray-20 hover:text-blue active:text-blue-active',
-    primary: 'text-white bg-blue border-blue-90 hover:bg-blue-hover active:text-white-active',
+    normal: 'text-black bg-gray-10 border-gray-20 hover:text-blue active:text-blue-100',
+    primary: 'text-white bg-blue border-blue-100 hover:bg-blue-100 active:text-white-700',
   };
 
   const boxDefault = 'w-48 h-16';
-  const basicClasses = 'relative overflow-hidden text-base font-normal box-border z-10 py-2 px-4 duration-200 ease-in';
+  const basicClasses = 'relative overflow-hidden text-h3 font-normal box-border z-10 py-2 px-4 duration-200 ease-in';
 
   const iconDefault = 'p-4 flex items-center select-none';
   const fabDefault = 'hover:bg-transparent';
-  const smallDefault = 'pt-1 pb-1 pl-2 pr-2 text-xs';
+  const smallDefault = 'pt-1 pb-1 pl-2 pr-2 text-base';
   const disabledDefault =
     'bg-gray-300 text-gray-500 dark:bg-dark-400 pointer-events-none hover:bg-gray-300 cursor-default';
 

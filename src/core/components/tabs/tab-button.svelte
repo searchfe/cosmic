@@ -3,7 +3,7 @@
   import utils, { ClassBuilder } from 'smelte/src/utils/classes';
 
   const classesDefault =
-    'active:bg-active relative overflow-hidden text-center w-full h-full p-2 cursor-pointer flex mx-auto items-center text-sm h-full dark:bg-cgray-600 bg-cgray-400';
+    'active:bg-active relative overflow-hidden text-center w-full h-full p-2 cursor-pointer flex mx-auto items-center text-base h-full dark:bg-cgray-600 bg-cgray-400';
 
   export let classes = classesDefault;
 

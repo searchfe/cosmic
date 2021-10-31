@@ -35,7 +35,7 @@
 
 <Layout class="text-black">
   <Header>
-    <div class="flex items-center text-tiny text-black">
+    <div class="flex items-center text-base text-black">
       <img class="logo" src="https://fe-dev.bj.bcebos.com/cosmic/%E6%97%A0%E6%9E%81LOGO.png" alt="logo" />
       <span>无极设计中台</span>
     </div>

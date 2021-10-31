@@ -37,10 +37,10 @@
 <Dialog bind:value="{show}" width="656px">
   <div slot="title">创建项目</div>
   <div class="flex items-center mb-12">
-    <label class="flex-none text-tiny mr-4" for="name">名称*</label>
+    <label class="flex-none text-base mr-4" for="name">名称*</label>
     <input
       bind:value="{name}"
-      class="flex-1 input text-sm rounded-lg"
+      class="flex-1 input text-base rounded-xl"
       name="name"
       type="text"
       placeholder="请输入业务名称"

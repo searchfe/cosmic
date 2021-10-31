@@ -11,7 +11,7 @@
 
 <div class="flex items-center px-4 justify-around">
   <div class="flex items-center">
-    <div class="h-7 w-16 mr-4 text-sm flex items-center">字号:</div>
+    <div class="h-7 w-16 mr-4 text-base flex items-center">字号:</div>
     <TextField on:change="{fontSizeChangeHandle}" classes="{classes}" value="{fontSize}" />
   </div>
   <Icon class="cursor-pointer" on:click="{() => (isVisibility = !isVisibility)}"

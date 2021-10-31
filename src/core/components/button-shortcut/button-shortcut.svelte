@@ -8,7 +8,7 @@
   const darkTheme = 'bg-black text-white';
 
   const defaultContainerClass =
-    'flex items-center h-12 inline-block z-10 min-w-28 w-auto hover:shadow shadow text-sm font-normal';
+    'flex items-center h-12 inline-block z-10 min-w-28 w-auto hover:shadow shadow text-base font-normal';
 
   export let theme: 'dark' | 'light' = 'light';
   export let text = '';

@@ -2,7 +2,7 @@
   .card {
     width: 180px;
     height: 72px;
-    @apply rounded-2xl;
+    @apply rounded-xl;
     @apply relative;
     @apply flex;
     @apply relative;
@@ -45,7 +45,7 @@
 >
   <div class="flex-auto">
     <div class="text-h3 font-semibold">{data.text}</div>
-    <div class="text-sm mt-5 {hovering ? 'text-white' : 'text-cgray-300'}">{data.num}</div>
+    <div class="text-base mt-5 {hovering ? 'text-white' : 'text-cgray-300'}">{data.num}</div>
   </div>
   <img class="img" class:hidden="{!hovering}" src="{data.hoverIcon}" alt="" />
   <img class="img" class:hidden="{hovering}" src="{data.icon}" alt="" />

@@ -9,9 +9,9 @@ export default class extends _Chip {
     intro?: boolean;
     $$inline?: boolean;
   }) {
-    // chip 中的字体是写死的，text-sm，替换不产生作用
+    // chip 中的字体是写死的，text-base，替换不产生作用
     props.props.replace = {
-      'text-sm': 'text-base',
+      'text-base': 'text-base',
     };
     super(props);
   }

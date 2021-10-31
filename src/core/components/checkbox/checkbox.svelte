@@ -14,7 +14,7 @@
   export let checked = false;
   export let disabled = false;
   export let classes = classesDefault;
-  export let labelClasses = 'text-sm';
+  export let labelClasses = 'text-base';
   export let group = [];
 
   // for bind:group

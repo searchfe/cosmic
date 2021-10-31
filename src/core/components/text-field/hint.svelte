@@ -3,7 +3,7 @@
   import { fly } from 'svelte/transition';
   import { quadOut } from 'svelte/easing';
 
-  let classesDefault = 'text-xs py-1 pl-4 absolute left-0';
+  let classesDefault = 'text-base py-1 pl-4 absolute left-0';
 
   export let error = false;
   export let hint = '';

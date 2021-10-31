@@ -102,7 +102,7 @@
 <div class="flex flex-col dark:bg-cgray-800 bg-cgray-200 flex-1 min-h-screen">
   <header class="border-b border-gray-50 {headerClass}">
     <span>button</span>
-    <Icon class="text-tiny">save</Icon>
+    <Icon class="text-base">save</Icon>
   </header>
   <div class="flex flex-col">
     <header class="{headerClass}">

@@ -23,8 +23,8 @@
   class:reverse
   class:tip
   on:click
-  class:text-base="{small}"
-  class:text-xs="{xs}"
+  class:text-h3="{small}"
+  class:text-base="{xs}"
   style="{color ? `color: ${color}` : ''}"
 >
   <slot />

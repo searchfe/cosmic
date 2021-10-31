@@ -7,7 +7,7 @@
   export let data: TreeNode;
 
   const defaultContainerClasses = '';
-  const defaultNodeClasses = 'h-12 pr-3 flex items-center text-sm text-black hover:bg-cgray-100';
+  const defaultNodeClasses = 'h-12 pr-3 flex items-center text-base text-black hover:bg-cgray-100';
 
   export let containerClass = '';
   export let nodeClass = '';

@@ -17,17 +17,17 @@
 </Story> -->
 
 <Template let:args>
-  <blockquote class="pl-4 mt-2 mb-8 border-l-4 border-blue text-tiny py-2">
+  <blockquote class="pl-4 mt-2 mb-8 border-l-4 border-blue text-base py-2">
     <p>Buttons allow users to take actions, and make choices, with a single tap.</p>
   </blockquote>
 
-  <div class="mt-5 mb-5 text-tiny">Auto（Configurable）</div>
+  <div class="mt-5 mb-5 text-base">Auto（Configurable）</div>
   <Button class="w-40 uppercase" {...args}>Button</Button>
 
-  <div class="mt-5 mb-5 text-tiny">Light</div>
+  <div class="mt-5 mb-5 text-base">Light</div>
   <Button class="w-40 uppercase" light="true">Button</Button>
 
-  <div class="mt-5 mb-5 text-tiny">Dark</div>
+  <div class="mt-5 mb-5 text-base">Dark</div>
   <Button class="w-40 uppercase" dark="true">Button</Button>
 
   <!-- <p class="mt-5 mb-5"></p>
@@ -36,7 +36,7 @@
   </Button> -->
 
   <div class="max-w-xs">
-    <div class="mt-5 mb-5 text-tiny">Block</div>
+    <div class="mt-5 mb-5 text-base">Block</div>
     <div class="w-40">
       <Button class="w-40 uppercase" block="true">Button</Button>
     </div>

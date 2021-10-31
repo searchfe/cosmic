@@ -13,7 +13,7 @@
     collapse-item-header box-border 
     h-12 py-3.5 pr-3
     flex flex-row justify-start items-center 
-    rounded-md text-sm 
+    rounded text-base 
     hover:bg-cgray-100
   `;
   const defaultContentClasses = '';
