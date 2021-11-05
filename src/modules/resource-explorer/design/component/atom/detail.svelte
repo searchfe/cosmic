@@ -1,8 +1,15 @@
-<script lang="typescript">
+<script lang="ts">
   import Info from '../../../common/components/info.svelte';
   import { Collapse, CollapseItem, Breadcrumb, BreadcrumbItem, Icon } from '@cosmic/core/components';
   import AtomMicroCard from './micro-card.svelte';
   import Filter from './filter/index.svelte';
+  import Operation from './operation.svelte';
+  import Dialog from './dialog/index.svelte';
+
+  let active = {
+    key: 'color',
+    text: '颜色'
+  };
 
   const data = [
     {
@@ -14,9 +21,15 @@
       name: '渐变',
     },
   ];
+
+  let showDilaog = false;
+
+  function createHandler() {
+    showDilaog = true;
+  }
 </script>
 
-<div class="mb-8">
+<div class="mb-20">
   <Breadcrumb>
     <BreadcrumbItem>
       <img
@@ -33,14 +46,15 @@
 </div>
 
 <Info title="视觉原子">
-  <Filter />
+  <Filter classes="my-20" />
+  <Operation on:create={createHandler}/>
 </Info>
 
 <Collapse>
   {#each data as cate}
     <CollapseItem headerClass="pl-0 font-normal" header="{cate.name}" key="{cate.key}" let:isSelected="{active}">
       <Icon slot="prefix">{active ? 'arrow_drop_down' : 'arrow_right'}</Icon>
-      <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10">
+      <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-22 xl:gap-26 2xl:gap-14">
         <AtomMicroCard classes="" />
         <AtomMicroCard classes="" />
         <AtomMicroCard classes="" />
@@ -51,3 +65,5 @@
     </CollapseItem>
   {/each}
 </Collapse>
+
+<Dialog bind:show={showDilaog}/>

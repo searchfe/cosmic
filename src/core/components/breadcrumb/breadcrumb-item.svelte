@@ -7,7 +7,7 @@
   }
 </style>
 
-<script lang="typescript">
+<script lang="ts">
   import { getContext } from 'svelte';
   import { Icon } from '@cosmic/core/components';
   import { BREADCRUMB } from './breadcrumb.svelte';

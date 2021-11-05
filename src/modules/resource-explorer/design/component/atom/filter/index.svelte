@@ -1,5 +1,8 @@
-<script lang="typescript">
+<script lang="ts">
   import Item from './item.svelte';
+
+  export let classes = '';
+
   const data = [
     {
       text: '颜色',
@@ -40,8 +43,14 @@
   ];
 </script>
 
-<div class="w-full flex items-center mt-8 text-black">
+<div class="filter flex items-center {classes} text-black overflow-y-auto scroll">
   {#each data as item}
     <Item data="{item}" />
   {/each}
 </div>
+
+<style>
+.filter::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+}
+</style>

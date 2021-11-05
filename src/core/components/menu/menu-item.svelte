@@ -59,7 +59,7 @@
   <div class="flex flex-col p-0">
     <slot name="button">
       {#if icon}
-        <Icon class="pr-6 text-h3" small="{dense}">
+        <Icon class="pr-15 text-h3" small="{dense}">
           {icon}
         </Icon>
       {/if}

@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { Icon } from '@cosmic/core/components';
   import type { TreeNode } from './type';
@@ -7,7 +7,7 @@
   export let data: TreeNode;
 
   const defaultContainerClasses = '';
-  const defaultNodeClasses = 'h-12 pr-3 flex items-center text-base text-black hover:bg-cgray-100';
+  const defaultNodeClasses = 'h-30 pr-3 flex items-center text-base text-black hover:bg-cgray-100';
 
   export let containerClass = '';
   export let nodeClass = '';
@@ -53,10 +53,10 @@
         <Icon>{arrowStatus}</Icon>
       </div>
       {#if treeIcon}
-        <Icon small classes="mr-1.5">{treeIcon}</Icon>
+        <Icon small classes="mr-4">{treeIcon}</Icon>
       {/if}
     {:else if leafIcon}
-      <Icon small classes="mr-1.5">{leafIcon}</Icon>
+      <Icon small classes="mr-4">{leafIcon}</Icon>
     {/if}
 
     <span class="flex-auto">{label}</span>

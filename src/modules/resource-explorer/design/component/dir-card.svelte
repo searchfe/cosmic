@@ -1,5 +1,5 @@
-<script lang="typescript">
-  import { Icon } from '@cosmic/core/components';
+<script lang="ts">
+  import { Button } from '@cosmic/core/components';
   import Card from '../../common/components/card.svelte';
   import type { Project } from '../../common/types/graphql';
 
@@ -13,22 +13,22 @@
 </script>
 
 <Card classes="h-0 pb-2/3 rounded-xl overflow-hidden">
-  <div class="absolute left-0 top-1/29 w-full h-1/10 flex items-center text-base">
-    <div class="ml-6 flex-auto text-h3">{data.name}</div>
-    <div class="flex-none">20个</div>
-    <div class="mx-3 flex-none">
-      <Icon>more_horiz</Icon>
+  <div class="absolute left-0 top-0 box-border w-full h-full p-14 flex flex-col justify-between text-base">
+    <div class="h-26 w-full flex items-center">
+      <div class="flex-auto text-h3">{data.name}</div>
+      <div class="flex-none">20个</div>
+      <div class="ml-5 flex-none">
+        <Button icon="more_horiz"></Button>
+      </div>
     </div>
-  </div>
-  <div class="absolute box-border w-full px-3 top-17/100 h-4/5 overflow-hidden flex">
-    <div class="h-full w-2/3 rounded-l-xl overflow-hidden">
-      <img class="w-full h-full" src="{img}" alt="" />
-    </div>
-    <div class="h-full w-1/3 ml-1.5 rounded-r-xl overflow-hidden">
-      <div class="h-1/2 mb-1.5">
+    <div class="box-border w-full mt-12 flex-auto overflow-hidden rounded-xl grid grid-cols-12 gap-2">
+      <div class="col-span-7 row-span-2">
         <img class="w-full h-full" src="{img}" alt="" />
       </div>
-      <div class="h-1/2">
+      <div class="col-span-5">
+        <img class="w-full h-full" src="{img}" alt="" />
+      </div>
+      <div class="col-span-5">
         <img class="w-full h-full" src="{img}" alt="" />
       </div>
     </div>

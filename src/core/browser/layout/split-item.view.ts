@@ -25,7 +25,7 @@ export default class SplitItemView extends View {
   public setContent(contentView: HTMLElement): SplitItemView {
     this.contentView = contentView;
     this.root.classList.add('split-item', 'flex');
-    contentView.classList.add('flex', 'flex-1');
+    contentView.classList.add('flex', 'flex-1', 'w-full');
     return this.prepend(contentView);
   }
 

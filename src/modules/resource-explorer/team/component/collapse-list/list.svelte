@@ -1,4 +1,4 @@
-<script lang="typescript" context="module">
+<script lang="ts" context="module">
   import type { TreeNode } from '@cosmic/core/components';
   import type { Project } from '../../../common/types/graphql';
   import ProjectCreateDialog from '../../../project/component/create-dialog.svelte';
@@ -47,7 +47,7 @@
   }
 </script>
 
-<script lang="typescript">
+<script lang="ts">
   import { push } from 'svelte-spa-router';
   import { query } from '@urql/svelte';
   import { Collapse } from '@cosmic/core/components';

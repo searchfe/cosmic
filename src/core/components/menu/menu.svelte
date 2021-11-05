@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import List from './menu-list.svelte';
   import { ClassBuilder } from 'smelte/src/utils/classes';

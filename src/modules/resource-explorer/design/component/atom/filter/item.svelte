@@ -1,24 +1,23 @@
 <style>
   .card {
-    width: 180px;
-    height: 72px;
+    @apply w-168;
+    @apply h-68;
     @apply rounded-xl;
     @apply relative;
     @apply flex;
     @apply relative;
     @apply justify-between;
-    @apply px-8;
-    @apply py-6;
-    @apply mr-4;
+    @apply p-14;
+    @apply flex-none;
   }
   .img {
-    flex: none;
-    width: 40px;
-    height: 40px;
+    @apply flex;
+    @apply w-40;
+    @apply h-40;
   }
 </style>
 
-<script lang="typescript">
+<script lang="ts">
   interface IData {
     text?: string;
     num?: string;
@@ -39,14 +38,13 @@
 </script>
 
 <div
-  class="card bg-gray-10 hover:bg-blue hover:text-white"
+  class="card mr-10 bg-gray-100 hover:bg-blue text-black hover:text-white"
   on:mouseleave="{mouseleaveHandler}"
   on:mouseenter|stopPropagation="{mouseenterHandler}"
 >
   <div class="flex-auto">
     <div class="text-h3 font-semibold">{data.text}</div>
-    <div class="text-base mt-5 {hovering ? 'text-white' : 'text-cgray-300'}">{data.num}</div>
+    <div class="text-base mt-14">{data.num}</div>
   </div>
-  <img class="img" class:hidden="{!hovering}" src="{data.hoverIcon}" alt="" />
-  <img class="img" class:hidden="{hovering}" src="{data.icon}" alt="" />
+  <img class="img" src="{hovering ? data.hoverIcon : data.icon}" alt="" />
 </div>

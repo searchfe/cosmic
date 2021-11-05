@@ -21,7 +21,7 @@
         { id: '3', text: 'Kitties', icon: 'eject' },
       ]}"
     >
-      <div slot="content" class="flex overflow-hidden w-full h-full p-6 bg-cgray-500" style="height: 250px">
+      <div slot="content" class="flex overflow-hidden w-full h-full p-15 bg-cgray-500" style="height: 250px">
         <Tab id="1" selected="{selected}">this is a tab 1</Tab>
         <Tab id="2" selected="{selected}">this is a tab 2</Tab>
         <Tab id="3" selected="{selected}">this is a tab 3</Tab>
@@ -45,7 +45,7 @@
         { id: '3', text: 'Kitties', icon: 'eject' },
       ]}"
     >
-      <div slot="content" class="flex overflow-hidden w-full  bg-cgray-500 h-full p-6">
+      <div slot="content" class="flex overflow-hidden w-full  bg-cgray-500 h-full p-15">
         <Tab id="1" selected="{selected}">this is a tab 1</Tab>
         <Tab id="2" selected="{selected}">this is a tab 2</Tab>
         <Tab id="3" selected="{selected}">this is a tab 3</Tab>

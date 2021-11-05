@@ -1,19 +1,21 @@
-<script lang="typescript">
+<script lang="ts">
   import Card from '../../common/components/card.svelte';
 
-  const img =
-    'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1805669441,154121004&fm=30&app=106&f=JPEG?w=312&h=208&s=D5383ED766AB32B0D234CD2603003069';
+  export const project = {
+    img: '',
+    title: '',
+    desc: ''
+  };
 </script>
 
-<Card classes="h-0 pb-2/3 rounded-xl overflow-hidden">
-  <div class="w-full absolute top-0 left-0" style="height: 74%;">
-    <img class="w-full h-full" src="{img}" alt="" />
-  </div>
-  <div
-    class="box-border w-full flex flex-col items-start justify-center px-6 absolute left-0 bg-white"
-    style="top: 74%; height: 26%;"
-  >
-    <div class="text-base h-12 flex items-center">全职卡职位个性化推荐精准需求</div>
-    <div class="text-base h-8 flex items-center">编辑于 昨天</div>
+<Card classes="relative h-0 pb-3/4 rounded-xl overflow-hidden">
+  <div class="w-full h-full absolute flex flex-col top-0 left-0">
+    <div class="flex-auto">
+      <img src="{project.img || `https://fe-dev.bj.bcebos.com/file-card.png`}" alt="" />
+    </div>
+    <div class="h-78 px-14 flex flex-col items-start justify-center  bg-white">
+      <div class="text-h3 h-16 items-center">{project.title}</div>
+      <div class="mt-10 text-base flex-a items-center">{project.desc || '编辑于 昨天'}</div>
+    </div>
   </div>
 </Card>

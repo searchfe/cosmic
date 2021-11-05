@@ -6,7 +6,7 @@
   }
 </style>
 
-<script lang="typescript">
+<script lang="ts">
   import { initClient } from '@urql/svelte';
   import Router from 'svelte-spa-router';
   import { Layout } from '@cosmic/core/components';
@@ -33,19 +33,19 @@
   });
 </script>
 
-<Layout class="text-black">
+<Layout class="text-black w-full">
   <Header>
     <div class="flex items-center text-base text-black">
       <img class="logo" src="https://fe-dev.bj.bcebos.com/cosmic/%E6%97%A0%E6%9E%81LOGO.png" alt="logo" />
       <span>无极设计中台</span>
     </div>
   </Header>
-  <Layout class="overflow-scroll">
+  <Layout>
     <Sider>
       <MineMenu />
       <TeamMenu />
     </Sider>
-    <Content class="box-border p-16 overflow-scroll">
+    <Content classes="flex-auto p-40 overflow-hidden">
       <Router routes="{routes}" />
     </Content>
   </Layout>

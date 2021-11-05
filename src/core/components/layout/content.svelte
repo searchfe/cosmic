@@ -1,6 +1,6 @@
 <script>
 </script>
 
-<main class="{`content bg-cgray-100 flex-auto ${$$props.class}`}">
+<main class="w-full {`bg-gray-100 flex-auto ${$$props.classes}`}">
   <slot />
 </main>

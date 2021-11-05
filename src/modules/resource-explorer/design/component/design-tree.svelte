@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
   import { push } from 'svelte-spa-router';
   import { Tree } from '@cosmic/core/components';
   import { ROUTES_ENUM, urlFor } from '../../routes';
@@ -40,4 +40,4 @@
   }
 </script>
 
-<Tree data="{leaves}" primaryIndent="{2}" treeIcon="grid_view" on:click="{projectNodeClickedHandler}" />
+<Tree data="{leaves}" primaryIndent="{2.2}" treeIcon="grid_view" on:click="{projectNodeClickedHandler}" />

@@ -68,7 +68,7 @@
 
   $: iClasses = cb
     .flush()
-    .remove('pt-6 pb-2', outlined)
+    .remove('pt-15 pb-2', outlined)
     .add('border rounded bg-transparent py-2 duration-200 ease-in', outlined)
     .add('border-error-500 caret-error-500', error)
     .remove(caret(), error)
@@ -77,11 +77,11 @@
     .add('bg-gray-100 dark:bg-dark-600', !outlined)
     .add('bg-gray-300 dark:bg-dark-200', focused && !outlined)
     .remove('px-4', prepend)
-    .add('pr-4 pl-8', prepend)
+    .add('pr-4 pl-20', prepend)
     .add('pr-9', append)
     .add(add)
     .remove('pt-2 pb-2', dense && !outlined)
-    .add('pt-6', label && !outlined)
+    .add('pt-15', label && !outlined)
     .add('pt-4 pb-1', dense && !outlined)
     .remove('bg-gray-100', disabled)
     .add('bg-gray-50', disabled)

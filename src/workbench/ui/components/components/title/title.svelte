@@ -5,7 +5,7 @@
   export let append = '';
   export let noUnderline = false;
   export let defaultClass =
-    'h-8 flex justify-between  text-cgray-50 dark:text-cgray-200 items-center my-2 px-4 bg-cgray-400 dark:bg-cgray-700 dark:border-cgray-500';
+    'h-20 flex justify-between  text-cgray-50 dark:text-cgray-200 items-center my-2 px-4 bg-cgray-400 dark:bg-cgray-700 dark:border-cgray-500';
 
   const cb = new ClassBuilder($$props.class);
 

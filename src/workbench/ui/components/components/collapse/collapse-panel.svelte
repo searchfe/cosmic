@@ -29,7 +29,7 @@
   });
 
   const headerDefault =
-    'flex h-8 flex-row justify-between items-center text-gray-50  dark:text-cgray-200 bg-cgray-400 dark:bg-cgray-700 dark:border-cgray-500 text-base px-2 py-1 cursor-pointer';
+    'flex h-20 flex-row justify-between items-center text-gray-50  dark:text-cgray-200 bg-cgray-400 dark:bg-cgray-700 dark:border-cgray-500 text-base px-2 py-1 cursor-pointer';
 
   function changeKeyHandler() {
     if (activeKey !== key) {

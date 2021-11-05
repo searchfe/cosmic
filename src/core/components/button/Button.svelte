@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
   /**
    * 按钮用于开始一个即是操作
    * @component
@@ -27,14 +27,15 @@
   export let replace = {};
 
   const typeMap = {
-    normal: 'text-black bg-gray-10 border-gray-20 hover:text-blue active:text-blue-100',
+    normal: 'py-2 px-4 text-black bg-gray-10 border-gray-20 hover:text-blue active:text-blue-100',
     primary: 'text-white bg-blue border-blue-100 hover:bg-blue-100 active:text-white-700',
+    icon: 'w-26 h-26 bg-gray-100 hover:opacity-30',
   };
 
   const boxDefault = 'w-48 h-16';
-  const basicClasses = 'relative overflow-hidden text-h3 font-normal box-border z-10 py-2 px-4 duration-200 ease-in';
+  const basicClasses = 'relative overflow-hidden text-h3 font-normal box-border z-10 duration-200 ease-in';
 
-  const iconDefault = 'p-4 flex items-center select-none';
+  const iconDefault = 'flex items-center justify-center select-none';
   const fabDefault = 'hover:bg-transparent';
   const smallDefault = 'pt-1 pb-1 pl-2 pr-2 text-base';
   const disabledDefault =
@@ -83,25 +84,21 @@
 
   if (icon) {
     iconCb = new ClassBuilder(iconClass);
+    type = 'icon';
   }
 
   $: classes = cb
     .flush()
     .add(classes)
     .add(typeMap[type])
-    // .add(`${bg(bgc0)} dark:${bg(bgc1)} hover:${bg(lighter)}`, basic)
-    // .add(`${border(lighter)} ${txt(bgc0)} hover:${bg('trans')} dark-hover:${bg('transDark')}`, outlined)
-    // .add(`${txt(lighter)}`, text)
     .add(iconClasses, icon, iconDefault)
     .remove('py-2', icon)
-    // .remove(txt(lighter), fab)
     .add(disabledClasses, disabled, disabledDefault)
     .add(smallClasses, small, smallDefault)
-    .add('flex items-center justify-center h-8 w-8', small && icon)
+    .add('flex items-center justify-center h-20 w-20', small && icon)
     .add('border-solid', outlined)
-    .add('rounded-full', icon)
-    .add(block ? 'w-full' : boxDefault)
-    .add('rounded', outlined || text)
+    .add(block ? 'w-full' : (type === 'icon' ? '' : boxDefault))
+    .add('rounded', outlined || text || icon)
     .add('button', !icon)
     .add(fabClasses, fab, fabDefault)
     .add(`hover:${bg('transLight')}`, fab)
