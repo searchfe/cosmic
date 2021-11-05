@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
 
   const defaultCardClasses =

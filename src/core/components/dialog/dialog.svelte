@@ -5,7 +5,7 @@
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
 
   const classesDefault = 'box-border text-black items-center z-50 rounded-3xl bg-white p-24 shadow-dialog';
-  const titleClassesDefault = 'text-h2 font-bold pb-16';
+  const titleClassesDefault = 'text-h2 font-bold';
   const actionsClassesDefault = 'w-full';
 
   export let value;

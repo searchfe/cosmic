@@ -5,7 +5,7 @@
   }
 </style>
 
-<script lang="typescript">
+<script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { Dialog, Button } from '@cosmic/core/components';
   import { createProject } from '../api';
@@ -36,7 +36,7 @@
 
 <Dialog bind:value="{show}" width="656px">
   <div slot="title">创建项目</div>
-  <div class="flex items-center mb-12">
+  <div class="flex items-center mb-30">
     <label class="flex-none text-base mr-4" for="name">名称*</label>
     <input
       bind:value="{name}"

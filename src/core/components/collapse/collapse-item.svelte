@@ -1,20 +1,18 @@
-<script lang="typescript">
+<script lang="ts">
   import { getContext } from 'svelte';
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
   import { COLLAPSE } from './collapse.svelte';
 
-  export let headerClass = 'pl-8 font-semibold';
+  export let headerClass = 'pl-7 font-semibold';
   export let contentClass = '';
   export let header = '';
   export let key = '';
   export let isSelected = false;
 
   const defaultHeaderClasses = `
-    collapse-item-header box-border 
-    h-12 py-3.5 pr-3
+    box-border h-30 pl-18 pr-2
     flex flex-row justify-start items-center 
-    rounded text-base 
-    hover:bg-cgray-100
+    rounded text-base hover:bg-cgray-100
   `;
   const defaultContentClasses = '';
 

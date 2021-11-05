@@ -5,7 +5,7 @@
   }
 </style>
 
-<script lang="typescript">
+<script lang="ts">
   import { LAYOUT } from './layout.svelte';
   import { getContext } from 'svelte';
 
@@ -13,6 +13,6 @@
   $hasSider = true;
 </script>
 
-<aside class="sider relative box-border bg-white height-full">
+<aside class="sider flex-none relative box-border bg-white height-full">
   <slot />
 </aside>

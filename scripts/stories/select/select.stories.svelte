@@ -37,7 +37,7 @@
 <Meta title="Select" component="{Select}" />
 
 <Template let:args id="ochange">
-  <blockquote class="pl-4 mt-2 mb-8 border-l-4 border-blue text-base py-2">
+  <blockquote class="pl-4 mt-2 mb-20 border-l-4 border-blue text-base py-2">
     <p>One may bind to a select via on:change event.</p>
   </blockquote>
   <Select {...args} on:change="{valueChange}" class="w-80 h-60" />

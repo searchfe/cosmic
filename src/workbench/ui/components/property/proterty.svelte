@@ -75,7 +75,7 @@
   let widgetValue = '';
 
   const headerClass =
-    'flex h-8 max-h-8 justify-between items-center text-cgray-50 dark:text-cgray-200 flex-grow-0 px-4 bg-cgray-400 dark:bg-cgray-700 dark:border-cgray-500';
+    'flex h-20 max-h-20 justify-between items-center text-cgray-50 dark:text-cgray-200 flex-grow-0 px-4 bg-cgray-400 dark:bg-cgray-700 dark:border-cgray-500';
 
   $: stateList = proterties.map((item) => item.stateName);
 

@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { DropdownTrigger } from './type';
   import { ClassBuilder } from 'smelte/src/utils/classes.js';

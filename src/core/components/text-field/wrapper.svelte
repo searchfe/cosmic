@@ -1,7 +1,7 @@
 <script>
   import utils, { ClassBuilder, filterProps } from 'smelte/src/utils/classes';
 
-  let classesDefault = 'mt-2 mb-6 relative text-gray-600';
+  let classesDefault = 'mt-2 mb-15 relative text-gray-600';
 
   export let error = false;
   export let select = false;

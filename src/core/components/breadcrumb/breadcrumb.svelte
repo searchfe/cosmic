@@ -1,8 +1,8 @@
-<script lang="typescript" context="module">
+<script lang="ts" context="module">
   export const BREADCRUMB = { name: 'breadcrumb' };
 </script>
 
-<script lang="typescript">
+<script lang="ts">
   import { setContext } from 'svelte';
 
   /* separator icon */

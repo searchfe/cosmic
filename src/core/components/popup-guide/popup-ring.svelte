@@ -40,7 +40,7 @@
 </script>
 
 <div
-  class="select-none popup-core absolute transform-gpu -mt-6 -ml-6"
+  class="select-none popup-core absolute transform-gpu -mt-15 -ml-15"
   style="top:{top};left:{left};"
   bind:this="{startDom}"
 >

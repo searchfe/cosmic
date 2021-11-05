@@ -1,8 +1,8 @@
-<script lang="typescript" context="module">
+<script lang="ts" context="module">
   export const COLLAPSE = { name: 'collapse' };
 </script>
 
-<script lang="typescript">
+<script lang="ts">
   import { setContext, onMount, createEventDispatcher } from 'svelte';
   import { readable } from 'svelte/store';
 
@@ -82,6 +82,6 @@
   });
 </script>
 
-<div class="collapse">
+<div>
   <slot />
 </div>

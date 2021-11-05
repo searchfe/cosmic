@@ -1,43 +1,4 @@
-<style>
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-  }
-
-  .name {
-    margin-bottom: 21px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
-    color: #333;
-    font-weight: bold;
-  }
-
-  .user-avatar-list {
-    left: 14px;
-    bottom: 14px;
-  }
-
-  .user-avatar {
-    width: 24px;
-    height: 24px;
-    border: 1px solid #f5f5f5;
-    margin-right: 4px;
-    border-radius: 50%;
-  }
-
-  .info {
-    font-size: 12px;
-  }
-
-  .operation {
-    top: 14px;
-    right: 14px;
-  }
-</style>
-
-<script lang="typescript">
+<script lang="ts">
   import { push } from 'svelte-spa-router';
   import { Icon } from '@cosmic/core/components';
   import Card from '../../common/components/card.svelte';
@@ -56,20 +17,20 @@
   }
 </script>
 
-<Card classes="overflow-hidden p-6" on:click="{projectClickHandler}">
-  <img class="avatar" src="{avatar}" alt="projcet avatra" />
-  <div class="name">
-    {data.name}
+<Card classes="relative overflow-hidden pb-1/2 px-14 h-0 text-base" on:click="{projectClickHandler}">
+  <div class="relative overflow-hidden w-1/4 pb-1/4 h-0 mt-14 box-border rounded-sm">
+    <img class="absolute w-full h-full"  src="{avatar}" alt="projcet avatra" />
   </div>
-  <div class="meta flex justify-between items-end">
-    <div class="user-avatar-list flex justify-between">
+  <div class="mt-10 h-14 flex items-center font-bold text-h4 text-black">{data.name}</div>
+  <div class="absolute left-0 w-full box-border px-14 bottom-14 flex justify-between items-end">
+    <div class="h-24 mr-6 flex justify-between">
       {#each userAvatars as uer}
-        <img class="user-avatar" src="{uer}" alt="" />
+        <img class="w-24 h-24 mr-4 border-gray-100 border-solid border rounded-full" src="{uer}" alt="" />
       {/each}
     </div>
-    <div class="info">
+    <div>
       {info}
     </div>
   </div>
-  <Icon classes="absolute top-6 right-6">more_horiz</Icon>
+  <Icon classes="absolute top-14 right-14">more_horiz</Icon>
 </Card>

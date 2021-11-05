@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { Dropdown, CollapseItem } from '@cosmic/core/components';
   import type { TreeNode } from '@cosmic/core/components';

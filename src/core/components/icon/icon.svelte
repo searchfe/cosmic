@@ -15,11 +15,12 @@
   export let tip = false;
   export let color = 'default';
   export let classes = '';
+  export let outlined = false;
 </script>
 
 <i
   aria-hidden="true"
-  class="material-icons icon text-xl select-none {classes} duration-200 ease-in"
+  class="{outlined ? 'material-icons-outlined' : 'material-icons'} icon text-xl select-none {classes} duration-200 ease-in"
   class:reverse
   class:tip
   on:click

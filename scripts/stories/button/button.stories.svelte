@@ -17,7 +17,7 @@
 </Story> -->
 
 <Template let:args>
-  <blockquote class="pl-4 mt-2 mb-8 border-l-4 border-blue text-base py-2">
+  <blockquote class="pl-4 mt-2 mb-20 border-l-4 border-blue text-base py-2">
     <p>Buttons allow users to take actions, and make choices, with a single tap.</p>
   </blockquote>
 
@@ -41,29 +41,29 @@
       <Button class="w-40 uppercase" block="true">Button</Button>
     </div>
 
-    <h6 class="mb-3 mt-6">Outlined</h6>
+    <h6 class="mb-3 mt-15">Outlined</h6>
     <div class="py-2">
       <Button color="secondary" class="uppercase" light block outlined>Button</Button>
     </div>
 
-    <h6 class="mb-3 mt-6">Text</h6>
+    <h6 class="mb-3 mt-15">Text</h6>
     <div class="py-2">
       <Button class="uppercase" text>Button</Button>
     </div>
 
-    <h6 class="mb-3 mt-6">Disabled</h6>
+    <h6 class="mb-3 mt-15">Disabled</h6>
     <div class="py-2">
       <Button class="uppercase" block disabled>Button</Button>
     </div>
 
-    <h6 class="mb-3 mt-6">
+    <h6 class="mb-3 mt-15">
       FAB <a href="https://material.io/components/buttons-floating-action-button/">(Floating action button)</a>
     </h6>
     <div class="py-2">
       <Button color="alert" icon="change_history" />
     </div>
 
-    <h6 class="mb-3 mt-6">Fab flat</h6>
+    <h6 class="mb-3 mt-15">Fab flat</h6>
     <div class="py-2">
       <Button color="error" icon="change_history" text light flat />
     </div>

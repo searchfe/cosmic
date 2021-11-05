@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { push } from 'svelte-spa-router';
   import { Tree } from '@cosmic/core/components';
@@ -23,7 +23,7 @@
 <Tree
   data="{data}"
   extraIcon="add"
-  primaryIndent="{2}"
+  primaryIndent="{2.2}"
   treeIcon="folder_open"
   on:click="{projectNodeClickedHandler}"
   on:click-extra="{addButtonClickedHandler}"
