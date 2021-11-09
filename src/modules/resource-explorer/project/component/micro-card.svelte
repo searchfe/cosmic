@@ -3,7 +3,7 @@
   import { Icon } from '@cosmic/core/components';
   import Card from '../../common/components/card.svelte';
   import type { Project } from '../../common/types/graphql';
-  import { urlFor, ROUTES_ENUM } from '../../routes';
+  import { urlFor, ROUTES } from '../../routes';
 
   export let data: Project;
 
@@ -13,7 +13,7 @@
   export let info = '协作 30';
 
   function projectClickHandler() {
-    push(urlFor(ROUTES_ENUM.PROJECT_DETAIL, { projectId: data.id }));
+    push(urlFor(ROUTES.PROJECT_DETAIL, { projectId: data.id }));
   }
 </script>
 

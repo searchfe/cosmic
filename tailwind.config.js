@@ -9,6 +9,7 @@ const widthConfigs = {
   4: '0.4rem',
   5: '0.5rem',
   6: '0.6rem',
+  7: '0.7rem',
   8: '0.8rem',
   10: '1rem',
   12: '1.2rem',

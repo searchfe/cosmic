@@ -54,7 +54,7 @@
   import { queryProjects } from '../../../project/api';
   import TeamItem from './item.svelte';
   import { teamsQuery } from '../../api';
-  import { ROUTES_ENUM, urlFor } from '../../../routes';
+  import { ROUTES, urlFor } from '../../../routes';
 
   const pojectStore = queryProjects();
   query(teamsQuery);
@@ -78,7 +78,7 @@
       }
       if (activeKey.length === 0) {
         activeKey = [teamsQuery.data.teams[0].id];
-        push(urlFor(ROUTES_ENUM.TEAM_DETAIL, { teamId: activeKey[0] }));
+        push(urlFor(ROUTES.TEAM_DETAIL, { teamId: activeKey[0] }));
       }
     }
   }
@@ -89,7 +89,7 @@
   }
 
   function selectedTeamChangeHandler(event) {
-    push(urlFor(ROUTES_ENUM.TEAM_DETAIL, { teamId: event.detail.activeKey[0] }));
+    push(urlFor(ROUTES.TEAM_DETAIL, { teamId: event.detail.activeKey[0] }));
   }
 
   function addProjectHandler(event) {

@@ -1,3 +1,8 @@
+/**
+ * @author biyingshuai<biyingshuai@gmail.com>
+ * @description module entry
+ */
+
 import Component from './index.svelte';
 import { SvelteModule } from '@cosmic/core/parts';
 
