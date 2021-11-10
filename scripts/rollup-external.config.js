@@ -1,9 +1,8 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import { existsSync } from 'fs';
-import { terser } from 'rollup-plugin-terser';
 
-const production = !process.env.ROLLUP_WATCH;
+const production = process.env.NODE_ENV === 'production';
 
 /** 不参与全部构建的外部依赖，会编译到core/external/中 */
 export const externals = ['tslib', 'reflect-metadata', 'color', 'inversify'];
@@ -38,11 +37,6 @@ function options(config) {
         browser: true,
       }),
       commonjs({}),
-      production &&
-        terser({
-          compress: true,
-          mangle: true,
-        }),
     ],
   };
 }

@@ -1,9 +1,8 @@
 import livereload from 'rollup-plugin-livereload';
-import { terser } from 'rollup-plugin-terser';
 import { externals } from './rollup-external.config';
 import { pluginsOptions } from './rollup-plugin-svelte';
 
-const production = !process.env.ROLLUP_WATCH;
+const production = process.env.NODE_ENV === 'production';
 
 let paths = ['core/browser', 'core/common', 'core/components', 'core/parts'];
 export const internals = paths.map((path) => {
@@ -38,11 +37,6 @@ function options(config) {
       !production &&
         livereload({
           watch: `dist/${config.path}`,
-        }),
-      production &&
-        terser({
-          compress: true,
-          mangle: true,
         }),
     ],
   };

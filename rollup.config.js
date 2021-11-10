@@ -1,6 +1,5 @@
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
-import { terser } from 'rollup-plugin-terser';
 import { configs as externalConfig, externals, importmap as externalMap } from './scripts/rollup-external.config';
 import { configs as internalConfig, internals, importmap as internalMap } from './scripts/rollup-internal.config';
 import { configs as moduleConfig, modules, importmap as moduleMap } from './scripts/rollup-module.config';
@@ -9,7 +8,9 @@ import replace from '@rollup/plugin-replace';
 import { syncFile } from './scripts/rollup-plugin-sync';
 import { jsonFiles, importmap as jsonMap, jsonSync } from './scripts/rollup-json.config';
 
-const production = !process.env.ROLLUP_WATCH;
+import { relative, join } from 'path/posix';
+
+const production = process.env.NODE_ENV === 'production';
 
 export default [
   ...externalConfig(),
@@ -35,6 +36,10 @@ export default [
             ...jsonMap().imports,
           },
         };
+        const relativePath = relative('/workbench/desktop', '/');
+        for (const [k, v] of Object.entries(data.imports)) {
+          data.imports[k] = join(relativePath, v);
+        }
         return text
           .toString()
           .replace('__importmap_config__', JSON.stringify(data, null, ''))
@@ -62,14 +67,6 @@ export default [
         livereload({
           watch: 'dist/workbench/desktop',
           // verbose: true,
-        }),
-
-      // If we're building for production (npm run build
-      // instead of npm run dev), minify
-      production &&
-        terser({
-          compress: true,
-          mangle: true,
         }),
     ],
     watch: {

@@ -2,7 +2,6 @@ import { existsSync, readdirSync, statSync } from 'fs';
 import { resolve } from 'path';
 
 import livereload from 'rollup-plugin-livereload';
-import { terser } from 'rollup-plugin-terser';
 import { externals } from './rollup-external.config';
 import { internals } from './rollup-internal.config';
 import { pluginsOptions } from './rollup-plugin-svelte';
@@ -14,7 +13,7 @@ export const modules = paths
   .filter((path) => existsSync(resolve('src/modules', path, 'index.ts')))
   .map((path) => 'modules/' + path);
 
-const production = !process.env.ROLLUP_WATCH;
+const production = process.env.NODE_ENV === 'production';
 function normalize() {
   const list = [];
   modules.forEach((moduleId) => {
@@ -42,11 +41,6 @@ function options(config) {
       !production &&
         livereload({
           watch: `dist/${config.path}`,
-        }),
-      production &&
-        terser({
-          compress: true,
-          mangle: true,
         }),
     ],
   };

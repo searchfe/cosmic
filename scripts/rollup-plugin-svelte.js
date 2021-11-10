@@ -15,7 +15,7 @@ import smelte from './rollup-plugin-smelte.js';
 
 const tailwindConfig = require('./tailwind.config');
 
-const production = !process.env.ROLLUP_WATCH;
+const production = process.env.NODE_ENV === 'production';
 
 export function pluginsOptions(path, separateCss) {
   return [

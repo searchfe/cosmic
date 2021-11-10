@@ -4,14 +4,14 @@ import { parse } from 'url';
 import { autoUpdater } from 'electron-updater';
 
 import logger from './utils/logger';
-import settings from './utils/settings';
+// import settings from './utils/settings';
 
 const isProd = process.env.NODE_ENV === 'production' || !/[\\/]electron/.exec(process.execPath); // !process.execPath.match(/[\\/]electron/);
 
 logger.info('App starting...');
-settings.set('check', true);
+// settings.set('check', true);
 logger.info('Checking if settings store works correctly.');
-logger.info(settings.get('check') ? 'Settings store works correctly.' : 'Settings store has a problem.');
+// logger.info(settings.get('check') ? 'Settings store works correctly.' : 'Settings store has a problem.');
 
 let mainWindow: BrowserWindow | null;
 let notification: Notification | null;
@@ -24,7 +24,6 @@ const createWindow = () => {
     webPreferences: {
       devTools: isProd ? false : true,
       contextIsolation: true,
-      enableRemoteModule: false,
       // preload: join(__dirname, 'preload.js'),
     },
   });
@@ -33,7 +32,7 @@ const createWindow = () => {
     // process.env.NODE_ENV === "production"
     isProd
       ? // in production, use the statically build version of our application
-        `file://${join(__dirname, 'dist/workbench/desktop/', 'index.html')}`
+        `file://${join(__dirname, '../workbench/desktop/index.html')}`
       : // in dev, target the host and port of the local rollup web server
         'http://localhost:5000/workbench/desktop/';
 
