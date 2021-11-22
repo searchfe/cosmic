@@ -7,7 +7,8 @@
     "build": "pnpm i --shamefully-hoist && tsup && electron-builder",
     "dev": "tsup --watch",
     "start": "electron dist",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "nodemon": "nodemon"
   },
   "dependencies": {
     "@cosmic/site": "workspace:*",
