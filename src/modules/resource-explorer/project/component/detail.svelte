@@ -1,15 +1,14 @@
 <script lang="ts">
   import ProjectInfo from './info.svelte';
   import { query } from '@urql/svelte';
-  import DirCard from '../../design/component/dir-card.svelte';
-  import FileCard from '../../design/component/file-card.svelte';
+  import DirCard from './dir-card.svelte';
+  import FileCard from './file-card.svelte';
   import { queryProjects } from '../api';
 
   export let params: Record<string, string> = {};
   const store = queryProjects({ parent: params.projectId });
   query(store);
 
-  console.log(params.projectId)
 
   $: {
     if (params.projectId) {
@@ -25,8 +24,8 @@
     {#if $store.data.projects.children}
        <!-- content here -->
     {/if}
-      <DirCard data="{project}" />
-      <!-- <FileCard project="{}"/> -->
+      <!-- <DirCard data="{project}" /> -->
+      <FileCard />
     {/each}
   {/if}
 </div>

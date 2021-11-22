@@ -46,7 +46,7 @@
     .flush()
     .add(selectedClasses, selected, selectedClassesDefault)
     .add(lineBreakClasses, lineBreak, lineBreakClassesDedault)
-    .add('py-1', dense)
+    // .add('py-1', dense)
     .add('text-gray-600', disabled)
     .add($$props.class)
     .add('break-keep-all')

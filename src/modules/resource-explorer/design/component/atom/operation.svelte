@@ -7,10 +7,8 @@
   function buttonClickHandler() {
     dispatch('create');
   }
-
-
-
 </script>
+
 <div class="flex justify-between">
   <div></div>
   <Button icon="add" on:click={buttonClickHandler}></Button>

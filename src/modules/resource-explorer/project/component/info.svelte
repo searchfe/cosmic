@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Info from '../../common/components/info.svelte';
+  import Info from '../../common/component/info.svelte';
 
   export let title = '';
 </script>

@@ -8,7 +8,6 @@
   let showDialog = false;
 
   function handleClick() {
-    console.log(showDialog);
     showDialog = true;
   }
 </script>

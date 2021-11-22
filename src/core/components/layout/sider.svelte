@@ -1,10 +1,3 @@
-<style>
-  .sider {
-    padding: 24px 14px 0;
-    width: 270px;
-  }
-</style>
-
 <script lang="ts">
   import { LAYOUT } from './layout.svelte';
   import { getContext } from 'svelte';
@@ -13,6 +6,6 @@
   $hasSider = true;
 </script>
 
-<aside class="sider flex-none relative box-border bg-white height-full">
+<aside class="w-270 pt-24 px-14 flex-none relative box-border bg-white height-full">
   <slot />
 </aside>

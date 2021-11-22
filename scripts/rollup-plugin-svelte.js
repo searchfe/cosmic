@@ -33,6 +33,9 @@ export function pluginsOptions(path, separateCss) {
         accessors: true,
       },
     }),
+    replace({
+      'outros.c.push': 'if (outros === undefined) { block.o(local); return }\noutros.c.push'
+    }),
     smelte({
       purge: production,
       output: `dist/${path}/index.css`, // it defaults to static/global.css which is probably what you expect in Sapper

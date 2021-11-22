@@ -27,12 +27,12 @@
   export let replace = {};
 
   const typeMap = {
-    normal: 'py-2 px-4 text-black bg-gray-10 border-gray-20 hover:text-blue active:text-blue-100',
+    normal: 'py-2 px-4 text-black bg-gray-100 border-gray-200 hover:text-blue active:text-blue-100',
     primary: 'text-white bg-blue border-blue-100 hover:bg-blue-100 active:text-white-700',
     icon: 'w-26 h-26 bg-gray-100 hover:opacity-30',
   };
 
-  const boxDefault = 'w-48 h-16';
+  const boxDefault = 'w-120 h-40';
   const basicClasses = 'relative overflow-hidden text-h3 font-normal box-border z-10 duration-200 ease-in';
 
   const iconDefault = 'flex items-center justify-center select-none';

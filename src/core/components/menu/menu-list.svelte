@@ -21,7 +21,7 @@
   export let hoverClasses = '';
   export let itemClasses = '';
 
-  const classesDefault = 'overflow-hidden rounded-xl py-4';
+  const classesDefault = 'py-10 overflow-hidden rounded-xl';
 
   function id(i) {
     if (i.id !== undefined) return i.id;

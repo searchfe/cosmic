@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Button } from '@cosmic/core/components';
-  import Card from '../../common/components/card.svelte';
+  import Card from '../../common/component/card.svelte';
   import type { Project } from '../../common/types/graphql';
 
   export let data: Project = {
     id: '123123',
-    name: '搜索前端',
-    team: '123123123',
+    name: '项目名称',
+    team: '团队名称',
   };
   const img =
     'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1805669441,154121004&fm=30&app=106&f=JPEG?w=312&h=208&s=D5383ED766AB32B0D234CD2603003069';

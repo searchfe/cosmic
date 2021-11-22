@@ -1,9 +1,9 @@
 <style>
   :global(.breadcrumb-item:last-child .separator) {
-    @apply hidden;
+    overflow: hidden;
   }
   .breadcrumb-item:last-child {
-    @apply text-black;
+    background: #1f1f1f;
   }
 </style>
 

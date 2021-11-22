@@ -152,8 +152,8 @@ mkdirSync(bundledElectronPath);
 mkdirSync(buildSveltePath);
 mkdirSync(publicPath);
 
-const jsFiles = getAllJSFiles(bundledElectronPath);
-minifyJSFiles(jsFiles);
+// const jsFiles = getAllJSFiles(bundledElectronPath);
+// minifyJSFiles(jsFiles);
 
 copyPublicFolderAndMinify(buildSveltePath, publicPath);
 cleanTsconfig();

@@ -1,8 +1,15 @@
-export enum ROUTES_ENUM {
+/**
+ * @author zfy<biyingshuai@gmail.com>
+ * @description top routes
+ */
+
+export enum ROUTES {
   INDEX,
   TEAM_DETAIL,
   PROJECT_DETAIL,
   DESIGN_ATOM,
+  LOGIN,
+  DEFAULT
 }
 
 interface RoutesValue {
@@ -10,37 +17,50 @@ interface RoutesValue {
   paramNames: string[];
 }
 
-export const ROUTES: { [key in ROUTES_ENUM]: RoutesValue } = {
-  [ROUTES_ENUM.INDEX]: {
-    path: '/',
+const ROUTES_CONFIG: { [key in ROUTES]: RoutesValue } = {
+  [ROUTES.DEFAULT]: {
+    path: '*',
     paramNames: [],
   },
-  [ROUTES_ENUM.TEAM_DETAIL]: {
+  [ROUTES.INDEX]: {
+    path: '',
+    paramNames: [],
+  },
+  [ROUTES.TEAM_DETAIL]: {
     path: '/team',
     paramNames: ['teamId'],
   },
-  [ROUTES_ENUM.PROJECT_DETAIL]: {
+  [ROUTES.PROJECT_DETAIL]: {
     path: '/project',
     paramNames: ['projectId'],
   },
-  [ROUTES_ENUM.DESIGN_ATOM]: {
+  [ROUTES.DESIGN_ATOM]: {
     path: '/design/atom',
     paramNames: ['teamId'],
   },
+  [ROUTES.LOGIN]: {
+    path: '/login',
+    paramNames: [],
+  },
 };
 
-export function getCompleteRoute(route: ROUTES_ENUM): string {
-  const { path, paramNames } = ROUTES[route];
+export function routeFor(route: ROUTES): string {
+  const { path, paramNames } = ROUTES_CONFIG[route];
   const paramPath = paramNames.map((param: string) => `:${param}`).join('/');
   return `${path}/${paramPath}`;
 }
 
 // TODO: validate params, recognize params
-export function urlFor(route: ROUTES_ENUM, params?: Record<string, unknown>): string {
-  const { path, paramNames } = ROUTES[route];
+export function urlFor(route: ROUTES, params?: Record<string, unknown>): string {
+  if (route === ROUTES.INDEX) {
+    return '/';
+  }
+  const { path, paramNames } = ROUTES_CONFIG[route];
   if (paramNames.length === 0 || !params) {
     return path;
   }
   const result = paramNames.map((paramName: string) => params[paramName] || paramName);
   return `${path}/${result.join('/')}`;
 }
+
+

@@ -1,10 +1,17 @@
 <script lang="ts">
-  import Info from '../../../common/components/info.svelte';
+  import Info from '../../../common/component/info.svelte';
   import { Collapse, CollapseItem, Breadcrumb, BreadcrumbItem, Icon } from '@cosmic/core/components';
   import AtomMicroCard from './micro-card.svelte';
   import Filter from './filter/index.svelte';
   import Operation from './operation.svelte';
   import Dialog from './dialog/index.svelte';
+  import { queryColors } from '../../api/color';
+  import { query } from '@urql/svelte';
+
+  export let params: Record<string, string> = {};
+  const store = queryColors({ team: params.teamId });
+  query(store)
+
 
   let active = {
     key: 'color',
@@ -26,6 +33,10 @@
 
   function createHandler() {
     showDilaog = true;
+  }
+
+  function reQuery() {
+    store.reexecute({ requestPolicy: 'network-only' });
   }
 </script>
 
@@ -55,15 +66,14 @@
     <CollapseItem headerClass="pl-0 font-normal" header="{cate.name}" key="{cate.key}" let:isSelected="{active}">
       <Icon slot="prefix">{active ? 'arrow_drop_down' : 'arrow_right'}</Icon>
       <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-22 xl:gap-26 2xl:gap-14">
-        <AtomMicroCard classes="" />
-        <AtomMicroCard classes="" />
-        <AtomMicroCard classes="" />
-        <AtomMicroCard classes="" />
-        <AtomMicroCard classes="" />
-        <AtomMicroCard classes="" />
+        {#if !$store.fetching && $store.data.colors}
+          {#each $store.data.colors as color}
+            <AtomMicroCard classes="" color="{color.color}" />
+          {/each}
+        {/if}
       </div>
     </CollapseItem>
   {/each}
 </Collapse>
 
-<Dialog bind:show={showDilaog}/>
+<Dialog bind:show={showDilaog} team={params.teamId} on:created="{reQuery}"/>

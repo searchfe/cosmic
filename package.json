@@ -1,5 +1,7 @@
 {
   "main": "dist/app/index.js",
+  "version": "0.0.1",
+  "name": "cosmic",
   "scripts": {
     "prestart": "cross-env NODE_ENV=development node scripts/preBuild.js",
     "start": "cross-env NODE_ENV=development npm-run-all -p -r build:frontend:dev start:electron",
@@ -42,12 +44,14 @@
     "compodoc:build": "compodoc"
   },
   "dependencies": {
+    "@types/color": "^3.0.1",
+    "@urql/exchange-auth": "~0.1.6",
     "@urql/svelte": "~1.3.0",
+    "axios": "~0.24.0",
     "canvaskit-wasm": "~0.28.1",
     "color": "^3.1.3",
     "electron-log": "^4.4.1",
     "electron-store": "^8.0.1",
-    "electron-updater": "^4.3.9",
     "eventemitter2": "^6.4.4",
     "graphql": "~15.6.0",
     "install": "~0.13.0",
@@ -93,7 +97,7 @@
     "copy-webpack-plugin": "6.4",
     "cross-env": "^7.0.3",
     "electron": "^15.3.0",
-    "electron-builder": "^22.13.1",
+    "electron-builder": "~22.13.1",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-jsdoc": "^32.0.1",
@@ -122,7 +126,7 @@
     "sass": "^1.35.1",
     "sb": "^6.2.9",
     "storybook-dark-mode": "^1.0.8",
-    "svelte": "^3.38.1",
+    "svelte": "3.38.2",
     "svelte-check": "~2.2.6",
     "svelte-inline-svg": "^1.0.8",
     "svelte-loader": "^3.1.1",

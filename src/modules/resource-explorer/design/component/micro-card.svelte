@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Card from '../../common/components/card.svelte';
+  import Card from '../../common/component/card.svelte';
 
   interface Info {
     key: string;

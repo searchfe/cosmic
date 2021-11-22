@@ -1,22 +1,3 @@
-<style>
-  .card {
-    @apply w-168;
-    @apply h-68;
-    @apply rounded-xl;
-    @apply relative;
-    @apply flex;
-    @apply relative;
-    @apply justify-between;
-    @apply p-14;
-    @apply flex-none;
-  }
-  .img {
-    @apply flex;
-    @apply w-40;
-    @apply h-40;
-  }
-</style>
-
 <script lang="ts">
   interface IData {
     text?: string;
@@ -38,7 +19,7 @@
 </script>
 
 <div
-  class="card mr-10 bg-gray-100 hover:bg-blue text-black hover:text-white"
+  class="w-168 h-68 rounded-xl relative flex justify-between p-14 flex-none mr-10 bg-gray-100 hover:bg-blue text-black hover:text-white"
   on:mouseleave="{mouseleaveHandler}"
   on:mouseenter|stopPropagation="{mouseenterHandler}"
 >
@@ -46,5 +27,5 @@
     <div class="text-h3 font-semibold">{data.text}</div>
     <div class="text-base mt-14">{data.num}</div>
   </div>
-  <img class="img" src="{hovering ? data.hoverIcon : data.icon}" alt="" />
+  <img class="flex h-40 w-40" src="{hovering ? data.hoverIcon : data.icon}" alt="" />
 </div>

@@ -3,7 +3,7 @@
   import { push } from 'svelte-spa-router';
   import { Tree } from '@cosmic/core/components';
   import type { TreeNode } from '@cosmic/core/components';
-  import { ROUTES_ENUM, urlFor } from '../../routes';
+  import { ROUTES, urlFor } from '../../routes';
 
   export let data: TreeNode;
 
@@ -11,7 +11,7 @@
 
   function projectNodeClickedHandler(event) {
     if (event.detail.selectedKey) {
-      push(urlFor(ROUTES_ENUM.PROJECT_DETAIL, { projectId: event.detail.selectedKey }));
+      push(urlFor(ROUTES.PROJECT_DETAIL, { projectId: event.detail.selectedKey }));
     }
   }
 
