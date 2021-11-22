@@ -9,7 +9,7 @@
 
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { Icon } from '@cosmic/core/components';
+  import Icon from '../icon';
   import { BREADCRUMB } from './breadcrumb.svelte';
 
   export let active = false;
