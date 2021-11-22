@@ -1,22 +1,25 @@
 {
-  "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "src",
-    "paths": {
-      "@cosmic/workbench/services/*": ["workbench/services/*"],
-      "@cosmic/workbench/ui/*": ["workbench/ui/*"],
-      "@cosmic/core/browser": ["core/browser"],
-      "@cosmic/core/common": ["core/common"],
-      "@cosmic/core/components": ["core/components"],
-      "@cosmic/core/parts": ["core/parts"]
-    },
-    "resolveJsonModule": true,
+    "target": "ES2019",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "skipDefaultLibCheck": true,
     "experimentalDecorators": true,
-    "types": ["jest"],
-    "isolatedModules": false,
-    "noImplicitThis": false,
-    "strictPropertyInitialization": false,
-    "module": "ESNext"
+    "paths": {
+      "@cosmic/app": ["./src/app/index.ts"],
+      "@cosmic/core/browser": ["./src/core/browser/index.ts"],
+      "@cosmic/core/common": ["./src/core/common/index.ts"],
+      "@cosmic/core/components": ["./src/core/components/index.ts"],
+      "@cosmic/core/parts": ["./src/core/parts/index.ts"],
+      "@cosmic/workbench": ["./src/workbench/desktop/app.ts"]
+    }
   },
-  "include": ["**/*.ts", "**/*.css"]
+  "exclude": [
+    "**/dist/**",
+    "**/node_modules/**"
+  ]
 }

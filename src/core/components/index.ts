@@ -24,7 +24,7 @@ export { default as Card } from './card/card';
 export { default as Image } from './image/image';
 export { PopupRing } from './popup-guide';
 export { ButtonShortcut } from './button-shortcut';
-export { default as Canvas } from './canvas';
+// export { default as Canvas } from './canvas';
 export { Collapse, CollapseItem } from './collapse';
 export { default as Tree } from './tree';
 export { default as Layout } from './layout';

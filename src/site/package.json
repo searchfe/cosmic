@@ -1,0 +1,23 @@
+{
+  "name": "@cosmic/site",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@cosmic/core": "workspace:*",
+    "@cosmic/modules": "workspace:*",
+    "@cosmic/workbench": "workspace:*",
+    "color": "^4.0.1",
+    "inversify": "^6.0.1",
+    "reflect-metadata": "^0.1.13",
+    "svelte": "^3.44.1",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/color": "^3.0.2"
+  }
+}

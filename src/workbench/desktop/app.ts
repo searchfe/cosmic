@@ -2,7 +2,7 @@ import { Container } from 'inversify';
 import { AppearanceType } from '@cosmic/core/common';
 import { ModuleFactory } from '@cosmic/core/parts';
 import { Controller } from '@cosmic/core/browser';
-import { AppearanceService } from '@cosmic/workbench/services/appearance-service';
+import { AppearanceService } from '../services/appearance-service';
 // import { MenuGroupService } from '@cosmic/workbench/services/menu-group-service';
 // import { applicationMenus } from './base-menu/config';
 import Navigation from '../ui/components/navigation/navigation-bar.svelte';
@@ -10,7 +10,7 @@ import StatusBar from '../ui/components/status/status-bar.svelte';
 import ResourcePage from '../ui/components/resource/resource.svelte';
 import PropertyPanel from '../ui/components/property/proterty.svelte';
 
-import config from 'workbench/desktop/app.config.json';
+import config from './app.config';
 
 export default class App {
   private container: Container;

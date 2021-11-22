@@ -1,12 +1,12 @@
-{
+export default {
   "workbench": {
-    "id": "modules/workbench",
+    "id": "@cosmic/modules/workbench",
     "type": "col",
     "minWidth": 1280,
     "scale": [20, 40, 20, 20],
     "modules": [
       {
-        "id": "modules/resource-explorer"
+        "id": "@cosmic/modules/resource-explorer"
       }
       // {
       //   "id": "modules/shape-canvas"

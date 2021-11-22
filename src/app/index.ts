@@ -3,7 +3,7 @@ import { join } from 'path';
 import { parse } from 'url';
 // import { autoUpdater } from 'electron-updater';
 
-// import logger from './utils/logger';
+// import './utils/logger';
 // import settings from './utils/settings';
 
 const isProd = process.env.NODE_ENV === 'production' || !/[\\/]electron/.exec(process.execPath); // !process.execPath.match(/[\\/]electron/);
@@ -28,13 +28,15 @@ const createWindow = () => {
     },
   });
 
+  console.log(isProd);
+
   const url =
     // process.env.NODE_ENV === "production"
     isProd
       ? // in production, use the statically build version of our application
         `file://${join(__dirname, '../workbench/desktop/index.html')}`
       : // in dev, target the host and port of the local rollup web server
-        'http://localhost:5000/workbench/desktop/';
+        'http://localhost:5000';
 
   mainWindow.loadURL(url).catch((err: any) => {
     // logger.error(JSON.stringify(err));

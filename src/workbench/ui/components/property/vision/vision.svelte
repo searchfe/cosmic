@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Title } from '@cosmic/workbench/ui/components/components';
+  import { Title } from '../../components';
   import { VisionColor, VisionFontSize, VisionTempelet } from './components';
   import { createEventDispatcher } from 'svelte';
   export let vision: Object;

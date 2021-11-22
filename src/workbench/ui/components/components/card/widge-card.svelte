@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Card } from '../../../../../core/components';
+  import { Card } from '@cosmic/core/components';
   export let title = '';
   export let text = '';
 </script>

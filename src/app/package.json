@@ -1,0 +1,19 @@
+{
+  "name": "@cosmic/app",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "electron dist",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "electron": "^16.0.1",
+    "electron-builder": "^22.13.1",
+    "electron-log": "^4.4.1",
+    "electron-store": "^8.0.1",
+    "electron-updater": "^4.3.9"
+  }
+}

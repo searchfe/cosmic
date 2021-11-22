@@ -1,4 +1,4 @@
-@import '../../../core/components/global.css';
+@import '../node_modules/@cosmic/core/components/global.css';
 
 html,
 body {

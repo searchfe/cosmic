@@ -1,0 +1,28 @@
+{
+  "name": "@cosmic/core",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    "./browser": "./dist/browser/index.js",
+    "./common": "./dist/common/index.js",
+    "./components": "./dist/components/index.js",
+    "./parts": "./dist/parts/index.js"
+  },
+  "scripts": {
+    "build": "run-p build:*",
+    "build:rollup": "rollup -c",
+    "build:tsup": "tsup",
+    "dev": "run-p dev:*",
+    "dev:rollup": "rollup -c -w",
+    "//dev:tsup": "tsup --watch",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "keycode": "^2.2.1",
+    "split.js": "^1.6.4"
+  },
+  "dependencies": {
+    "color": "^4.0.1",
+    "inversify": "^6.0.1"
+  }
+}

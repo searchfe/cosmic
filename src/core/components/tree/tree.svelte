@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { Icon } from '@cosmic/core/components';
+  import Icon from '../icon';
   import type { TreeNode } from './type';
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
 
