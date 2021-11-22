@@ -1,3 +1,4 @@
+
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -7,35 +8,35 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum ETextUnit {
-  PIXELS = 'PIXELS',
-  PERCENT = 'PERCENT',
-  AUTO = 'AUTO',
+  PIXELS = "PIXELS",
+  PERCENT = "PERCENT",
+  AUTO = "AUTO"
 }
 
 export enum ETextAlignHorizontal {
-  LEFT = 'LEFT',
-  CENTER = 'CENTER',
-  RIGHT = 'RIGHT',
-  JUSTIFIED = 'JUSTIFIED',
+  LEFT = "LEFT",
+  CENTER = "CENTER",
+  RIGHT = "RIGHT",
+  JUSTIFIED = "JUSTIFIED"
 }
 
 export enum ETextAlignVertical {
-  TOP = 'TOP',
-  CENTER = 'CENTER',
-  BOTTOM = 'BOTTOM',
+  TOP = "TOP",
+  CENTER = "CENTER",
+  BOTTOM = "BOTTOM"
 }
 
 export enum EShadowType {
-  INSET = 'INSET',
-  OUTSET = 'OUTSET',
+  INSET = "INSET",
+  OUTSET = "OUTSET"
 }
 
 export enum EConstaintType {
-  MIN = 'MIN',
-  CENTER = 'CENTER',
-  MAX = 'MAX',
-  STRETCH = 'STRETCH',
-  SCALE = 'SCALE',
+  MIN = "MIN",
+  CENTER = "CENTER",
+  MAX = "MAX",
+  STRETCH = "STRETCH",
+  SCALE = "SCALE"
 }
 
 export interface QueryProjectDTO {
@@ -43,6 +44,11 @@ export interface QueryProjectDTO {
   name?: Nullable<string>;
   team?: Nullable<string>;
   parent?: Nullable<string>;
+}
+
+export interface QueryColorDTO {
+  id?: Nullable<string>;
+  team?: Nullable<string>;
 }
 
 export interface CreateUserDTO {
@@ -124,9 +130,15 @@ export interface UpdateProjectDTO {
   id: string;
 }
 
-export interface CreateConstraintDTO {
-  vertical: EConstaintType;
-  horizontal: EConstaintType;
+export interface CreateColorDTO {
+  color: string;
+  variant?: Nullable<CreateColorVariantDTO>;
+  team?: Nullable<string>;
+}
+
+export interface CreateColorVariantDTO {
+  light: string;
+  dark: string;
 }
 
 export interface CreateTextDTO {
@@ -153,6 +165,11 @@ export interface CreateCornerDTO {
   topRightRadius: number;
   bottomLeftRadius: number;
   bottomRightRadius: number;
+}
+
+export interface CreateConstraintDTO {
+  vertical: EConstaintType;
+  horizontal: EConstaintType;
 }
 
 export interface Team {
@@ -214,9 +231,16 @@ export interface User {
   avatar?: Nullable<string>;
 }
 
+export interface ColorVariant {
+  light: ColorString;
+  dark: ColorString;
+}
+
 export interface Color {
   id: string;
   color: ColorString;
+  variant?: Nullable<ColorVariant[]>;
+  team: string;
 }
 
 export interface TextValueProp {
@@ -287,8 +311,9 @@ export interface IQuery {
   level(fields?: Nullable<string[]>, id: string): Level | Promise<Level>;
   levels(categories: string[], specification: string): Level[] | Promise<Level[]>;
   project(id: string): Project | Promise<Project>;
-  projects(project: QueryProjectDTO): Project[] | Promise<Project[]>;
+  projects(project?: Nullable<QueryProjectDTO>): Project[] | Promise<Project[]>;
   color(id: string): Color | Promise<Color>;
+  colors(color?: Nullable<QueryColorDTO>): Color[] | Promise<Color[]>;
   text(id: string): Text | Promise<Text>;
   stroke(id: string): Stroke | Promise<Stroke>;
   corner(id: string): Corner | Promise<Corner>;
@@ -304,10 +329,7 @@ export interface IMutation {
   updateTeam(team: UpdateTeamDTO): boolean | Promise<boolean>;
   createMember(member: AddTeamMemberDTO, teamId: string): boolean | Promise<boolean>;
   createSpecification(specification: CreateSpecificationDTO): Specification | Promise<Specification>;
-  updateSpecification(
-    fields?: Nullable<string[]>,
-    specification: UpdateSpecificationDTO
-  ): Specification | Promise<Specification>;
+  updateSpecification(fields?: Nullable<string[]>, specification: UpdateSpecificationDTO): Specification | Promise<Specification>;
   createCategory(category: CreateCategoryDTO): string | Promise<string>;
   updateCategory(category: UpdateCategoryDTO): boolean | Promise<boolean>;
   deleteCategory(categoryId: string, specificationId: string): boolean | Promise<boolean>;
@@ -315,11 +337,12 @@ export interface IMutation {
   createItem(item: CreateItemDTO, levelId: string): string | Promise<string>;
   createProject(project: CreateProjectDTO): Project | Promise<Project>;
   updateProject(project: UpdateProjectDTO): boolean | Promise<boolean>;
-  createColor(constraint: CreateConstraintDTO): Constraint | Promise<Constraint>;
+  createColor(color: CreateColorDTO): Color | Promise<Color>;
   createText(text: CreateTextDTO): Text | Promise<Text>;
   createStroke(stroke: string): Stroke | Promise<Stroke>;
   createCorner(corner: CreateCornerDTO): Corner | Promise<Corner>;
   createShadow(shadow: string): Shadow | Promise<Shadow>;
+  createConstraint(constraint: CreateConstraintDTO): Constraint | Promise<Constraint>;
   createLayout(layout: string): Layout | Promise<Layout>;
 }
 

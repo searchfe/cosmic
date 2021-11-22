@@ -1,17 +1,15 @@
 /**
- * @author biyingshuai<biyingshuai@gmail.com>
+ * @author zfy<biyingshuai@gmail.com>
  * @description top routes
  */
-
-import TeamDetail from './team/component/detail.svelte';
-import ProjectDetail from './project/component/detail.svelte';
-import AtomDetail from './design/component/atom/detail.svelte';
 
 export enum ROUTES {
   INDEX,
   TEAM_DETAIL,
   PROJECT_DETAIL,
   DESIGN_ATOM,
+  LOGIN,
+  DEFAULT
 }
 
 interface RoutesValue {
@@ -20,8 +18,12 @@ interface RoutesValue {
 }
 
 const ROUTES_CONFIG: { [key in ROUTES]: RoutesValue } = {
+  [ROUTES.DEFAULT]: {
+    path: '*',
+    paramNames: [],
+  },
   [ROUTES.INDEX]: {
-    path: '/',
+    path: '',
     paramNames: [],
   },
   [ROUTES.TEAM_DETAIL]: {
@@ -36,9 +38,13 @@ const ROUTES_CONFIG: { [key in ROUTES]: RoutesValue } = {
     path: '/design/atom',
     paramNames: ['teamId'],
   },
+  [ROUTES.LOGIN]: {
+    path: '/login',
+    paramNames: [],
+  },
 };
 
-function getCompleteRoute(route: ROUTES): string {
+export function routeFor(route: ROUTES): string {
   const { path, paramNames } = ROUTES_CONFIG[route];
   const paramPath = paramNames.map((param: string) => `:${param}`).join('/');
   return `${path}/${paramPath}`;
@@ -46,6 +52,9 @@ function getCompleteRoute(route: ROUTES): string {
 
 // TODO: validate params, recognize params
 export function urlFor(route: ROUTES, params?: Record<string, unknown>): string {
+  if (route === ROUTES.INDEX) {
+    return '/';
+  }
   const { path, paramNames } = ROUTES_CONFIG[route];
   if (paramNames.length === 0 || !params) {
     return path;
@@ -54,9 +63,4 @@ export function urlFor(route: ROUTES, params?: Record<string, unknown>): string 
   return `${path}/${result.join('/')}`;
 }
 
-export const routes = {
-  [getCompleteRoute(ROUTES.INDEX)]: TeamDetail,
-  [getCompleteRoute(ROUTES.TEAM_DETAIL)]: TeamDetail,
-  [getCompleteRoute(ROUTES.PROJECT_DETAIL)]: ProjectDetail,
-  [getCompleteRoute(ROUTES.DESIGN_ATOM)]: AtomDetail,
-};
+

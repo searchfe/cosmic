@@ -1,16 +1,16 @@
 import { app, BrowserWindow, Notification } from 'electron';
 import { join } from 'path';
 import { parse } from 'url';
-import { autoUpdater } from 'electron-updater';
+// import { autoUpdater } from 'electron-updater';
 
-import logger from './utils/logger';
+// import logger from './utils/logger';
 // import settings from './utils/settings';
 
 const isProd = process.env.NODE_ENV === 'production' || !/[\\/]electron/.exec(process.execPath); // !process.execPath.match(/[\\/]electron/);
 
-logger.info('App starting...');
+// logger.info('App starting...');
 // settings.set('check', true);
-logger.info('Checking if settings store works correctly.');
+// logger.info('Checking if settings store works correctly.');
 // logger.info(settings.get('check') ? 'Settings store works correctly.' : 'Settings store has a problem.');
 
 let mainWindow: BrowserWindow | null;
@@ -22,7 +22,7 @@ const createWindow = () => {
     minHeight: 600,
     minWidth: 960,
     webPreferences: {
-      devTools: isProd ? false : true,
+      devTools: true,
       contextIsolation: true,
       // preload: join(__dirname, 'preload.js'),
     },
@@ -37,7 +37,7 @@ const createWindow = () => {
         'http://localhost:5000/workbench/desktop/';
 
   mainWindow.loadURL(url).catch((err: any) => {
-    logger.error(JSON.stringify(err));
+    // logger.error(JSON.stringify(err));
     app.quit();
   });
 
@@ -62,10 +62,10 @@ app.on('activate', () => {
 });
 
 app.on('web-contents-created', (e, contents) => {
-  logger.info(e);
+  // logger.info(e);
   // Security of webviews
   contents.on('will-attach-webview', (event, webPreferences, params) => {
-    logger.info(event, params);
+    // logger.info(event, params);
     // Strip away preload scripts if unused or verify their location is legitimate
     delete webPreferences.preload;
 
@@ -82,65 +82,65 @@ app.on('web-contents-created', (e, contents) => {
     const parsedURL = parse(navigationUrl);
     // In dev mode allow Hot Module Replacement
     if (parsedURL.host !== 'localhost:5000' && !isProd) {
-      logger.warn('Stopped attempt to open: ' + navigationUrl);
+      // logger.warn('Stopped attempt to open: ' + navigationUrl);
       event.preventDefault();
     } else if (isProd) {
-      logger.warn('Stopped attempt to open: ' + navigationUrl);
+      // logger.warn('Stopped attempt to open: ' + navigationUrl);
       event.preventDefault();
     }
   });
 });
 
-if (isProd)
-  autoUpdater.checkForUpdates().catch((err) => {
-    logger.error(JSON.stringify(err));
-  });
+// if (isProd)
+//   // autoUpdater.checkForUpdates().catch((err) => {
+//     // logger.error(JSON.stringify(err));
+//   });
 
-autoUpdater.logger = logger;
+// autoUpdater.logger = logger;
 
-autoUpdater.on('update-available', () => {
-  notification = new Notification({
-    title: 'Fluide',
-    body: 'Updates are available. Click to download.',
-    silent: true,
-    // icon: nativeImage.createFromPath(join(__dirname, "..", "assets", "icon.png"),
-  });
-  notification.show();
-  notification.on('click', () => {
-    autoUpdater.downloadUpdate().catch((err) => {
-      logger.error(JSON.stringify(err));
-    });
-  });
-});
+// autoUpdater.on('update-available', () => {
+//   notification = new Notification({
+//     title: 'Fluide',
+//     body: 'Updates are available. Click to download.',
+//     silent: true,
+//     // icon: nativeImage.createFromPath(join(__dirname, "..", "assets", "icon.png"),
+//   });
+//   notification.show();
+//   notification.on('click', () => {
+//     autoUpdater.downloadUpdate().catch((err) => {
+//       // logger.error(JSON.stringify(err));
+//     });
+//   });
+// });
 
-autoUpdater.on('update-not-available', () => {
-  notification = new Notification({
-    title: 'Fluide',
-    body: 'Your software is up to date.',
-    silent: true,
-    // icon: nativeImage.createFromPath(join(__dirname, "..", "assets", "icon.png"),
-  });
-  notification.show();
-});
+// autoUpdater.on('update-not-available', () => {
+//   notification = new Notification({
+//     title: 'Fluide',
+//     body: 'Your software is up to date.',
+//     silent: true,
+//     // icon: nativeImage.createFromPath(join(__dirname, "..", "assets", "icon.png"),
+//   });
+//   notification.show();
+// });
 
-autoUpdater.on('update-downloaded', () => {
-  notification = new Notification({
-    title: 'Fluide',
-    body: 'The updates are ready. Click to quit and install.',
-    silent: true,
-    // icon: nativeImage.createFromPath(join(__dirname, "..", "assets", "icon.png"),
-  });
-  notification.show();
-  notification.on('click', () => {
-    autoUpdater.quitAndInstall();
-  });
-});
+// autoUpdater.on('update-downloaded', () => {
+//   notification = new Notification({
+//     title: 'Fluide',
+//     body: 'The updates are ready. Click to quit and install.',
+//     silent: true,
+//     // icon: nativeImage.createFromPath(join(__dirname, "..", "assets", "icon.png"),
+//   });
+//   notification.show();
+//   notification.on('click', () => {
+//     autoUpdater.quitAndInstall();
+//   });
+// });
 
-autoUpdater.on('error', (err) => {
-  notification = new Notification({
-    title: 'Fluide',
-    body: JSON.stringify(err),
-    // icon: nativeImage.createFromPath(join(__dirname, "..", "assets", "icon.png"),
-  });
-  notification.show();
-});
+// autoUpdater.on('error', (err) => {
+//   notification = new Notification({
+//     title: 'Fluide',
+//     body: JSON.stringify(err),
+//     // icon: nativeImage.createFromPath(join(__dirname, "..", "assets", "icon.png"),
+//   });
+//   notification.show();
+// });

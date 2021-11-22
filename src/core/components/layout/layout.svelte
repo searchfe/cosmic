@@ -8,8 +8,10 @@
   const hasSider = writable(false);
 
   setContext(LAYOUT, { hasSider });
+
+  export let classes = '';
 </script>
 
-<section class="flex flex-auto {$$props.class} {$hasSider ? 'flex-row' : 'flex-col'}">
+<section class="flex flex-auto h-full {classes} {$hasSider ? 'flex-row' : 'flex-col'}">
   <slot />
 </section>

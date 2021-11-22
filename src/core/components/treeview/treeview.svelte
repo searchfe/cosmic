@@ -30,7 +30,6 @@
     if (selectable && !i.items) {
       selected = i;
     }
-    console.log(selectable);
 
     expanded = i && !expanded.includes(i) ? [...expanded, i] : expanded.filter((si) => si !== i);
   }

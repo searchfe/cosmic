@@ -1,16 +1,24 @@
 <!--
-  @author biyingshuai<biyingshuai@gmail.com>
-  @description root container
+  @author zfy<biyingshuai@gmail.com>
+  @description home component
 -->
-
 <script lang="ts">
-  import { initClient } from '@urql/svelte';
-  import Home from './home.svelte';
-  import { routes } from './routes';
-  
-  initClient({
-    url: 'http://localhost:3000/api/graphql',
-  });
+  import Router from 'svelte-spa-router';
+  import { Layout } from '@cosmic/core/components';
+  import Header from './common/component/header.svelte';
+  import TeamIndex from './team/index.svelte';
+  import Login from './auth/login.svelte';
+  import { routeFor, ROUTES } from './routes';
+
+  const routes = {
+    [routeFor(ROUTES.LOGIN)]: Login,
+    [routeFor(ROUTES.INDEX)]: TeamIndex,
+    [routeFor(ROUTES.DEFAULT)]: TeamIndex,
+  };
+
 </script>
 
-<Home {routes} />
+<Layout classes="text-black w-full">
+  <Header />
+  <Router routes="{routes}" />
+</Layout>

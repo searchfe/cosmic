@@ -1,7 +1,7 @@
 <script lang="ts">
   import { push } from 'svelte-spa-router';
   import { Icon } from '@cosmic/core/components';
-  import Card from '../../common/components/card.svelte';
+  import Card from '../../common/component/card.svelte';
   import type { Project } from '../../common/types/graphql';
   import { urlFor, ROUTES } from '../../routes';
 
@@ -9,7 +9,13 @@
 
   export let avatar =
     'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1805669441,154121004&fm=30&app=106&f=JPEG?w=312&h=208&s=D5383ED766AB32B0D234CD2603003069';
-  export let userAvatars: string[] = [avatar, avatar, avatar];
+  export let userAvatars: string[] = [
+    'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F01.png',
+    'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F02.png',
+    'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F03.png',
+    'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F04.png',
+    'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F05.png'
+  ];
   export let info = '协作 30';
 
   function projectClickHandler() {

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Card from '../../common/components/card.svelte';
+  import Card from '../../common/component/card.svelte';
 
   export const project = {
     img: '',
-    title: '',
-    desc: ''
+    title: '标题',
+    desc: '描述'
   };
 </script>
 

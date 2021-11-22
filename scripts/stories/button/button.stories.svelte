@@ -5,7 +5,6 @@
   import { Button, ButtonShortcut } from '../../../src/core/components';
   let count = 0;
   function handleClick() {
-    console.log(count);
     count += 1;
   }
 </script>

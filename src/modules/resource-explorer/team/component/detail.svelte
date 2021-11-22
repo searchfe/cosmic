@@ -10,12 +10,16 @@
 
   query(store);
 
-  let tempIMG = 'https://fe-dev.bj.bcebos.com/design-card-micro.png';
   const tempItem = {
     header: 'https://fe-dev.bj.bcebos.com/design-card-header.png',
     title: '视觉原子',
     infos: [{ key: '引用', value: '36' }, { key: '自荐', value: '2' }],
-    imgs: [tempIMG, tempIMG, tempIMG, tempIMG],
+    imgs: [
+      'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%86%85%E7%BC%A9%E7%95%A5%E5%9B%BE%2001.png',
+      'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%86%85%E7%BC%A9%E7%95%A5%E5%9B%BE%2002.png',
+      'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%86%85%E7%BC%A9%E7%95%A5%E5%9B%BE%2003.png',
+      'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%86%85%E7%BC%A9%E7%95%A5%E5%9B%BE%2004.png'
+    ],
     extra: '38个',
   };
   const teamAssestData = [tempItem, {

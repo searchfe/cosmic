@@ -1,7 +1,7 @@
 <script>
   import { scale } from 'svelte/transition';
   import { quadIn } from 'svelte/easing';
-  import { Scrim } from 'smelte/src/components/Util/index.js';
+  // import { Scrim } from 'smelte/src/components/Util/index.js';
   import { ClassBuilder } from 'smelte/src/utils/classes.js';
 
   const classesDefault = 'box-border text-black items-center z-50 rounded-3xl bg-white p-24 shadow-dialog';
@@ -31,7 +31,7 @@
 </script>
 
 <div class="fixed w-full h-full top-0 left-0 z-30" class:hidden="{!value}">
-  <Scrim opacity="{opacity}" on:click="{() => !persistent && (value = false)}" />
+  <!-- <Scrim opacity="{opacity}" on:click="{() => !persistent && (value = false)}" /> -->
   <div class="h-full w-full absolute flex items-center justify-center">
     <div in:scale="{transitionProps}" class="{c}" style="width: {width}; height: {height}">
       <div class="{t}">
