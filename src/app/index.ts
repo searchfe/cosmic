@@ -3,15 +3,15 @@ import { join } from 'path';
 import { parse } from 'url';
 // import { autoUpdater } from 'electron-updater';
 
-// import './utils/logger';
-// import settings from './utils/settings';
+import logger from './utils/logger';
+import settings from './utils/settings';
 
 const isProd = process.env.NODE_ENV === 'production' || !/[\\/]electron/.exec(process.execPath); // !process.execPath.match(/[\\/]electron/);
 
-// logger.info('App starting...');
-// settings.set('check', true);
-// logger.info('Checking if settings store works correctly.');
-// logger.info(settings.get('check') ? 'Settings store works correctly.' : 'Settings store has a problem.');
+logger.info('App starting...');
+settings.set('check', true);
+logger.info('Checking if settings store works correctly.');
+logger.info(settings.get('check') ? 'Settings store works correctly.' : 'Settings store has a problem.');
 
 let mainWindow: BrowserWindow | null;
 let notification: Notification | null;
@@ -28,18 +28,16 @@ const createWindow = () => {
     },
   });
 
-  console.log(isProd);
-
   const url =
     // process.env.NODE_ENV === "production"
     isProd
       ? // in production, use the statically build version of our application
-        `file://${join(__dirname, '../workbench/desktop/index.html')}`
+        `file://${join(__dirname, '../node_modules/@cosmic/site/index.html')}`
       : // in dev, target the host and port of the local rollup web server
         'http://localhost:5000';
 
   mainWindow.loadURL(url).catch((err: any) => {
-    // logger.error(JSON.stringify(err));
+    logger.error(JSON.stringify(err));
     app.quit();
   });
 
@@ -64,10 +62,10 @@ app.on('activate', () => {
 });
 
 app.on('web-contents-created', (e, contents) => {
-  // logger.info(e);
+  logger.info(e);
   // Security of webviews
   contents.on('will-attach-webview', (event, webPreferences, params) => {
-    // logger.info(event, params);
+    logger.info(event, params);
     // Strip away preload scripts if unused or verify their location is legitimate
     delete webPreferences.preload;
 
@@ -84,10 +82,10 @@ app.on('web-contents-created', (e, contents) => {
     const parsedURL = parse(navigationUrl);
     // In dev mode allow Hot Module Replacement
     if (parsedURL.host !== 'localhost:5000' && !isProd) {
-      // logger.warn('Stopped attempt to open: ' + navigationUrl);
+      logger.warn('Stopped attempt to open: ' + navigationUrl);
       event.preventDefault();
     } else if (isProd) {
-      // logger.warn('Stopped attempt to open: ' + navigationUrl);
+      logger.warn('Stopped attempt to open: ' + navigationUrl);
       event.preventDefault();
     }
   });

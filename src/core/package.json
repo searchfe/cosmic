@@ -11,7 +11,7 @@
   "scripts": {
     "build": "run-p build:*",
     "build:rollup": "rollup -c",
-    "build:tsup": "tsup",
+    "//build:tsup": "tsup",
     "dev": "run-p dev:*",
     "dev:rollup": "rollup -c -w",
     "//dev:tsup": "tsup --watch",

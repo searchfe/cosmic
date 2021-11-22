@@ -4,16 +4,19 @@
   "type": "commonjs",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsup",
+    "build": "pnpm i --shamefully-hoist && tsup && electron-builder",
     "dev": "tsup --watch",
     "start": "electron dist",
     "clean": "rimraf dist"
   },
   "dependencies": {
+    "@cosmic/site": "workspace:*",
+    "electron-log": "^4.4.1",
+    "electron-store": "^8.0.1"
+  },
+  "devDependencies": {
     "electron": "^16.0.1",
     "electron-builder": "^22.13.1",
-    "electron-log": "^4.4.1",
-    "electron-store": "^8.0.1",
-    "electron-updater": "^4.3.9"
+    "nodemon": "^2.0.15"
   }
 }
