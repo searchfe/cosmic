@@ -3,15 +3,9 @@
   @description root container
 -->
 <script lang="ts">
-  import { initClient } from '@urql/svelte';
-  import { dedupExchange, cacheExchange, fetchExchange } from '@urql/svelte';
+  import { init as initGqlClient } from './common/gql/client';
 
-  import { exchanges as authExchange } from './auth/exchange/index';
-
-  initClient({
-    url: 'http://localhost:3000/api/graphql',
-    exchanges: [dedupExchange, cacheExchange, authExchange, fetchExchange],
-  });
+  initGqlClient();
 </script>
 
 <slot />

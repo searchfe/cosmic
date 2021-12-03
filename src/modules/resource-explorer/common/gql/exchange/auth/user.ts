@@ -1,4 +1,4 @@
-import { urlFor, ROUTES } from '../routes';
+import { urlFor, ROUTES } from '../../../../routes';
 import { push } from 'svelte-spa-router';
 import axios from 'axios';
 

@@ -7,8 +7,7 @@
 
   export let data: Project;
 
-  export let avatar =
-    'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1805669441,154121004&fm=30&app=106&f=JPEG?w=312&h=208&s=D5383ED766AB32B0D234CD2603003069';
+  export let avatar = 'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%9B%BE%E6%A0%8740*40.png';
   export let userAvatars: string[] = [
     'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F01.png',
     'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F02.png',
