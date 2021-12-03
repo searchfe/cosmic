@@ -46,7 +46,7 @@
       <img
         class="w-10 h-10 mr-4"
         slot="prefix"
-        src="https://fe-dev.bj.bcebos.com/%E4%BE%A7%E8%BE%B9%E6%A0%8F%E5%9B%BE%E6%A0%8714*14.png"
+        src="https://fe-dev.bj.bcebos.com/table%E5%9B%BE%E6%A0%8730*30.png"
         alt="SC"
       />
       百度搜索

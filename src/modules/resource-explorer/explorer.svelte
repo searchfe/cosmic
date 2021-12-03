@@ -7,7 +7,7 @@
   import { Layout } from '@cosmic/core/components';
   import Header from './common/component/header.svelte';
   import TeamIndex from './team/index.svelte';
-  import Login from './auth/login.svelte';
+  import Login from './user/login.svelte';
   import { routeFor, ROUTES } from './routes';
 
   const routes = {

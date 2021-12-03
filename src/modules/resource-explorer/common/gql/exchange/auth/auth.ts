@@ -4,7 +4,7 @@
  */
 import { makeOperation } from '@urql/svelte';
 import type { Operation, CombinedError, OperationType, OperationContext } from '@urql/svelte';
-import { logout } from '../user';
+import { logout } from './user';
 
 interface IAuthState {
   accessToken?: string;

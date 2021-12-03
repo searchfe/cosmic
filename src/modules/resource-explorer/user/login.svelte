@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Layout, Button } from '@cosmic/core/components';
-  import { login } from '../auth/user';
+  import { login } from '../common/gql/exchange/auth/user';
   import { push } from 'svelte-spa-router';
   import { urlFor, ROUTES } from '../routes';
   

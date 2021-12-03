@@ -3,7 +3,7 @@
     overflow: hidden;
   }
   .breadcrumb-item:last-child {
-    background: #1f1f1f;
+    color: #1f1f1f;
   }
 </style>
 
