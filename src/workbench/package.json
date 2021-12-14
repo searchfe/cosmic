@@ -4,8 +4,8 @@
   "type": "module",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rimraf dist"
   },
   "dependencies": {

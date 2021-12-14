@@ -9,17 +9,14 @@
     "./parts": "./dist/parts/index.js"
   },
   "scripts": {
-    "build": "run-p build:*",
-    "build:rollup": "rollup -c",
-    "//build:tsup": "tsup",
-    "dev": "run-p dev:*",
-    "dev:rollup": "rollup -c -w",
-    "//dev:tsup": "tsup --watch",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rimraf dist"
   },
   "devDependencies": {
     "keycode": "^2.2.1",
-    "split.js": "^1.6.4"
+    "split.js": "^1.6.4",
+    "svelte-inline-svg": "^1.0.8"
   },
   "dependencies": {
     "color": "^4.0.1",
