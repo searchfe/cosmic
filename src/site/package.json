@@ -3,20 +3,22 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rimraf dist"
   },
   "dependencies": {
     "@cosmic/core": "workspace:*",
     "@cosmic/modules": "workspace:*",
     "@cosmic/workbench": "workspace:*",
-    "color": "^4.0.1",
-    "inversify": "^6.0.1",
-    "reflect-metadata": "^0.1.13",
-    "tslib": "^2.3.1"
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
-    "@types/color": "^3.0.2"
+    "@types/color": "^3.0.2",
+    "@types/http-server": "^0.12.1",
+    "color": "^4.0.1",
+    "http-server": "^14.0.0",
+    "inversify": "^6.0.1",
+    "tslib": "^2.3.1"
   }
 }

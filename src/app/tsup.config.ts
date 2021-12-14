@@ -1,10 +1,10 @@
-import type { Options } from 'tsup'
+import GlobalConfig from '../../tsup.config';
+import { defineConfig } from 'tsup';
 
-const config: Options = {
+export default defineConfig({
+  ...GlobalConfig,
   format: ['cjs'],
-  entryPoints: ['index.ts'],
-  target: 'es2019',
-  external: ['electron', 'electron-builder']
-}
-
-export default config
+  entry: ['index.ts'],
+  external: ['electron', 'electron-builder'],
+  platform: 'node',
+});
