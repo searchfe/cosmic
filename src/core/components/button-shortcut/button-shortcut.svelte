@@ -68,10 +68,10 @@
   });
 </script>
 
-<div class="{containerComputedClass}" on:click="{change}">
+<div class={containerComputedClass} on:click={change}>
   <slot name="icon">
     {#if icon == 'blank'}
-      <i class="float-left material-icons material-icons-round icon pr-1 min-w-min leading-none  w-20 h-2"></i>
+      <i class="float-left material-icons material-icons-round icon pr-1 min-w-min leading-none  w-20 h-2" />
     {:else if icon}
       <i class="float-left material-icons material-icons-round icon pr-1 min-w-min leading-none w-20">{icon}</i>
     {/if}

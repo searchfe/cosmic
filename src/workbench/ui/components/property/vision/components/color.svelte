@@ -25,11 +25,11 @@
 
 <div class="flex items-center px-4 justify-around">
   <div class="flex items-center">
-    <div class="h-7 w-10 border mr-4" style="background-color: {styleColor}; opacity: {styleOpacity}"></div>
-    <TextField on:change="{colorChangeHandle}" classes="{classes}" value="{color}" />
-    <TextField on:change="{opacityChangeHandle}" classes="{classes}" value="{opacity}" />
+    <div class="h-7 w-10 border mr-4" style="background-color: {styleColor}; opacity: {styleOpacity}" />
+    <TextField on:change={colorChangeHandle} {classes} value={color} />
+    <TextField on:change={opacityChangeHandle} {classes} value={opacity} />
   </div>
-  <Icon class="cursor-pointer" on:click="{() => (isVisibility = !isVisibility)}"
+  <Icon class="cursor-pointer" on:click={() => (isVisibility = !isVisibility)}
     >{isVisibility ? 'visibility' : 'visibility_off'}</Icon
   >
   <Icon class="cursor-pointer">remove</Icon>

@@ -55,9 +55,9 @@
   export let extend = () => {};
 
   export let focused = false;
-  let wClasses = (i) => i;
-  let aClasses = (i) => i;
-  let pClasses = (i) => i;
+  let wClasses = i => i;
+  let aClasses = i => i;
+  let pClasses = i => i;
 
   function toggleFocused() {
     focused = !focused;
@@ -130,34 +130,27 @@
       'remove',
       'small',
     ],
-    $$props
+    $$props,
   );
 
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="{wClasses}">
+<div class={wClasses}>
   {#if label}
     <slot name="label">
-      <Label
-        labelOnTop="{labelOnTop}"
-        focused="{focused}"
-        error="{error}"
-        outlined="{outlined}"
-        prepend="{prepend}"
-        color="{color}"
-        bgColor="{bgColor}"
-        dense="{dense && !outlined}">{label}</Label
+      <Label {labelOnTop} {focused} {error} {outlined} {prepend} {color} {bgColor} dense={dense && !outlined}
+        >{label}</Label
       >
     </slot>
   {/if}
 
   {#if (!textarea && !select) || autocomplete}
     <input
-      aria-label="{label}"
-      class="{iClasses}"
-      on:focus="{toggleFocused}"
-      on:blur="{toggleFocused}"
+      aria-label={label}
+      class={iClasses}
+      on:focus={toggleFocused}
+      on:blur={toggleFocused}
       on:blur
       bind:value
       on:change
@@ -165,52 +158,53 @@
       on:keydown
       on:keypress
       on:keyup
-      disabled="{disabled}"
+      {disabled}
       on:click
       on:focus
       {...props}
-      placeholder="{!value ? placeholder : ''}"
+      placeholder={!value ? placeholder : ''}
     />
   {:else if textarea && !select}
     <textarea
-      rows="{rows}"
-      aria-label="{label}"
-      class="{iClasses}"
+      {rows}
+      aria-label={label}
+      class={iClasses}
       on:change
       on:input
       on:keydown
       on:keypress
       on:keyup
-      disabled="{disabled}"
+      {disabled}
       on:click
       on:focus
       on:blur
       bind:value
       {...props}
-      on:focus="{toggleFocused}"
-      on:blur="{toggleFocused}"
-      placeholder="{!value ? placeholder : ''}"></textarea>
+      on:focus={toggleFocused}
+      on:blur={toggleFocused}
+      placeholder={!value ? placeholder : ''}
+    />
   {:else if select && !autocomplete}
     <input
       readonly
-      class="{iClasses}"
+      class={iClasses}
       on:change
       on:input
       on:keydown
       on:keypress
       on:keyup
-      disabled="{disabled}"
+      {disabled}
       on:click
       on:blur
       on:focus
-      value="{value}"
+      {value}
     />
   {/if}
 
   {#if append}
-    <div class="{aClasses}" on:click="{() => dispatch('click-append')}">
+    <div class={aClasses} on:click={() => dispatch('click-append')}>
       <slot name="append">
-        <Icon reverse="{appendReverse}" class="{focused ? txt() : ''} {iconClass}">
+        <Icon reverse={appendReverse} class="{focused ? txt() : ''} {iconClass}">
           {append}
         </Icon>
       </slot>
@@ -218,18 +212,18 @@
   {/if}
 
   {#if prepend}
-    <div class="{pClasses}" on:click="{() => dispatch('click-prepend')}">
+    <div class={pClasses} on:click={() => dispatch('click-prepend')}>
       <slot name="prepend">
-        <Icon reverse="{prependReverse}" class="{focused ? txt() : ''} {iconClass}">
+        <Icon reverse={prependReverse} class="{focused ? txt() : ''} {iconClass}">
           {prepend}
         </Icon>
       </slot>
     </div>
   {/if}
 
-  <Underline noUnderline="{noUnderline}" outlined="{outlined}" focused="{focused}" error="{error}" />
+  <Underline {noUnderline} {outlined} {focused} {error} />
 
   {#if showHint}
-    <Hint error="{error}" hint="{hint}" />
+    <Hint {error} {hint} />
   {/if}
 </div>

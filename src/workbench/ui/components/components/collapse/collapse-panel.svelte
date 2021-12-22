@@ -41,7 +41,7 @@
 </script>
 
 <div class="w-full flex flex-col my-1">
-  <header on:click="{changeKeyHandler}" class="{headerDefault}">
+  <header on:click={changeKeyHandler} class={headerDefault}>
     <div class="flex flex-row items-center">
       {#if !!prepend}
         <Icon class="mr-4 {iconClass}">{prepend}</Icon>
@@ -51,7 +51,7 @@
     <slot name="left">
       <div>
         {#if !!append}
-          <Icon class="{iconClass}">{append}</Icon>
+          <Icon class={iconClass}>{append}</Icon>
         {/if}
       </div>
     </slot>

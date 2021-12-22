@@ -43,21 +43,21 @@
 </script>
 
 <div
-  class="{headerComputedClass}"
-  on:click|stopPropagation="{onClick}"
-  on:mouseenter="{onMouseEnter}"
-  on:mouseleave="{onMouseLeave}"
+  class={headerComputedClass}
+  on:click|stopPropagation={onClick}
+  on:mouseenter={onMouseEnter}
+  on:mouseleave={onMouseLeave}
 >
   <div class="mr-4 flex-none">
-    <slot name="prefix" isSelected="{isSelected}" />
+    <slot name="prefix" {isSelected} />
   </div>
   <div class="flex-auto">{header}</div>
   {#if $$slots.extra}
-    <div class="flex-none" on:click|stopPropagation class:invisible="{!hovering}">
+    <div class="flex-none" on:click|stopPropagation class:invisible={!hovering}>
       <slot name="extra" />
     </div>
   {/if}
 </div>
-<div class="{contentComputedClass}">
+<div class={contentComputedClass}>
   <slot />
 </div>

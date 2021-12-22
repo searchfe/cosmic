@@ -8,8 +8,8 @@ import externals from '../../scripts/rollup/externals';
 const production = !process.env.ROLLUP_WATCH;
 
 /**
- * @param {string} mod 
- * @returns 
+ * @param {string} mod
+ * @returns
  */
 function defineConfig(mod) {
   return {
@@ -17,7 +17,7 @@ function defineConfig(mod) {
     output: {
       sourcemap: true,
       format: 'es',
-      file: `dist/${mod}/index.js`
+      file: `dist/${mod}/index.js`,
     },
     external: [...internals, ...externals],
     plugins: [
@@ -29,10 +29,10 @@ function defineConfig(mod) {
       !production && livereload(`dist/${mod}`),
     ],
     watch: {
-      clearScreen: false
-    }
-  }
-};
+      clearScreen: false,
+    },
+  };
+}
 
 export default [
   'draw-canvas/skia-wasm',
@@ -40,5 +40,5 @@ export default [
   'property-panel',
   'resource-explorer',
   'shape-canvas',
-  'workbench'
-].map(defineConfig)
+  'workbench',
+].map(defineConfig);

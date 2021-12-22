@@ -5,15 +5,15 @@
   import { RadioButtonGroup } from '@cosmic/core/components/radio-button';
 </script>
 
-<Meta title="Radio" component="{RadioButtonGroup}" />
+<Meta title="Radio" component={RadioButtonGroup} />
 
 <Template>
   <RadioButtonGroup
     name="test"
-    items="{[
+    items={[
       { value: 1, label: 'One' },
       { value: 2, label: 'Two' },
-    ]}"
+    ]}
   />
 </Template>
 

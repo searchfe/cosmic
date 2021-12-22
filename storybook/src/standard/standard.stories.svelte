@@ -5,7 +5,7 @@
   import Standard from '@cosmic/workbench/ui/components/resource/standard/standard.svelte';
 </script>
 
-<Meta title="Standard" component="{Standard}" />
+<Meta title="Standard" component={Standard} />
 
 <Template let:args>
   <div class="w-100">
@@ -13,4 +13,4 @@
   </div>
 </Template>
 
-<Story name="Default" args="{{}}" />
+<Story name="Default" args={{}} />

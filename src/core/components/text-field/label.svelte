@@ -1,15 +1,3 @@
-<style>
-  .label-top {
-    line-height: 0.05;
-  }
-  .label-transition {
-    transition: font-size 0.05s, line-height 0.1s;
-  }
-  :global(label.text-base) {
-    font-size: 0.7rem;
-  }
-</style>
-
 <script>
   import utils, { ClassBuilder, filterProps } from 'smelte/src/utils/classes';
 
@@ -35,7 +23,7 @@
 
   const l = new ClassBuilder(labelClasses, labelDefault);
 
-  let lClasses = (i) => i;
+  let lClasses = i => i;
 
   $: lClasses = l
     .flush()
@@ -60,3 +48,15 @@
 <label class="{lClasses} {$$props.class}" {...props}>
   <slot />
 </label>
+
+<style>
+  .label-top {
+    line-height: 0.05;
+  }
+  .label-transition {
+    transition: font-size 0.05s, line-height 0.1s;
+  }
+  :global(label.text-base) {
+    font-size: 0.7rem;
+  }
+</style>

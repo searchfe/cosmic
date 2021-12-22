@@ -8,7 +8,7 @@
   import { TextField } from '@cosmic/core/components';
 </script>
 
-<Meta title="Canvas" component="{TextField}" />
+<Meta title="Canvas" component={TextField} />
 
 <Template let:args id="normal">
   <div class="w-80">

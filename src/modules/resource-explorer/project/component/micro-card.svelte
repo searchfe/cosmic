@@ -13,7 +13,7 @@
     'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F02.png',
     'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F03.png',
     'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F04.png',
-    'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F05.png'
+    'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F05.png',
   ];
   export let info = '协作 30';
 
@@ -22,15 +22,17 @@
   }
 </script>
 
-<Card classes="relative overflow-hidden pb-1/2 px-14 h-0 text-base" on:click="{projectClickHandler}">
+<Card classes="relative overflow-hidden pb-1/2 px-14 h-0 text-base" on:click={projectClickHandler}>
   <div class="relative overflow-hidden w-1/4 pb-1/4 h-0 mt-14 box-border rounded-sm">
-    <img class="absolute w-full h-full"  src="{avatar}" alt="projcet avatra" />
+    <img class="absolute w-full h-full" src={avatar} alt="projcet avatra" />
   </div>
-  <div class="mt-10 h-14 flex items-center font-bold text-h4 text-black">{data.name}</div>
+  <div class="mt-10 h-14 flex items-center font-bold text-h4 text-black">
+    {data.name}
+  </div>
   <div class="absolute left-0 w-full box-border px-14 bottom-14 flex justify-between items-end">
     <div class="h-24 mr-6 flex justify-between">
       {#each userAvatars as uer}
-        <img class="w-24 h-24 mr-4 border-gray-100 border-solid border rounded-full" src="{uer}" alt="" />
+        <img class="w-24 h-24 mr-4 border-gray-100 border-solid border rounded-full" src={uer} alt="" />
       {/each}
     </div>
     <div>

@@ -9,7 +9,7 @@
     const idNodeMap = new Map<string, TreeNode>();
     const unresolvedNode: TreeNode[] = [];
 
-    teams.forEach((team) => {
+    teams.forEach(team => {
       teamMap.set(team, {
         key: '',
         label: '项目类别',
@@ -17,7 +17,7 @@
       });
     });
 
-    projects.forEach((project) => {
+    projects.forEach(project => {
       const treeNode = {
         key: project.id,
         label: project.name,
@@ -36,7 +36,7 @@
       }
     });
 
-    unresolvedNode.forEach((pro) => {
+    unresolvedNode.forEach(pro => {
       if (idNodeMap.get(pro.parent)) {
         // in case of wrong data
         idNodeMap.get(pro.parent).children.push(pro);
@@ -73,7 +73,7 @@
       if (!$pojectStore.fetching && $pojectStore.data.projects) {
         projectForest = generateProjectForest(
           $pojectStore.data.projects,
-          $teamsQuery.data.teams.map((team) => team.id)
+          $teamsQuery.data.teams.map(team => team.id),
         );
       }
       if (activeKey.length === 0) {
@@ -101,17 +101,12 @@
 
 <div>
   {#if !$teamsQuery.fetching && $teamsQuery.data.teams && !$pojectStore.fetching}
-    <Collapse bind:activeKey accordion on:change="{selectedTeamChangeHandler}">
+    <Collapse bind:activeKey accordion on:change={selectedTeamChangeHandler}>
       {#each $teamsQuery.data.teams as team}
-        <TeamItem team="{team}" project="{projectForest.get(team.id)}" on:add-project="{addProjectHandler}" />
+        <TeamItem {team} project={projectForest.get(team.id)} on:add-project={addProjectHandler} />
       {/each}
     </Collapse>
   {/if}
 </div>
 
-<ProjectCreateDialog
-  bind:show="{showProjectDialog}"
-  parent="{newProjectParent}"
-  team="{dialogTeam}"
-  on:success="{refresh}"
-/>
+<ProjectCreateDialog bind:show={showProjectDialog} parent={newProjectParent} team={dialogTeam} on:success={refresh} />

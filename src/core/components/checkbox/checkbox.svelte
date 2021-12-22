@@ -32,7 +32,7 @@
         groupstate = true;
         // remove from group array if unchecked
       } else if (!checked && groupHasValue) {
-        group = [...group.filter((v) => v !== value)];
+        group = [...group.filter(v => v !== value)];
         groupstate = false;
       }
     } else {
@@ -56,21 +56,21 @@
   $: c = cb.flush().add(classes, true, classesDefault).add($$props.class).get();
 </script>
 
-<div class="{$$props.class}">
-  <div class="{c}" on:click="{check}">
-    <input bind:checked class="hidden" type="checkbox" on:change value="{value}" />
+<div class={$$props.class}>
+  <div class={c} on:click={check}>
+    <input bind:checked class="hidden" type="checkbox" on:change {value} />
     <div class="relative w-auto h-auto z-0">
-      <Ripple color="{rippleColor}">
+      <Ripple color={rippleColor}>
         {#if checked}
           <Icon
-            class="{disabled ? 'text-gray-500 dark:text-gray-600' : `text-${color} dark:text-${color}`}"
+            class={disabled ? 'text-gray-500 dark:text-gray-600' : `text-${color} dark:text-${color}`}
             extraStyle="font-size: 1.2rem"
           >
             check_box
           </Icon>
         {:else}
           <Icon
-            class="{disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600 dark:text-gray-300'}"
+            class={disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600 dark:text-gray-300'}
             extraStyle="font-size: 1.2rem"
           >
             check_box_outline_blank
@@ -79,7 +79,7 @@
       </Ripple>
     </div>
     <slot name="label">
-      <Label disabled="{disabled}" label="{label}" class="{labelClasses}" checked="{checked}" />
+      <Label {disabled} {label} class={labelClasses} {checked} />
     </slot>
   </div>
 </div>

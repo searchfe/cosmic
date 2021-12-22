@@ -9,10 +9,10 @@
   }
 </script>
 
-<Meta title="Switch" component="{Switch}" />
+<Meta title="Switch" component={Switch} />
 
 <Template let:args>
-  <Switch {...args} on:valueChange="{valueChange}" />
+  <Switch {...args} on:valueChange={valueChange} />
 </Template>
 
-<Story name="Default" args="{{ label: 'switch' }}" />
+<Story name="Default" args={{ label: 'switch' }} />

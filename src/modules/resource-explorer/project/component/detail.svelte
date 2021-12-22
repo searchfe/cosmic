@@ -9,10 +9,9 @@
   const store = queryProjects({ parent: params.projectId });
   query(store);
 
-
   $: {
     if (params.projectId) {
-      store.reexecute({ requestPolicy: 'network-only' })
+      store.reexecute({ requestPolicy: 'network-only' });
     }
   }
 </script>
@@ -20,10 +19,10 @@
 <ProjectInfo title="搜索通用组件" />
 <div class="w-full grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-22 xl:gap-26 2xl:gap-14">
   {#if !$store.fetching && $store.data.projects}
-  {#each $store.data.projects as project}
-    {#if $store.data.projects.children}
-       <!-- content here -->
-    {/if}
+    {#each $store.data.projects as project}
+      {#if $store.data.projects.children}
+        <!-- content here -->
+      {/if}
       <!-- <DirCard data="{project}" /> -->
       <FileCard />
     {/each}

@@ -21,10 +21,10 @@
 </script>
 
 <Tree
-  data="{data}"
+  {data}
   extraIcon="add"
-  primaryIndent="{2.2}"
+  primaryIndent={2.2}
   treeIcon="folder_open"
-  on:click="{projectNodeClickedHandler}"
-  on:click-extra="{addButtonClickedHandler}"
+  on:click={projectNodeClickedHandler}
+  on:click-extra={addButtonClickedHandler}
 />

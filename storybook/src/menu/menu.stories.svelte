@@ -15,17 +15,17 @@
   ];
 </script>
 
-<Meta title="Menu" component="{Menu}" />
+<Meta title="Menu" component={Menu} />
 
 <Story name="Default">
   Select: {selected.text || ''}
   <br />
   <br />
-  <Menu bind:open items="{items}" bind:value="{selected}">
+  <Menu bind:open {items} bind:value={selected}>
     <div slot="activator">
       <Button
-        on:click="{() => (open = !open)}"
-        bgClasses="{open ? '' : 'bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-100'}">Files</Button
+        on:click={() => (open = !open)}
+        bgClasses={open ? '' : 'bg-opacity-0 dark:bg-opacity-0 hover:bg-opacity-100'}>Files</Button
       >
     </div>
   </Menu>

@@ -53,15 +53,15 @@
   }
 </script>
 
-<div class="{c}" on:click="{check}">
+<div class={c} on:click={check}>
   <input bind:value class="hidden" type="checkbox" on:change />
-  <div class="{tr}">
-    <div class="w-full h-full absolute"></div>
-    <Ripple color="{value && !disabled ? color : 'gray'}" noHover>
-      <div class="{th}" style="{value ? 'left: 1.25rem' : ''}"></div>
+  <div class={tr}>
+    <div class="w-full h-full absolute" />
+    <Ripple color={value && !disabled ? color : 'gray'} noHover>
+      <div class={th} style={value ? 'left: 1.25rem' : ''} />
     </Ripple>
   </div>
-  <label aria-hidden="true" class="{l}">
+  <label aria-hidden="true" class={l}>
     {label}
   </label>
 </div>

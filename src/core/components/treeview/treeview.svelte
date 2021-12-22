@@ -31,24 +31,24 @@
       selected = i;
     }
 
-    expanded = i && !expanded.includes(i) ? [...expanded, i] : expanded.filter((si) => si !== i);
+    expanded = i && !expanded.includes(i) ? [...expanded, i] : expanded.filter(si => si !== i);
   }
 </script>
 
-<List items="{items}" {...$$props}>
+<List {items} {...$$props}>
   <span slot="item" let:item>
     <ListItem
-      item="{item}"
+      {item}
       {...$$props}
       {...item}
-      selected="{selectable && selected === item}"
-      selectedClasses="{selectedClasses}"
-      on:click="{() => toggle(item)}"
+      selected={selectable && selected === item}
+      {selectedClasses}
+      on:click={() => toggle(item)}
       on:click
     >
       <div class="flex items-center">
         {#if showExpandIcon && !item.hideArrow && item.items}
-          <Icon tip="{expanded.includes(item)}">{expandIcon}</Icon>
+          <Icon tip={expanded.includes(item)}>{expandIcon}</Icon>
         {/if}
         <slot><span>{item.text}</span></slot>
       </div>
@@ -56,7 +56,7 @@
 
     {#if item.items && expanded.includes(item)}
       <div in:slide class="ml-15">
-        <svelte:self {...$$props} items="{item.items}" level="{level + 1}" on:click on:select />
+        <svelte:self {...$$props} items={item.items} level={level + 1} on:click on:select />
       </div>
     {/if}
   </span>

@@ -1,9 +1,3 @@
-<style>
-  :root {
-    color: var(--label-color);
-  }
-</style>
-
 <script lang="ts">
   import { inject } from '@cosmic/core/parts';
 
@@ -21,17 +15,17 @@
 <h2>Size</h2>
 
 <label>
-  <input type="radio" bind:group="{mod}" value="{AppearanceType.any}" on:change="{changeMode}" />
+  <input type="radio" bind:group={mod} value={AppearanceType.any} on:change={changeMode} />
   ANY
 </label>
 
 <label>
-  <input type="radio" bind:group="{mod}" value="{AppearanceType.light}" on:change="{changeMode}" />
+  <input type="radio" bind:group={mod} value={AppearanceType.light} on:change={changeMode} />
   Light
 </label>
 
 <label>
-  <input type="radio" bind:group="{mod}" value="{AppearanceType.dark}" on:change="{changeMode}" />
+  <input type="radio" bind:group={mod} value={AppearanceType.dark} on:change={changeMode} />
   Dark
 </label>
 
@@ -39,3 +33,9 @@
 <div>
   AppearanceType is {mod}
 </div>
+
+<style>
+  :root {
+    color: var(--label-color);
+  }
+</style>

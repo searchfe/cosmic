@@ -55,20 +55,20 @@
 </script>
 
 <!-- use:ripple  -->
-<li class="{c}" tabindex="{tabindex}" on:keypress="{change}" on:click>
+<li class={c} {tabindex} on:keypress={change} on:click>
   <div class="flex flex-col p-0">
     <slot name="button">
       {#if icon}
-        <Icon class="pr-15 text-h3" small="{dense}">
+        <Icon class="pr-15 text-h3" small={dense}>
           {icon}
         </Icon>
       {/if}
-      <div class="{$$props.class}">
+      <div class={$$props.class}>
         <slot>{text}</slot>
       </div>
     </slot>
   </div>
   {#if subheading}
-    <div class="{subheadingClasses}">{subheading}</div>
+    <div class={subheadingClasses}>{subheading}</div>
   {/if}
 </li>

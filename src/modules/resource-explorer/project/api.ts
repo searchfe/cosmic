@@ -15,7 +15,7 @@ export const queryProjects = (project: QueryProjectDTO = {}) => {
     }
   `,
     { project },
-    { requestPolicy: 'cache-first' }
+    { requestPolicy: 'cache-first' },
   );
 };
 

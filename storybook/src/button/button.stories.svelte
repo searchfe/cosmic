@@ -9,7 +9,7 @@
   }
 </script>
 
-<Meta title="Button" component="{Button}" />
+<Meta title="Button" component={Button} />
 
 <!-- <Story name="默认" >
   <Button on:click="{handleClick}" class="w-40">{count}</Button>
@@ -69,15 +69,15 @@
   </div>
 </Template>
 
-<Story name="Primary" args="{{ primary: true }}" />
+<Story name="Primary" args={{ primary: true }} />
 
 <Story name="Button With ShortcutKey">
-  <div class="pt-4"></div>
+  <div class="pt-4" />
   <ButtonShortcut text="Front" shortcutKey="70" stopPropagation="true" />
-  <div class="pt-4"></div>
+  <div class="pt-4" />
   <ButtonShortcut text="Back" shortcutKey="B,66" icon="arrow_back_ios" />
-  <div class="pt-4"></div>
+  <div class="pt-4" />
   <ButtonShortcut text="Back" shortcutKey="B,66" icon="blank" />
-  <div class="pt-4"></div>
+  <div class="pt-4" />
   <ButtonShortcut text="Active" shortcutKey="A" stopPropagation="true" state="hover" />
 </Story>

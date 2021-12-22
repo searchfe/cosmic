@@ -23,25 +23,25 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<svelte:window on:click="{() => (open = false)}" />
+<svelte:window on:click={() => (open = false)} />
 
-<div class="{containerComputedClass}" on:click|stopPropagation>
+<div class={containerComputedClass} on:click|stopPropagation>
   <slot name="activator" />
   <slot name="menu">
     {#if open}
-      <div class="{listComputedClass}">
+      <div class={listComputedClass}>
         <List
           bind:value
           select
           dense
-          theme="{theme}"
-          items="{items}"
-          noTopRadius="{Boolean($$slots.activator)}"
+          {theme}
+          {items}
+          noTopRadius={Boolean($$slots.activator)}
           on:change
-          on:change="{(e) => {
+          on:change={e => {
             open = false;
             value = e.detail;
-          }}"
+          }}
           {...listProps}
         />
       </div>

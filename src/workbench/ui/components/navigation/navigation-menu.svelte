@@ -10,5 +10,5 @@
 
 <div class="flex flex-row items-center">
   <Icon>search</Icon>
-  <Select items="{items}" />
+  <Select {items} />
 </div>

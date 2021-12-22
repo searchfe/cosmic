@@ -10,13 +10,13 @@
   }
 </script>
 
-<Meta title="Popup Guide" component="{PopupRing}" />
+<Meta title="Popup Guide" component={PopupRing} />
 
 <Template id="normal" let:args>
   <div class="w-1/2 h-full bg-cgray-50 dark:bg-cgray-800 relative">
     <div class="pt-5 pl-5 text-base">selected Item : {selected}</div>
-    <PopupRing on:change="{handleChange}" {...args} />
+    <PopupRing on:change={handleChange} {...args} />
   </div>
 </Template>
 
-<Story name="Ring" template="normal" args="{{ title: 'Ring' }}" />
+<Story name="Ring" template="normal" args={{ title: 'Ring' }} />

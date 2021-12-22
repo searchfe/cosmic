@@ -7,7 +7,7 @@
 
 <Meta title="Checkbox" />
 
-<Template controls="{{ hideNoControlsWarning: true }}">
+<Template controls={{ hideNoControlsWarning: true }}>
   <Checkbox label="A checkbox" />
   <Checkbox color="secondary" label="A colored checkbox" />
   <Checkbox disabled label="A disabled checkbox" />

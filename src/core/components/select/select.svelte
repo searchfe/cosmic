@@ -9,7 +9,7 @@
   const optionsClassesDefault = 'absolute left-0 bg-white rounded shadow w-full z-20 dark:bg-dark-500';
   const classesDefault = 'cursor-pointer relative pb-2';
 
-  const noop = (i) => i;
+  const noop = i => i;
 
   export let items = [];
   export let value = '';
@@ -49,7 +49,7 @@
   let itemsProcessed = [];
 
   function process(it) {
-    return it.map((i) => (typeof i !== 'object' ? { value: i, text: i } : i));
+    return it.map(i => (typeof i !== 'object' ? { value: i, text: i } : i));
   }
 
   $: itemsProcessed = process(items);
@@ -61,7 +61,7 @@
     if (selectedLabelProp !== undefined) {
       selectedLabel = selectedLabelProp;
     } else if (value !== undefined) {
-      let selectedItem = itemsProcessed.find((i) => i.value === value);
+      let selectedItem = itemsProcessed.find(i => i.value === value);
       selectedLabel = selectedItem ? selectedItem.text : '';
     } else {
       selectedLabel = '';
@@ -69,7 +69,7 @@
   }
 
   let filterText = null;
-  $: filteredItems = itemsProcessed.filter((i) => !filterText || i.text.toLowerCase().includes(filterText));
+  $: filteredItems = itemsProcessed.filter(i => !filterText || i.text.toLowerCase().includes(filterText));
 
   function filterItems({ target }) {
     filterText = target.value.toLowerCase();
@@ -92,57 +92,57 @@
   $: o = ocb.flush().add(optionsClasses, true, optionsClassesDefault).add('rounded-t-none', !outlined).get();
 
   $: if (dense) {
-    appendClasses = (i) => i.replace('pt-4', 'pt-3');
+    appendClasses = i => i.replace('pt-4', 'pt-3');
   }
 </script>
 
-<div class="{c}" use:hideListAction="{onHideListPanel}">
+<div class={c} use:hideListAction={onHideListPanel}>
   <slot name="select">
     <TextField
       select
-      dense="{dense}"
-      focused="{showList}"
-      autocomplete="{autocomplete}"
-      value="{selectedLabel}"
-      outlined="{outlined}"
-      label="{label}"
-      placeholder="{placeholder}"
-      hint="{hint}"
-      error="{error}"
-      append="{append}"
-      persistentHint="{persistentHint}"
-      color="{color}"
-      add="{add}"
-      remove="{remove}"
-      replace="{replace}"
-      noUnderline="{noUnderline}"
-      class="{inputWrapperClasses}"
-      appendClasses="{appendClasses}"
-      labelClasses="{labelClasses}"
-      inputClasses="{inputClasses}"
-      prependClasses="{prependClasses}"
-      on:click="{handleInputClick}"
-      on:click-append="{(e) => (showList = !showList)}"
+      {dense}
+      focused={showList}
+      {autocomplete}
+      value={selectedLabel}
+      {outlined}
+      {label}
+      {placeholder}
+      {hint}
+      {error}
+      {append}
+      {persistentHint}
+      {color}
+      {add}
+      {remove}
+      {replace}
+      {noUnderline}
+      class={inputWrapperClasses}
+      {appendClasses}
+      {labelClasses}
+      {inputClasses}
+      {prependClasses}
+      on:click={handleInputClick}
+      on:click-append={e => (showList = !showList)}
       on:click
-      on:input="{filterItems}"
-      appendReverse="{showList}"
+      on:input={filterItems}
+      appendReverse={showList}
     />
   </slot>
 
   {#if showList}
     <slot name="options">
-      <div class="{o}" on:click="{() => (showList = false)}">
+      <div class={o} on:click={() => (showList = false)}>
         <List
           bind:value
-          class="{listClasses}"
-          selectedClasses="{selectedClasses}"
-          itemClasses="{itemClasses}"
+          class={listClasses}
+          {selectedClasses}
+          {itemClasses}
           select
-          dense="{dense}"
-          items="{filteredItems}"
-          on:change="{({ detail }) => {
+          {dense}
+          items={filteredItems}
+          on:change={({ detail }) => {
             dispatch('change', detail);
-          }}"
+          }}
         />
       </div>
     </slot>

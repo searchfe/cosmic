@@ -35,7 +35,7 @@ export class ModuleFactory {
   }
   async load(moduleId: string, props: any) {
     if (!this.exist(moduleId)) {
-      await import(moduleId).then((ModuleSource) => {
+      await import(moduleId).then(ModuleSource => {
         this.add(moduleId, ModuleSource.default, props.scope || 'Transient');
       });
     }

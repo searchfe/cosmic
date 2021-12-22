@@ -65,7 +65,7 @@ export default class SplitBoardView<T extends SplitItemView> extends View implem
   }
 
   public setCursor(
-    type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize' = ''
+    type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize' = '',
   ): void {
     this.root.style.cursor = type;
   }

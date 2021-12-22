@@ -19,17 +19,17 @@
   $: c = cb.flush().add($$props.class).get();
 </script>
 
-<div class="{c}">
+<div class={c}>
   {#each items as item}
-    <slot item="{item}">
+    <slot {item}>
       <RadioButton
         bind:selected
-        class="{buttonClasses}"
+        class={buttonClasses}
         {...item}
-        color="{color}"
-        small="{small}"
-        name="{name || `radio-${Math.random()}`}"
-        disabled="{disabled}"
+        {color}
+        {small}
+        name={name || `radio-${Math.random()}`}
+        {disabled}
       />
     </slot>
   {/each}

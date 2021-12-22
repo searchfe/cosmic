@@ -9,7 +9,7 @@ export enum ROUTES {
   PROJECT_DETAIL,
   DESIGN_ATOM,
   LOGIN,
-  DEFAULT
+  DEFAULT,
 }
 
 interface RoutesValue {
@@ -62,5 +62,3 @@ export function urlFor(route: ROUTES, params?: Record<string, unknown>): string 
   const result = paramNames.map((paramName: string) => params[paramName] || paramName);
   return `${path}/${result.join('/')}`;
 }
-
-

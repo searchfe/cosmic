@@ -31,7 +31,7 @@
   }
 </script>
 
-<div class="{containerComputedClass}" on:click|stopPropagation>
-  <Icon on:click="{onClick}">more_horiz</Icon>
-  <Menu class="{menuComputedClass}" theme="dark" open="{open}" items="{items}" on:change />
+<div class={containerComputedClass} on:click|stopPropagation>
+  <Icon on:click={onClick}>more_horiz</Icon>
+  <Menu class={menuComputedClass} theme="dark" {open} {items} on:change />
 </div>
