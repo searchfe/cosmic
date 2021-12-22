@@ -14,7 +14,7 @@
 </script>
 
 <Card classes="overflow-hidden pb-3/4 h-0">
-  <img style="height: 58%" class="absolute top-0 left-0 w-full" src="{header}" alt="" />
+  <img style="height: 58%" class="absolute top-0 left-0 w-full" src={header} alt="" />
   <div
     style="top: 62%;"
     class="absolute w-full h-1/10 left-0 flex justify-between items-center border-l-4 border-black"
@@ -30,7 +30,7 @@
   <div style="top: 76%;" class="w-full absolute h-1/5 px-14">
     <div class="overflow-hidden w-full height-full grid grid-cols-4 gap-x-1 rounded-xl">
       {#each imgs as img}
-        <img class="flex w-full h-full" src="{img}" alt="" />
+        <img class="flex w-full h-full" src={img} alt="" />
       {/each}
     </div>
   </div>

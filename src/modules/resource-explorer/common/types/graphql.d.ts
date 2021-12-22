@@ -1,4 +1,3 @@
-
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -8,35 +7,35 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum ETextUnit {
-  PIXELS = "PIXELS",
-  PERCENT = "PERCENT",
-  AUTO = "AUTO"
+  PIXELS = 'PIXELS',
+  PERCENT = 'PERCENT',
+  AUTO = 'AUTO',
 }
 
 export enum ETextAlignHorizontal {
-  LEFT = "LEFT",
-  CENTER = "CENTER",
-  RIGHT = "RIGHT",
-  JUSTIFIED = "JUSTIFIED"
+  LEFT = 'LEFT',
+  CENTER = 'CENTER',
+  RIGHT = 'RIGHT',
+  JUSTIFIED = 'JUSTIFIED',
 }
 
 export enum ETextAlignVertical {
-  TOP = "TOP",
-  CENTER = "CENTER",
-  BOTTOM = "BOTTOM"
+  TOP = 'TOP',
+  CENTER = 'CENTER',
+  BOTTOM = 'BOTTOM',
 }
 
 export enum EShadowType {
-  INSET = "INSET",
-  OUTSET = "OUTSET"
+  INSET = 'INSET',
+  OUTSET = 'OUTSET',
 }
 
 export enum EConstaintType {
-  MIN = "MIN",
-  CENTER = "CENTER",
-  MAX = "MAX",
-  STRETCH = "STRETCH",
-  SCALE = "SCALE"
+  MIN = 'MIN',
+  CENTER = 'CENTER',
+  MAX = 'MAX',
+  STRETCH = 'STRETCH',
+  SCALE = 'SCALE',
 }
 
 export interface QueryProjectDTO {
@@ -329,7 +328,10 @@ export interface IMutation {
   updateTeam(team: UpdateTeamDTO): boolean | Promise<boolean>;
   createMember(member: AddTeamMemberDTO, teamId: string): boolean | Promise<boolean>;
   createSpecification(specification: CreateSpecificationDTO): Specification | Promise<Specification>;
-  updateSpecification(fields?: Nullable<string[]>, specification: UpdateSpecificationDTO): Specification | Promise<Specification>;
+  updateSpecification(
+    fields?: Nullable<string[]>,
+    specification: UpdateSpecificationDTO,
+  ): Specification | Promise<Specification>;
   createCategory(category: CreateCategoryDTO): string | Promise<string>;
   updateCategory(category: UpdateCategoryDTO): boolean | Promise<boolean>;
   deleteCategory(categoryId: string, specificationId: string): boolean | Promise<boolean>;

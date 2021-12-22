@@ -28,15 +28,14 @@
   }
 
   let innerCreate;
-
 </script>
 
-<Dialog bind:value="{show}" width="500px">
+<Dialog bind:value={show} width="500px">
   <div class="text-center mb-10" slot="title">{typeMap[type].text}</div>
   <input type="text" />
-  <svelte:component bind:onCreate="{innerCreate}" this={typeMap[type].component}></svelte:component>
+  <svelte:component this={typeMap[type].component} bind:onCreate={innerCreate} />
   <div class="justify-center flex" slot="actions">
-    <Button class="rounded-full mr-4" on:click="{onDialogCancel}">取消</Button>
-    <Button class="rounded-full" type="primary" on:click="{onDialogConfirm}">确定</Button>
+    <Button class="rounded-full mr-4" on:click={onDialogCancel}>取消</Button>
+    <Button class="rounded-full" type="primary" on:click={onDialogConfirm}>确定</Button>
   </div>
 </Dialog>

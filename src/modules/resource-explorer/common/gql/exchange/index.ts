@@ -1,4 +1,13 @@
-import { dedupExchange, cacheExchange, fetchExchange } from '@urql/svelte';
-import { exchange as authExchange } from './auth/index';
+import { dedupExchange, fetchExchange } from '@urql/svelte';
+import { authExchange } from './auth/index';
+import { subscriptionExchange } from './websocket/index';
 
-export const exchanges = [dedupExchange, cacheExchange, authExchange, fetchExchange];
+// import { offlineExchange } from './offline/index';
+
+export const exchanges = [
+  dedupExchange,
+  // offlineExchange,
+  authExchange,
+  fetchExchange,
+  subscriptionExchange,
+];

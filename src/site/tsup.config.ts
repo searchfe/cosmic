@@ -21,7 +21,7 @@ export default defineConfig({
 
         build.onStart(() => {
           if (!http) {
-            http = spawn('npx', ['http-server', '.', '-p', '5000']);
+            http = spawn('npx', ['http-server', '.', '-p', '5555', '--silent']);
             http.stdout.on('data', (chunk: Buffer) => {
               console.log(chunk.toString());
             });
@@ -37,5 +37,5 @@ export default defineConfig({
         });
       },
     },
-  ]
+  ],
 });

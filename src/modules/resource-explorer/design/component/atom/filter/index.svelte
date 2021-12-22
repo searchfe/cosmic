@@ -45,12 +45,12 @@
 
 <div class="filter flex items-center {classes} text-black overflow-y-auto scroll">
   {#each data as item}
-    <Item data="{item}" />
+    <Item data={item} />
   {/each}
 </div>
 
 <style>
-.filter::-webkit-scrollbar {
-  display: none; /* Chrome Safari */
-}
+  .filter::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
 </style>

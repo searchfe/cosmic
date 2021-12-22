@@ -4,7 +4,7 @@
  */
 import { makeOperation } from '@urql/svelte';
 import type { Operation, CombinedError, OperationType, OperationContext } from '@urql/svelte';
-import { logout } from './user';
+import { logout, get } from './user';
 
 interface IAuthState {
   accessToken?: string;
@@ -27,12 +27,10 @@ export function addAuthToOperation(params: AddParams) {
     return operation;
   }
   if (!operation) {
-
     throw Error('runtime error');
   }
   const { kind, context } = operation;
   if (!kind || !context) {
-
     throw Error('runtime error');
   }
 
@@ -53,7 +51,7 @@ export function addAuthToOperation(params: AddParams) {
 export async function getAuth(params: GetParams) {
   const { authState } = params;
   if (!authState) {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = get().token;
     if (accessToken) {
       return { accessToken };
     }
