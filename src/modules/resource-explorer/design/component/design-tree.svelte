@@ -40,4 +40,4 @@
   }
 </script>
 
-<Tree data="{leaves}" primaryIndent="{2.2}" treeIcon="grid_view" on:click="{projectNodeClickedHandler}" />
+<Tree data={leaves} primaryIndent={2.2} treeIcon="grid_view" on:click={projectNodeClickedHandler} />

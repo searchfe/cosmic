@@ -8,33 +8,35 @@
     dark: '#234567',
     night: '#234567',
   };
-  
 
-  const modes = [{
-    name: 'light',
-    icon: 'light_mode',
-    outlined: true,
-  }, {
-    name: 'dark',
-    icon: 'dark_mode',
-    outlined: false,
-  }, {
-    name: 'night',
-    icon: 'mode_night',
-    outlined: true,
-  }];
+  const modes = [
+    {
+      name: 'light',
+      icon: 'light_mode',
+      outlined: true,
+    },
+    {
+      name: 'dark',
+      icon: 'dark_mode',
+      outlined: false,
+    },
+    {
+      name: 'night',
+      icon: 'mode_night',
+      outlined: true,
+    },
+  ];
   const createPromise = createColor();
 
   export function onCreate(team: string) {
     return createPromise({
       color: { color: 'rgba(1,1,1,0.5)', team },
-    }).then((res) => {
+    }).then(res => {
       if (res.data && res.data.createColor.id) {
         return res.data.createColor.id;
       }
     });
   }
-
 </script>
 
 <div class="text-base">
@@ -50,5 +52,5 @@
       </div>
     </div>
   {/each} -->
-<!-- <TextField label="名称" /> -->
+  <!-- <TextField label="名称" /> -->
 </div>

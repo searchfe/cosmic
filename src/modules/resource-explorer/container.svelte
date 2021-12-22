@@ -3,9 +3,12 @@
   @description root container
 -->
 <script lang="ts">
-  import { init as initGqlClient } from './common/gql/client';
-
-  initGqlClient();
+  import GQLContext from './common/gql/client.svelte';
+  import NetContext from './common/net/context.svelte';
 </script>
 
-<slot />
+<NetContext>
+  <GQLContext>
+    <slot />
+  </GQLContext>
+</NetContext>

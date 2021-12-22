@@ -6,16 +6,18 @@
   import Operation from './operation.svelte';
   import Dialog from './dialog/index.svelte';
   import { queryColors } from '../../api/color';
-  import { query } from '@urql/svelte';
+  import { subscription } from '@urql/svelte';
 
   export let params: Record<string, string> = {};
-  const store = queryColors({ team: params.teamId });
-  query(store)
-
+  const store = queryColors({});
+  const handleSubscription = (...args) => {
+    return args;
+  };
+  subscription(store, handleSubscription);
 
   let active = {
     key: 'color',
-    text: '颜色'
+    text: '颜色',
   };
 
   const data = [
@@ -58,17 +60,17 @@
 
 <Info title="视觉原子">
   <Filter classes="my-20" />
-  <Operation on:create={createHandler}/>
+  <Operation on:create={createHandler} />
 </Info>
 
 <Collapse>
   {#each data as cate}
-    <CollapseItem headerClass="pl-0 font-normal" header="{cate.name}" key="{cate.key}" let:isSelected="{active}">
+    <CollapseItem headerClass="pl-0 font-normal" header={cate.name} key={cate.key} let:isSelected={active}>
       <Icon slot="prefix">{active ? 'arrow_drop_down' : 'arrow_right'}</Icon>
       <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-22 xl:gap-26 2xl:gap-14">
         {#if !$store.fetching && $store.data.colors}
           {#each $store.data.colors as color}
-            <AtomMicroCard classes="" color="{color.color}" />
+            <AtomMicroCard classes="" color={color.color} />
           {/each}
         {/if}
       </div>
@@ -76,4 +78,4 @@
   {/each}
 </Collapse>
 
-<Dialog bind:show={showDilaog} team={params.teamId} on:created="{reQuery}"/>
+<Dialog bind:show={showDilaog} team={params.teamId} on:created={reQuery} />
