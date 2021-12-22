@@ -24,6 +24,6 @@
     .get();
 </script>
 
-<label aria-hidden="true" {...$$props} class="{c}">
+<label aria-hidden="true" {...$$props} class={c}>
   <slot>{label}</slot>
 </label>

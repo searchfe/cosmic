@@ -16,10 +16,10 @@
     {title}
   </div>
   <div class="col-span-2 flex items-center">
-    <Select items="{atom}" on:bind="{value}" />
+    <Select items={atom} on:bind={value} />
   </div>
   <div class="col-span-2 flex items-center pl-4 justify-around">
-    <Icon class="cursor-pointer" on:click="{() => (isVisibility = !isVisibility)}"
+    <Icon class="cursor-pointer" on:click={() => (isVisibility = !isVisibility)}
       >{isVisibility ? 'visibility' : 'visibility_off'}</Icon
     >
     <Icon class="cursor-pointer">remove</Icon>

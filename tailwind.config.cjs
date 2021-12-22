@@ -75,9 +75,9 @@ module.exports = {
   plugins: [require('tailwindcss-typography')],
   theme: {
     screens: {
-      'md': '960px',
-      'lg': '1200px',
-      'xl': '1400px',
+      md: '960px',
+      lg: '1200px',
+      xl: '1400px',
       '2xl': '1920px',
     },
     spacing: widthConfigs,

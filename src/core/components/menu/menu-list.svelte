@@ -46,12 +46,12 @@
     .get();
 </script>
 
-<ul class="{c}" class:rounded-t-none="{noTopRadius}">
+<ul class={c} class:rounded-t-none={noTopRadius}>
   {#each items as item, i}
     {#if item.to !== undefined}
       <slot>
-        <a tabindex="{i + 1}" href="{item.to}">
-          <MenuItem bind:value {...item} id="{id(item)}" dense="{dense}" on:change>
+        <a tabindex={i + 1} href={item.to}>
+          <MenuItem bind:value {...item} id={id(item)} {dense} on:change>
             {item.text}
           </MenuItem>
         </a>
@@ -60,26 +60,26 @@
       <slot>
         <MenuItem
           bind:value
-          selectedClasses="{selectedClasses}"
-          hoverClasses="{hoverClasses}"
+          {selectedClasses}
+          {hoverClasses}
           class="{itemClasses} w-full"
           {...item}
-          tabindex="{i + 1}"
-          id="{id(item)}"
-          selected="{value === id(item)}"
-          dense="{dense}"
+          tabindex={i + 1}
+          id={id(item)}
+          selected={value === id(item)}
+          {dense}
           on:change
           on:click
         >
           <ButtonShortcut
             slot="button"
-            text="{getText(item)}"
-            shortcutKey="{item.shortcutKey}"
+            text={getText(item)}
+            shortcutKey={item.shortcutKey}
             stopPropagation="true"
-            value="{item}"
-            icon="{item.icon || 'blank'}"
+            value={item}
+            icon={item.icon || 'blank'}
             classes="rounded-none"
-            theme="{theme}"
+            {theme}
             on:change
             on:click
           />

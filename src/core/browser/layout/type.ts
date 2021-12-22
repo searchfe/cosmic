@@ -14,7 +14,7 @@ export interface ISplitBoardView extends View {
   items: SplitItemView[];
   direction: directionType;
   setCursor: (
-    type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize'
+    type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize',
   ) => void;
   cancelForMerge: () => void;
   resizeAt: (index: number, start: number, length: number, position: number) => void;

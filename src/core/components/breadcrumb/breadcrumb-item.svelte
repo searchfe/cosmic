@@ -1,12 +1,3 @@
-<style>
-  :global(.breadcrumb-item:last-child .separator) {
-    overflow: hidden;
-  }
-  .breadcrumb-item:last-child {
-    color: #1f1f1f;
-  }
-</style>
-
 <script lang="ts">
   import { getContext } from 'svelte';
   import Icon from '../icon';
@@ -22,3 +13,12 @@
   <slot />
   <Icon classes="separator">{separator}</Icon>
 </li>
+
+<style>
+  :global(.breadcrumb-item:last-child .separator) {
+    overflow: hidden;
+  }
+  .breadcrumb-item:last-child {
+    color: #1f1f1f;
+  }
+</style>

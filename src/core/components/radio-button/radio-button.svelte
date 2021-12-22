@@ -14,7 +14,7 @@
   export let value = '';
   export let classes = classesDefault;
   export let small = false;
-  export let labelClasses = (i) => i;
+  export let labelClasses = i => i;
 
   function select() {
     if (disabled) return;
@@ -28,26 +28,18 @@
   $: rippleColor = value && !disabled ? color : 'gray';
 </script>
 
-<div class="{c}" on:click="{select}">
-  <input
-    aria-label="{label}"
-    class="hidden"
-    type="radio"
-    role="radio"
-    disabled="{disabled}"
-    name="{name}"
-    selected="{selected === value}"
-  />
+<div class={c} on:click={select}>
+  <input aria-label={label} class="hidden" type="radio" role="radio" {disabled} {name} selected={selected === value} />
   <div class="relative">
-    <Ripple color="{rippleColor}">
+    <Ripple color={rippleColor}>
       {#if selected === value}
-        <Icon small="{small}" class="text-{disabled ? 'gray' : color}" extraStyle="font-size: 1.2rem">
+        <Icon {small} class="text-{disabled ? 'gray' : color}" extraStyle="font-size: 1.2rem">
           radio_button_checked
         </Icon>
       {:else}
         <Icon
-          small="{small}"
-          class="{disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600'}"
+          {small}
+          class={disabled ? 'text-gray-500 dark:text-gray-600' : 'text-gray-600'}
           extraStyle="font-size: 1.2rem"
         >
           radio_button_unchecked
@@ -56,6 +48,6 @@
     </Ripple>
   </div>
   <slot name="label">
-    <Label disabled="{disabled}" label="{label}" class="{labelClasses}" checked="{selected}" />
+    <Label {disabled} {label} class={labelClasses} checked={selected} />
   </slot>
 </div>

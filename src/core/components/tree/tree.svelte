@@ -26,7 +26,7 @@
   const _expansionState: Record<string, boolean> = {};
   let expanded = _expansionState[key] || false;
 
-  const toggleExpansion = (e) => {
+  const toggleExpansion = e => {
     expanded = _expansionState[key] = !expanded;
     dispatch('click', { selectedKey: key });
   };
@@ -42,11 +42,11 @@
   $: nodeComputedClass = nodeClassBuilder.flush().add(nodeClass).get();
 </script>
 
-<div class="{containerComputedClass}">
+<div class={containerComputedClass}>
   <div
-    class="{nodeComputedClass}"
-    style="{`padding-left: ${primaryIndent}rem;`}"
-    on:click|stopPropagation="{toggleExpansion}"
+    class={nodeComputedClass}
+    style={`padding-left: ${primaryIndent}rem;`}
+    on:click|stopPropagation={toggleExpansion}
   >
     {#if children && children.length}
       <div class="flex-none">
@@ -61,7 +61,7 @@
 
     <span class="flex-auto">{label}</span>
     {#if extraIcon}
-      <div class="flex-none" on:click|stopPropagation="{onClickExtra}">
+      <div class="flex-none" on:click|stopPropagation={onClickExtra}>
         <Icon small>{extraIcon}</Icon>
       </div>
     {/if}
@@ -69,10 +69,10 @@
   {#if expanded && children && children.length}
     {#each children as child}
       <svelte:self
-        extraIcon="{extraIcon}"
-        data="{child}"
-        primaryIndent="{primaryIndent + indentStep}"
-        indentStep="{indentStep}"
+        {extraIcon}
+        data={child}
+        primaryIndent={primaryIndent + indentStep}
+        {indentStep}
         on:click-extra
         on:click
       />

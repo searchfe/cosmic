@@ -1,9 +1,3 @@
-<style>
-  .ripple {
-    position: absolute !important;
-  }
-</style>
-
 <script>
   export let color = 'primary';
   export let noHover = false;
@@ -21,3 +15,9 @@
 >
   <slot />
 </span>
+
+<style>
+  .ripple {
+    position: absolute !important;
+  }
+</style>

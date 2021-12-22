@@ -2,7 +2,7 @@ import keycode from 'keycode';
 
 export function normalizeShortcutKey(
   /** e.g.  "67" | "67,72" | "B" | "B,Z | "B,13""*/
-  keys: string
+  keys: string,
 ) {
   const shortcutKeycodes: number[] = [];
   let shortcutKeyText = '';

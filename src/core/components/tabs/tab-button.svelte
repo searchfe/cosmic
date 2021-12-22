@@ -36,10 +36,10 @@
 </script>
 
 {#if to}
-  <a href="{to}" class="{c}" on:click>
-    <div class="{tabClasses}">
+  <a href={to} class={c} on:click>
+    <div class={tabClasses}>
       {#if icon}
-        <Icon class="mb-1" color="{bgColor}">{icon}</Icon>
+        <Icon class="mb-1" color={bgColor}>{icon}</Icon>
       {/if}
 
       <div>
@@ -48,10 +48,10 @@
     </div>
   </a>
 {:else}
-  <li class="{c}" on:click="{() => (selected = id)}" on:click>
-    <div class="{tabClasses}">
+  <li class={c} on:click={() => (selected = id)} on:click>
+    <div class={tabClasses}>
       {#if icon}
-        <Icon class="mb-1" color="{bgColor}">{icon}</Icon>
+        <Icon class="mb-1" color={bgColor}>{icon}</Icon>
       {/if}
 
       <div>

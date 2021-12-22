@@ -39,7 +39,7 @@ export default class Workbench
     }
     this.splitBoard.applySplit(
       this.splitBoard.direction === directionType.col ? 'horizontal' : 'vertical',
-      props.scale || []
+      props.scale || [],
     );
     return this;
   }
@@ -47,7 +47,7 @@ export default class Workbench
   viewWillAppear(): void {
     this.splitBoard.items.forEach((item, index) => {
       const view = this.splitBoard.items[index];
-      item.loader.then((module) => {
+      item.loader.then(module => {
         if (module instanceof Controller) {
           view.setContent(module.view());
           view.module = module;
@@ -81,7 +81,7 @@ export default class Workbench
   expandNewItem(view: ModuleItem<any>, index: number) {
     const item = view.clone();
     item.loader = this.moduleFactory.load(item.moduleId, view.module.serialize());
-    item.loader.then((module) => {
+    item.loader.then(module => {
       if (module instanceof Controller) {
         item.module = module;
         item.setContent(module.view());

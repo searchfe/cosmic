@@ -16,7 +16,7 @@
 
   const l = new ClassBuilder($$props.class, classesDefault);
 
-  let Classes = (i) => i;
+  let Classes = i => i;
 
   $: classes = l
     .flush()
@@ -30,7 +30,7 @@
   const props = filterProps(['error', 'hint'], $$props);
 </script>
 
-<div class="{classes}" transition:fly="{transitionProps}">
+<div class={classes} transition:fly={transitionProps}>
   {@html hint || ''}
   {error || ''}
 </div>

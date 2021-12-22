@@ -6,12 +6,12 @@
   import Resource from '@cosmic/workbench/ui/components/resource/resource.svelte';
 </script>
 
-<Meta title="Resource Panel" component="{Resource}" />
+<Meta title="Resource Panel" component={Resource} />
 
 <Template let:args>
   <Resource />
 </Template>
 
-<Story name="Default" args="{{}}">
+<Story name="Default" args={{}}>
   <Resource />
 </Story>

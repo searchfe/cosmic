@@ -14,8 +14,8 @@
     <div class="border-r flex-auto flex flex-col px-15 py-4 justify-around">
       {#each stateList as item}
         <Button
-          on:click="{() => dispatch('stateChange', item)}"
-          selected="{stateValue === item}"
+          on:click={() => dispatch('stateChange', item)}
+          selected={stateValue === item}
           class="w-40 {stateValue === item ? 'dark:bg-active bg-active' : ''}">{item}</Button
         >
       {/each}
@@ -23,7 +23,7 @@
     <div class="flex-auto flex flex-col px-4 mb-4">
       <header class="flex flex-grow-0 h-20 items-center">基础组件</header>
       <div class="flex flex-col justify-around flex-auto ">
-        <List value="{widgetValue}" on:change="{(event) => dispatch('widgetChange', event.detail)}" items="{widgets}" />
+        <List value={widgetValue} on:change={event => dispatch('widgetChange', event.detail)} items={widgets} />
       </div>
     </div>
   </div>

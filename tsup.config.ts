@@ -9,13 +9,7 @@ export default defineConfig({
   // minify: isProd,
   injectStyle: true,
   platform: 'browser',
-  external: [
-    '@cosmic/app',
-    '@cosmic/core',
-    '@cosmic/modules',
-    '@cosmic/site',
-    '@cosmic/workbench',
-  ],
+  external: ['@cosmic/app', '@cosmic/core', '@cosmic/modules', '@cosmic/site', '@cosmic/workbench'],
   clean: isProd,
   esbuildOptions: opts => {
     opts.logLevel = 'error';

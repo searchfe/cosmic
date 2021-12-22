@@ -28,10 +28,10 @@
   ];
 </script>
 
-<Meta title="Treeview" component="{Treeview}" />
+<Meta title="Treeview" component={Treeview} />
 
 <Template let:args>
   <Treeview {...args} class="w-80 overflow-hidden" />
 </Template>
 
-<Story name="Default" args="{{ items, select: true }}" />
+<Story name="Default" args={{ items, select: true }} />

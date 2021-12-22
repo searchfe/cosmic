@@ -23,9 +23,9 @@
   }
 </script>
 
-<CollapseItem header="{team.name}" key="{team.id}">
+<CollapseItem header={team.name} key={team.id}>
   <img slot="prefix" src="https://fe-dev.bj.bcebos.com/%E4%BE%A7%E8%BE%B9%E6%A0%8F%E5%9B%BE%E6%A0%8714*14.png" alt="" />
-  <Dropdown slot="extra" items="{items}" />
-  <DesignTree team="{team}" />
-  <ProjectTree data="{project}" on:add-project="{addProjectHandler}" />
+  <Dropdown slot="extra" {items} />
+  <DesignTree {team} />
+  <ProjectTree data={project} on:add-project={addProjectHandler} />
 </CollapseItem>

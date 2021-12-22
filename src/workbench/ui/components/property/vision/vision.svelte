@@ -35,10 +35,10 @@
 
 <div>
   {#each Object.keys(vision) as key}
-    <Title title="{titleMap[key]}" append="{append}" on:click="{() => add(key)}" />
+    <Title title={titleMap[key]} {append} on:click={() => add(key)} />
     {#each vision[key] as value}
       <!-- <svelte:component this="{compoentMap[key]}" {...value} /> -->
-      <VisionTempelet title="{titleMap[key]}" />
+      <VisionTempelet title={titleMap[key]} />
     {/each}
   {/each}
 </div>

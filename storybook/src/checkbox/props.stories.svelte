@@ -5,7 +5,7 @@
   import Checkbox from '@cosmic/core/components/checkbox';
 </script>
 
-<Meta title="CheckBox" component="{Checkbox}" />
+<Meta title="CheckBox" component={Checkbox} />
 
 <Template let:args>
   <Checkbox {...args} />

@@ -15,10 +15,9 @@
     [routeFor(ROUTES.INDEX)]: TeamIndex,
     [routeFor(ROUTES.DEFAULT)]: TeamIndex,
   };
-
 </script>
 
 <Layout classes="text-black w-full">
   <Header />
-  <Router routes="{routes}" />
+  <Router {routes} />
 </Layout>

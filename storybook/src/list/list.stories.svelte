@@ -48,20 +48,20 @@
   //   .add(selectedClassesDefault, selected);
 </script>
 
-<Meta title="List" component="{List}" />
+<Meta title="List" component={List} />
 
 <Template let:args id="normal">
-  <List {...args} on:change="{change}" class="w-80" />
+  <List {...args} on:change={change} class="w-80" />
 </Template>
 
 <Template let:args id="custom">
-  <List {...args} on:change="{change}" class="w-80">
+  <List {...args} on:change={change} class="w-80">
     <li slot="item" let:item>
       <div
         class="cursor-pointer p-4 border-alert-50 my-2"
-        on:click="{() => (selected = item.text)}"
-        class:dark:bg-active="{selected === item.text}"
-        class:bg-active="{selected === item.text}"
+        on:click={() => (selected = item.text)}
+        class:dark:bg-active={selected === item.text}
+        class:bg-active={selected === item.text}
       >
         {selected === item.text ? '👌' : '🙅‍'}
         {item.text}
@@ -70,10 +70,10 @@
   </List>
 </Template>
 
-<Story name="OneLine" args="{{ items: listOneLine }}" template="normal" />
+<Story name="OneLine" args={{ items: listOneLine }} template="normal" />
 
-<Story name="TwoLine" args="{{ items: listTwoLines }}" template="normal" />
+<Story name="TwoLine" args={{ items: listTwoLines }} template="normal" />
 
-<Story name="Custom" args="{{ items: listOneLine }}" template="custom" />
+<Story name="Custom" args={{ items: listOneLine }} template="custom" />
 
 <!-- <Story name="dense" args="{{ items: listTwoLines, dense: true }}" /> -->

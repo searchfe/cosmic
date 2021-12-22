@@ -5,12 +5,12 @@
   import Proterty from '@cosmic/workbench/ui/components/property/proterty.svelte';
 </script>
 
-<Meta title="Proterty Panel" component="{Proterty}" />
+<Meta title="Proterty Panel" component={Proterty} />
 
 <Template let:args>
   <Proterty />
 </Template>
 
-<Story name="Default" args="{{}}">
+<Story name="Default" args={{}}>
   <Proterty />
 </Story>

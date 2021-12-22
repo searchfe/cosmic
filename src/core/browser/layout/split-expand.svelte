@@ -1,3 +1,18 @@
+<script>
+  export let expandHidden = false;
+  export let mergeDirection = '';
+</script>
+
+<div class="split-expand" class:hidden={expandHidden} />
+
+<div
+  class="split-merge max-w-20"
+  class:merge-w={mergeDirection == 'merge-w'}
+  class:merge-e={mergeDirection == 'merge-e'}
+  class:merge-n={mergeDirection == 'merge-n'}
+  class:merge-s={mergeDirection == 'merge-s'}
+/>
+
 <style>
   .split-expand {
     position: absolute;
@@ -48,18 +63,3 @@
     background-position: left center;
   }
 </style>
-
-<script>
-  export let expandHidden = false;
-  export let mergeDirection = '';
-</script>
-
-<div class="split-expand" class:hidden="{expandHidden}"></div>
-
-<div
-  class="split-merge max-w-20"
-  class:merge-w="{mergeDirection == 'merge-w'}"
-  class:merge-e="{mergeDirection == 'merge-e'}"
-  class:merge-n="{mergeDirection == 'merge-n'}"
-  class:merge-s="{mergeDirection == 'merge-s'}"
-></div>

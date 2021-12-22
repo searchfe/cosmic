@@ -4,4 +4,4 @@
   export let title = '';
 </script>
 
-<Info title="{title}" />
+<Info {title} />

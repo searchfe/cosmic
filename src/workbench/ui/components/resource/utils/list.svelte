@@ -22,11 +22,11 @@
 
   let searchItems = [];
 
-  $: searchItems = items.filter((item) => item.title.includes(search));
+  $: searchItems = items.filter(item => item.title.includes(search));
 </script>
 
 <div class="grid grid-cols-3">
   {#each searchItems as item}
-    <WidgetCard text="{item.title}" />
+    <WidgetCard text={item.title} />
   {/each}
 </div>

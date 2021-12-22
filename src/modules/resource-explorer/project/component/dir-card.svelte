@@ -18,18 +18,18 @@
       <div class="flex-auto text-h3">{data.name}</div>
       <div class="flex-none">20个</div>
       <div class="ml-5 flex-none">
-        <Button icon="more_horiz"></Button>
+        <Button icon="more_horiz" />
       </div>
     </div>
     <div class="box-border w-full mt-12 flex-auto overflow-hidden rounded-xl grid grid-cols-12 gap-2">
       <div class="col-span-7 row-span-2">
-        <img class="w-full h-full" src="{img}" alt="" />
+        <img class="w-full h-full" src={img} alt="" />
       </div>
       <div class="col-span-5">
-        <img class="w-full h-full" src="{img}" alt="" />
+        <img class="w-full h-full" src={img} alt="" />
       </div>
       <div class="col-span-5">
-        <img class="w-full h-full" src="{img}" alt="" />
+        <img class="w-full h-full" src={img} alt="" />
       </div>
     </div>
   </div>

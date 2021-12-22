@@ -7,16 +7,16 @@
 </script>
 
 <div class="flex flex-col h-full w-full px-4">
-  <TextField bind:value="{searchValue}" />
-  <p class="{pClass}">基础组件</p>
+  <TextField bind:value={searchValue} />
+  <p class={pClass}>基础组件</p>
   <Collapse>
-    <CollapsePanel header="输入框" key="{1}">
-      <WidgetList search="{searchValue}" />
+    <CollapsePanel header="输入框" key={1}>
+      <WidgetList search={searchValue} />
     </CollapsePanel>
-    <CollapsePanel header="密码框" key="{2}">
+    <CollapsePanel header="密码框" key={2}>
       <WidgetList />
     </CollapsePanel>
   </Collapse>
-  <p class="{pClass}">组合组件</p>
+  <p class={pClass}>组合组件</p>
   <WidgetList />
 </div>

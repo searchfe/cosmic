@@ -1,9 +1,3 @@
-<style>
-  .line {
-    height: 1px;
-  }
-</style>
-
 <script>
   import utils, { ClassBuilder, filterProps } from 'smelte/src/utils/classes';
 
@@ -25,7 +19,7 @@
 
   const l = new ClassBuilder(lineClasses, defaultClasses);
 
-  let Classes = (i) => i;
+  let Classes = i => i;
 
   $: classes = l
     .flush()
@@ -41,6 +35,12 @@
   const props = filterProps(['focused', 'error', 'outlined', 'labelOnTop', 'prepend', 'bgcolor', 'color'], $$props);
 </script>
 
-<div class="line absolute bottom-0 left-0 w-full bg-gray-600 {$$props.class}" class:hidden="{noUnderline || outlined}">
-  <div class="{classes}" style="height: 2px; transition: width .2s ease"></div>
+<div class="line absolute bottom-0 left-0 w-full bg-gray-600 {$$props.class}" class:hidden={noUnderline || outlined}>
+  <div class={classes} style="height: 2px; transition: width .2s ease" />
 </div>
+
+<style>
+  .line {
+    height: 1px;
+  }
+</style>

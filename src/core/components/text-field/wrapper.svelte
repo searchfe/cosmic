@@ -13,7 +13,7 @@
 
   const l = new ClassBuilder($$props.class, classesDefault);
 
-  let Classes = (i) => i;
+  let Classes = i => i;
 
   $: classes = l
     .flush()
@@ -27,6 +27,6 @@
   const props = filterProps(['error', 'hint', 'select', 'autocomplete'], $$props);
 </script>
 
-<div class="{classes}">
+<div class={classes}>
   <slot />
 </div>

@@ -14,7 +14,7 @@
   export let notSelectedColor = 'cgray';
 
   export let loading = false;
-  export let tabButtonClasses = (i) => i;
+  export let tabButtonClasses = i => i;
 
   let node;
   let indicatorWidth = 0;
@@ -25,7 +25,7 @@
     indicatorWidth = node ? node.offsetWidth / items.length : 0;
 
     let left = 0;
-    if (selected && items.findIndex((i) => selected.includes(i.to || i.id)) !== -1) {
+    if (selected && items.findIndex(i => selected.includes(i.to || i.id)) !== -1) {
       const longestMatch = items
         .map((item, index) => [index, item])
         .filter(([index, item]) => selected.includes(item.to || item.id))
@@ -57,24 +57,18 @@
     .get();
 </script>
 
-<div class="{c}" bind:this="{node}">
+<div class={c} bind:this={node}>
   {#each items as item, i}
-    <slot name="item" color="{color}" item="{item}">
-      <TabButton
-        class="{tabButtonClasses}"
-        bind:selected
-        {...item}
-        color="{color}"
-        notSelectedColor="{notSelectedColor}">{item.text}</TabButton
-      >
+    <slot name="item" {color} {item}>
+      <TabButton class={tabButtonClasses} bind:selected {...item} {color} {notSelectedColor}>{item.text}</TabButton>
     </slot>
   {/each}
   {#if indicator && offset !== null}
-    <Indicator color="{color}" width="{indicatorWidth}" left="{offset}" />
+    <Indicator {color} width={indicatorWidth} left={offset} />
   {/if}
 </div>
 {#if loading}
-  <ProgressLinear color="{color}" />
+  <ProgressLinear {color} />
 {/if}
 
-<slot selected="{selected}" name="content" />
+<slot {selected} name="content" />

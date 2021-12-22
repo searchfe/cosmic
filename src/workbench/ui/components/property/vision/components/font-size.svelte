@@ -12,9 +12,9 @@
 <div class="flex items-center px-4 justify-around">
   <div class="flex items-center">
     <div class="h-7 w-16 mr-4 text-base flex items-center">字号:</div>
-    <TextField on:change="{fontSizeChangeHandle}" classes="{classes}" value="{fontSize}" />
+    <TextField on:change={fontSizeChangeHandle} {classes} value={fontSize} />
   </div>
-  <Icon class="cursor-pointer" on:click="{() => (isVisibility = !isVisibility)}"
+  <Icon class="cursor-pointer" on:click={() => (isVisibility = !isVisibility)}
     >{isVisibility ? 'visibility' : 'visibility_off'}</Icon
   >
   <Icon class="cursor-pointer">remove</Icon>

@@ -25,7 +25,10 @@
 
   function selectItem(
     keys: string[],
-    { toogle = false, replace = false }: Record<string, unknown> = { toogle: false, replace: false }
+    { toogle = false, replace = false }: Record<string, unknown> = {
+      toogle: false,
+      replace: false,
+    },
   ) {
     if (keys.length === 0) {
       // empty array will clear all
@@ -42,7 +45,7 @@
     if (toogle) {
       selectedSetCopy = new Set($selectedSet);
       // toogle mode set opposite value
-      keys.forEach((k) => {
+      keys.forEach(k => {
         if (selectedSetCopy.has(k)) {
           selectedSetCopy.delete(k);
         } else {
@@ -59,7 +62,7 @@
     if (!Array.isArray(keys)) {
       return [keys.toString()];
     }
-    return keys.map((k) => k.toString());
+    return keys.map(k => k.toString());
   }
 
   setContext(COLLAPSE, {

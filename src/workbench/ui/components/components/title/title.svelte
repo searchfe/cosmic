@@ -12,7 +12,7 @@
   $: c = cb.flush().add($$props.class).add(defaultClass).add('border-b', !noUnderline).get();
 </script>
 
-<div class="{c}">
+<div class={c}>
   <slot name="left">
     <div>{title}</div>
   </slot>

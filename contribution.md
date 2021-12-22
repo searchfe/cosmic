@@ -22,7 +22,7 @@
 > https://github.com/antfu/ni
 
 1. 运行 `nr dev`, `src/` 下的模块都会通过 `tsup(或 rollup)` 编译, 并观察更改
-2. 等到步骤 1 执行完毕, 浏览器中可以看到效果后, 运行  `nr electron`
+2. 等到步骤 1 执行完毕, 浏览器中可以看到效果后, 运行 `nr electron`
 
 ## 发布
 

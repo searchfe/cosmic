@@ -77,13 +77,13 @@
   const headerClass =
     'flex h-20 max-h-20 justify-between items-center text-cgray-50 dark:text-cgray-200 flex-grow-0 px-4 bg-cgray-400 dark:bg-cgray-700 dark:border-cgray-500';
 
-  $: stateList = proterties.map((item) => item.stateName);
+  $: stateList = proterties.map(item => item.stateName);
 
-  $: widgets = proterties.find((item) => item.stateName === stateValue).widgets;
+  $: widgets = proterties.find(item => item.stateName === stateValue).widgets;
 
   $: vision =
-    proterties.find((item) => item.stateName === stateValue)?.widgets?.find((item) => item.text === widgetValue)
-      ?.vision ?? {};
+    proterties.find(item => item.stateName === stateValue)?.widgets?.find(item => item.text === widgetValue)?.vision ??
+    {};
 
   function stateChangeHandle({ detail }) {
     stateValue = detail;
@@ -105,18 +105,18 @@
     <Icon class="text-base">save</Icon>
   </header>
   <div class="flex flex-col">
-    <header class="{headerClass}">
+    <header class={headerClass}>
       <span>交互设置</span>
       <Icon>arrow_drop_down</Icon>
     </header>
   </div>
   <State
-    on:stateChange="{stateChangeHandle}"
-    on:widgetChange="{widgetChangeHandle}"
-    stateList="{stateList}"
-    stateValue="{stateValue}"
-    widgets="{widgets}"
-    widgetValue="{widgetValue}"
+    on:stateChange={stateChangeHandle}
+    on:widgetChange={widgetChangeHandle}
+    {stateList}
+    {stateValue}
+    {widgets}
+    {widgetValue}
   />
-  <Vision vision="{vision}" on:addVision="{addVision}" />
+  <Vision {vision} on:addVision={addVision} />
 </div>

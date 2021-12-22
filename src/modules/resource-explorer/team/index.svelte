@@ -23,21 +23,17 @@
 </script>
 
 <Layout>
-<Sider>
-  <MineMenu />
-  <TeamMenu />
-</Sider>
-<Content classes="flex-auto p-40 overflow-x-hidden overflow-y-scroll">
-  <Router routes="{routes}" />
-</Content>
-<Layout classes="w-270 h-full bg-white px-14 pt-40 md:hidden 2xl:flex">
-  <div class="w-full h-30 flex items-center justify-between text-base">
-    <div class="text-black font-semibold">
-      业务成员
+  <Sider>
+    <MineMenu />
+    <TeamMenu />
+  </Sider>
+  <Content classes="flex-auto p-40 overflow-x-hidden overflow-y-scroll">
+    <Router {routes} />
+  </Content>
+  <Layout classes="w-270 h-full bg-white px-14 pt-40 md:hidden 2xl:flex">
+    <div class="w-full h-30 flex items-center justify-between text-base">
+      <div class="text-black font-semibold">业务成员</div>
+      <div class="text-blue">邀请</div>
     </div>
-    <div class="text-blue">
-      邀请
-    </div>
-  </div>
-</Layout>
+  </Layout>
 </Layout>

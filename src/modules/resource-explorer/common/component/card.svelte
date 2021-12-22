@@ -11,6 +11,6 @@
   $: cardComputedClass = cardClassesBuilder.flush().add(classes).get();
 </script>
 
-<div class="{cardComputedClass}" on:click>
+<div class={cardComputedClass} on:click>
   <slot />
 </div>

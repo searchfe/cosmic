@@ -4,7 +4,7 @@ import { operationStore, mutation } from '@urql/svelte';
 export const queryColors = (color: QueryColorDTO) => {
   return operationStore<{ colors: Color[] }, { color: QueryColorDTO }>(
     `
-    query ($color: QueryColorDTO) {
+    subscription ($color: QueryColorDTO) {
       colors(color: $color) {
         id,
         color,
@@ -17,7 +17,7 @@ export const queryColors = (color: QueryColorDTO) => {
     }
   `,
     { color },
-    { requestPolicy: 'cache-first' }
+    { requestPolicy: 'cache-first' },
   );
 };
 

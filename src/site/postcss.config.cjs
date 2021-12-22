@@ -4,8 +4,6 @@ module.exports = {
     require('postcss-url'),
     require('postcss-input-range'),
     require('autoprefixer'),
-    require('tailwindcss')(
-      require('smelte/tailwind.config')(require('../../tailwind.config.cjs')),
-    ),
+    require('tailwindcss')(require('smelte/tailwind.config')(require('../../tailwind.config.cjs'))),
   ],
 };

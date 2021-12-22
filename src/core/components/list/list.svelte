@@ -12,9 +12,9 @@
   export const text = '';
   export const item = {};
   export const to = null;
-  export const defaultClass = (i) => i;
-  export const selectedClasses = (i) => i;
-  export let itemClasses = (i) => i;
+  export const defaultClass = i => i;
+  export const selectedClasses = i => i;
+  export let itemClasses = i => i;
 
   const classesDefault = 'text-gray-50 dark:text-gray-200 bg-cgray-400 dark:bg-cgray-600 rounded';
 
@@ -39,12 +39,12 @@
   $: c = cb.flush().add(classes, true, classesDefault).add($$props.class).get();
 </script>
 
-<ul class="{c}" class:rounded-t-none="{select}">
+<ul class={c} class:rounded-t-none={select}>
   {#each items as item, i}
     {#if item.to !== undefined}
-      <slot name="item" item="{item}" dense="{dense}" value="{value}">
-        <a tabindex="{i + 1}" href="{item.to}">
-          <ListItem bind:value {...item} id="{id(item)}" dense="{dense}" on:change>
+      <slot name="item" {item} {dense} {value}>
+        <a tabindex={i + 1} href={item.to}>
+          <ListItem bind:value {...item} id={id(item)} {dense} on:change>
             {item.text}
           </ListItem>
         </a>
@@ -52,24 +52,24 @@
     {:else}
       <slot
         name="item"
-        value="{value}"
-        selectedClasses="{selectedClasses}"
-        classes="{itemClasses}"
-        item="{item}"
-        tabindex="{i + 1}"
-        id="{id(item)}"
-        selected="{value === id(item)}"
-        dense="{dense}"
+        {value}
+        {selectedClasses}
+        classes={itemClasses}
+        {item}
+        tabindex={i + 1}
+        id={id(item)}
+        selected={value === id(item)}
+        {dense}
       >
         <ListItem
           bind:value
-          selectedClasses="{selectedClasses}"
-          classes="{itemClasses}"
+          {selectedClasses}
+          classes={itemClasses}
           {...item}
-          tabindex="{i + 1}"
-          id="{id(item)}"
-          selected="{value === id(item)}"
-          dense="{dense}"
+          tabindex={i + 1}
+          id={id(item)}
+          selected={value === id(item)}
+          {dense}
           on:change
           on:click
         >

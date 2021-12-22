@@ -50,8 +50,8 @@
   fab = fab || (text && icon);
   // const basic = !outlined && !text && !fab;
 
-  let Classes = (i) => i;
-  let iClasses = (i) => i;
+  let Classes = i => i;
+  let iClasses = i => i;
   let shade = 0;
 
   $: {
@@ -97,7 +97,7 @@
     .add(smallClasses, small, smallDefault)
     .add('flex items-center justify-center h-20 w-20', small && icon)
     .add('border-solid', outlined)
-    .add(block ? 'w-full' : (type === 'icon' ? '' : boxDefault))
+    .add(block ? 'w-full' : type === 'icon' ? '' : boxDefault)
     .add('rounded', outlined || text || icon)
     .add('button', !icon)
     .add(fabClasses, fab, fabDefault)
@@ -133,40 +133,32 @@
       'remove',
       'replace',
     ],
-    $$props
+    $$props,
   );
 </script>
 
 {#if href}
-  <a href="{href}" {...props}>
-    <button
-      class="{classes}"
-      {...props}
-      disabled="{disabled}"
-      on:click="{() => (value = !value)}"
-      on:click
-      on:mouseover
-      on:*
-    >
+  <a {href} {...props}>
+    <button class={classes} {...props} {disabled} on:click={() => (value = !value)} on:click on:mouseover on:*>
       {#if icon}
-        <Icon class="{iClasses}" small="{small}">{icon}</Icon>
+        <Icon class={iClasses} {small}>{icon}</Icon>
       {/if}
       <slot />
     </button>
   </a>
 {:else}
   <button
-    class="{classes}"
+    class={classes}
     {...props}
-    disabled="{disabled}"
-    on:click="{() => (value = !value)}"
+    {disabled}
+    on:click={() => (value = !value)}
     on:click
     on:mouseover
     on:*
     style="text-shadow: none;"
   >
     {#if icon}
-      <Icon class="{iClasses}" small="{small}">{icon}</Icon>
+      <Icon class={iClasses} {small}>{icon}</Icon>
     {/if}
     <slot />
   </button>
