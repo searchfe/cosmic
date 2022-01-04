@@ -21,7 +21,7 @@ function set(key: string, value: any) {
 }
 
 function loadUser() {
-  return JSON.parse(localStorage.getItem('CACHE_USER_KEY') || '{}');
+  return JSON.parse(localStorage.getItem(CACHE_USER_KEY) || '{}');
 }
 
 export function login({ username, password }: ILoginData) {
