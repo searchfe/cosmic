@@ -11,6 +11,7 @@ importers:
       autoprefixer: ^10.4.0
       cross-env: ^7.0.3
       eslint-plugin-svelte3: ~3.2.1
+      only-allow: ~1.0.0
       postcss: ^8.3.11
       postcss-import: ^14.0.2
       postcss-input-range: ^4.0.0
@@ -35,6 +36,7 @@ importers:
       autoprefixer: 10.4.0_postcss@8.3.11
       cross-env: 7.0.3
       eslint-plugin-svelte3: 3.2.1_svelte@3.38.3
+      only-allow: 1.0.0
       postcss: 8.3.11
       postcss-import: 14.0.2_postcss@8.3.11
       postcss-input-range: 4.0.0
@@ -11148,6 +11150,14 @@ packages:
     dependencies:
       mimic-fn: 2.1.0
 
+  /only-allow/1.0.0:
+    resolution: {integrity: sha512-DQazysAz1cw8JxxYVqg+wXWSm6K7smVqORwS+dtXQWPeRwjsWvRpxMRa5FPiOPxH4e05xCDv12ncAUF8JlVukw==}
+    hasBin: true
+    dependencies:
+      boxen: 4.2.0
+      which-pm-runs: 1.0.0
+    dev: true
+
   /open/7.4.2:
     resolution: {integrity: sha512-MVHddDVweXZF3awtlAS+6pgKLlm/JgxZ90+/NBurBoQctVOOB/zDdVjcyPzQ+0laDGbsWgrRkflI65sQeOgT9Q==}
     engines: {node: '>=8'}
@@ -15248,6 +15258,10 @@ packages:
       is-number-object: 1.0.6
       is-string: 1.0.7
       is-symbol: 1.0.4
+    dev: true
+
+  /which-pm-runs/1.0.0:
+    resolution: {integrity: sha1-Zws6+8VS4LVd9rd4DKdGFfI60cs=}
     dev: true
 
   /which/1.3.1:

@@ -2,6 +2,8 @@
   "name": "@cosmic/monorepo",
   "type": "module",
   "scripts": {
+    "predev": "npx only-allow pnpm",
+    "preinstall": "npx only-allow pnpm",
     "dev": "pnpm -r --parallel --filter !storybook run dev",
     "build": "cross-env NODE_ENV=production pnpm -r --parallel --filter !storybook --filter !app run build && npm run electron:build",
     "clean": "pnpm -r --parallel --filter !storybook run clean",
@@ -20,6 +22,7 @@
     "autoprefixer": "^10.4.0",
     "cross-env": "^7.0.3",
     "eslint-plugin-svelte3": "~3.2.1",
+    "only-allow": "~1.0.0",
     "postcss": "^8.3.11",
     "postcss-import": "^14.0.2",
     "postcss-input-range": "^4.0.0",
