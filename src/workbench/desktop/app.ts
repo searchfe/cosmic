@@ -13,99 +13,99 @@ import PropertyPanel from '../ui/components/property/proterty.svelte';
 import config from './app.config';
 
 export default class App {
-  private container: Container;
-  private context = new Map<string, Container>();
-  constructor(private root: HTMLElement) {
-    this.container = new Container({ defaultScope: 'Singleton' });
-    this.context.set('container', this.container);
-    this.initPreferences();
-    this.initStyle();
-  }
-  async bootstrap() {
-    // this.initNavigationBar();
-    // this.initStatusBar();
-    await this.initModules();
-  }
-
-  async initModules() {
-    const moduleFactory = new ModuleFactory(this.container);
-    this.container.bind('ModuleFactory').toDynamicValue(() => moduleFactory);
-
-    const workbench = await moduleFactory.load(config.workbench.id, config.workbench);
-    if (workbench instanceof Controller) {
-      workbench.viewWillAppear();
-      this.root.appendChild(workbench.view());
-      workbench.viewDidAppear();
+    private container: Container;
+    private context = new Map<string, Container>();
+    constructor(private root: HTMLElement) {
+        this.container = new Container({ defaultScope: 'Singleton' });
+        this.context.set('container', this.container);
+        this.initPreferences();
+        this.initStyle();
     }
-  }
-
-  initPreferences() {
-    this.container.bind(AppearanceService).to(AppearanceService);
-    // this.container.bind(MenuGroupService).to(MenuGroupService);
-  }
-
-  initStyle() {
-    const aps = this.container.get(AppearanceService);
-    aps.onModeChanged((type: AppearanceType) => this.initStyleMode(type));
-    this.initStyleMode(AppearanceType.dark);
-  }
-  initStyleMode(type: AppearanceType): void {
-    if (type === AppearanceType.dark) {
-      document.body.classList.add('mode-dark');
-    } else {
-      document.body.classList.remove('mode-dark');
+    async bootstrap() {
+        // this.initNavigationBar();
+        // this.initStatusBar();
+        await this.initModules();
     }
-  }
 
-  initFrame(): void {
-    // to do sth.
-  }
+    async initModules() {
+        const moduleFactory = new ModuleFactory(this.container);
+        this.container.bind('ModuleFactory').toDynamicValue(() => moduleFactory);
 
-  initNavigationBar(): void {
-    // to do sth.
-    const navigationBar = new Navigation({
-      target: this.root,
-      props: {},
-      context: this.context,
-    });
-    this.initMenus();
-  }
+        const workbench = await moduleFactory.load(config.workbench.id, config.workbench);
+        if (workbench instanceof Controller) {
+            workbench.viewWillAppear();
+            this.root.appendChild(workbench.view());
+            workbench.viewDidAppear();
+        }
+    }
 
-  initMenus(): void {
-    // const header = document.querySelector('#main-header');
-    // const groupMenu = this.container.get(MenuGroupService);
-    // groupMenu.initContainer(header as HTMLElement);
-    // for (const menu of applicationMenus) {
-    //   groupMenu.getMenuInsatance().init(menu.title, menu.items);
-    // }
-  }
+    initPreferences() {
+        this.container.bind(AppearanceService).to(AppearanceService);
+        // this.container.bind(MenuGroupService).to(MenuGroupService);
+    }
 
-  initResourcePanel(container: HTMLElement): void {
-    new ResourcePage({
-      target: container,
-      props: {},
-      context: this.context,
-    });
-  }
+    initStyle() {
+        const aps = this.container.get(AppearanceService);
+        aps.onModeChanged((type: AppearanceType) => this.initStyleMode(type));
+        this.initStyleMode(AppearanceType.dark);
+    }
+    initStyleMode(type: AppearanceType): void {
+        if (type === AppearanceType.dark) {
+            document.body.classList.add('mode-dark');
+        } else {
+            document.body.classList.remove('mode-dark');
+        }
+    }
 
-  initPropertyPanel(container: HTMLElement): void {
-    new PropertyPanel({
-      target: container,
-      props: {},
-      context: this.context,
-    });
-  }
+    initFrame(): void {
+        // to do sth.
+    }
 
-  initWorkArea(): void {
-    // to do sth.
-  }
+    initNavigationBar(): void {
+        // to do sth.
+        const navigationBar = new Navigation({
+            target: this.root,
+            props: {},
+            context: this.context,
+        });
+        this.initMenus();
+    }
 
-  initStatusBar(): void {
-    new StatusBar({
-      target: this.root,
-      props: {},
-      context: this.context,
-    });
-    // to do sth.
-  }
+    initMenus(): void {
+        // const header = document.querySelector('#main-header');
+        // const groupMenu = this.container.get(MenuGroupService);
+        // groupMenu.initContainer(header as HTMLElement);
+        // for (const menu of applicationMenus) {
+        //   groupMenu.getMenuInsatance().init(menu.title, menu.items);
+        // }
+    }
+
+    initResourcePanel(container: HTMLElement): void {
+        new ResourcePage({
+            target: container,
+            props: {},
+            context: this.context,
+        });
+    }
+
+    initPropertyPanel(container: HTMLElement): void {
+        new PropertyPanel({
+            target: container,
+            props: {},
+            context: this.context,
+        });
+    }
+
+    initWorkArea(): void {
+        // to do sth.
+    }
+
+    initStatusBar(): void {
+        new StatusBar({
+            target: this.root,
+            props: {},
+            context: this.context,
+        });
+        // to do sth.
+    }
 }

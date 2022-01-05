@@ -1,9 +1,9 @@
 interface LayoutMixin {
-  x: number;
-  y: number;
+    x: number;
+    y: number;
 
-  width: number;
-  height: number;
+    width: number;
+    height: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

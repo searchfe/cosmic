@@ -1,4 +1,4 @@
 packages:
-  - 'src/*'
-  - 'storybook'
-  - '!**/test/**'
+    - 'src/*'
+    - 'storybook'
+    - '!**/test/**'

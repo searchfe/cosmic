@@ -1,6 +1,6 @@
 export interface TreeNode {
-  key: string;
-  label: string;
-  children?: TreeNode[];
-  parent?: string;
+    key: string;
+    label: string;
+    children?: TreeNode[];
+    parent?: string;
 }

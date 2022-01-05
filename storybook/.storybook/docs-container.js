@@ -4,24 +4,24 @@ import { useDarkMode } from 'storybook-dark-mode';
 import { themes } from '@storybook/theming';
 
 export const DocsContainer = ({ children, context }) => {
-  const dark = useDarkMode();
+    const dark = useDarkMode();
 
-  const dom = React.createElement(
-    BaseContainer,
-    {
-      context: {
-        ...context,
-        parameters: {
-          ...context.parameters,
-          docs: {
-            // This is where the magic happens.
-            theme: dark ? themes.dark : themes.light,
-          },
+    const dom = React.createElement(
+        BaseContainer,
+        {
+            context: {
+                ...context,
+                parameters: {
+                    ...context.parameters,
+                    docs: {
+                        // This is where the magic happens.
+                        theme: dark ? themes.dark : themes.light,
+                    },
+                },
+            },
         },
-      },
-    },
-    children,
-  );
+        children,
+    );
 
-  return dom;
+    return dom;
 };

@@ -1,4 +1,4 @@
 export enum DropdownTrigger {
-  CLICK = 'click',
-  HOVER = 'hover',
+    CLICK = 'click',
+    HOVER = 'hover',
 }

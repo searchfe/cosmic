@@ -2,7 +2,7 @@ import Color from 'color';
 import ColorRef from '../../common/color-ref';
 
 function makeColor(anyColorHex: string, lightColorHex?: string, darkColorHex?: string) {
-  return new ColorRef(Color(anyColorHex), Color(lightColorHex), Color(darkColorHex));
+    return new ColorRef(Color(anyColorHex), Color(lightColorHex), Color(darkColorHex));
 }
 
 export const BorderColor = makeColor('#D9D9D9', '#D9D9D9', '#D9D9D9');

@@ -6,10 +6,10 @@ import Sider from './sider.svelte';
 import Header from './header.svelte';
 
 interface LayoutType {
-  Header?: typeof Header;
-  Footer?: typeof Footer;
-  Content?: typeof Content;
-  Sider?: typeof Sider;
+    Header?: typeof Header;
+    Footer?: typeof Footer;
+    Content?: typeof Content;
+    Sider?: typeof Sider;
 }
 
 // TODO: use the correct Type

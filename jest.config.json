@@ -1,9 +1,9 @@
 {
-  "coverageDirectory": "coverage",
-  "testMatch": ["<rootDir>/src/**/*.spec.{ts,tsx,js,jsx}", "<rootDir>/src/*.spec.{ts,tsx,js,jsx}"],
-  "transform": {
-    "^.+\\.(t|j)sx?$": ["@swc/jest"]
-  },
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
-  "testEnvironment": "jsdom"
+    "coverageDirectory": "coverage",
+    "testMatch": ["<rootDir>/src/**/*.spec.{ts,tsx,js,jsx}", "<rootDir>/src/*.spec.{ts,tsx,js,jsx}"],
+    "transform": {
+        "^.+\\.(t|j)sx?$": ["@swc/jest"]
+    },
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+    "testEnvironment": "jsdom"
 }

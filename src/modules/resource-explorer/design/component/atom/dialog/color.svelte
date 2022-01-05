@@ -1,46 +1,46 @@
 <script lang="ts">
-  import { Icon } from '@cosmic/core/components';
-  import { createColor } from '../../../api/color';
+    import { Icon } from '@cosmic/core/components';
+    import { createColor } from '../../../api/color';
 
-  export let data = {
-    id: '',
-    light: '#234567',
-    dark: '#234567',
-    night: '#234567',
-  };
+    export let data = {
+        id: '',
+        light: '#234567',
+        dark: '#234567',
+        night: '#234567',
+    };
 
-  const modes = [
-    {
-      name: 'light',
-      icon: 'light_mode',
-      outlined: true,
-    },
-    {
-      name: 'dark',
-      icon: 'dark_mode',
-      outlined: false,
-    },
-    {
-      name: 'night',
-      icon: 'mode_night',
-      outlined: true,
-    },
-  ];
-  const createPromise = createColor();
+    const modes = [
+        {
+            name: 'light',
+            icon: 'light_mode',
+            outlined: true,
+        },
+        {
+            name: 'dark',
+            icon: 'dark_mode',
+            outlined: false,
+        },
+        {
+            name: 'night',
+            icon: 'mode_night',
+            outlined: true,
+        },
+    ];
+    const createPromise = createColor();
 
-  export function onCreate(team: string) {
-    return createPromise({
-      color: { color: 'rgba(1,1,1,0.5)', team },
-    }).then(res => {
-      if (res.data && res.data.createColor.id) {
-        return res.data.createColor.id;
-      }
-    });
-  }
+    export function onCreate(team: string) {
+        return createPromise({
+            color: { color: 'rgba(1,1,1,0.5)', team },
+        }).then(res => {
+            if (res.data && res.data.createColor.id) {
+                return res.data.createColor.id;
+            }
+        });
+    }
 </script>
 
 <div class="text-base">
-  <!-- {#each modes as mode,index}
+    <!-- {#each modes as mode,index}
     <div class="pl-4 h-10 flex items-center mt-4">
       <Icon outlined="{mode.outlined}" xs>{mode.icon}</Icon>
       <div class="rounded w-15 h-15 ml-1.6 mr-3" style="background: {data[mode.name]}"></div>
@@ -52,5 +52,5 @@
       </div>
     </div>
   {/each} -->
-  <!-- <TextField label="名称" /> -->
+    <!-- <TextField label="名称" /> -->
 </div>

@@ -2,23 +2,23 @@ import type View from '../view';
 import type SplitItemView from './split-item.view';
 
 export enum directionType {
-  'col',
-  'row',
+    'col',
+    'row',
 }
 
 export interface ItemGenerateDelegate<T extends SplitItemView> {
-  expandNewItem: (oldItem: T, index: number) => T;
+    expandNewItem: (oldItem: T, index: number) => T;
 }
 
 export interface ISplitBoardView extends View {
-  items: SplitItemView[];
-  direction: directionType;
-  setCursor: (
-    type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize',
-  ) => void;
-  cancelForMerge: () => void;
-  resizeAt: (index: number, start: number, length: number, position: number) => void;
-  waitForMergeAtItem: (index: number, direction: 'w' | 'e' | 'n' | 's') => void;
-  splitColumnAt: (index: number, clientX: number, clientY: number) => void;
-  splitRowAt: (index: number, clientX: number, clientY: number) => void;
+    items: SplitItemView[];
+    direction: directionType;
+    setCursor: (
+        type: '' | 'row-resize' | 'col-resize' | 'crosshair' | 'e-resize' | 'w-resize' | 's-resize' | 'n-resize',
+    ) => void;
+    cancelForMerge: () => void;
+    resizeAt: (index: number, start: number, length: number, position: number) => void;
+    waitForMergeAtItem: (index: number, direction: 'w' | 'e' | 'n' | 's') => void;
+    splitColumnAt: (index: number, clientX: number, clientY: number) => void;
+    splitRowAt: (index: number, clientX: number, clientY: number) => void;
 }
