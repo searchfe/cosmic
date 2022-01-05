@@ -2,5 +2,5 @@
 </script>
 
 <footer class="footer">
-  <slot />
+    <slot />
 </footer>

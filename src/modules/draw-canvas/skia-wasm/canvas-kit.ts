@@ -4,7 +4,7 @@
 // import type { CanvasKit } from 'canvaskit-wasm';
 
 export async function getCanvasKit(): Promise<CanvasKit> | void {
-  // return CanvasKitInit({
-  //   locateFile: (file: string) => './bin/' + file,
-  // }).then((canvasKit: CanvasKit) => canvasKit);
+    // return CanvasKitInit({
+    //   locateFile: (file: string) => './bin/' + file,
+    // }).then((canvasKit: CanvasKit) => canvasKit);
 }

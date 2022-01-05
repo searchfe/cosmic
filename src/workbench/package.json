@@ -1,20 +1,20 @@
 {
-  "name": "@cosmic/workbench",
-  "version": "0.0.1",
-  "type": "module",
-  "main": "./dist/index.js",
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "clean": "rimraf dist"
-  },
-  "dependencies": {
-    "@cosmic/core": "workspace:*",
-    "inversify": "^6.0.1"
-  },
-  "devDependencies": {
-    "eventemitter2": "^6.4.5",
-    "svelte-inline-svg": "^1.0.8",
-    "svelte-waypoint": "^0.1.4"
-  }
+    "name": "@cosmic/workbench",
+    "version": "0.0.1",
+    "type": "module",
+    "main": "./dist/index.js",
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsup --watch",
+        "clean": "rimraf dist"
+    },
+    "dependencies": {
+        "@cosmic/core": "workspace:*",
+        "inversify": "^6.0.1"
+    },
+    "devDependencies": {
+        "eventemitter2": "^6.4.5",
+        "svelte-inline-svg": "^1.0.8",
+        "svelte-waypoint": "^0.1.4"
+    }
 }

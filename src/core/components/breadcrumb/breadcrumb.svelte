@@ -1,18 +1,18 @@
 <script lang="ts" context="module">
-  export const BREADCRUMB = { name: 'breadcrumb' };
+    export const BREADCRUMB = { name: 'breadcrumb' };
 </script>
 
 <script lang="ts">
-  import { setContext } from 'svelte';
+    import { setContext } from 'svelte';
 
-  /* separator icon */
-  export let separator = 'navigate_next';
+    /* separator icon */
+    export let separator = 'navigate_next';
 
-  setContext(BREADCRUMB, { separator });
+    setContext(BREADCRUMB, { separator });
 </script>
 
 <nav class="text-h3 font-semibold">
-  <ol class="flex h-11 leading-11">
-    <slot />
-  </ol>
+    <ol class="flex h-11 leading-11">
+        <slot />
+    </ol>
 </nav>

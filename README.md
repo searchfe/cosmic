@@ -27,19 +27,19 @@ The structure of this template is very similar to the structure of a monorepo.
 
 The entire source code of the program is divided into three modules (packages) that are bundled each independently:
 
-- [`src/core`](src/core)
-  Include common dependencies, such as components, utils, ipc.
-- [`src/app`](src/app)
-  Electron [**main script**](https://www.electronjs.org/docs/tutorial/quick-start#create-the-main-script-file).
-- [`src/modules`](src/modules)
-  Modules of tools
-- [`src/workbench`](src/workbench)
-  Electron [**web page**](https://www.electronjs.org/docs/tutorial/quick-start#create-a-web-page).
+-   [`src/core`](src/core)
+    Include common dependencies, such as components, utils, ipc.
+-   [`src/app`](src/app)
+    Electron [**main script**](https://www.electronjs.org/docs/tutorial/quick-start#create-the-main-script-file).
+-   [`src/modules`](src/modules)
+    Modules of tools
+-   [`src/workbench`](src/workbench)
+    Electron [**web page**](https://www.electronjs.org/docs/tutorial/quick-start#create-a-web-page).
 
 ### Cosmic Components
 
-- [Components StoryBook](https://design-to-release.github.io/cosmic/components)
-- [`src/core/components`](src/core/components)
+-   [Components StoryBook](https://design-to-release.github.io/cosmic/components)
+-   [`src/core/components`](src/core/components)
 
 ### Compile App
 
@@ -47,16 +47,16 @@ Next step is run packaging and compilation a ready for distribution Electron app
 
 To do this, using the [electron-builder]:
 
-- In npm script `compile`: This script is configured to compile the application as quickly as possible. It is not ready for distribution, is compiled only for the current platform and is used for debugging.
-- In GitHub Action: The application is compiled for any platform and ready-to-distribute files are automatically added to the draft GitHub release.
+-   In npm script `compile`: This script is configured to compile the application as quickly as possible. It is not ready for distribution, is compiled only for the current platform and is used for debugging.
+-   In GitHub Action: The application is compiled for any platform and ready-to-distribute files are automatically added to the draft GitHub release.
 
 ## Contribution
 
 See Wiki **[Contributing](https://github.com/design-to-release/cosmic/wiki/Contributing)**
 
-- [Source Code Organization](https://github.com/design-to-release/cosmic/wiki/Source-Code-Organization)
-- User Interface
-  - [Color Set](https://github.com/design-to-release/cosmic/wiki/Color-Set)
+-   [Source Code Organization](https://github.com/design-to-release/cosmic/wiki/Source-Code-Organization)
+-   User Interface
+    -   [Color Set](https://github.com/design-to-release/cosmic/wiki/Color-Set)
 
 [electron]: https://github.com/electron/electron
 [electron-builder]: https://github.com/electron-userland/electron-builder

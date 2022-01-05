@@ -1,38 +1,38 @@
 name: gh-pages
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.23.6
-          run_install: true
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          cache: 'pnpm'
+        steps:
+            - uses: actions/checkout@v2
+            - uses: pnpm/action-setup@v2.0.1
+              with:
+                  version: 6.23.6
+                  run_install: true
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: 16
+                  cache: 'pnpm'
 
-      - name: Generate components docs
-        run: |
-          pnpm story:build
-          mkdir docs
-          mv storybook/dist docs/components
+            - name: Generate components docs
+              run: |
+                  pnpm story:build
+                  mkdir docs
+                  mv storybook/dist docs/components
 
-      # - name: Generate API docs
-      #   run: pnpm compodoc:build
+            # - name: Generate API docs
+            #   run: pnpm compodoc:build
 
-      - name: Deploy docs
-        if: github.event_name == 'push'
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs
+            - name: Deploy docs
+              if: github.event_name == 'push'
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: docs

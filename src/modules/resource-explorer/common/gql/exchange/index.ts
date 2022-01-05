@@ -5,9 +5,9 @@ import { subscriptionExchange } from './websocket/index';
 // import { offlineExchange } from './offline/index';
 
 export const exchanges = [
-  dedupExchange,
-  // offlineExchange,
-  authExchange,
-  fetchExchange,
-  subscriptionExchange,
+    dedupExchange,
+    // offlineExchange,
+    authExchange,
+    fetchExchange,
+    subscriptionExchange,
 ];

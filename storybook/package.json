@@ -1,31 +1,31 @@
 {
-  "name": "@cosmic/storybook",
-  "type": "commonjs",
-  "scripts": {
-    "dev": "start-storybook",
-    "build": "build-storybook -o dist",
-    "clean": "rimraf dist"
-  },
-  "devDependencies": {
-    "@storybook/addon-actions": "^6.2.9",
-    "@storybook/addon-controls": "^6.2.9",
-    "@storybook/addon-docs": "^6.2.9",
-    "@storybook/addon-essentials": "^6.2.9",
-    "@storybook/addon-postcss": "^2.0.0",
-    "@storybook/addon-storysource": "^6.2.9",
-    "@storybook/addon-svelte-csf": "^1.0.0",
-    "@storybook/addon-viewport": "^6.2.9",
-    "@storybook/addons": "^6.2.9",
-    "@storybook/source-loader": "^6.2.9",
-    "@storybook/svelte": "^6.2.9",
-    "@storybook/theming": "^6.2.9",
-    "copy-webpack-plugin": "6.4",
-    "postcss-loader": "~4.0.4",
-    "storybook-dark-mode": "^1.0.8",
-    "tsconfig-paths-webpack-plugin": "^3.5.1"
-  },
-  "dependencies": {
-    "@cosmic/core": "workspace:*",
-    "@cosmic/workbench": "workspace:*"
-  }
+    "name": "@cosmic/storybook",
+    "type": "commonjs",
+    "scripts": {
+        "dev": "start-storybook",
+        "build": "build-storybook -o dist",
+        "clean": "rimraf dist"
+    },
+    "devDependencies": {
+        "@storybook/addon-actions": "^6.2.9",
+        "@storybook/addon-controls": "^6.2.9",
+        "@storybook/addon-docs": "^6.2.9",
+        "@storybook/addon-essentials": "^6.2.9",
+        "@storybook/addon-postcss": "^2.0.0",
+        "@storybook/addon-storysource": "^6.2.9",
+        "@storybook/addon-svelte-csf": "^1.0.0",
+        "@storybook/addon-viewport": "^6.2.9",
+        "@storybook/addons": "^6.2.9",
+        "@storybook/source-loader": "^6.2.9",
+        "@storybook/svelte": "^6.2.9",
+        "@storybook/theming": "^6.2.9",
+        "copy-webpack-plugin": "6.4",
+        "postcss-loader": "~4.0.4",
+        "storybook-dark-mode": "^1.0.8",
+        "tsconfig-paths-webpack-plugin": "^3.5.1"
+    },
+    "dependencies": {
+        "@cosmic/core": "workspace:*",
+        "@cosmic/workbench": "workspace:*"
+    }
 }
