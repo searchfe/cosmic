@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Icon } from '@cosmic/core/components';
-    import { createColor } from '../../../api/color';
+    import { create } from '../../../api/common';
+    import type { Color, CreateColorDTO } from '../../../../common/types/graphql';
 
     export let data = {
         id: '',
@@ -26,11 +26,11 @@
             outlined: true,
         },
     ];
-    const createPromise = createColor();
+    const createPromise = create<{ createColor: Color }, CreateColorDTO>('color', ['id', 'team']);
 
     export function onCreate(team: string) {
         return createPromise({
-            color: { color: 'rgba(1,1,1,0.5)', team },
+            data: { color: 'rgba(1,1,1,0.5)', team },
         }).then(res => {
             if (res.data && res.data.createColor.id) {
                 return res.data.createColor.id;

@@ -5,15 +5,16 @@
     import Filter from './filter/index.svelte';
     import Operation from './operation.svelte';
     import Dialog from './dialog/index.svelte';
-    import { queryColors } from '../../api/color';
-    import { subscription } from '@urql/svelte';
+    import { query as queryColor, onCreate } from '../../api/common';
+    import { subscription, query } from '@urql/svelte';
+
+    import type { Color, QueryColorDTO } from '../../../common/types/graphql';
 
     export let params: Record<string, string> = {};
-    const store = queryColors({});
-    const handleSubscription = (...args) => {
-        return args;
-    };
-    subscription(store, handleSubscription);
+
+    let colors: Color[] = [];
+    let showDilaog = false;
+    let usedFields = ['team', 'color'];
 
     let active = {
         key: 'color',
@@ -31,7 +32,14 @@
         },
     ];
 
-    let showDilaog = false;
+    const store = queryColor<{ colors: Color[] }, QueryColorDTO>('color', {}, usedFields);
+
+    subscription(onCreate<Color>('color', usedFields), (...args) => {
+        console.log('🚀 ~ file: detail.svelte ~ line 35 ~ subscription ~ args', args);
+        return args;
+    });
+
+    query(store);
 
     function createHandler() {
         showDilaog = true;
@@ -39,6 +47,12 @@
 
     function reQuery() {
         store.reexecute({ requestPolicy: 'network-only' });
+    }
+
+    $: {
+        if (!$store.fetching && $store.data?.colors) {
+            colors = $store.data.colors;
+        }
     }
 </script>
 
@@ -68,8 +82,8 @@
         <CollapseItem headerClass="pl-0 font-normal" header={cate.name} key={cate.key} let:isSelected={active}>
             <Icon slot="prefix">{active ? 'arrow_drop_down' : 'arrow_right'}</Icon>
             <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-22 xl:gap-26 2xl:gap-14">
-                {#if !$store.fetching && $store.data.colors}
-                    {#each $store.data.colors as color}
+                {#if colors.length}
+                    {#each colors as color}
                         <AtomMicroCard classes="" color={color.color} />
                     {/each}
                 {/if}
