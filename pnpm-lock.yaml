@@ -89,6 +89,7 @@ importers:
   src/modules:
     specifiers:
       '@cosmic/core': workspace:*
+      '@types/lodash': ~4.14.178
       '@urql/exchange-auth': ~0.1.6
       '@urql/exchange-graphcache': ~4.3.5
       '@urql/introspection': ~0.3.0
@@ -98,12 +99,14 @@ importers:
       graphql: ^16.0.1
       graphql-ws: ~5.5.5
       inversify: ^6.0.1
+      lodash: ~4.17.21
       svelte-spa-router: ^3.2.0
       ts-mixer: ^6.0.0
     dependencies:
       '@cosmic/core': link:../core
       inversify: 6.0.1
     devDependencies:
+      '@types/lodash': 4.14.178
       '@urql/exchange-auth': 0.1.6_graphql@16.0.1
       '@urql/exchange-graphcache': 4.3.6_graphql@16.0.1
       '@urql/introspection': 0.3.1_graphql@16.0.1
@@ -112,6 +115,7 @@ importers:
       canvaskit-wasm: 0.31.0
       graphql: 16.0.1
       graphql-ws: 5.5.5_graphql@16.0.1
+      lodash: 4.17.21
       svelte-spa-router: 3.2.0
       ts-mixer: 6.0.0
 
@@ -4581,6 +4585,10 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
+    dev: true
+
+  /@types/lodash/4.14.178:
+    resolution: {integrity: sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==}
     dev: true
 
   /@types/markdown-to-jsx/6.11.3:

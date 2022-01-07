@@ -25,17 +25,17 @@ export enum ETextAlignVertical {
     BOTTOM = 'BOTTOM',
 }
 
-export enum EShadowType {
-    INSET = 'INSET',
-    OUTSET = 'OUTSET',
-}
-
 export enum EConstaintType {
     MIN = 'MIN',
     CENTER = 'CENTER',
     MAX = 'MAX',
     STRETCH = 'STRETCH',
     SCALE = 'SCALE',
+}
+
+export enum EShadowType {
+    INSET = 'INSET',
+    OUTSET = 'OUTSET',
 }
 
 export interface QueryProjectDTO {
@@ -46,6 +46,26 @@ export interface QueryProjectDTO {
 }
 
 export interface QueryColorDTO {
+    id?: Nullable<string>;
+    team?: Nullable<string>;
+}
+
+export interface QueryTextDTO {
+    id?: Nullable<string>;
+    team?: Nullable<string>;
+}
+
+export interface QueryStrokeDTO {
+    id?: Nullable<string>;
+    team?: Nullable<string>;
+}
+
+export interface QueryConstraintDTO {
+    id?: Nullable<string>;
+    team?: Nullable<string>;
+}
+
+export interface QueryShadowDTO {
     id?: Nullable<string>;
     team?: Nullable<string>;
 }
@@ -131,13 +151,7 @@ export interface UpdateProjectDTO {
 
 export interface CreateColorDTO {
     color: string;
-    variant?: Nullable<CreateColorVariantDTO>;
     team?: Nullable<string>;
-}
-
-export interface CreateColorVariantDTO {
-    light: string;
-    dark: string;
 }
 
 export interface CreateTextDTO {
@@ -159,16 +173,30 @@ export interface TextValuePropDTO {
     unit: ETextUnit;
 }
 
-export interface CreateCornerDTO {
-    topLeftRadius: number;
-    topRightRadius: number;
-    bottomLeftRadius: number;
-    bottomRightRadius: number;
+export interface CreatStrokeDTO {
+    paint: string[];
+    weight: number;
 }
 
 export interface CreateConstraintDTO {
     vertical: EConstaintType;
     horizontal: EConstaintType;
+}
+
+export interface CreateShadowDTO {
+    type?: Nullable<EShadowType>;
+    spread?: Nullable<number>;
+    blur: number;
+}
+
+export interface User {
+    id: string;
+    email: string;
+    username: string;
+    password: string;
+    name: string;
+    intro?: Nullable<string>;
+    avatar?: Nullable<string>;
 }
 
 export interface Team {
@@ -220,26 +248,10 @@ export interface Category {
     icon?: Nullable<string>;
 }
 
-export interface User {
-    id: string;
-    email: string;
-    username: string;
-    password: string;
-    name: string;
-    intro?: Nullable<string>;
-    avatar?: Nullable<string>;
-}
-
-export interface ColorVariant {
-    light: ColorString;
-    dark: ColorString;
-}
-
 export interface Color {
     id: string;
-    color: ColorString;
-    variant?: Nullable<ColorVariant[]>;
     team: string;
+    color: string;
 }
 
 export interface TextValueProp {
@@ -254,50 +266,36 @@ export interface FontName {
 
 export interface Text {
     id: string;
+    team: string;
+    fontSize: number;
     textAlignHorizontal: ETextAlignHorizontal;
     textAlignVertical: ETextAlignVertical;
-    fontSize: number;
     fontName: FontName;
     letterSpacing: TextValueProp;
     lineHeight: TextValueProp;
 }
 
-export interface Stroke {
-    id: string;
-    dashPattern: number[];
-    paint: string[];
-    weight: number;
-}
-
-export interface Corner {
-    id: string;
-    topLeftRadius: number;
-    topRightRadius: number;
-    bottomLeftRadius: number;
-    bottomRightRadius: number;
-}
-
-export interface Shadow {
-    id: string;
-    color?: Nullable<string>;
-    type?: Nullable<EShadowType>;
-    offset: Vetor;
-    spread?: Nullable<number>;
-    blur: number;
-}
-
 export interface Constraint {
     id: string;
+    team: string;
     horizontal: EConstaintType;
     vertical: EConstaintType;
 }
 
-export interface Layout {
+export interface Shadow {
     id: string;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
+    team: string;
+    color?: Nullable<string>;
+    type?: Nullable<EShadowType>;
+    spread?: Nullable<number>;
+    blur: number;
+}
+
+export interface Stroke {
+    id: string;
+    team: string;
+    paint: string[];
+    weight: number;
 }
 
 export interface IQuery {
@@ -311,14 +309,19 @@ export interface IQuery {
     levels(categories: string[], specification: string): Level[] | Promise<Level[]>;
     project(id: string): Project | Promise<Project>;
     projects(project?: Nullable<QueryProjectDTO>): Project[] | Promise<Project[]>;
-    color(id: string): Color | Promise<Color>;
-    colors(color?: Nullable<QueryColorDTO>): Color[] | Promise<Color[]>;
-    text(id: string): Text | Promise<Text>;
-    stroke(id: string): Stroke | Promise<Stroke>;
-    corner(id: string): Corner | Promise<Corner>;
-    shadow(id: string): Shadow | Promise<Shadow>;
-    constraint(id: string): Constraint | Promise<Constraint>;
-    layout(id: string): Layout | Promise<Layout>;
+    getColor(fields?: Nullable<string[]>, id: string): Nullable<Color> | Promise<Nullable<Color>>;
+    colors(fields?: Nullable<string[]>, query?: Nullable<QueryColorDTO>): Color[] | Promise<Color[]>;
+    getText(fields?: Nullable<string[]>, id: string): Nullable<Text> | Promise<Nullable<Text>>;
+    texts(fields?: Nullable<string[]>, query?: Nullable<QueryTextDTO>): Text[] | Promise<Text[]>;
+    getStroke(fields?: Nullable<string[]>, id: string): Nullable<Stroke> | Promise<Nullable<Stroke>>;
+    strokes(fields?: Nullable<string[]>, query?: Nullable<QueryStrokeDTO>): Stroke[] | Promise<Stroke[]>;
+    getConstraint(fields?: Nullable<string[]>, id: string): Nullable<Constraint> | Promise<Nullable<Constraint>>;
+    constraints(
+        fields?: Nullable<string[]>,
+        query?: Nullable<QueryConstraintDTO>,
+    ): Constraint[] | Promise<Constraint[]>;
+    getShadow(fields?: Nullable<string[]>, id: string): Nullable<Shadow> | Promise<Nullable<Shadow>>;
+    shadows(fields?: Nullable<string[]>, query?: Nullable<QueryShadowDTO>): Shadow[] | Promise<Shadow[]>;
 }
 
 export interface IMutation {
@@ -339,15 +342,29 @@ export interface IMutation {
     createItem(item: CreateItemDTO, levelId: string): string | Promise<string>;
     createProject(project: CreateProjectDTO): Project | Promise<Project>;
     updateProject(project: UpdateProjectDTO): boolean | Promise<boolean>;
-    createColor(color: CreateColorDTO): Color | Promise<Color>;
-    createText(text: CreateTextDTO): Text | Promise<Text>;
-    createStroke(stroke: string): Stroke | Promise<Stroke>;
-    createCorner(corner: CreateCornerDTO): Corner | Promise<Corner>;
-    createShadow(shadow: string): Shadow | Promise<Shadow>;
-    createConstraint(constraint: CreateConstraintDTO): Constraint | Promise<Constraint>;
-    createLayout(layout: string): Layout | Promise<Layout>;
+    createColor(data: CreateColorDTO): Color | Promise<Color>;
+    updateColor(data: CreateColorDTO): Color | Promise<Color>;
+    deleteColor(id: string): Color | Promise<Color>;
+    createText(data: CreateTextDTO): Text | Promise<Text>;
+    updateText(data: CreateTextDTO): Text | Promise<Text>;
+    deleteText(id: string): Text | Promise<Text>;
+    createStroke(data: CreatStrokeDTO): Stroke | Promise<Stroke>;
+    updateStroke(data: CreatStrokeDTO): Stroke | Promise<Stroke>;
+    deleteStroke(id: string): Stroke | Promise<Stroke>;
+    createConstraint(data: CreateConstraintDTO): Constraint | Promise<Constraint>;
+    updateConstraint(data: CreateConstraintDTO): Constraint | Promise<Constraint>;
+    deleteConstraint(id: string): Constraint | Promise<Constraint>;
+    createShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
+    updateShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
+    deleteShadow(id: string): Shadow | Promise<Shadow>;
 }
 
-export type ColorString = any;
-export type Vetor = any;
+export interface ISubscription {
+    onColorCreate(): Color | Promise<Color>;
+    onTextCreate(): Text | Promise<Text>;
+    onStrokeCreate(): Stroke | Promise<Stroke>;
+    onConstraintCreate(): Constraint | Promise<Constraint>;
+    onShadowCreate(): Shadow | Promise<Shadow>;
+}
+
 type Nullable<T> = T | null;
