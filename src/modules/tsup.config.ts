@@ -15,6 +15,8 @@ export default defineConfig({
         'resource-explorer/index.ts',
         'shape-canvas/index.ts',
         'workbench/index.ts',
+        'assets/index.ts',
+        'editor/index.ts',
     ],
     esbuildPlugins: [
         ...esbuildPlugins,

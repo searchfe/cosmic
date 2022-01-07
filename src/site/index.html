@@ -1,149 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src http://localhost:*; connect-src ws://localhost:*"> -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src http://localhost:*; connect-src ws://localhost:*"> -->
 
-        <title>Cosmic Design</title>
-        <style>
-          @font-face {
-            font-family: 'Material Icons';
-            font-style: normal;
-            font-weight: 400;
-            src: url(https://fonts.gstatic.com/s/materialicons/v118/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
-          }
-          @font-face {
-            font-family: 'Material Icons Outlined';
-            font-style: normal;
-            font-weight: 400;
-            src: url(https://fonts.gstatic.com/s/materialiconsoutlined/v92/gok-H7zzDkdnRel8-DQ6KAXJ69wP1tGnf4ZGhUcel5euIg.woff2) format('woff2');
-          }
-          @font-face {
-            font-family: 'Material Icons Round';
-            font-style: normal;
-            font-weight: 400;
-            src: url(https://fonts.gstatic.com/s/materialiconsround/v91/LDItaoyNOAY6Uewc665JcIzCKsKc_M9flwmPq_HTTw.woff2) format('woff2');
-          }
-          @font-face {
-            font-family: 'Material Icons Sharp';
-            font-style: normal;
-            font-weight: 400;
-            src: url(https://fonts.gstatic.com/s/materialiconssharp/v92/oPWQ_lt5nv4pWNJpghLP75WiFR4kLh3kvmvRImcycg.woff2) format('woff2');
-          }
-          @font-face {
-            font-family: 'Material Icons Two Tone';
-            font-style: normal;
-            font-weight: 400;
-            src: url(https://fonts.gstatic.com/s/materialiconstwotone/v90/hESh6WRmNCxEqUmNyh3JDeGxjVVyMg4tHGctNCu0NjbrHg.woff2) format('woff2');
-          }
+    <title>Cosmic Design</title>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet"> -->
+    <link rel="icon" type="image/png" href="assets/favicon.ico" />
+    <link rel="stylesheet" href="./dist/index.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "@cosmic/core/browser": "./node_modules/@cosmic/core/dist/browser/index.js",
+          "@cosmic/core/common": "./node_modules/@cosmic/core/dist/common/index.js",
+          "@cosmic/core/components": "./node_modules/@cosmic/core/dist/components/index.js",
+          "@cosmic/core/parts": "./node_modules/@cosmic/core/dist/parts/index.js",
+          "@cosmic/modules/draw-canvas": "./node_modules/@cosmic/modules/dist/draw-canvas/index.js",
+          "@cosmic/modules/menu-group": "./node_modules/@cosmic/modules/dist/menu-group/index.js",
+          "@cosmic/modules/property-panel": "./node_modules/@cosmic/modules/dist/property-panel/index.js",
+          "@cosmic/modules/resource-explorer": "./node_modules/@cosmic/modules/dist/resource-explorer/index.js",
+          "@cosmic/modules/shape-canvas": "./node_modules/@cosmic/modules/dist/shape-canvas/index.js",
+          "@cosmic/modules/workbench": "./node_modules/@cosmic/modules/dist/workbench/index.js",
+          "@cosmic/modules/assets": "./node_modules/@cosmic/modules/dist/assets/index.js",
+          "@cosmic/modules/editor": "./node_modules/@cosmic/modules/dist/editor/index.js",
+          "@cosmic/workbench": "./node_modules/@cosmic/workbench/dist/app.js",
 
-          .material-icons {
-            font-family: 'Material Icons';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-          }
+          "tslib": "./dist/externals/tslib.js",
+          "inversify": "./dist/externals/inversify.js",
+          "color": "./dist/externals/color.js"
+        }
+      }
+    </script>
+    <script src="./node_modules/reflect-metadata/Reflect.js"></script>
+    <script type="module" src="./dist/index.js"></script>
+  </head>
 
-          .material-icons-outlined {
-            font-family: 'Material Icons Outlined';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-          }
-
-          .material-icons-round {
-            font-family: 'Material Icons Round';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-          }
-
-          .material-icons-sharp {
-            font-family: 'Material Icons Sharp';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-          }
-
-          .material-icons-two-tone {
-            font-family: 'Material Icons Two Tone';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-          }
-        </style>
-        <link rel="icon" type="image/png" href="assets/favicon.ico" />
-        <link rel="stylesheet" href="./dist/index.css" />
-        <script type="importmap">
-            {
-                "imports": {
-                    "@cosmic/core/browser": "./node_modules/@cosmic/core/dist/browser/index.js",
-                    "@cosmic/core/common": "./node_modules/@cosmic/core/dist/common/index.js",
-                    "@cosmic/core/components": "./node_modules/@cosmic/core/dist/components/index.js",
-                    "@cosmic/core/parts": "./node_modules/@cosmic/core/dist/parts/index.js",
-                    "@cosmic/modules/draw-canvas": "./node_modules/@cosmic/modules/dist/draw-canvas/index.js",
-                    "@cosmic/modules/menu-group": "./node_modules/@cosmic/modules/dist/menu-group/index.js",
-                    "@cosmic/modules/property-panel": "./node_modules/@cosmic/modules/dist/property-panel/index.js",
-                    "@cosmic/modules/resource-explorer": "./node_modules/@cosmic/modules/dist/resource-explorer/index.js",
-                    "@cosmic/modules/shape-canvas": "./node_modules/@cosmic/modules/dist/shape-canvas/index.js",
-                    "@cosmic/modules/workbench": "./node_modules/@cosmic/modules/dist/workbench/index.js",
-                    "@cosmic/workbench": "./node_modules/@cosmic/workbench/dist/app.js",
-
-                    "tslib": "./dist/externals/tslib.js",
-                    "inversify": "./dist/externals/inversify.js",
-                    "color": "./dist/externals/color.js"
-                }
-            }
-        </script>
-        <script src="./node_modules/reflect-metadata/Reflect.js"></script>
-        <script type="module" src="./dist/index.js"></script>
-    </head>
-
-    <body class="flex flex-col"></body>
+  <body class="flex flex-col"></body>
 </html>
