@@ -13,7 +13,7 @@ export default defineConfig({
     external: ['@cosmic/app', '@cosmic/core', '@cosmic/modules', '@cosmic/site', '@cosmic/workbench'],
     clean: isProd,
     esbuildOptions: opts => {
-        opts.logLevel = 'error';
+        // opts.logLevel = 'error';
     },
     esbuildPlugins: [
         {

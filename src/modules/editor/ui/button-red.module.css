@@ -1,0 +1,13 @@
+.button  {
+  border-width: calc(var(--border) * 2);
+  border-radius: calc(var(--rounded) * 2);
+  composes: button from './button.module.css';
+}
+.button:global(.primary) {
+  --color-top: #e8ff97;
+  --color-bottom: #1C1C20;
+}
+.button:global(.hover), .button:hover {
+  --color-top: #e8ff97;
+  --color-bottom: orange;
+}

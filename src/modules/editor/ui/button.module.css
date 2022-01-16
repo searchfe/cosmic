@@ -1,0 +1,78 @@
+.button  {
+  cursor: pointer;
+  text-align: center;
+  /* border-width: var(--border);
+  border-radius: var(--rounded);
+
+  padding: var(--spacing) var(--spacing); */
+
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+}
+
+
+/* .button:global(.xs) {
+  composes: text-xs from global;
+}
+.button:global(.sm) {
+  composes: text-sm from global;
+}
+.button:global(.base) {
+  composes: text-base from global;
+
+}
+.button:global(.lg) {
+  composes: text-lg from global;
+} */
+
+.button:global(.primary) {
+  color: var(--color--white);
+  background-color: var(--color-gray-900);
+  border-color: var(--color-gray-900);
+}
+
+.button:global(.reverse) {
+  color: var(--color-gray-900);
+  background-color: var(--color-white);
+  border-color: var(--color-gray-900);
+}
+
+.button:global(.primary.hover), .button:global(.primary):hover {
+  background-color: var(--color-indigo-700);
+  border-color: var(--color-indigo-700);
+}
+.button:global(.reverse.hover), .button:global(.reverse):hover {
+  color: var(--color-indigo-700);
+  border-color: var(--color-indigo-700);
+}
+
+.button:global(.primary.hover), .button:global(.primary):hover {
+  background-color: var(--color-gray-700);
+  border-color: var(--color-gray-700);
+}
+.button:global(.reverse.hover), .button:global(.reverse):hover {
+  color: var(--color-gray-700);
+  border-color: var(--color-gray-700);
+}
+
+
+
+/* .button:global(.hover), .button:hover {
+  --color-active:var(--color--indigo-700);
+}
+
+.button:global(.disabled), .button:disabled {
+  --color-active:var(--color-pre);
+} */
+
+
+
+.prefix {
+  display: inline-block;
+  vertical-align: top;
+}
+.subfix {
+  display: inline-block;
+  vertical-align: top;
+}

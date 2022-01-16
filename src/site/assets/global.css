@@ -49,36 +49,3 @@ body {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQwcHgiIGhlaWdodD0iMjAwcHgiIHZpZXdCb3g9IjAgMCAxNDAgMjAwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPHBvbHlnb24gaWQ9Iui3r+W+hCIgcG9pbnRzPSI1MCAxLjIyNDY0NjhlLTE1IDE0MCAxMDAgNTAgMjAwIDUwIDE0NSAwIDE0NSAwIDU1IDUwIDU1IiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvcG9seWdvbj4KPC9zdmc+);
     opacity: 0.15;
 }
-
-:root {
-  --color-dark-900: #1C1C20;
-  --color-indogo-500: #5B66FE;
-}
-
-
-.button {
-  cursor: pointer;
-  text-align: center;
-}
-
-.button.default.normal {
-  background-color: var(--color-dark-900);
-}
-.button.default.hover,  .button.default:hover{
-  background-color: var(--color-indogo-500);
-}
-
-
-.button.xs {
-  font-size: 1.2rem;
-  line-height: 1.8rem;
-  padding: 0.4rem 1.2rem;
-  border-radius: 0.4rem;
-}
-
-.button.base {
-  font-size: 1.4rem;
-  line-height: 2.1rem;
-  padding: 0.6rem 1.8rem;
-  border-radius: 0.6rem;
-}

@@ -6,4 +6,4 @@ export enum element {
 };
 export type State = 'normal' | 'hover' | 'actived' | 'disabled';
 export type Size = '2xs' | 'xs' | 'base' | 'lg' | 'xl' | '2xl' | '3xl';
-export type Type = 'default' | 'reversed' | 'dashed' | 'link' | 'text';
+export type Type = 'primary' | 'reversed' | 'dashed' | 'link' | 'text';
