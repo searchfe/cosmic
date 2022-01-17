@@ -1,20 +1,15 @@
 <script>
       import Button from './component/button.svelte';
       import IconButton from './ui/button-icon.module.css';
-      import Icon from './icon/icon.svelte';
+      import Icon, { supported } from './icon/icon.svelte';
+      import Toolbar from './module/toolbar.svelte';
       import './ui/global.css';
 </script>
 
 <app class="w-full bg-white">
-    <toolbar class="block w-full h-44">
-        <Icon svg="cursor"></Icon>
-    </toolbar>
+    <Toolbar class="block w-full"></Toolbar>
     <div class="h-full flex flex-row flex-nowrap ">
-        <div class="flex-none w-270">
-            <!-- <Button size="xs" class="inline-block" let:classes type="reverse">
-                <Icon svg="cursor" slot="prefix" class="{classes}"></Icon>
-                <span slot="subfix" class="{classes}">--</span>
-            </Button> -->
+        <div class="flex-none assets-panel">
             <Button size="xs" class="inline-block">Button</Button>
             <Button size="sm" class="inline-block">Button</Button>
             <Button size="base" class="inline-block">Button</Button>
@@ -32,9 +27,26 @@
             <Button size="lg" class="inline-block selected" styles={IconButton} let:classes>
                 <Icon svg="cursor" slot="prefix" class="{classes}"></Icon>
             </Button>
+            <br>
+            {#each Object.keys(supported) as item}
+                <Button size="sm" class="inline-block selected" styles={IconButton} let:classes>
+                    <Icon svg={item} slot="prefix" class="{classes}"></Icon>
+                </Button>
+            {/each}
         </div>
-        <div class="flex-1 bg-gray-100">2</div>
-        <div class="flex-none w-270">3</div>
+        <div class="flex-1 canvas-pannel">2</div>
+        <div class="flex-none prop-panel">3</div>
     </div>
-
 </app>
+<style>
+    .assets-panel{
+        min-width: calc(var(--spacing-base) * 67.5);
+    }
+    .canvas-pannel {
+        background-color: var(--color-gray-100);
+    }
+    .prop-panel{
+        min-width: calc(var(--spacing-base) * 67.5);
+    }
+</style>
+
