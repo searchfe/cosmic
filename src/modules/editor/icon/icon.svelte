@@ -1,14 +1,11 @@
 <script>
-    import SVG from 'svelte-inline-svg';
+    import SVG from './inline-svg.svelte';
     import cursor from './cursor.svg';
-    export let classes = '';
     export let svg;
     let map = {
         cursor,
     }
 </script>
-<div class="icon {classes}">
-    {#if svg}
-        <SVG src="./node_modules/@cosmic/modules/dist/icon/{map[svg]}" />
-    {/if}
-</div>
+{#if svg}
+    <SVG src="./node_modules/@cosmic/modules/dist/icon/{map[svg]}" class={$$props.class} />
+{/if}

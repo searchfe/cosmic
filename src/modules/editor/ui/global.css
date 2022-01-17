@@ -3,7 +3,7 @@
     --color-white: #FFFFFF;
     --color-black: #000000;
 
-    --color-cool-gray-50: ##F9FAFB;
+    --color-cool-gray-50: #F9FAFB;
     --color-cool-gray-100: #F3F4F6;
     --color-cool-gray-200: #E5E7EB;
     --color-cool-gray-300: #D1D5DB;
@@ -14,7 +14,7 @@
     --color-cool-gray-800: #1F2937;
     --color-cool-gray-900: #111827;
 
-    --color-gray-50: ##FAFAFA;
+    --color-gray-50: #FAFAFA;
     --color-gray-100: #F4F4F5;
     --color-gray-200: #E4E4E7;
     --color-gray-300: #D1D5DB;
@@ -33,7 +33,8 @@
     --color-indigo-400: #818CF8;
     --color-indigo-500: #6366F1;
     --color-indigo-600: #4F46E5;
-    --color-indigo-700: #4338CA;
+    --color-indigo-700: #546BFF;
+    /* #4338CA; */
     --color-indigo-800: #3730A3;
     --color-indigo-900: #312E81;
 
@@ -47,8 +48,8 @@
     --leading-base: 2.2rem;
     --leading-lg: 2.4rem;
 
-    --spacing-xs: 0.15rem;
-    --spacing-sm: 0.3rem;
+    --spacing-xs: 0.1rem;
+    --spacing-sm: 0.4rem;
     --spacing-base: 0.4rem;
     --spacing-lg: 0.5rem;
 
@@ -62,11 +63,8 @@
     --font-extrabold: 800;
     --font-black: 900;
 
-}
+    --rounded-base:  0.4rem;
+    --border-base: 0.1rem;
+    --padding-base: 0.4rem;
 
-.text-base {
-    --font-family: inherit;
-    --font-size: var(--font-base);
-    --line-height: var(--leading-base);
-    --font-weight: var(--font-normal);
 }

@@ -22,12 +22,15 @@ importers:
       smelte: ^1.1.8
       svelte: ~3.38.1
       svelte-check: ^2.2.10
+      svelte-inline-svg: ^1.0.8
       svelte-loader: 3.1.1
       svelte-preprocess: ^4.9.8
       tailwindcss: ^2.2.19
       tailwindcss-typography: ^3.1.0
       tsup: 5.11.4
       typescript: ^4.5.3
+    dependencies:
+      svelte-inline-svg: 1.0.8
     devDependencies:
       '@antfu/ni': 0.12.0
       '@types/node': 16.11.12
@@ -111,13 +114,13 @@ importers:
       '@urql/exchange-auth': 0.1.6_graphql@16.0.1
       '@urql/exchange-graphcache': 4.3.6_graphql@16.0.1
       '@urql/introspection': 0.3.1_graphql@16.0.1
-      '@urql/svelte': 1.3.2_graphql@16.0.1+svelte@3.38.3
+      '@urql/svelte': 1.3.2_graphql@16.0.1
       axios: 0.24.0
       canvaskit-wasm: 0.31.0
       graphql: 16.0.1
       graphql-ws: 5.5.5_graphql@16.0.1
       lodash: 4.17.21
-      postcss-modules: 4.3.0_postcss@8.3.11
+      postcss-modules: 4.3.0
       svelte-spa-router: 3.2.0
       ts-mixer: 6.0.0
 
@@ -4927,7 +4930,7 @@ packages:
       graphql: 16.0.1
     dev: true
 
-  /@urql/svelte/1.3.2_graphql@16.0.1+svelte@3.38.3:
+  /@urql/svelte/1.3.2_graphql@16.0.1:
     resolution: {integrity: sha512-L/fSKb+jTrxfeKbnA4+7T69sL0XlzMv4d9i0j9J+fCkBCpUOGgPsYzsyBttbVbjrlaw61Wrc6J2NKuokrd570w==}
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
@@ -4935,7 +4938,6 @@ packages:
     dependencies:
       '@urql/core': 2.3.5_graphql@16.0.1
       graphql: 16.0.1
-      svelte: 3.38.3
       wonka: 4.0.15
     dev: true
 
@@ -9363,6 +9365,13 @@ packages:
       postcss: 7.0.39
     dev: true
 
+  /icss-utils/5.1.0:
+    resolution: {integrity: sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==}
+    engines: {node: ^10 || ^12 || >= 14}
+    peerDependencies:
+      postcss: ^8.1.0
+    dev: true
+
   /icss-utils/5.1.0_postcss@8.3.11:
     resolution: {integrity: sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==}
     engines: {node: ^10 || ^12 || >= 14}
@@ -11826,6 +11835,13 @@ packages:
       postcss: 7.0.39
     dev: true
 
+  /postcss-modules-extract-imports/3.0.0:
+    resolution: {integrity: sha512-bdHleFnP3kZ4NYDhuGlVK+CMrQ/pqUm8bx/oGL93K6gVwiclvX5x0n76fYMKuIGKzlABOy13zsvqjb0f92TEXw==}
+    engines: {node: ^10 || ^12 || >= 14}
+    peerDependencies:
+      postcss: ^8.1.0
+    dev: true
+
   /postcss-modules-extract-imports/3.0.0_postcss@8.3.11:
     resolution: {integrity: sha512-bdHleFnP3kZ4NYDhuGlVK+CMrQ/pqUm8bx/oGL93K6gVwiclvX5x0n76fYMKuIGKzlABOy13zsvqjb0f92TEXw==}
     engines: {node: ^10 || ^12 || >= 14}
@@ -11841,6 +11857,17 @@ packages:
     dependencies:
       icss-utils: 4.1.1
       postcss: 7.0.39
+      postcss-selector-parser: 6.0.6
+      postcss-value-parser: 4.1.0
+    dev: true
+
+  /postcss-modules-local-by-default/4.0.0:
+    resolution: {integrity: sha512-sT7ihtmGSF9yhm6ggikHdV0hlziDTX7oFoXtuVWeDd3hHObNkcHRo9V3yg7vCAY7cONyxJC/XXCmmiHHcvX7bQ==}
+    engines: {node: ^10 || ^12 || >= 14}
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      icss-utils: 5.1.0
       postcss-selector-parser: 6.0.6
       postcss-value-parser: 4.1.0
     dev: true
@@ -11865,6 +11892,15 @@ packages:
       postcss-selector-parser: 6.0.6
     dev: true
 
+  /postcss-modules-scope/3.0.0:
+    resolution: {integrity: sha512-hncihwFA2yPath8oZ15PZqvWGkWf+XUfQgUGamS4LqoP1anQLOsOJw0vr7J7IwLpoY9fatA2qiGUGmuZL0Iqlg==}
+    engines: {node: ^10 || ^12 || >= 14}
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      postcss-selector-parser: 6.0.6
+    dev: true
+
   /postcss-modules-scope/3.0.0_postcss@8.3.11:
     resolution: {integrity: sha512-hncihwFA2yPath8oZ15PZqvWGkWf+XUfQgUGamS4LqoP1anQLOsOJw0vr7J7IwLpoY9fatA2qiGUGmuZL0Iqlg==}
     engines: {node: ^10 || ^12 || >= 14}
@@ -11880,6 +11916,15 @@ packages:
     dependencies:
       icss-utils: 4.1.1
       postcss: 7.0.39
+    dev: true
+
+  /postcss-modules-values/4.0.0:
+    resolution: {integrity: sha512-RDxHkAiEGI78gS2ofyvCsu7iycRv7oqw5xMWn9iMoR0N/7mf9D50ecQqUo5BZ9Zh2vH4bCUR/ktCqbB9m8vJjQ==}
+    engines: {node: ^10 || ^12 || >= 14}
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      icss-utils: 5.1.0
     dev: true
 
   /postcss-modules-values/4.0.0_postcss@8.3.11:
@@ -11908,7 +11953,7 @@ packages:
       string-hash: 1.1.3
     dev: true
 
-  /postcss-modules/4.3.0_postcss@8.3.11:
+  /postcss-modules/4.3.0:
     resolution: {integrity: sha512-zoUttLDSsbWDinJM9jH37o7hulLRyEgH6fZm2PchxN7AZ8rkdWiALyNhnQ7+jg7cX9f10m6y5VhHsrjO0Mf/DA==}
     peerDependencies:
       postcss: ^8.0.0
@@ -11916,11 +11961,10 @@ packages:
       generic-names: 4.0.0
       icss-replace-symbols: 1.1.0
       lodash.camelcase: 4.3.0
-      postcss: 8.3.11
-      postcss-modules-extract-imports: 3.0.0_postcss@8.3.11
-      postcss-modules-local-by-default: 4.0.0_postcss@8.3.11
-      postcss-modules-scope: 3.0.0_postcss@8.3.11
-      postcss-modules-values: 4.0.0_postcss@8.3.11
+      postcss-modules-extract-imports: 3.0.0
+      postcss-modules-local-by-default: 4.0.0
+      postcss-modules-scope: 3.0.0
+      postcss-modules-values: 4.0.0
       string-hash: 1.1.3
     dev: true
 
@@ -14030,7 +14074,6 @@ packages:
 
   /svelte-inline-svg/1.0.8:
     resolution: {integrity: sha512-4x6FMZzY6F2Xze6q6n0yr47PwVcPNWvKJWPwM08TxpKuuWQRyyCctHSnCDUDCO1h2DpAV3o9+nTzpHZdiZGzUw==}
-    dev: true
 
   /svelte-loader/3.1.1_svelte@3.38.3:
     resolution: {integrity: sha512-JU7qo1yBdDeJ3Aw23WoGKXrVaSn3KeWkM9KMl43HuMVFrsPNHIzZHTsf1ARJX/Abm3jeqNjigaO35RVbixhmWg==}

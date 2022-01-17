@@ -1,0 +1,80 @@
+.button  {
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    border-width: 0;
+    border-radius: var(--rounded-base);
+    font-weight: var(--font-normal);
+    color: var(--color-gray-900);
+    background-color: transpant;
+}
+  
+.button:global(.xs) {
+    font-size: var(--font-xs);
+    line-height: var(--leading-xs);
+    padding: var(--spacing-xs) var(--spacing-xs);
+}
+  
+.button:global(.sm) {
+    font-size: var(--font-sm);
+    line-height: var(--leading-sm);
+    padding: var(--spacing-sm) var(--spacing-sm);
+}
+  
+.button:global(.base) {
+    font-size: var(--font-base);
+    line-height: var(--leading-base);
+    padding: var(--spacing-base) var(--spacing-base);
+}
+  
+.button:global(.lg) {
+    font-size: var(--font-lg);
+    line-height: var(--leading-lg);
+    padding: var(--spacing-lg) var(--spacing-lg);
+}
+  
+.button:global(.hover), .button:hover {
+    background-color: var(--color-gray-100);
+}
+
+.button:global(.active), .button:active {
+    color: var(--color-gray-700);
+}
+  
+.button:global(.selected) {
+    color: var(--color-indigo-700);
+}
+
+
+.button:global(.xs) .prefix{
+    width: var(--leading-xs);
+    height: var(--leading-xs);
+}
+
+.button:global(.sm) .prefix{
+    width: var(--leading-sm);
+    height: var(--leading-sm);
+}
+.button:global(.base) .prefix{
+    width: var(--leading-base);
+    height: var(--leading-base);
+}
+.button:global(.lg) .prefix{
+    width: var(--leading-lg);
+    height: var(--leading-lg);
+}
+
+
+.prefix {
+    display: inline-block;
+    vertical-align: top;
+}
+.prefix svg {
+    width: 1.8rem;
+    height: 1.8rem;
+}
+.subfix {
+    display: inline-block;
+    vertical-align: top;
+}
+  

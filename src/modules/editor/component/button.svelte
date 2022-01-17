@@ -4,18 +4,19 @@
     // import Icon from '../icon/icon.svelte';
     export let styles = _styles;
     export let size: Size = 'base';
-    export let type: Type = 'primary';
     export let disabled : boolean = false;
     let state = disabled ? 'disabled': 'normal';
 </script>
 
-<div class="{styles.button} {state} {size} {type} {$$props.class} ss">
+<div class="{styles.button} {state} {size} {$$props.class}">
     <!-- <Icon></Icon> -->
     {#if $$slots.prefix}
-        <slot name='prefix' classes={styles.prefix}></slot>
+        <slot name='prefix' classes="{styles.prefix} {size}"></slot>
     {/if}
-    <slot classes={styles.label}>Button</slot>
+    {#if $$slots.default}
+        <slot classes={styles.label}>Button</slot>
+    {/if}
     {#if $$slots.subfix}
-        <slot name='subfix' classes={styles.subfix}></slot>
+        <slot name='subfix' classes="{styles.subfix} {size}"></slot>
     {/if}
 </div>
