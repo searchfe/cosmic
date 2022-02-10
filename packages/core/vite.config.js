@@ -1,8 +1,8 @@
 /* eslint-env node */
 
 import {chrome} from '../../.electron-vendors.cache.json';
-import { writeFileSync, ensureDirSync } from 'fs-extra';
-import {join, resolve} from 'path';
+import {writeFileSync, ensureDirSync} from 'fs-extra';
+import {resolve} from 'path';
 import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
 
