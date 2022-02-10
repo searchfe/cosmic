@@ -1,67 +1,133 @@
-# Cosmic Design
+# Cosmic 
 
-[![Build Status](https://github.com/design-to-release/cosmic/workflows/ci/badge.svg?branch=main)](https://github.com/design-to-release/cosmic/actions)
 [![GitHub issues by-label](https://img.shields.io/github/issues/design-to-release/cosmic/help%20wanted?label=issues%20need%20help&logo=github)](https://github.com/design-to-release/cosmic/issues?q=label%3A%22help+wanted%22+is%3Aopen+is%3Aissue)
-[![Minimal node version](https://img.shields.io/static/v1?label=node&message=%3E=14.16&logo=node.js&color)](https://nodejs.org/about/releases/)
-[![Minimal npm version](https://img.shields.io/static/v1?label=npm&message=%3E=7.7&logo=npm&color)](https://github.com/npm/cli/releases)
-[![codecov](https://codecov.io/gh/design-to-release/cosmic/branch/main/graph/badge.svg)](https://codecov.io/gh/design-to-release/cosmic)
+[![Required Node.JS >= v16.13](https://img.shields.io/static/v1?label=node&message=%3E=16.13&logo=node.js&color)](https://nodejs.org/about/releases/)
+[![Required npm >= v8.1](https://img.shields.io/static/v1?label=npm&message=%3E=8.1&logo=npm&color)](https://github.com/npm/cli/releases)
 
-> 🚧 ing...
 
-## The Repository
+Cosmic is the free and open source ui design suite. It supports the entirety of the prototype, visual design, animation, component package and code release.
 
-Cosmic design is a concrete practice of [D2R](https://design-to-release.github.io/docs).
-This repository is where we develop it together with the community. Not only do we work on code and issues here, we also publish our roadmap , development guide. This source code is available to everyone under the standard [MIT license](LICENSE.txt).
 
-## About Cosmic Design
+## Get started
 
-> 🚧 ing...
+### Continuous Integration
+- The configured workflow will check the types for each push and PR.
+- The configured workflow will check the code style for each push and PR.
+  - Unit tests are placed within each package and run separately.
+  - End-to-end tests are placed in the root [`tests`](tests) directory and use [playwright].
 
-## How it works
-
-The template required a minimum [dependencies](package.json). Only **Vite** is used for building, nothing more.
+### Continuous delivery
+- Each time you push changes to the `main` branch, the [`release`](.github/workflows/release.yml) workflow starts, which creates a release draft.
+  - The version is automatically set based on the current date in the format `yy.mm.dd-minutes`.
+  - Notes are automatically generated and added to the release draft.
+  - Code signing supported. See [`compile` job in the `release` workflow](.github/workflows/release.yml).
+- **Auto-update is supported**. After the release is published, all client applications will download the new version and install updates silently.
 
 ### Project Structure
 
 The structure of this template is very similar to the structure of a monorepo.
 
-The entire source code of the program is divided into three modules (packages) that are bundled each independently:
-
--   [`src/core`](src/core)
-    Include common dependencies, such as components, utils, ipc.
--   [`src/app`](src/app)
-    Electron [**main script**](https://www.electronjs.org/docs/tutorial/quick-start#create-the-main-script-file).
--   [`src/modules`](src/modules)
-    Modules of tools
--   [`src/workbench`](src/workbench)
-    Electron [**web page**](https://www.electronjs.org/docs/tutorial/quick-start#create-a-web-page).
-
-### Cosmic Components
-
--   [Components StoryBook](https://design-to-release.github.io/cosmic/components)
--   [`src/core/components`](src/core/components)
+The entire source code of the program is divided into three modules (packages) that are each bundled independently:
+- [`packages/app`](packages/app)
+  Electron [**main script**](https://www.electronjs.org/docs/tutorial/quick-start#create-the-main-script-file).
+- [`packages/preload`](packages/preload)
+  Used in `BrowserWindow.webPreferences.preload`. See [Checklist: Security Recommendations](https://www.electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content).
+- [`packages/site`](packages/site)
+  Electron [**web page**](https://www.electronjs.org/docs/tutorial/quick-start#create-a-web-page).
+- [`packages/core`](packages/core)
+  Core libs for cosmic.
+- [`packages/module`](packages/module)
+  Modules for cosmic.
 
 ### Compile App
+The next step is to package and compile a ready to distribute Electron app for macOS, Windows and Linux with "auto update" support out of the box.
 
-Next step is run packaging and compilation a ready for distribution Electron app for macOS, Windows and Linux with "auto update" support out of the box.
+To do this using the [electron-builder]:
+- Using the npm script `compile`: This script is configured to compile the application as quickly as possible. It is not ready for distribution, it is compiled only for the current platform and is used for debugging.
+- Using GitHub Actions: The application is compiled for any platform and ready-to-distribute files are automatically added as a draft to the GitHub releases page.
 
-To do this, using the [electron-builder]:
+### Using external modules in renderer
+According to [Electron's security guidelines](https://www.electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content), Node.js integration is disabled for remote content. This means that **you cannot call any Node.js api in the `packages/site` directly**. This also means you can't import external modules during runtime in the renderer:
+```js
+// renderer.bundle.js
+const {writeFile} = require('fs') // ReferenceError: require is not defined
+writeFile()
+```
 
--   In npm script `compile`: This script is configured to compile the application as quickly as possible. It is not ready for distribution, is compiled only for the current platform and is used for debugging.
--   In GitHub Action: The application is compiled for any platform and ready-to-distribute files are automatically added to the draft GitHub release.
+To use external modules in Renderer you **must** describe the interface in the `packages/preload` where the Node.js api is allowed:
+```ts
+// packages/preload/src/index.ts
+import type {BinaryLike} from 'crypto';
+import {createHash} from 'crypto';
+
+contextBridge.exposeInMainWorld('nodeCrypto', {
+  sha256sum(data: BinaryLike) {
+    const hash = createHash('sha256');
+    hash.update(data);
+    return hash.digest('hex');
+  },
+});
+```
+
+The [`dts-cb`](https://github.com/cawa-93/dts-for-context-bridge) utility will automatically generate an interface for TS:
+```ts
+// packages/preload/exposedInMainWorld.d.ts 
+interface Window {
+    readonly nodeCrypto: { sha256sum(data: import("crypto").BinaryLike): string; };
+}
+```
+And now, you can safely use the registered method:
+```ts
+// packages/site/src/App.vue
+window.nodeCrypto.sha256sum('data')
+```
+
+[Read more about Security Considerations](https://www.electronjs.org/docs/tutorial/context-isolation#security-considerations).
+
+
+### Modes and Environment Variables
+All environment variables set as part of the `import.meta`, so you can access them as follows: `import.meta.env`.
+
+If you are using TypeScript and want to get code completion you must add all the environment variables to the [`ImportMetaEnv` in `types/env.d.ts`](types/env.d.ts).
+
+The mode option is used to specify the value of `import.meta.env.MODE` and the corresponding environment variables files that need to be loaded.
+
+By default, there are two modes:
+- `production` is used by default
+- `development` is used by `npm run watch` script
+
+When running the build script, the environment variables are loaded from the following files in your project root:
+
+```
+.env                # loaded in all cases
+.env.local          # loaded in all cases, ignored by git
+.env.[mode]         # only loaded in specified env mode
+.env.[mode].local   # only loaded in specified env mode, ignored by git
+```
+
+To prevent accidentally leaking env variables to the client, only variables prefixed with `VITE_` are exposed to your Vite-processed code. e.g. the following file:
+
+```
+DB_PASSWORD=foobar
+VITE_SOME_KEY=123
+```
+Only `VITE_SOME_KEY` will be exposed as `import.meta.env.VITE_SOME_KEY` to your client source code, but `DB_PASSWORD` will not.
+
 
 ## Contribution
 
-See Wiki **[Contributing](https://github.com/design-to-release/cosmic/wiki/Contributing)**
+See [Contributing Guide](contributing.md).
 
--   [Source Code Organization](https://github.com/design-to-release/cosmic/wiki/Source-Code-Organization)
--   User Interface
-    -   [Color Set](https://github.com/design-to-release/cosmic/wiki/Color-Set)
 
+[vite]: https://github.com/vitejs/vite/
 [electron]: https://github.com/electron/electron
 [electron-builder]: https://github.com/electron-userland/electron-builder
-[svelte]: https://github.com/sveltejs/svelte
+[vue]: https://github.com/vuejs/vue-next
+[vue-router]: https://github.com/vuejs/vue-router-next/
 [typescript]: https://github.com/microsoft/TypeScript/
-[spectron]: https://github.com/electron-userland/spectron
-[smelte]: https://github.com/matyunya/smelte
-[tailwindcss]: https://github.com/tailwindlabs/tailwindcss
+[playwright]: https://playwright.dev
+[vitest]: https://vitest.dev
+[vue-tsc]: https://github.com/johnsoncodehk/vue-tsc
+[eslint-plugin-vue]: https://github.com/vuejs/eslint-plugin-vue
+[cawa-93-github]: https://github.com/cawa-93/
+[cawa-93-sponsor]: https://www.patreon.com/Kozack/
