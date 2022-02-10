@@ -18,7 +18,7 @@ const config = {
     alias: {
       '/@/': join(PACKAGE_ROOT, 'src') + '/',
       '@cosmic/core': join(PACKAGE_ROOT, '../core'),
-      '@cosmic-module': join(PACKAGE_ROOT, '../module'),
+      '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
     },
   },
   plugins: [vue()],
