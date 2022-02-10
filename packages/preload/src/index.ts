@@ -3,7 +3,7 @@
  */
 
 import {contextBridge} from 'electron';
-import {sha256sum} from '/@/sha256sum';
+// import {sha256sum} from '/@/sha256sum';
 
 /**
  * The "Main World" is the JavaScript context that your main site code runs in.
@@ -33,4 +33,4 @@ contextBridge.exposeInMainWorld('versions', process.versions);
  * @example
  * window.nodeCrypto('data')
  */
-contextBridge.exposeInMainWorld('nodeCrypto', {sha256sum});
+// contextBridge.exposeInMainWorld('nodeCrypto', {sha256sum});

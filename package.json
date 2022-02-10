@@ -24,7 +24,7 @@
     "lint": "eslint . --ext js,ts,vue",
     "typecheck:main": "tsc --noEmit -p packages/app/tsconfig.json",
     "typecheck:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
-    "typecheck:site": "npm run build:preload:types && vue-tsc --noEmit -p packages/site/tsconfig.json",
+    "typecheck:site": "npm run build:preload:types && vue-tsc --noEmit -p ./tsconfig.json",
     "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:site",
     "clean": "rimraf dist"
   },
