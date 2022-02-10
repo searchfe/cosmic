@@ -7,7 +7,7 @@
   },
   "main": "packages/app/dist/index.cjs",
   "scripts": {
-    "build": "npm run build:main && npm run build:preload && npm run build:site && npm run build:core && npm run build:module",
+    "build": "npm run build:main && npm run build:preload && npm run build:core && npm run build:module && npm run build:site",
     "build:main": "cd ./packages/app && vite build",
     "build:preload": "cd ./packages/preload && vite build",
     "build:preload:types": "dts-cb -i \"packages/preload/tsconfig.json\" -o \"packages/preload/exposedInMainWorld.d.ts\"",
