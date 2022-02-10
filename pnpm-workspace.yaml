@@ -1,4 +1,3 @@
 packages:
-    - 'src/*'
-    - 'storybook'
+    - 'packages/*'
     - '!**/test/**'

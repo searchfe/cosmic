@@ -1,0 +1,40 @@
+appId: design.cosmic.app
+productName: Cosmic
+asar: false
+extraResources:
+    - assets/**
+files:
+    - 'packages/**/dist/**'
+linux:
+    category: Graphics
+    target:
+        - target: deb
+          arch:
+              - x64
+              - arm64
+        - target: AppImage
+          arch:
+              - x64
+              - arm64
+        - target: rpm
+          arch:
+              - x64
+              - arm64
+        - target: snap
+          arch:
+              - x64
+win:
+    target:
+        - nsis
+mac:
+    category: public.app-category.graphics-design
+    type: development
+    target:
+        target: dmg
+        arch:
+            - x64
+            - arm64
+publish:
+    provider: github
+    owner: design-to-release
+    repo: cosmic

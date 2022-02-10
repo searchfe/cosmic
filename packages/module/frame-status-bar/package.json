@@ -1,0 +1,14 @@
+{
+    "name": "@cosmic-module/frame-status-bar",
+    "version": "0.0.1",
+    "main": "./index.cjs",
+    "module": "./index.mjs",
+    "scripts": {
+        "build": "vite build",
+        "clean": "rimraf dist"
+    },
+    "devDependencies": {
+    },
+    "dependencies": {
+    }
+}
