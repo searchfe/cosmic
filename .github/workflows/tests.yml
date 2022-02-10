@@ -25,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6.30.1
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
@@ -38,6 +40,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6.30.1
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
@@ -51,6 +55,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6.30.1
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
@@ -67,6 +73,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6.30.1
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
