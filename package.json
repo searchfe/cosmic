@@ -58,5 +58,5 @@
     "reflect-metadata": "^0.1.13",
     "vue": "3.2.29"
   },
-  "email": "admin@cosmic.design"
+  "author": "cosmic-design <admin@cosmic.design>"
 }
