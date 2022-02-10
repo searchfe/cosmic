@@ -18,25 +18,22 @@ const config = {
   files: [
     'packages/**/dist/**',
   ],
-  // linux: {
-  //   category: 'Graphics',
-  //   target: [{
-  //     target: 'deb',
-  //     arch: ['x64', 'arm64'],
-  //   }, {
-  //     target: 'AppImage',
-  //     arch: ['x64', 'arm64'],
-  //   }, {
-  //     target: 'rpm',
-  //     arch: ['x64', 'arm64'],
-  //   }, {
-  //     target: 'snap',
-  //     arch: ['x64'],
-  //   }]
-  // },
-  // win: {
-  //   target: ['nsis'],
-  // },
+  linux: {
+    category: 'Graphics',
+    target: [{
+      target: 'deb',
+      arch: ['x64', 'arm64'],
+    }, {
+      target: 'AppImage',
+      arch: ['x64', 'arm64'],
+    }, {
+      target: 'rpm',
+      arch: ['x64', 'arm64'],
+    }]
+  },
+  win: {
+    target: ['nsis'],
+  },
   mac: {
     category: 'public.app-category.graphics-design',
     target: {
