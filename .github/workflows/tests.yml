@@ -24,6 +24,7 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
+      - uses: pnpm/action-setup@v2.1.0
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
@@ -36,6 +37,7 @@ jobs:
   preload:
     runs-on: ubuntu-latest
     steps:
+      - uses: pnpm/action-setup@v2.1.0
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
@@ -48,6 +50,7 @@ jobs:
   site:
     runs-on: ubuntu-latest
     steps:
+      - uses: pnpm/action-setup@v2.1.0
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
@@ -63,6 +66,7 @@ jobs:
         os: [ windows-latest ]
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: pnpm/action-setup@v2.1.0
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
