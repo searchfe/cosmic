@@ -92,18 +92,18 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - uses: actions/checkout@v2
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 6.30.1
-      - uses: actions/checkout@v2
-
+          run_install: true
       - uses: actions/setup-node@v2
         with:
           node-version: 16 # Need for npm >=7.7
           cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install
+      # - name: Install dependencies
+      #   run: pnpm install
 
       # The easiest way to transfer release notes to a compiled application is create `release-notes.md` in the build resources.
       # See https://github.com/electron-userland/electron-builder/issues/1511#issuecomment-310160119
