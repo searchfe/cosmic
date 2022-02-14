@@ -9,7 +9,7 @@ if (process.env.VITE_APP_VERSION === undefined) {
  */
 const config = {
   appId: 'design.cosmic.app',
-  productName: 'Cosmic',
+  productName: 'cosmic',
   directories: {
     output: 'dist',
     buildResources: 'buildResources',
