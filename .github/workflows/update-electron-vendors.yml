@@ -33,7 +33,7 @@ jobs:
 
       # TODO: Install not all dependencies, but only those required for this workflow
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install --frozen-lockfile
 
       - run: node ./scripts/update-electron-vendors.js
 

@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: 16
           cache: 'pnpm'
-      - run: pnpm ci
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run test:main
 
 
@@ -47,7 +47,7 @@ jobs:
         with:
           node-version: 16
           cache: 'pnpm'
-      - run: pnpm ci
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run test:preload
 
 
@@ -62,7 +62,7 @@ jobs:
         with:
           node-version: 16
           cache: 'pnpm'
-      - run: pnpm ci
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run test:site
 
 
@@ -80,5 +80,5 @@ jobs:
         with:
           node-version: 16
           cache: 'pnpm'
-      - run: pnpm ci
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run test:e2e
