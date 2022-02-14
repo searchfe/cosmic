@@ -24,46 +24,49 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 6.30.1
-      - uses: actions/checkout@v2
+          run_install: true
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test:main
+          cache: 'pnpm'
+      # - run: pnpm install
+      - run: pnpm run test:main
 
 
   preload:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 6.30.1
-      - uses: actions/checkout@v2
+          run_install: true
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test:preload
+          cache: 'pnpm'
+      # - run: pnpm install
+      - run: pnpm run test:preload
 
 
   site:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 6.30.1
-      - uses: actions/checkout@v2
+          run_install: true
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test:site
+          cache: 'pnpm'
+      # - run: pnpm install
+      - run: pnpm run test:site
 
 
   e2e:
@@ -72,13 +75,14 @@ jobs:
         os: [ windows-latest ]
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/checkout@v2
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 6.30.1
-      - uses: actions/checkout@v2
+          run_install: true
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test:e2e
+          cache: 'pnpm'
+      # - run: pnpm install
+      - run: pnpm run test:e2e
