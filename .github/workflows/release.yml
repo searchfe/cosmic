@@ -114,7 +114,7 @@ jobs:
 
       # Compile app and upload artifacts
       - name: Compile & release Electron app
-        uses: samuelmeuli/action-electron-builder@v1.6.0
+        uses: njzydark/action-electron-builder-pnpm@v1.1.0-pnpm
         env:
           VITE_APP_VERSION: ${{ needs.draft.outputs.version }}
         with:
@@ -129,7 +129,8 @@ jobs:
           # release the app after building
           release: true
           
-          skip_install: true
+          skip_package_manager_install: true
+          package_manager: 'pnpm'
 
           # Sometimes the build may fail due to a connection problem with Apple, GitHub, etc. servers.
           # This option will restart the build as many attempts as possible
