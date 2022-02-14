@@ -59,6 +59,12 @@ importers:
       vitest: 0.2.3_happy-dom@2.30.1
       vue-tsc: 0.31.1_typescript@4.5.5
 
+  packages/core:
+    specifiers:
+      inversify: ^6.0.1
+    dependencies:
+      inversify: 6.0.1
+
 packages:
 
   /7zip-bin/5.1.1:
@@ -282,7 +288,7 @@ packages:
     dev: true
 
   /@types/glob/7.2.0:
-    resolution: {integrity: sha1-vBtb86qS8lvV3TnzXFc2G9zlsus=, tarball: '@types/glob/download/@types/glob-7.2.0.tgz'}
+    resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     requiresBuild: true
     dependencies:
       '@types/minimatch': 3.0.5
@@ -355,7 +361,7 @@ packages:
     dev: true
 
   /@types/yauzl/2.9.2:
-    resolution: {integrity: sha1-xI5dVq/xREQJ45+hZLC01FUqe3o=, tarball: '@types/yauzl/download/@types/yauzl-2.9.2.tgz'}
+    resolution: {integrity: sha512-8uALY5LTvSuHgloDVUvWP3pIauILm+8/0pDMokuDYIoNsOkSwd5AiHBTSEJjKTDcZr5z8UpgOWZkxBF4iJftoA==}
     requiresBuild: true
     dependencies:
       '@types/node': 17.0.12
@@ -1316,7 +1322,7 @@ packages:
     dev: true
 
   /dmg-license/1.0.10:
-    resolution: {integrity: sha512-SVeeyiOeinV5JCPHXMdKOgK1YVbak/4+8WL2rBnfqRYpA5FaeFaQnQWb25x628am1w70CbipGDv9S51biph63A==, tarball: dmg-license/download/dmg-license-1.0.10.tgz}
+    resolution: {integrity: sha512-SVeeyiOeinV5JCPHXMdKOgK1YVbak/4+8WL2rBnfqRYpA5FaeFaQnQWb25x628am1w70CbipGDv9S51biph63A==}
     engines: {node: '>=8'}
     os: [darwin]
     hasBin: true
@@ -2008,7 +2014,7 @@ packages:
     dev: true
 
   /fsevents/2.3.2:
-    resolution: {integrity: sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro=, tarball: fsevents/download/fsevents-2.3.2.tgz}
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -2085,7 +2091,7 @@ packages:
     dev: true
 
   /global-agent/3.0.0:
-    resolution: {integrity: sha1-rnzTG9NYO5PFoWQ3oa/ifMM6GrY=, tarball: global-agent/download/global-agent-3.0.0.tgz}
+    resolution: {integrity: sha512-PT6XReJ+D07JvGoxQMkT6qji/jVNfX/h364XHZOWeRzy64sSFr+xJ5OX7LI3b4MPQzdL4H8Y8M0xzPpsVMwA8Q==}
     engines: {node: '>=10.0'}
     requiresBuild: true
     dependencies:
@@ -2106,7 +2112,7 @@ packages:
     dev: true
 
   /global-tunnel-ng/2.7.1:
-    resolution: {integrity: sha1-0DtRAt/eOmmRT17n2GdhyjXVfY8=, tarball: global-tunnel-ng/download/global-tunnel-ng-2.7.1.tgz}
+    resolution: {integrity: sha512-4s+DyciWBV0eK148wqXxcmVAbFVPqtc3sEtUE/GTQfuU80rySLcMhUmHKSHI7/LDj8q0gDYI1lIhRRB7ieRAqg==}
     engines: {node: '>=0.10'}
     requiresBuild: true
     dependencies:
@@ -2348,7 +2354,7 @@ packages:
     dev: true
 
   /inversify/6.0.1:
-    resolution: {integrity: sha512-B3ex30927698TJENHR++8FfEaJGqoWOgI6ZY5Ht/nLUsFCwHn6akbwtnUAPCgUepAnTpe2qHxhDNjoKLyz6rgQ==, tarball: inversify/download/inversify-6.0.1.tgz}
+    resolution: {integrity: sha512-B3ex30927698TJENHR++8FfEaJGqoWOgI6ZY5Ht/nLUsFCwHn6akbwtnUAPCgUepAnTpe2qHxhDNjoKLyz6rgQ==}
     dev: false
 
   /ip/1.1.5:
