@@ -54,6 +54,7 @@
     "vue-tsc": "0.31.1"
   },
   "dependencies": {
+    "cosmic-design": "^0.0.6",
     "electron-updater": "4.6.5",
     "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13",

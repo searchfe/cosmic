@@ -8,6 +8,7 @@ importers:
       '@typescript-eslint/parser': ^5.10.1
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
+      cosmic-design: ^0.0.6
       cross-env: 7.0.3
       dts-for-context-bridge: 0.7.1
       electron: 16.0.7
@@ -31,6 +32,7 @@ importers:
       vue: 3.2.29
       vue-tsc: 0.31.1
     dependencies:
+      cosmic-design: 0.0.6
       electron-updater: 4.6.5
       inversify: 6.0.1
       reflect-metadata: 0.1.13
@@ -1266,6 +1268,10 @@ packages:
   /core-util-is/1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: true
+
+  /cosmic-design/0.0.6:
+    resolution: {integrity: sha512-7kfmanmP2IqA4LixRx5Vm9fW4CTgJGs14B7HYCBLxRKyGr5uHH/XQpYyne82GBeYv5F0gsSKhnGUrL6HYf8EGg==}
+    dev: false
 
   /crc/3.8.0:
     resolution: {integrity: sha512-iX3mfgcTMIq3ZKLIsVFAbv7+Mc10kxabAGQb8HvjA1o3T1PIYprbakQ65d3I+2HGHt6nSKkM9PYjgoJO2KcFBQ==}

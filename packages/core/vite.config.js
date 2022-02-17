@@ -5,8 +5,8 @@ import {writeFileSync, ensureDirSync} from 'fs-extra';
 import {resolve} from 'path';
 import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
+import { cStyle } from 'cosmic-vue/plugin';
 
-console.log(resolve(__dirname, 'parts/index.ts'));
 const PACKAGE_ROOT = __dirname;
 
 /**
@@ -21,7 +21,7 @@ const config = {
       // '/@/': join(PACKAGE_ROOT, 'src') + '/',
     },
   },
-  plugins: [vue()],
+  plugins: [cStyle(), vue()],
   base: '',
   server: {
     fs: {
@@ -57,6 +57,8 @@ const config = {
         },
       ],
       external: [
+        'cosmic-vue',
+        'vue',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
     },

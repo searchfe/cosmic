@@ -4,6 +4,8 @@ import {chrome} from '../../.electron-vendors.cache.json';
 import {join} from 'path';
 import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
+import { cStyle } from 'cosmic-vue/plugin';
+console.log('1111site', cStyle());
 
 const PACKAGE_ROOT = __dirname;
 
@@ -17,11 +19,11 @@ const config = {
   resolve: {
     alias: {
       '/@/': join(PACKAGE_ROOT, 'src') + '/',
-      '@cosmic/core': join(PACKAGE_ROOT, '../core'),
+      '@cosmic/core': join(PACKAGE_ROOT, '../core/dist'),
       '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
     },
   },
-  plugins: [vue()],
+  plugins: [cStyle(), vue()],
   base: '',
   server: {
     fs: {
@@ -36,8 +38,6 @@ const config = {
     rollupOptions: {
       input: 'index.html',
       external: [
-        '@cosmic/core',
-        '@cosmic-module',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
     },
