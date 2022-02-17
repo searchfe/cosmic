@@ -5,7 +5,6 @@ import {join} from 'path';
 import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
 import { cStyle } from 'cosmic-vue/plugin';
-console.log('1111site', cStyle());
 
 const PACKAGE_ROOT = __dirname;
 
