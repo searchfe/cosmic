@@ -1,8 +1,10 @@
 import {createApp} from 'vue';
-import App from '/@/App.vue';
-import { inject } from '@cosmic/core/browser';
-import m from '@cosmic-module/frame-menu-bar';
+import { App } from '@cosmic/core/browser';
+import '@cosmic/core/style.css';
+import 'cosmic-design/global.css';
+import 'cosmic-vue/style.css';
 
-console.log(inject, m);
+// import a from '@cosmic-module/frame-menu-bar';
+console.log(window.versions);
 
 createApp(App).mount('#app');

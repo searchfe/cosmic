@@ -9,10 +9,11 @@
         "strict": true,
         "strictNullChecks": true,
         "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
         "experimentalDecorators": true,
         "resolveJsonModule": true,
         "paths": {
-            "@cosmic/core/*": ["./packages/core"],
+            "@cosmic/core/*": ["./packages/core/*"],
             "@cosmic-module/*": ["./packages/module/*"],
         }
     },

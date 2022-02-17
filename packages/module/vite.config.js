@@ -1,9 +1,10 @@
 /* eslint-env node */
 
 import {chrome} from '../../.electron-vendors.cache.json';
-import {resolve} from 'path';
+import {resolve, join} from 'path';
 import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
+import { cStyle } from 'cosmic-vue/plugin';
 
 export function genConfig(PACKAGE_ROOT) {
   return {
@@ -11,10 +12,11 @@ export function genConfig(PACKAGE_ROOT) {
     root: PACKAGE_ROOT,
     resolve: {
       alias: {
-        '/@/': PACKAGE_ROOT + '/',
+        '@cosmic/core': join(PACKAGE_ROOT, '../core/dist'),
+        '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
       },
     },
-    plugins: [vue()],
+    plugins: [cStyle(), vue()],
     base: '',
     server: {
       fs: {
@@ -24,7 +26,7 @@ export function genConfig(PACKAGE_ROOT) {
     build: {
       sourcemap: true,
       target: `chrome${chrome}`,
-      outDir: './',
+      outDir: './dist',
       lib: {
           entry: resolve(PACKAGE_ROOT, './index.ts'),
           name: 'index',
@@ -36,16 +38,20 @@ export function genConfig(PACKAGE_ROOT) {
           {
             entryFileNames: ({ name }) => `${name}.mjs`,
             format: 'esm',
-            dir: resolve(PACKAGE_ROOT, './'),
+            dir: resolve(PACKAGE_ROOT, './dist'),
           },
           {
             entryFileNames: ({ name }) => `${name}.cjs`,
             format: 'commonjs',
             exports: 'named',
-            dir: resolve(PACKAGE_ROOT, './'),
+            dir: resolve(PACKAGE_ROOT, './dist'),
           },
         ],
         external: [
+          'cosmic-vue',
+          'vue',
+          '@cosmic/core',
+          '@cosmic-module/*',
           ...builtinModules.flatMap(p => [p, `node:${p}`]),
         ],
       },

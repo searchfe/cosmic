@@ -1,12 +1,9 @@
-class A {
-    private a: string;
-    constructor() {
-        console.log('b');
-        this.a = 'xxxx';
-    }
-    print() {
-        console.log(this.a);
-    }
-}
+import { ModuleFactory } from './modules/module-factory';
+import type { ModuleConfig } from './modules/module-factory';
+import type { Module } from './modules/module';
 
-export { A };
+import inject from './ioc/inject';
+
+export type { Module, ModuleConfig };
+
+export { inject, ModuleFactory };
