@@ -1,10 +1,22 @@
-import {createApp} from 'vue';
-import { App } from '@cosmic/core/browser';
-import '@cosmic/core/style.css';
-import 'cosmic-design/global.css';
-import 'cosmic-vue/style.css';
+import { bootstrap } from '@cosmic/core/browser';
+import '@cosmic/core/browser.css';
 
-// import a from '@cosmic-module/frame-menu-bar';
-console.log(window.versions);
+import { modulePath } from '@cosmic-module/frame-module-loader';
 
-createApp(App).mount('#app');
+// console.log(window.versions);
+// console.log('xx', xx, import.meta);
+const a = 'frame-menu-bar';
+
+import(
+  /* @vite-ignore */
+  `${modulePath}${a}/dist/index.mjs`
+).then(x => {
+  console.log('1', x.default);
+});
+
+bootstrap({
+  root: 'body',
+  modules: {
+    'frame-menu-bar': '@cosmic-module/frame-menu-bar',
+  },
+});

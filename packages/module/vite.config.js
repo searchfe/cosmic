@@ -26,6 +26,7 @@ export function genConfig(PACKAGE_ROOT) {
     build: {
       sourcemap: true,
       target: `chrome${chrome}`,
+      cssCodeSplit: true,
       outDir: './dist',
       lib: {
           entry: resolve(PACKAGE_ROOT, './index.ts'),

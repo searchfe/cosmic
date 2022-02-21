@@ -7,3 +7,5 @@ import inject from './ioc/inject';
 export type { Module, ModuleConfig };
 
 export { inject, ModuleFactory };
+
+export * from './types';

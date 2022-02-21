@@ -1,5 +1,5 @@
 {
-    "name": "@cosmic-module/frame-status-bar",
+    "name": "@cosmic-module/frame-module-loader",
     "version": "0.0.1",
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",

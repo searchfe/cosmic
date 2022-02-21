@@ -32,6 +32,7 @@ const config = {
     sourcemap: true,
     target: `chrome${chrome}`,
     outDir: 'dist',
+    cssCodeSplit: true,
     lib: {
         entry: resolve(__dirname, './index.ts'),
         name: 'index',
