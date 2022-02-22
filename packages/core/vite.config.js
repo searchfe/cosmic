@@ -2,7 +2,7 @@
 
 import {chrome} from '../../.electron-vendors.cache.json';
 import {writeFileSync, ensureDirSync} from 'fs-extra';
-import {resolve} from 'path';
+import {join, resolve} from 'path';
 import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
 import { cStyle } from 'cosmic-vue/plugin';
@@ -19,6 +19,7 @@ const config = {
   resolve: {
     alias: {
       // '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
     },
   },
   plugins: [cStyle(), vue()],
@@ -60,6 +61,7 @@ const config = {
       external: [
         'cosmic-vue',
         'vue',
+        '@cosmic-module/module-loader',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
     },

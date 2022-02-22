@@ -1,18 +1,11 @@
 import { bootstrap } from '@cosmic/core/browser';
 import '@cosmic/core/browser.css';
 
-import { modulePath } from '@cosmic-module/frame-module-loader';
-
 // console.log(window.versions);
 // console.log('xx', xx, import.meta);
-const a = 'frame-menu-bar';
 
-import(
-  /* @vite-ignore */
-  `${modulePath}${a}/dist/index.mjs`
-).then(x => {
-  console.log('1', x.default);
-});
+// const module = await load('@cosmic-module/frame-menu-bar');
+// console.log(module);
 
 bootstrap({
   root: 'body',
