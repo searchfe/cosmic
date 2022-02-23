@@ -24,7 +24,6 @@ const sharedConfig = {
   },
   logLevel: LOG_LEVEL,
 };
-
 /** Messages on stderr that match any of the contained patterns will be stripped from output */
 const stderrFilterPatterns = [
   // warning about devtools extension
