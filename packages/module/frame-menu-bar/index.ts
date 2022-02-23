@@ -1,5 +1,5 @@
-import MenuBar from './src/menu-bar.vue';
-console.log('aa', import.meta.url);
+import root from './src/menu-bar.vue';
+// import service from './src/menu-bar.service';
 export default {
-  Component: MenuBar,
+  root,
 };

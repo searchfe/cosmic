@@ -61,7 +61,7 @@ const config = {
       external: [
         'cosmic-vue',
         'vue',
-        '@cosmic-module/module-loader',
+        '@cosmic-module/core',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
     },

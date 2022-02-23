@@ -1,12 +1,12 @@
 <script setup lang="ts">
 </script>
 <template>
-  <div class="bar">
-    frame-menu-bar
+  <div class="sworkbench">
+    workbench
   </div>
 </template>
 <style scoped>
-.bar {
-  color: red;
+.workbench {
+  color: green;
 }
 </style>

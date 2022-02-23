@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-// import { Button } from 'cosmic-vue';
-
 </script>
 
 <template>
-  <frame-menu-bar />
-  <frame-content />
+  <m-component src="@cosmic-module/frame-menu-bar" />
+  <m-component src="@cosmic-module/frame-workbench" />
 </template>
 
 <style>

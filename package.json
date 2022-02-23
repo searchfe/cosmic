@@ -59,6 +59,7 @@
     "electron-updater": "4.6.5",
     "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13",
+    "vite-plugin-import-maps": "^0.1.2",
     "vue": "3.2.29"
   },
   "simple-git-hooks": {

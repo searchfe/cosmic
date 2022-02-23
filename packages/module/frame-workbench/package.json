@@ -1,5 +1,5 @@
 {
-    "name": "@cosmic-module/frame-module-loader",
+    "name": "@cosmic-module/frame-workbench",
     "version": "0.0.1",
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",

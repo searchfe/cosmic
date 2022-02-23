@@ -30,6 +30,7 @@ const config = {
     rollupOptions: {
       external: [
         'electron',
+        'vue',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
       output: {
