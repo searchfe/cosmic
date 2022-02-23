@@ -8,7 +8,7 @@ import { cStyle } from 'cosmic-vue/plugin';
 import { importMaps } from 'vite-plugin-import-maps';
 
 const PACKAGE_ROOT = __dirname;
-const APP_ROOT = process.env.MODE === 'production' ? '../../../' : `/@fs/${resolve(PACKAGE_ROOT, '../../')}/`;
+const APP_ROOT = process.env.MODE === 'development' ? `/@fs/${resolve(PACKAGE_ROOT, '../../')}/` : '../../../';
 
 /**
  * @type {import('vite').UserConfig}
