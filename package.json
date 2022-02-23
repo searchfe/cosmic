@@ -64,7 +64,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx nano-staged",
-    "pre-push": "npm run typecheck"
+    "pre-push": "npm run typecheck && npm run test"
   },
   "nano-staged": {
     "*.{js,ts,vue}": "eslint --cache --fix"
