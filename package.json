@@ -1,73 +1,80 @@
 {
-  "name": "cosmic",
-  "private": true,
-  "engines": {
-    "node": ">=v16.13",
-    "npm": ">=8.1"
-  },
-  "main": "packages/app/dist/index.cjs",
-  "scripts": {
-    "prepare": "npx only-allow pnpm",
-    "build": "npm run build:main && npm run build:preload && npm run build:core && npm run build:module && npm run build:site",
-    "build:main": "cd ./packages/app && vite build",
-    "build:preload": "cd ./packages/preload && vite build",
-    "build:preload:types": "dts-cb -i \"packages/preload/tsconfig.json\" -o \"packages/preload/exposedInMainWorld.d.ts\"",
-    "build:site": "cd ./packages/site && vite build",
-    "build:core": "npm -C ./packages/core run build",
-    "build:module": "node scripts/build-modules.js",
-    "compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js",
-    "test": "npm run test:main && npm run test:preload && npm run test:site && npm run test:e2e",
-    "test:e2e": "npm run build && vitest run",
-    "test:main": "vitest run -r packages/app --passWithNoTests",
-    "test:preload": "vitest run -r packages/preload --passWithNoTests",
-    "test:site": "vitest run -r packages/site --passWithNoTests",
-    "watch": "node scripts/watch.js",
-    "lint": "eslint . --ext js,ts,vue",
-    "typecheck:main": "tsc --noEmit -p packages/app/tsconfig.json",
-    "typecheck:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
-    "typecheck:site": "npm run build:preload:types && vue-tsc --noEmit -p ./tsconfig.json",
-    "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:site",
-    "clean": "rimraf dist"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.10.1",
-    "@typescript-eslint/parser": "^5.10.1",
-    "@vitejs/plugin-vue": "2.1.0",
-    "@vue/test-utils": "2.0.0-rc.18",
-    "cross-env": "7.0.3",
-    "dts-for-context-bridge": "0.7.1",
-    "electron": "16.0.7",
-    "electron-builder": "22.14.5",
-    "electron-devtools-installer": "3.2.0",
-    "eslint": "8.7.0",
-    "eslint-plugin-vue": "8.3.0",
-    "fs-extra": "^10.0.0",
-    "happy-dom": "2.30.1",
-    "nano-staged": "0.5.0",
-    "playwright": "1.18.0",
-    "rimraf": "^3.0.2",
-    "simple-git-hooks": "2.7.0",
-    "typescript": "4.5.5",
-    "vite": "2.7.13",
-    "vite-dts": "^1.0.4",
-    "vitest": "0.2.3",
-    "vue-tsc": "0.31.1"
-  },
-  "dependencies": {
-    "cosmic-design": "^0.0.9",
-    "cosmic-vue": "^0.0.22",
-    "electron-updater": "4.6.5",
-    "inversify": "^6.0.1",
-    "reflect-metadata": "^0.1.13",
-    "vite-plugin-import-maps": "^0.1.2",
-    "vue": "3.2.29"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "npx nano-staged",
-    "pre-push": "npm run typecheck && npm run test"
-  },
-  "nano-staged": {
-    "*.{js,ts,vue}": "eslint --cache --fix"
-  },
-  "author": "cosmic-design <admin@cosmic.design>"
+    "name": "cosmic",
+    "private": true,
+    "engines": {
+        "node": ">=v16.13",
+        "npm": ">=8.1"
+    },
+    "main": "packages/app/dist/index.cjs",
+    "scripts": {
+        "prepare": "npx only-allow pnpm",
+        "build": "npm run build:main && npm run build:preload && npm run build:core && npm run build:module && npm run build:site",
+        "build:main": "cd ./packages/app && vite build",
+        "build:preload": "cd ./packages/preload && vite build",
+        "build:preload:types": "dts-cb -i \"packages/preload/tsconfig.json\" -o \"packages/preload/exposedInMainWorld.d.ts\"",
+        "build:site": "cd ./packages/site && vite build",
+        "build:core": "npm -C ./packages/core run build",
+        "build:module": "node scripts/build-modules.js",
+        "compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js",
+        "test": "npm run test:main && npm run test:preload && npm run test:site && npm run test:e2e",
+        "test:e2e": "npm run build && vitest run",
+        "test:main": "vitest run -r packages/app --passWithNoTests",
+        "test:preload": "vitest run -r packages/preload --passWithNoTests",
+        "test:site": "vitest run -r packages/site --passWithNoTests",
+        "watch": "node scripts/watch.js",
+        "lint": "eslint . --ext js,ts,vue",
+        "typecheck:main": "tsc --noEmit -p packages/app/tsconfig.json",
+        "typecheck:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
+        "typecheck:site": "npm run build:preload:types && vue-tsc --noEmit -p ./tsconfig.json",
+        "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:site",
+        "clean": "rimraf dist",
+        "commit": "git-cz"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "5.10.1",
+        "@typescript-eslint/parser": "^5.10.1",
+        "@vitejs/plugin-vue": "2.1.0",
+        "@vue/test-utils": "2.0.0-rc.18",
+        "cross-env": "7.0.3",
+        "dts-for-context-bridge": "0.7.1",
+        "electron": "16.0.7",
+        "electron-builder": "22.14.5",
+        "electron-devtools-installer": "3.2.0",
+        "eslint": "8.7.0",
+        "eslint-plugin-vue": "8.3.0",
+        "fs-extra": "^10.0.0",
+        "git-cz": "~4.8.0",
+        "happy-dom": "2.30.1",
+        "nano-staged": "0.5.0",
+        "playwright": "1.18.0",
+        "rimraf": "^3.0.2",
+        "simple-git-hooks": "2.7.0",
+        "typescript": "4.5.5",
+        "vite": "2.7.13",
+        "vite-dts": "^1.0.4",
+        "vitest": "0.2.3",
+        "vue-tsc": "0.31.1"
+    },
+    "dependencies": {
+        "cosmic-design": "^0.0.9",
+        "cosmic-vue": "^0.0.22",
+        "electron-updater": "4.6.5",
+        "inversify": "^6.0.1",
+        "reflect-metadata": "^0.1.13",
+        "vite-plugin-import-maps": "^0.1.2",
+        "vue": "3.2.29"
+    },
+    "simple-git-hooks": {
+        "pre-commit": "npx nano-staged",
+        "pre-push": "npm run typecheck && npm run test"
+    },
+    "nano-staged": {
+        "*.{js,ts,vue}": "eslint --cache --fix"
+    },
+    "author": "cosmic-design <admin@cosmic.design>",
+    "config": {
+        "commitizen": {
+            "path": "git-cz"
+        }
+    }
 }

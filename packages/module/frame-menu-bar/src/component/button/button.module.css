@@ -1,0 +1,15 @@
+.button  {
+    user-select: none;
+    text-align: center;
+    border-width: 0;
+    height: 20px;
+    padding: 0 8px;
+    line-height: 20px;
+    border-radius: 4px;
+    color: rgb(29, 29, 29, .7);
+}
+
+.button:hover {
+    color: rgb(29, 29, 29, .85);
+    background: #f5f6fe;
+}
