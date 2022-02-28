@@ -40,7 +40,7 @@ async function createWindow() {
     : new URL('../site/dist/index.html', 'file://' + __dirname).toString();
 
 
-  await browserWindow.loadURL(pageUrl);
+  await browserWindow.loadURL(pageUrl as string);
 
   return browserWindow;
 }

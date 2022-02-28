@@ -1,0 +1,8 @@
+{
+    "arrowParens": "avoid",
+    "bracketSameLine": false,
+    "plugins": ["prettier-plugin-svelte"],
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120
+}
