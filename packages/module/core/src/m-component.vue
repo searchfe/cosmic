@@ -1,17 +1,11 @@
 <script lang="ts">
-import { createApp, onMounted, ref, watch } from 'vue';
-import { loadModule, moduleAssetPath} from './loader';
-async function startupModule(src: string, withCss: boolean, container: HTMLElement) {
-    if(!src || !container) return;
-    loadModule(src).then((module: any) => {
-        if (module?.default?.root) {
-            createApp(module.default.root).mount(container);
-        }
-    });
-    // load()
-}
+import { inject, onMounted, ref, watch } from 'vue';
+import { fetchModule, fetchStyle, bootstrapModule } from './module-util';
+import type { Container } from '@cosmic/core/parts';
+
 </script>
 <script setup lang="ts">
+    const container = inject('container') as Container;
     const prop = defineProps({
         src: {
             type: String,
@@ -22,22 +16,17 @@ async function startupModule(src: string, withCss: boolean, container: HTMLEleme
             default: true,
         },
     });
-    const container = ref();
+    const root = ref();
     const cssPath = ref('');
 
-    function loadStyle() {
-        if (prop.css && prop.src) {
-            const linkSrc = moduleAssetPath(prop.src, 'index.css');
-            if (linkSrc) cssPath.value = linkSrc;
-        } 
-    }
+
     onMounted(() => {
-        loadStyle();
-        startupModule(prop.src, prop.css, container.value);
+        prop.css && fetchStyle(prop.src, cssPath);
+        fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container));
     });
     watch(() => prop.src, function(a) {
-        loadStyle();
-        startupModule(prop.src, prop.css, container.value);
+        prop.css && fetchStyle(prop.src, cssPath);
+        fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container));
     });
 
 </script>
@@ -47,5 +36,5 @@ async function startupModule(src: string, withCss: boolean, container: HTMLEleme
     rel="stylesheet"
     :href="cssPath"
   >
-  <section ref="container" />
+  <section ref="root" />
 </template>

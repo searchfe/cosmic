@@ -1,14 +1,6 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue';
 import Layout from './component/layout';
-import { Observer } from './lib/observable';
-
 const { Content, Footer, Header } = Layout;
-
-onMounted(() => {
-    window.eventHub = Observer.getObserver();
-});
-
 </script>
 
 <template>

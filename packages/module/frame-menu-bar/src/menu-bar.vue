@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { inject } from '@cosmic/core/parts';
 import { Button } from 'cosmic-vue';
+import MenuService from './menu.service';
 
-function onButtonClicked(index: number, msg: string) {
-    window.eventHub.publish('onTabChange', { index, msg });
+const service = inject(MenuService);
+
+function onButtonClicked(index: number, title: string) {
+  service.selectTab(index, { title });
 }
 </script>
 

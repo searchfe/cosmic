@@ -37,6 +37,5 @@
                  this.topics[topic] = [cb];
              }
          }
-         console.log(this.topics);
      }
  }

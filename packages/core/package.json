@@ -2,8 +2,8 @@
     "name": "@cosmic/core",
     "version": "0.0.1",
     "exports": {
-        "./browser": "./dist/browser/index.mjs",
-        "./parts": "./dist/parts/index.mjs"
+        "./browser": "./dist/browser.mjs",
+        "./parts": "./dist/parts.mjs"
     },
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",

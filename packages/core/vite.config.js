@@ -62,6 +62,8 @@ const config = {
         'cosmic-vue',
         'vue',
         '@cosmic-module/core',
+        '@cosmic/core/parts',
+        '@cosmic/core/browser',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
     },

@@ -52,6 +52,7 @@
         "typescript": "4.5.5",
         "vite": "2.7.13",
         "vite-dts": "^1.0.4",
+        "vite-plugin-import-maps": "^0.1.2",
         "vitest": "0.2.3",
         "vue-tsc": "0.31.1"
     },
@@ -61,7 +62,7 @@
         "electron-updater": "4.6.5",
         "inversify": "^6.0.1",
         "reflect-metadata": "^0.1.13",
-        "vite-plugin-import-maps": "^0.1.2",
+        "resolve": "^1.22.0",
         "vue": "3.2.29"
     },
     "simple-git-hooks": {
