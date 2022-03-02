@@ -6,18 +6,18 @@ const { Content, Footer, Header } = Layout;
 <template>
   <Layout style="height: 100vh">
     <Header>
-      <m-component
+      <!-- <m-component
         src="@cosmic-module/frame-menu-bar"
-      />
+      /> -->
     </Header>
     <Content>
       <Layout>
         <!-- put siders here -->
         <Layout>
           <Content>
-            <m-component
+            <!-- <m-component
               src="@cosmic-module/frame-workbench"
-            />
+            /> -->
           </Content>
         </Layout>
       </Layout>

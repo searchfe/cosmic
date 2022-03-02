@@ -25,9 +25,9 @@ const config = {
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
-      '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      // '/@/': join(PACKAGE_ROOT, 'src') + '/',
       '@cosmic/core': join(PACKAGE_ROOT, '../core/dist'),
-      '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
+      // '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
     },
   },
   plugins: [cStyle(),importMaps([{
@@ -60,9 +60,9 @@ const config = {
     rollupOptions: {
       input: 'index.html',
       external: [
-        'vue',
-        '@cosmic/core',
-        '@cosmic-module/core',
+        // 'vue',
+        // '@cosmic/core',
+        // '@cosmic-module/core',
         '@cosmic/core/browser',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
