@@ -49,10 +49,10 @@ export function genConfig(PACKAGE_ROOT) {
           },
         ],
         external: [
-          'cosmic-vue',
           'vue',
-          '@cosmic/core/parts',
+          'cosmic-vue',
           '@cosmic/core/browser',
+          '@cosmic/core/parts',
           '@cosmic-module/frame-menu-bar',
           '@cosmic-module/frame-workbench',
           ...builtinModules.flatMap(p => [p, `node:${p}`]),

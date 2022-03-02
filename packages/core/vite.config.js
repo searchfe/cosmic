@@ -59,11 +59,11 @@ const config = {
         },
       ],
       external: [
-        'cosmic-vue',
         'vue',
-        '@cosmic-module/core',
+        'cosmic-vue',
         '@cosmic/core/parts',
         '@cosmic/core/browser',
+        '@cosmic-module/core',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
     },

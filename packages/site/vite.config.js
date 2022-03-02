@@ -60,10 +60,7 @@ const config = {
     rollupOptions: {
       input: 'index.html',
       external: [
-        'vue',
-        '@cosmic/core',
-        '@cosmic/core/*',
-        '@cosmic-module/core',
+        '@cosmic/core/browser',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
     },
