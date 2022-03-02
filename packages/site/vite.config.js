@@ -1,7 +1,7 @@
 /* eslint-env node */
 
 import {chrome} from '../../.electron-vendors.cache.json';
-import {join, resolve} from 'path';
+import {join, resolve, sep} from 'path';
 import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
 import { cStyle } from 'cosmic-vue/plugin';
@@ -14,7 +14,7 @@ const APP_ROOT = development ? `/@fs/${resolve(PACKAGE_ROOT, '../../')}/` : '../
 
 function resolveLib(pkg) {
   const libPath = sync(pkg);
-  return APP_ROOT + libPath.replace(resolve(PACKAGE_ROOT, '../../') + '/', '');
+  return APP_ROOT + libPath.replace(resolve(PACKAGE_ROOT, '../../') + sep, '');
 }
 /**
  * @type {import('vite').UserConfig}
