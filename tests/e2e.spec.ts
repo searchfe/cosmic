@@ -38,6 +38,12 @@ test('Main window state', async () => {
 
 test('Main window web content', async () => {
   const page = await electronApp.firstWindow();
+  page.on('console', async msg => {
+    const values = [];
+    for (const arg of msg.args())
+      values.push(await arg.jsonValue());
+    console.log(99, ...values);
+  });
   const element = await page.$('body', {strict: true});
   await page.waitForTimeout(1000);
   console.log('element innerHTML: ', await element.innerHTML());
