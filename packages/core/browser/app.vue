@@ -1,23 +1,24 @@
 <script lang="ts" setup>
 import Layout from './component/layout';
 const { Content, Footer, Header } = Layout;
+
 </script>
 
 <template>
   <Layout style="height: 100vh">
     <Header>
-      <!-- <m-component
+      <m-component
         src="@cosmic-module/frame-menu-bar"
-      /> -->
+      />
     </Header>
     <Content>
       <Layout>
         <!-- put siders here -->
         <Layout>
           <Content>
-            <!-- <m-component
+            <m-component
               src="@cosmic-module/frame-workbench"
-            /> -->
+            />
           </Content>
         </Layout>
       </Layout>
