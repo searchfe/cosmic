@@ -6,10 +6,16 @@ import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
 import { cStyle } from 'cosmic-vue/plugin';
 import { importMaps } from 'vite-plugin-import-maps';
+import { sync } from 'resolve';
 
+const development = process.env.MODE === 'development';
 const PACKAGE_ROOT = __dirname;
-const APP_ROOT = process.env.MODE === 'development' ? `/@fs/${resolve(PACKAGE_ROOT, '../../')}/` : '../../../';
+const APP_ROOT = development ? `/@fs/${resolve(PACKAGE_ROOT, '../../')}/` : '../../../';
 
+function resolveLib(pkg) {
+  const libPath = sync(pkg);
+  return APP_ROOT + libPath.replace(resolve(PACKAGE_ROOT, '../../') + '/', '');
+}
 /**
  * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
@@ -19,16 +25,24 @@ const config = {
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
-      '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      // '/@/': join(PACKAGE_ROOT, 'src') + '/',
       '@cosmic/core': join(PACKAGE_ROOT, '../core/dist'),
-      '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
+      // '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
     },
   },
   plugins: [cStyle(),importMaps([{
       imports: {
         '@cosmic/core/browser':  APP_ROOT + 'packages/core/dist/browser.mjs',
+        '@cosmic/core/parts':  APP_ROOT + 'packages/core/dist/parts.mjs',
         '@cosmic-module/core': APP_ROOT + 'packages/module/core/dist/index.mjs',
-        'vue': APP_ROOT + 'node_modules/vue/dist/vue.runtime.esm-browser.prod.js',
+        '@cosmic-module/frame-menu-bar': APP_ROOT + 'packages/module/frame-menu-bar/dist/index.mjs',
+        '@cosmic-module/frame-workbench': APP_ROOT + 'packages/module/frame-workbench/dist/index.mjs',
+        '@cosmic-module/frame-menu-bar/': APP_ROOT + 'packages/module/frame-menu-bar/dist/',
+        '@cosmic-module/frame-workbench/': APP_ROOT + 'packages/module/frame-workbench/dist/',
+        ...development? {} :{ 
+          'cosmic-vue': resolveLib('cosmic-vue/dist/index.es.js'),
+          'vue': resolveLib('vue/dist/vue.runtime.esm-browser.prod'),
+        },
       },
     }]), vue(), 
   ],
@@ -46,10 +60,10 @@ const config = {
     rollupOptions: {
       input: 'index.html',
       external: [
-        'vue',
-        '@cosmic/core',
+        // 'vue',
+        // '@cosmic/core',
+        // '@cosmic-module/core',
         '@cosmic/core/browser',
-        '@cosmic-module/core',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
     },

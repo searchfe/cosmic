@@ -39,6 +39,7 @@ test('Main window state', async () => {
 test('Main window web content', async () => {
   const page = await electronApp.firstWindow();
   const element = await page.$('body', {strict: true});
+  await page.waitForTimeout(1000);
   expect(element, 'Can\'t find root element').toBeDefined();
   expect((await element.innerHTML()).trim(), 'Window content was empty').not.equal('');
 });

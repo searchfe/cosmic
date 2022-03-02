@@ -12,8 +12,8 @@ export function genConfig(PACKAGE_ROOT) {
     root: PACKAGE_ROOT,
     resolve: {
       alias: {
-        '@cosmic/core': join(PACKAGE_ROOT, '../core/dist'),
-        '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
+        '@cosmic/core': join(PACKAGE_ROOT, '../../core/dist'),
+        '@cosmic-module/': join(PACKAGE_ROOT, '../') + '/',
       },
     },
     plugins: [cStyle(), vue()],
@@ -49,10 +49,12 @@ export function genConfig(PACKAGE_ROOT) {
           },
         ],
         external: [
-          'cosmic-vue',
           'vue',
-          '@cosmic/core',
-          '@cosmic-module/*',
+          'cosmic-vue',
+          '@cosmic/core/browser',
+          '@cosmic/core/parts',
+          '@cosmic-module/frame-menu-bar',
+          '@cosmic-module/frame-workbench',
           ...builtinModules.flatMap(p => [p, `node:${p}`]),
         ],
       },
