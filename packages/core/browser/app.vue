@@ -8,7 +8,7 @@ const { Content, Footer, Header } = Layout;
   <Layout style="height: 100vh">
     <Header>
       <m-component
-        src="@cosmic-module/frame-menu-bar"
+        src="@cosmic-module/app-bar"
       />
     </Header>
     <Content>

@@ -1,5 +1,5 @@
 /* eslint-env node */
-
+import { listOfModule } from '../module/vite.config';
 import {chrome} from '../../.electron-vendors.cache.json';
 import {join, resolve, sep} from 'path';
 import {builtinModules} from 'module';
@@ -16,6 +16,15 @@ function resolveLib(pkg) {
   const libPath = sync(pkg);
   return APP_ROOT + libPath.replace(resolve(PACKAGE_ROOT, '../../') + sep, '');
 }
+
+function moduleImports() {
+  const imps = {};
+  listOfModule().forEach(m => {
+    imps[`@cosmic-module/${m}`] = `${APP_ROOT}packages/module/${m}/dist/index.mjs`;
+  });
+  return imps;
+}
+
 /**
  * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
@@ -34,11 +43,7 @@ const config = {
       imports: {
         '@cosmic/core/browser':  APP_ROOT + 'packages/core/dist/browser.mjs',
         '@cosmic/core/parts':  APP_ROOT + 'packages/core/dist/parts.mjs',
-        '@cosmic-module/core': APP_ROOT + 'packages/module/core/dist/index.mjs',
-        '@cosmic-module/frame-menu-bar': APP_ROOT + 'packages/module/frame-menu-bar/dist/index.mjs',
-        '@cosmic-module/frame-workbench': APP_ROOT + 'packages/module/frame-workbench/dist/index.mjs',
-        '@cosmic-module/frame-menu-bar/': APP_ROOT + 'packages/module/frame-menu-bar/dist/',
-        '@cosmic-module/frame-workbench/': APP_ROOT + 'packages/module/frame-workbench/dist/',
+        ...moduleImports(),
         ...development? {} :{ 
           'cosmic-vue': resolveLib('cosmic-vue/dist/index.es.js'),
           'vue': resolveLib('vue/dist/vue.runtime.esm-browser.prod'),

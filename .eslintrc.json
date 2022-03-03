@@ -21,7 +21,8 @@
   "ignorePatterns": [
     "packages/preload/exposedInMainWorld.d.ts",
     "node_modules/**",
-    "**/dist/**"
+    "**/dist/**",
+    "**/components.d.ts"
   ],
   "rules": {
     "@typescript-eslint/no-unused-vars": "error",
