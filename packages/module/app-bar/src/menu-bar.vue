@@ -12,6 +12,7 @@ function onButtonClicked(index: number, title: string) {
 
 <template>
   <div class="menu-container">
+    <i-cosmic-circles />
     <Button
       class="menu-button"
       c-style="./component/button/button.module.css"

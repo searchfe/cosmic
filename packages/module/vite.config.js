@@ -3,8 +3,14 @@
 import {chrome} from '../../.electron-vendors.cache.json';
 import {resolve, join} from 'path';
 import {builtinModules} from 'module';
+import { readdirSync, statSync } from 'fs-extra';
 import vue from '@vitejs/plugin-vue';
 import { cStyle } from 'cosmic-vue/plugin';
+
+import { cosmicCollectionFactory } from 'cosmic-icon';
+import IconsResolver from 'unplugin-icons/resolver';
+import Components from 'unplugin-vue-components/vite';
+import Icons from 'unplugin-icons/vite';
 
 export function genConfig(PACKAGE_ROOT) {
   return {
@@ -16,7 +22,23 @@ export function genConfig(PACKAGE_ROOT) {
         '@cosmic-module/': join(PACKAGE_ROOT, '../') + '/',
       },
     },
-    plugins: [cStyle(), vue()],
+    plugins: [
+      cStyle(), vue(),
+      Icons({
+          compiler: 'vue3',
+          customCollections: {
+              ...cosmicCollectionFactory(),
+          },
+      }),
+      Components({
+          dts: true,
+          resolvers: [
+              IconsResolver({
+                  customCollections: ['cosmic'],
+              }),
+          ],
+      }),
+    ],
     base: '',
     server: {
       fs: {
@@ -53,8 +75,7 @@ export function genConfig(PACKAGE_ROOT) {
           'cosmic-vue',
           '@cosmic/core/browser',
           '@cosmic/core/parts',
-          '@cosmic-module/frame-menu-bar',
-          '@cosmic-module/frame-workbench',
+          ...listOfModule().map(m => `@cosmic-module/${m}`),
           ...builtinModules.flatMap(p => [p, `node:${p}`]),
         ],
       },
@@ -67,3 +88,16 @@ export function genConfig(PACKAGE_ROOT) {
   };
 }
 export default genConfig(process.cwd());
+
+
+// list.map(dir => resolve(ROOT, dir)).filter(dir => statSync(dir).isDirectory()).map(dir => {
+//   const output = execSync(`cd ${dir} && pnpm run build`, {
+//       encoding: 'utf-8',
+//   });
+//   console.log(output.toString());
+// });
+
+export function listOfModule() {
+  const list = readdirSync(resolve(__dirname, '../module')).filter(dir => statSync(resolve(__dirname, dir)).isDirectory());
+  return list;
+}
