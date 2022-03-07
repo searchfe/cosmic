@@ -27,6 +27,13 @@ function onButtonClicked(index: number, title: string) {
     >
       设计工具
     </Button>
+    <Button
+      class="menu-button"
+      c-style="./component/button/button.module.css"
+      @click="onButtonClicked(3, 'blueprint')"
+    >
+      Blueprint
+    </Button>
   </div>
 </template>
 <style scoped>
