@@ -11,9 +11,10 @@
         "build": "vite build",
         "clean": "rimraf dist"
     },
-    "devDependencies": {
-    },
     "dependencies": {
+        "@urql/exchange-auth": "~0.1.7",
+        "@urql/exchange-graphcache": "~4.3.6",
+        "graphql-ws": "~5.6.2",
         "inversify": "^6.0.1"
     }
 }
