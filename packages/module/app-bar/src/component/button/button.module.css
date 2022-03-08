@@ -6,10 +6,17 @@
     padding: 0 8px;
     line-height: 20px;
     border-radius: 4px;
-    color: rgb(29, 29, 29, .7);
+    color: #D8D8D8;
+    text-shadow: 1px 1px #333;
+    font-size: 1.2rem;
 }
 
 .button:hover {
-    color: rgb(29, 29, 29, .85);
-    background: #f5f6fe;
+    /* #BDBDBD */
+    /* background: #343434; */
+    background: #424242;
+}
+
+.button:global(.selected) {
+    background: #424242;
 }

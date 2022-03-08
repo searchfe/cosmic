@@ -60,8 +60,8 @@
         "vue-tsc": "0.31.1"
     },
     "dependencies": {
-        "cosmic-design": "^0.0.9",
-        "cosmic-vue": "^0.0.22",
+        "cosmic-design": "0.0.11-alpha.0",
+        "cosmic-vue": "0.0.22",
         "electron-updater": "4.6.5",
         "inversify": "^6.0.1",
         "reflect-metadata": "^0.1.13",

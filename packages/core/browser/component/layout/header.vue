@@ -12,6 +12,6 @@
     height: 30px;
     align-items: center;
     flex: none;
-    padding: 0 20px;
+    padding: 0 0;
 }
 </style>

@@ -11,8 +11,8 @@ function onButtonClicked(index: number, title: string) {
 </script>
 
 <template>
-  <div class="menu-container">
-    <i-cosmic-circles />
+  <div class="container">
+    <i-cosmic-circles class="logo" />
     <Button
       class="menu-button"
       c-style="./component/button/button.module.css"
@@ -37,9 +37,22 @@ function onButtonClicked(index: number, title: string) {
   </div>
 </template>
 <style scoped>
-.menu-container {
+.container {
     display: flex;
-    justify-content: center;
-    height: 100%;
+    justify-content: left;
+    height: 30px;
+    background-color: #232323;
+    align-items: center;
+}
+.logo {
+  color: #D8D8D8;
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+  border-radius: 0.4rem;
+  padding-top: 0.1rem;
+  padding-left: 0.2rem;
+}
+.logo:hover {
+    background: #424242;
 }
 </style>

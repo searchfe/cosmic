@@ -15,10 +15,13 @@ import type { Container } from '@cosmic/core/parts';
             type: Boolean,
             default: true,
         },
+        class: {
+            type: String,
+            default: '',
+        },
     });
     const root = ref();
     const cssPath = ref('');
-
 
     onMounted(() => {
         prop.css && fetchStyle(prop.src, cssPath);
@@ -36,5 +39,8 @@ import type { Container } from '@cosmic/core/parts';
     rel="stylesheet"
     :href="cssPath"
   >
-  <section ref="root" />
+  <section
+    ref="root"
+    :class="prop.class"
+  />
 </template>
