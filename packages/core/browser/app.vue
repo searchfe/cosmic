@@ -9,6 +9,7 @@ const { Content, Footer, Header } = Layout;
     <Header>
       <m-component
         src="@cosmic-module/app-bar"
+        class="w-full"
       />
     </Header>
     <Content>
@@ -18,6 +19,7 @@ const { Content, Footer, Header } = Layout;
           <Content>
             <m-component
               src="@cosmic-module/frame-workbench"
+              class="w-full"
             />
           </Content>
         </Layout>
@@ -31,21 +33,20 @@ const { Content, Footer, Header } = Layout;
 
 <style>
 @import 'cosmic-design/global.css';
+@import 'cosmic-design/utilities.css';
 @import 'cosmic-vue/style.css';
-
-* {
+/* * {
     margin: 0;
     padding: 0;
     font-size: 12px;
-    color: #1f1f1f;
-}
+} */
 :root {
     font-size: 10px;
 }
 body {
     margin: 0;
 }
-.d {
-    color: green;
+.w-full {
+  width: 100%;
 }
 </style>

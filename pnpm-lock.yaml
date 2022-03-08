@@ -8,9 +8,9 @@ importers:
       '@typescript-eslint/parser': ^5.10.1
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
-      cosmic-design: ^0.0.9
+      cosmic-design: 0.0.11-alpha.0
       cosmic-icon: 0.0.3-alpha.2
-      cosmic-vue: ^0.0.22
+      cosmic-vue: 0.0.22
       cross-env: 7.0.3
       dts-for-context-bridge: 0.7.1
       electron: 16.0.7
@@ -39,7 +39,7 @@ importers:
       vue: 3.2.29
       vue-tsc: 0.31.1
     dependencies:
-      cosmic-design: 0.0.9
+      cosmic-design: 0.0.11-alpha.0
       cosmic-vue: 0.0.22
       electron-updater: 4.6.5
       inversify: 6.0.1
@@ -1373,8 +1373,8 @@ packages:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: true
 
-  /cosmic-design/0.0.9:
-    resolution: {integrity: sha512-oEc2BeSQCC0xiQenC+GzL3RzRQsary6oFG9EFWfbCGjgIkYqBpkPaKXRfBZ0/fTeD+tUGR4+6Ghmik2a8eZWGg==}
+  /cosmic-design/0.0.11-alpha.0:
+    resolution: {integrity: sha512-sCIwZX+F56ganU8zmNZdKyuqxZrretaq8Ly6IXVwVhyyAyIk0QE8k3Se2M7ojEhVhqrAFQ1eT/NwtncgAg2ZWw==}
     dev: false
 
   /cosmic-icon/0.0.3-alpha.2_vite@2.7.13:
