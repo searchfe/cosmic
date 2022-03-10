@@ -5,7 +5,6 @@ import {resolve, join} from 'path';
 import {builtinModules} from 'module';
 import { readdirSync, statSync } from 'fs-extra';
 import vue from '@vitejs/plugin-vue';
-import { cStyle } from 'cosmic-vue/plugin';
 
 import { cosmicCollectionFactory } from 'cosmic-icon';
 import IconsResolver from 'unplugin-icons/resolver';
@@ -23,7 +22,7 @@ export function genConfig(PACKAGE_ROOT) {
       },
     },
     plugins: [
-      cStyle(), vue(),
+      vue(),
       Icons({
           compiler: 'vue3',
           customCollections: {

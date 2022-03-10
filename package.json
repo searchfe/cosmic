@@ -25,7 +25,8 @@
         "lint": "eslint . --ext js,ts,vue",
         "typecheck:main": "tsc --noEmit -p packages/app/tsconfig.json",
         "typecheck:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
-        "typecheck:site": "npm run build:preload:types && vue-tsc --noEmit -p ./tsconfig.json",
+        "typecheck:site": "npm run build:preload:types",
+        "typecheck:vue": "vue-tsc --noEmit -p ./tsconfig.json",
         "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:site",
         "clean": "rimraf dist",
         "commit": "git-cz"
@@ -35,7 +36,7 @@
         "@typescript-eslint/parser": "^5.10.1",
         "@vitejs/plugin-vue": "2.1.0",
         "@vue/test-utils": "2.0.0-rc.18",
-        "cosmic-icon": "0.0.3-alpha.2",
+        "cosmic-icon": "0.0.5",
         "cross-env": "7.0.3",
         "dts-for-context-bridge": "0.7.1",
         "electron": "16.0.7",
@@ -57,11 +58,11 @@
         "vite-dts": "^1.0.4",
         "vite-plugin-import-maps": "^0.1.2",
         "vitest": "0.2.3",
-        "vue-tsc": "0.31.1"
+        "vue-tsc": "0.32.1"
     },
     "dependencies": {
-        "cosmic-design": "0.0.11-alpha.0",
-        "cosmic-vue": "0.0.22",
+        "cosmic-ui-alpha": "^0.0.15",
+        "cosmic-vue": "0.0.28",
         "electron-updater": "4.6.5",
         "inversify": "^6.0.1",
         "reflect-metadata": "^0.1.13",

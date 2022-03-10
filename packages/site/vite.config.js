@@ -4,7 +4,6 @@ import {chrome} from '../../.electron-vendors.cache.json';
 import {join, resolve, sep} from 'path';
 import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
-import { cStyle } from 'cosmic-vue/plugin';
 import { importMaps } from 'vite-plugin-import-maps';
 import { sync } from 'resolve';
 
@@ -36,15 +35,17 @@ const config = {
     alias: {
       // '/@/': join(PACKAGE_ROOT, 'src') + '/',
       '@cosmic/core': join(PACKAGE_ROOT, '../core/dist'),
+      'cosmic-ui': 'cosmic-ui-alpha',
       // '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
     },
   },
-  plugins: [cStyle(),importMaps([{
+  plugins: [importMaps([{
       imports: {
         '@cosmic/core/browser':  APP_ROOT + 'packages/core/dist/browser.mjs',
         '@cosmic/core/parts':  APP_ROOT + 'packages/core/dist/parts.mjs',
         ...moduleImports(),
         ...development? {} :{ 
+          'cosmic-ui': resolveLib('cosmic-ui-alpha/dist/index.es.js'),
           'cosmic-vue': resolveLib('cosmic-vue/dist/index.es.js'),
           'vue': resolveLib('vue/dist/vue.runtime.esm-browser.prod'),
         },
