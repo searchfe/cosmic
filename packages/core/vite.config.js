@@ -5,7 +5,6 @@ import {writeFileSync, ensureDirSync} from 'fs-extra';
 import {join, resolve} from 'path';
 import {builtinModules} from 'module';
 import vue from '@vitejs/plugin-vue';
-import { cStyle } from 'cosmic-vue/plugin';
 
 const PACKAGE_ROOT = __dirname;
 
@@ -20,9 +19,10 @@ const config = {
     alias: {
       // '/@/': join(PACKAGE_ROOT, 'src') + '/',
       '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
+      'cosmic-ui': 'cosmic-ui-alpha',
     },
   },
-  plugins: [cStyle(), vue()],
+  plugins: [vue()],
   base: '',
   server: {
     fs: {
@@ -61,6 +61,7 @@ const config = {
       external: [
         'vue',
         'cosmic-vue',
+        'cosmic-ui',
         '@cosmic/core/parts',
         '@cosmic/core/browser',
         '@cosmic-module/core',

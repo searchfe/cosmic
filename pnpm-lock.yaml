@@ -8,9 +8,9 @@ importers:
       '@typescript-eslint/parser': ^5.10.1
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
-      cosmic-design: 0.0.11-alpha.0
-      cosmic-icon: 0.0.3-alpha.2
-      cosmic-vue: 0.0.22
+      cosmic-icon: 0.0.5
+      cosmic-ui-alpha: ^0.0.15
+      cosmic-vue: 0.0.28
       cross-env: 7.0.3
       dts-for-context-bridge: 0.7.1
       electron: 16.0.7
@@ -37,10 +37,10 @@ importers:
       vite-plugin-import-maps: ^0.1.2
       vitest: 0.2.3
       vue: 3.2.29
-      vue-tsc: 0.31.1
+      vue-tsc: 0.32.1
     dependencies:
-      cosmic-design: 0.0.11-alpha.0
-      cosmic-vue: 0.0.22
+      cosmic-ui-alpha: 0.0.15
+      cosmic-vue: 0.0.28
       electron-updater: 4.6.5
       inversify: 6.0.1
       reflect-metadata: 0.1.13
@@ -51,7 +51,7 @@ importers:
       '@typescript-eslint/parser': 5.11.0_eslint@8.7.0+typescript@4.5.5
       '@vitejs/plugin-vue': 2.1.0_vite@2.7.13+vue@3.2.29
       '@vue/test-utils': 2.0.0-rc.18_vue@3.2.29
-      cosmic-icon: 0.0.3-alpha.2_vite@2.7.13
+      cosmic-icon: 0.0.5_vite@2.7.13
       cross-env: 7.0.3
       dts-for-context-bridge: 0.7.1
       electron: 16.0.7
@@ -73,7 +73,7 @@ importers:
       vite-dts: 1.0.4_vite@2.7.13
       vite-plugin-import-maps: 0.1.2
       vitest: 0.2.3_happy-dom@2.30.1
-      vue-tsc: 0.31.1_typescript@4.5.5
+      vue-tsc: 0.32.1_typescript@4.5.5
 
   packages/core:
     specifiers:
@@ -613,15 +613,15 @@ packages:
       vue: 3.2.29
     dev: true
 
-  /@volar/code-gen/0.31.1:
-    resolution: {integrity: sha512-HsUNJHBdq4vGxenYlREqtBNf1Gh5JV1GBkD703bcH8clauc7ADTkUrayfLAF2ulXP/U0l7dFL8C8bwqJ7PZbMw==}
+  /@volar/code-gen/0.32.1:
+    resolution: {integrity: sha512-xk0xJd2NcuQK8SvcQ/Gpvrch3gnd3RjKnHKEFODO6H6UtDpgXQCFprs+j0AuZZWDhVWEShEjuh1jwMmja6qvxg==}
     dependencies:
-      '@volar/shared': 0.31.1
-      '@volar/source-map': 0.31.1
+      '@volar/shared': 0.32.1
+      '@volar/source-map': 0.32.1
     dev: true
 
-  /@volar/html2pug/0.31.1:
-    resolution: {integrity: sha512-m/lbsz9t+zXx9HsuLH17Z/5nNtefv5qxncL8rycR+GaypHQKF5kg+GqQNOURMQ8T8lq2D6fNsGQOcMXoo3IqWQ==}
+  /@volar/html2pug/0.32.1:
+    resolution: {integrity: sha512-jWSaiB3W4HFP4wQh91r5kB6161QvSXQjBVE5XiCSFSOXep+FGZ1yyPN03RIznJQE45yv65eJnwW9yxKg+f1YWw==}
     dependencies:
       domelementtype: 2.2.0
       domhandler: 4.3.0
@@ -629,8 +629,8 @@ packages:
       pug: 3.0.2
     dev: true
 
-  /@volar/shared/0.31.1:
-    resolution: {integrity: sha512-WbMiPOlXbpFinZnQ+/qsJQ7+YW6MFla2fLdD6Er5bLW5DEXI+GupLQ2gnia7F0w6QborMowfOIEXnrnMPPYGOA==}
+  /@volar/shared/0.32.1:
+    resolution: {integrity: sha512-WROOlXKjtUrnYtx0CXCh/MAKg+Fq0nx5GEKGIpmrFnB/NZku8noOV/e8vS92wTe3JypbJmspU5RwmARcMFRhMg==}
     dependencies:
       upath: 2.0.1
       vscode-html-languageservice: 4.2.1
@@ -638,26 +638,26 @@ packages:
       vscode-uri: 3.0.3
     dev: true
 
-  /@volar/source-map/0.31.1:
-    resolution: {integrity: sha512-t+bUmxI5bkunBxX6UYpBX6+xnYYJhpciL3Hqv0dkHSaS63kJqY13OhV/utmQMjto3b3FAbYLSVqpt09FtdTPzg==}
+  /@volar/source-map/0.32.1:
+    resolution: {integrity: sha512-5QaCf0w/h24MTjk61QntSL7LYDAPPLIqcbYm3eR+WpGy+Gf9sQ1DlFBDCLFmFJfUyZNCE++HCzep9FBJ5K3VGA==}
     dependencies:
-      '@volar/shared': 0.31.1
+      '@volar/shared': 0.32.1
       vscode-languageserver-textdocument: 1.0.4
     dev: true
 
-  /@volar/transforms/0.31.1:
-    resolution: {integrity: sha512-O9rrGwCTzzsVFe06WOKUx7f9rkPg396ugWkMX6O0M15EF1a3ykqH7QX1uxVhFS0NwvWDnIeJYe7NG1uf1BwR+w==}
+  /@volar/transforms/0.32.1:
+    resolution: {integrity: sha512-J7DwwB/vjyKrJwnWkR+xM2YTzixbN2G499r56TMe8/uDiZsq7LEGrCNKi6H9k9yeqoL69puq1fQUT3Qrz2Pzwg==}
     dependencies:
-      '@volar/shared': 0.31.1
+      '@volar/shared': 0.32.1
       vscode-languageserver-types: 3.17.0-next.7
     dev: true
 
-  /@volar/vue-code-gen/0.31.1:
-    resolution: {integrity: sha512-MBMqhE+Z7xt2MSeQQA4ld0qx894gr5eLFWkTORdNoCbK8+02oB3yrZVr3T+i9jprjiV6svXKBoyk0RZ6YsgNqw==}
+  /@volar/vue-code-gen/0.32.1:
+    resolution: {integrity: sha512-JVTmr+hSAgBiLnqewIHn9j9V+28UGigfWVxslBUbz1PwTUeDvVEP7hr3pU3jGWjyj3KjhkVGAFYrpIiGsphyQg==}
     dependencies:
-      '@volar/code-gen': 0.31.1
-      '@volar/shared': 0.31.1
-      '@volar/source-map': 0.31.1
+      '@volar/code-gen': 0.32.1
+      '@volar/shared': 0.32.1
+      '@volar/source-map': 0.32.1
       '@vue/compiler-core': 3.2.31
       '@vue/compiler-dom': 3.2.31
       '@vue/shared': 3.2.31
@@ -1373,12 +1373,8 @@ packages:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: true
 
-  /cosmic-design/0.0.11-alpha.0:
-    resolution: {integrity: sha512-sCIwZX+F56ganU8zmNZdKyuqxZrretaq8Ly6IXVwVhyyAyIk0QE8k3Se2M7ojEhVhqrAFQ1eT/NwtncgAg2ZWw==}
-    dev: false
-
-  /cosmic-icon/0.0.3-alpha.2_vite@2.7.13:
-    resolution: {integrity: sha512-AYraDBwZiX13Ao7vifxcyN5Y0vGI/LWyYdi+DseGaNeyllKRgs55sZtMSROH91LMmB383lLv8Ru4r38svTE7eQ==}
+  /cosmic-icon/0.0.5_vite@2.7.13:
+    resolution: {integrity: sha512-ZvMbaV+GBl7LEJgsX0qqhlPKiXZRd30VC5NML/3+iDB8ZW04Bb9DCZ5K1FkKA0MF2n8cR/pglbHkpcp13Irl9w==}
     dependencies:
       unplugin-icons: 0.13.2_vite@2.7.13
     transitivePeerDependencies:
@@ -1393,8 +1389,12 @@ packages:
       - webpack
     dev: true
 
-  /cosmic-vue/0.0.22:
-    resolution: {integrity: sha512-viQEGUzgf/B6gJ8WrPGAxW6fCS1bDWzORao/t+myrgMo1EiFjPPBiSoJgaTZdJAS986qopKk0hoQpaBdjWmPOQ==}
+  /cosmic-ui-alpha/0.0.15:
+    resolution: {integrity: sha512-nx0pqy6yUWLhTq466TiZHybARdezOF2Ep9Bbp0P3NXxMCB+vhvtD8yyVuT+xRGoCvD7Fk+Ns8rTnjvCUsafiEA==}
+    dev: false
+
+  /cosmic-vue/0.0.28:
+    resolution: {integrity: sha512-XXblED4LmdEl1gj0V1845pPxCqJLZpB8ShgLfs3Plki6oE919WIZ5pwEcJpFcGMDN8gsgCokNj/W/mrJRISxiQ==}
     dependencies:
       '@babel/types': 7.17.0
       lodash.kebabcase: 4.1.1
@@ -4482,23 +4482,25 @@ packages:
     resolution: {integrity: sha512-u0Lw+IYlgbEJFF6/qAqG2d1jQmJl0eyAGJHoAJqr2HT4M2BNuQYSEiSE75f52pXHSJm8AlTjnLLbBFPrdz2hpA==}
     dev: true
 
-  /vscode-pug-languageservice/0.31.1:
-    resolution: {integrity: sha512-71aQbVF3RjE+dUbUA/DnL1oGaLXXIMEy5z4TkE/irO/qodMjfwVbW/bxMCBwrVrXmIObIMlsWYPD+S/+EE3CXQ==}
+  /vscode-pug-languageservice/0.32.1:
+    resolution: {integrity: sha512-kPmucTsCuEKk4f/2T549htcCxfkxReGkQG8j+nA0vvVhVGrjbQOiTgPk+KEA75PmrO6353p5ACXQiG0zI/O+AA==}
+    deprecated: 'WARNING: This project has been renamed to @volar/pug-language-service. Install using @volar/pug-language-service instead.'
     dependencies:
-      '@volar/code-gen': 0.31.1
-      '@volar/shared': 0.31.1
-      '@volar/source-map': 0.31.1
-      '@volar/transforms': 0.31.1
+      '@volar/code-gen': 0.32.1
+      '@volar/shared': 0.32.1
+      '@volar/source-map': 0.32.1
+      '@volar/transforms': 0.32.1
       pug-lexer: 5.0.1
       pug-parser: 6.0.0
       vscode-languageserver-textdocument: 1.0.4
       vscode-languageserver-types: 3.17.0-next.7
     dev: true
 
-  /vscode-typescript-languageservice/0.31.1:
-    resolution: {integrity: sha512-qJlkrznmRJGHAxIclfnAuJSbNfmKwDfAn7o3PLM7bBqtBvJG6HAFCBXaBWaE1kkM/ELG20Dn8Xi7lCfT15DlpA==}
+  /vscode-typescript-languageservice/0.32.1:
+    resolution: {integrity: sha512-7fFYTadMF/LkoNKmawipNefFPu3MCloWqiWFgbUKsjvvAAER/dY0W7Zml0/Qaj0eXriLoe0KabA3nWTiCxXAMQ==}
+    deprecated: 'WARNING: This project has been renamed to @volar/typescript-language-service. Install using @volar/typescript-language-service instead.'
     dependencies:
-      '@volar/shared': 0.31.1
+      '@volar/shared': 0.32.1
       semver: 7.3.5
       upath: 2.0.1
       vscode-languageserver-protocol: 3.17.0-next.14
@@ -4514,15 +4516,16 @@ packages:
     resolution: {integrity: sha512-EcswR2S8bpR7fD0YPeS7r2xXExrScVMxg4MedACaWHEtx9ftCF/qHG1xGkolzTPcEmjTavCQgbVzHUIdTMzFGA==}
     dev: true
 
-  /vscode-vue-languageservice/0.31.1:
-    resolution: {integrity: sha512-7HY4VkD00iyfWyWpJcl3zObnsa9gBKGjTtrWflFR0SqGHMsccfh7QXdrPmgy/2nFRkD6n60XU7eSYg2rN/QexA==}
+  /vscode-vue-languageservice/0.32.1:
+    resolution: {integrity: sha512-tme8aDa/ScQnACIvMWGOoHQsoDZAsp2qa+EGXEtqpcyPGBmrVlu0R/TAzRl43gVe6tv3qVPOv3s0XdK/1bMPBQ==}
+    deprecated: 'WARNING: This project has been renamed to @volar/vue-language-service. Install using @volar/vue-language-service instead.'
     dependencies:
-      '@volar/code-gen': 0.31.1
-      '@volar/html2pug': 0.31.1
-      '@volar/shared': 0.31.1
-      '@volar/source-map': 0.31.1
-      '@volar/transforms': 0.31.1
-      '@volar/vue-code-gen': 0.31.1
+      '@volar/code-gen': 0.32.1
+      '@volar/html2pug': 0.32.1
+      '@volar/shared': 0.32.1
+      '@volar/source-map': 0.32.1
+      '@volar/transforms': 0.32.1
+      '@volar/vue-code-gen': 0.32.1
       '@vscode/emmet-helper': 2.8.4
       '@vue/reactivity': 3.2.31
       '@vue/shared': 3.2.31
@@ -4532,8 +4535,8 @@ packages:
       vscode-json-languageservice: 4.2.0
       vscode-languageserver-protocol: 3.17.0-next.14
       vscode-languageserver-textdocument: 1.0.4
-      vscode-pug-languageservice: 0.31.1
-      vscode-typescript-languageservice: 0.31.1
+      vscode-pug-languageservice: 0.32.1
+      vscode-typescript-languageservice: 0.32.1
     dev: true
 
   /vue-eslint-parser/8.2.0_eslint@8.7.0:
@@ -4554,15 +4557,15 @@ packages:
       - supports-color
     dev: true
 
-  /vue-tsc/0.31.1_typescript@4.5.5:
-    resolution: {integrity: sha512-pyLQG1fCA02is6NAL0uY5SKxDfjJRI167x89iRz0gWOB0tUng6NjJZicE+Oh+3ZuN/LJ3J/wKfdW7O+hnfhxdg==}
+  /vue-tsc/0.32.1_typescript@4.5.5:
+    resolution: {integrity: sha512-HR34cFr14GDpV9WMX0kMxIAvieg735Q5sQ67MkIBEXtjuR2Yo5y43noiMMjoHZ6YqcjidXlCFbBiJrplLX/W7w==}
     hasBin: true
     peerDependencies:
       typescript: '*'
     dependencies:
-      '@volar/shared': 0.31.1
+      '@volar/shared': 0.32.1
       typescript: 4.5.5
-      vscode-vue-languageservice: 0.31.1
+      vscode-vue-languageservice: 0.32.1
     dev: true
 
   /vue/3.2.29:

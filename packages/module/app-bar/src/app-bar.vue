@@ -2,6 +2,7 @@
 import { inject } from '@cosmic/core/parts';
 import { Button } from 'cosmic-vue';
 import MenuService from './menu.service';
+import ButtonStyle from './component/button/button.module.css';
 
 const service = inject(MenuService);
 
@@ -15,21 +16,21 @@ function onButtonClicked(index: number, title: string) {
     <i-cosmic-circles class="logo" />
     <Button
       class="menu-button"
-      c-style="./component/button/button.module.css"
+      :styles="ButtonStyle"
       @click="onButtonClicked(1, '文件')"
     >
       资产管理
     </Button>
     <Button
       class="menu-button"
-      c-style="./component/button/button.module.css"
+      :styles="ButtonStyle"
       @click="onButtonClicked(2, '编辑')"
     >
       设计工具
     </Button>
     <Button
       class="menu-button"
-      c-style="./component/button/button.module.css"
+      :styles="ButtonStyle"
       @click="onButtonClicked(3, 'blueprint')"
     >
       Blueprint
@@ -49,8 +50,6 @@ function onButtonClicked(index: number, title: string) {
   font-size: 1.5rem;
   margin-left: 0.5rem;
   border-radius: 0.4rem;
-  padding-top: 0.1rem;
-  padding-left: 0.2rem;
 }
 .logo:hover {
     background: #424242;

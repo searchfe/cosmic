@@ -32,8 +32,7 @@ const { Content, Footer, Header } = Layout;
 </template>
 
 <style>
-@import 'cosmic-design/global.css';
-@import 'cosmic-design/utilities.css';
+@import 'cosmic-ui/ui.css';
 @import 'cosmic-vue/style.css';
 /* * {
     margin: 0;
