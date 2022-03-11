@@ -1,10 +1,10 @@
 import type { interfaces } from 'inversify';
+import type { DefineComponent } from 'vue';
 
 
 type QuerySelector = string;
 type ModuleId = string;
 
-import type { DefineComponent } from 'vue';
 
 export interface BootstrapOption {
   root: QuerySelector;
@@ -17,4 +17,3 @@ export interface Module {
   // declarations: [],
   imports?: ModuleId[],
 }
-export type { interfaces as inversify };
