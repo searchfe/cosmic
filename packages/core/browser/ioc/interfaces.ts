@@ -1,5 +1,3 @@
-export interface GqlClient {
-    useQuery: () => void;
-}
+import type { gqlClient } from './entity/gql';
 
-export type GqlClientProvider = () => Promise<GqlClient>;
+export type GqlClient = typeof gqlClient;

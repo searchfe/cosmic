@@ -1,9 +1,9 @@
 // import { EventEmitter2 } from 'eventemitter2';
-import { Observer, injectable } from '@cosmic/core/parts';
+import { Observer, inversify } from '@cosmic/core/parts';
 interface Data {
     [key: string]: string;
 }
-@injectable()
+@inversify.injectable()
 export default class MenuService {
     private ob: Observer;
     constructor() {

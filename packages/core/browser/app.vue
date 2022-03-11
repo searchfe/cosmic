@@ -1,39 +1,33 @@
 <script lang="ts" setup>
-import Layout from './component/layout';
+import { Layout } from 'cosmic-vue';
+
+
 const { Content, Footer, Header } = Layout;
 
 </script>
 
 <template>
-  <Layout style="height: 100vh">
-    <Header>
-      <m-component
-        src="@cosmic-module/app-bar"
-        class="w-full"
-      />
-    </Header>
-    <Content>
-      <Layout>
-        <!-- put siders here -->
-        <Layout>
-          <Content>
+    <Layout style="height: 100vh">
+        <Header>
             <m-component
-              src="@cosmic-module/frame-workbench"
-              class="w-full"
+                src="@cosmic-module/app-bar"
+                class="w-full"
             />
-          </Content>
-        </Layout>
-      </Layout>
-    </Content>
-    <Footer>
-      this is the footer
-    </Footer>
-  </Layout>
+        </Header>
+        <Content>
+        <!-- <m-component
+            src="@cosmic-module/resource-explorer"
+            class="w-full h-full"
+        /> -->
+        </Content>
+        <Footer>
+            this is the footer
+        </Footer>
+    </Layout>
 </template>
 
 <style>
 @import 'cosmic-ui/ui.css';
-@import 'cosmic-vue/style.css';
 /* * {
     margin: 0;
     padding: 0;
@@ -46,6 +40,9 @@ body {
     margin: 0;
 }
 .w-full {
-  width: 100%;
+    width: 100%;
+}
+.h-full {
+    height: 100%;
 }
 </style>

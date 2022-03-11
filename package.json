@@ -34,7 +34,6 @@
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "5.10.1",
         "@typescript-eslint/parser": "^5.10.1",
-        "@urql/vue": "~0.6.1",
         "@vitejs/plugin-vue": "2.1.0",
         "@vue/test-utils": "2.0.0-rc.18",
         "cosmic-icon": "0.0.5",
@@ -63,10 +62,9 @@
         "vue-tsc": "0.32.1"
     },
     "dependencies": {
-        "cosmic-ui-alpha": "^0.0.15",
-        "cosmic-vue": "0.0.28",
+        "cosmic-ui-alpha": "^0.0.16-alpha.4",
+        "cosmic-vue": "0.0.29-alpha.2",
         "electron-updater": "4.6.5",
-        "inversify": "^6.0.1",
         "reflect-metadata": "^0.1.13",
         "resolve": "^1.22.0",
         "vue": "3.2.29"
