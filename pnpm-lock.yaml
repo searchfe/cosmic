@@ -9,8 +9,8 @@ importers:
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
       cosmic-icon: 0.0.5
-      cosmic-ui-alpha: ^0.0.16-alpha.8
-      cosmic-vue: 0.0.29-alpha.8
+      cosmic-ui-alpha: ^0.0.16-alpha.9
+      cosmic-vue: 0.0.29-alpha.10
       cross-env: 7.0.3
       dts-for-context-bridge: 0.7.1
       electron: 16.0.7
@@ -39,8 +39,8 @@ importers:
       vue: 3.2.29
       vue-tsc: 0.32.1
     dependencies:
-      cosmic-ui-alpha: 0.0.16-alpha.8
-      cosmic-vue: 0.0.29-alpha.8
+      cosmic-ui-alpha: 0.0.16-alpha.9
+      cosmic-vue: 0.0.29-alpha.10
       electron-updater: 4.6.5
       reflect-metadata: 0.1.13
       resolve: 1.22.0
@@ -804,8 +804,8 @@ packages:
       '@vue/shared': 3.2.29
     dev: false
 
-  /@vue/devtools-api/6.0.13:
-    resolution: {integrity: sha512-T34EjcArVqzANedEZe2kXQ+AZsld2z1ptJlkOGm87+blk+s6udnP4ze/NYqV8lz1o9AIivimN0xxteLlWiWQdg==}
+  /@vue/devtools-api/6.1.0:
+    resolution: {integrity: sha512-1FtbxEEHN70WGJl1b/h8nLmyN+tOHONNsNLvgVEXF/L/vBrRqQZ0kF+dev1YAz3OtxsQ1sV/vPLKwRlq1axrgg==}
     dev: false
 
   /@vue/reactivity-transform/3.2.29:
@@ -1481,12 +1481,12 @@ packages:
       - webpack
     dev: true
 
-  /cosmic-ui-alpha/0.0.16-alpha.8:
-    resolution: {integrity: sha512-PKJkLxHS68lvrI6qfRpbTVjYyX+o0PaEXtr4/pytSJUURWS4E1pSjGcnFxXUEbbkWjL3L9U8oke+ahAxYinfcQ==}
+  /cosmic-ui-alpha/0.0.16-alpha.9:
+    resolution: {integrity: sha512-V2sN0IOakX0qlu9f2f35FSe4AULJ0uQndjiKgIEbwbL1SBJ5luacsEd87JjIcXjreVSnGUZ6M/rNwCMEYEWq3g==}
     dev: false
 
-  /cosmic-vue/0.0.29-alpha.8:
-    resolution: {integrity: sha512-CZOwJVD9jlpHdSc2x3RXIlxGIp8z+b88eUa/dNUb4YNPq06Tv3Q4WoWEehRWXg3UILQTsYdMipl9hD3r59iX/w==}
+  /cosmic-vue/0.0.29-alpha.10:
+    resolution: {integrity: sha512-3lYbii47r6wjXMQOUfu1/BkF5MQ4OlSZYgGMwuKYrN+8o52uzQ/NovUUGy5bhJY4uv3yYfKa4DoeEbzAf26BjA==}
     dependencies:
       '@babel/types': 7.17.0
       lodash.kebabcase: 4.1.1
@@ -4916,7 +4916,7 @@ packages:
     peerDependencies:
       vue: ^3.2.0
     dependencies:
-      '@vue/devtools-api': 6.0.13
+      '@vue/devtools-api': 6.1.0
       vue: 3.2.29
     dev: false
 
