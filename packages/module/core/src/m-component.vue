@@ -1,11 +1,12 @@
 <script lang="ts">
 import { inject, onMounted, ref, watch } from 'vue';
 import { fetchModule, fetchStyle, bootstrapModule } from './module-util';
-import type { Container } from '@cosmic/core/parts';
+
+import type { inversify } from '@cosmic/core/parts';
 
 </script>
 <script setup lang="ts">
-    const container = inject('container') as Container;
+    const container = inject('container') as typeof inversify.Container;
     const prop = defineProps({
         src: {
             type: String,

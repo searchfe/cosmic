@@ -3,7 +3,7 @@ import { Layout } from 'cosmic-vue';
 import { RouterView } from 'vue-router';
 
 
-const { Content, Footer, Header } = Layout;
+const { Content, Header } = Layout;
 
 </script>
 
@@ -18,9 +18,6 @@ const { Content, Footer, Header } = Layout;
         <Content>
             <router-view />
         </Content>
-        <Footer>
-            this is the footer
-        </Footer>
     </Layout>
 </template>
 
@@ -34,11 +31,5 @@ const { Content, Footer, Header } = Layout;
 }
 body {
     margin: 0;
-}
-.w-full {
-    width: 100%;
-}
-.h-full {
-    height: 100%;
 }
 </style>
