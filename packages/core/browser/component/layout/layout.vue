@@ -3,12 +3,12 @@ const hasSider = false;
 </script>
 
 <template>
-  <section
-    class="layout"
-    :class="{ hasSider }"
-  >
-    <slot />
-  </section>
+    <section
+        class="layout"
+        :class="{ hasSider }"
+    >
+        <slot />
+    </section>
 </template>
 
 <style>

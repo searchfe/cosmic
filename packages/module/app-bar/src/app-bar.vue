@@ -12,30 +12,30 @@ function onButtonClicked(index: number, title: string) {
 </script>
 
 <template>
-  <div class="container">
-    <i-cosmic-circles class="logo" />
-    <Button
-      class="menu-button"
-      :styles="ButtonStyle"
-      @click="onButtonClicked(1, '文件')"
-    >
-      资产管理
-    </Button>
-    <Button
-      class="menu-button"
-      :styles="ButtonStyle"
-      @click="onButtonClicked(2, '编辑')"
-    >
-      设计工具
-    </Button>
-    <Button
-      class="menu-button"
-      :styles="ButtonStyle"
-      @click="onButtonClicked(3, 'blueprint')"
-    >
-      Blueprint
-    </Button>
-  </div>
+    <div class="container">
+        <i-cosmic-circles class="logo" />
+        <Button
+            class="menu-button"
+            :styles="ButtonStyle"
+            @click="onButtonClicked(1, '文件')"
+        >
+            资产管理
+        </Button>
+        <Button
+            class="menu-button"
+            :styles="ButtonStyle"
+            @click="onButtonClicked(2, '编辑')"
+        >
+            设计工具
+        </Button>
+        <Button
+            class="menu-button"
+            :styles="ButtonStyle"
+            @click="onButtonClicked(3, 'blueprint')"
+        >
+            Blueprint
+        </Button>
+    </div>
 </template>
 <style scoped>
 .container {

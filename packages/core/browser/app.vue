@@ -33,6 +33,9 @@ const { Content, Footer, Header } = Layout;
     padding: 0;
     font-size: 12px;
 } */
+* {
+    box-sizing: border-box;
+}
 :root {
     font-size: 10px;
 }

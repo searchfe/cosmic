@@ -1,7 +1,7 @@
 <template>
-  <header class="layout layout-header">
-    <slot />
-  </header>
+    <header class="layout layout-header">
+        <slot />
+    </header>
 </template>
 
 <style>

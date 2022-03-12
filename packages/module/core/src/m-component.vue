@@ -34,13 +34,13 @@ import type { Container } from '@cosmic/core/parts';
 
 </script>
 <template>
-  <link
-    v-if="cssPath"
-    rel="stylesheet"
-    :href="cssPath"
-  >
-  <section
-    ref="root"
-    :class="prop.class"
-  />
+    <link
+        v-if="cssPath"
+        rel="stylesheet"
+        :href="cssPath"
+    >
+    <section
+        ref="root"
+        :class="prop.class"
+    />
 </template>
