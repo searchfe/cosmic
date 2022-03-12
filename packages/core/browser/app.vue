@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Layout } from 'cosmic-vue';
+import { RouterView } from 'vue-router';
 
 
 const { Content, Footer, Header } = Layout;
@@ -15,10 +16,7 @@ const { Content, Footer, Header } = Layout;
             />
         </Header>
         <Content>
-        <!-- <m-component
-            src="@cosmic-module/resource-explorer"
-            class="w-full h-full"
-        /> -->
+            <router-view />
         </Content>
         <Footer>
             this is the footer
@@ -28,11 +26,6 @@ const { Content, Footer, Header } = Layout;
 
 <style>
 @import 'cosmic-ui/ui.css';
-/* * {
-    margin: 0;
-    padding: 0;
-    font-size: 12px;
-} */
 * {
     box-sizing: border-box;
 }
