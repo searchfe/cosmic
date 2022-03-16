@@ -1,0 +1,14 @@
+{
+    "name": "@cosmic-module/text-widget",
+    "version": "0.0.1",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "scripts": {
+        "build": "vite build",
+        "clean": "rimraf dist"
+    },
+    "devDependencies": {
+    },
+    "dependencies": {
+    }
+}

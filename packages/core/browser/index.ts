@@ -9,6 +9,9 @@ import { routify } from './routes';
 
 import type { BootstrapOption } from '@cosmic/core/parts';
 
+import MColor from './component/color/color.vue';
+import MTitle from './component/title/title.vue';
+
 
 function bootstrap(option: BootstrapOption) {
     const app = createApp(App);
@@ -17,8 +20,11 @@ function bootstrap(option: BootstrapOption) {
     app.component('m-component', MComponent);
     // gql
     app.use(urqlPlugin, gqlClientOptions);
+
+    const router = routify();
+
     // router
-    app.use(routify());
+    app.use(router);
     // ioc container
     app.provide('container', createContainer({ defaultScope: 'Singleton' }));
 
@@ -31,3 +37,4 @@ export { bootstrap };
 export * as urql from '@urql/vue';
 export * as router from 'vue-router';
 export { default as lodash } from 'lodash';
+export { MColor, MTitle };

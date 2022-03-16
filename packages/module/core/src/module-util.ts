@@ -9,6 +9,7 @@ export function bootstrapModule(
     container: Container,
     inherit?: string[] | boolean,
     rootProviders: any[],
+    context: object,
 ) {
     return async function(module: Module) {
         if (!root) return;
@@ -22,6 +23,7 @@ export function bootstrapModule(
         if (module.root) {
             const moduleApp = createApp(module.root);
             moduleApp.provide('container', container);
+            moduleApp.provide('context', context);
             if (inherit) {
                 addInherit(moduleApp, inherit, rootProviders);
             }

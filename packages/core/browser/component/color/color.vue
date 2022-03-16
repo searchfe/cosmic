@@ -1,0 +1,159 @@
+<script lang="ts" setup>
+import { ref, defineEmits } from 'vue';
+const props = withDefaults(defineProps<{
+    theme?: 'light' | 'dark',
+    color?: string,
+    opacity?: string,
+    
+}>(),  {
+    theme: 'light',
+    color: '#000000',
+    opacity: '100%',
+});
+
+const emits = defineEmits(['onChange']);
+
+const rg = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/;
+
+const color = ref(props.color);
+
+const opacity = ref(props.opacity);
+
+const theme = ref(props.theme);
+
+const changeEvent = () => {
+    emits('onChange', {color: color.value, opacity: opacity.value, theme: theme.value});
+};
+
+const colorBurHandler = () => {
+    let value = color.value || '';
+    if (!value.startsWith('#')) value = `#${value}`;
+    rg.test(value) ? color.value = value : color.value = '#000000';
+    changeEvent();
+};
+
+const opacityBurHandler = () => {
+    console.log(opacity.value);
+    let number = Number(opacity.value || 100);
+    if (Object.is(NaN, number)) number = 100;
+    let value = number;
+    if (value > 100 || value < 0) value = 100;
+    opacity.value = `${value}%`;
+    changeEvent();
+};
+
+const focusHandler = (event:FocusEvent) => {
+    const target = event.target as HTMLInputElement;
+    target.select();
+};
+
+const themeClickHandler = () => {
+    theme.value = theme.value === 'light' ? 'dark' : 'light';
+    changeEvent();
+};
+
+</script>
+
+<template>
+    <div
+        :class="[$style.color, $style['color-border']]"
+    >
+        <div 
+            :class="$style.theme"
+            @click="themeClickHandler"
+        >
+            <i-cosmic-sun
+                v-if="theme === 'light'"
+            />
+            <i-cosmic-dark 
+                v-else
+            />
+        </div>
+        <div :class="$style['color-value']">
+            <div 
+                :class="$style['show-color']"
+                :style="{backgroundColor: color, opacity: opacity}"
+            />
+            <input
+                v-model="color"
+                :class="[$style.input]"
+                :size="10"
+                @focus="focusHandler"
+                @blur="colorBurHandler"
+            >
+        </div>
+        <div :class="$style.divider" />
+        <div :class="$style.opacity">
+            <input
+                v-model="opacity"
+                :class="[$style.input]"
+                :size="5"
+                @focus="focusHandler"
+                @blur="opacityBurHandler"
+            >
+        </div>
+    </div>
+</template>
+
+<style module>
+.color {
+    display: flex;
+    height: 28px;
+    margin: 2px;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin: 0 var(--padding-md);
+}
+
+.color > div {
+    flex: 1;
+}
+
+.color:hover.color-border, .color:active.color-border {
+    border: 1px solid var(--color-gray-200);
+}
+
+.color > .theme {
+    flex: 0 1 auto;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+
+
+
+.divider {
+    height: 100%;
+    max-width: 1px;
+}
+
+.color:hover > .divider {
+    background-color: var(--color-gray-200);
+}
+
+.color > .color-value {
+    flex: 2;
+    display: flex;
+    margin-right: 5px
+}
+
+.show-color {
+    width: 17px;
+    flex:  0 1 auto;
+    margin-right: 4px;
+    border-radius: 4px;
+}
+
+.opacity {
+    flex: 1;
+    margin-left: .4rem;
+}
+.input {
+    border: none;
+    outline: none;
+}
+
+</style>

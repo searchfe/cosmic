@@ -6,6 +6,10 @@ import { join, resolve } from 'path';
 import { builtinModules } from 'module';
 import vue from '@vitejs/plugin-vue';
 
+import { cosmicCollectionFactory } from 'cosmic-icon';
+import IconsResolver from 'unplugin-icons/resolver';
+import Components from 'unplugin-vue-components/vite';
+import Icons from 'unplugin-icons/vite';
 
 const PACKAGE_ROOT = __dirname;
 
@@ -24,7 +28,23 @@ const config = {
             'cosmic-ui': 'cosmic-ui-alpha',
         },
     },
-    plugins: [vue()],
+    plugins: [
+      vue(),
+      Icons({
+        compiler: 'vue3',
+        customCollections: {
+            ...cosmicCollectionFactory(),
+        },
+      }),
+      Components({
+          dts: true,
+          resolvers: [
+              IconsResolver({
+                  customCollections: ['cosmic'],
+              }),
+          ],
+      }),
+    ],
     base: '',
     server: {
         fs: {
