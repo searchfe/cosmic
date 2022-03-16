@@ -1,13 +1,12 @@
 <script setup lang="ts">
+import { inject } from 'vue';
 import { Button } from 'cosmic-vue';
 import ButtonStyle from './component/button/button.module.css';
-import { router } from '@cosmic/core/browser';
 
-
-const r = router.useRouter();
+const { router }  = inject('context') as any;
 
 function onButtonClicked(name: string) {
-    r.push({ name });
+    router && router.push({ name });
 }
 </script>
 
