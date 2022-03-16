@@ -1,9 +1,15 @@
-import type { Module, Container, inversify } from '@cosmic/core/parts';
+import type { Module, Container } from '@cosmic/core/parts';
 import { createApp } from 'vue';
-import type {Ref} from 'vue';
+import type { Ref, App } from 'vue';
 import { moduleAssetPath} from './loader';
 
-export function bootstrapModule(src: string, root: HTMLElement, container: Container) {
+export function bootstrapModule(
+    src: string,
+    root: HTMLElement,
+    container: Container,
+    inherit?: string[] | boolean,
+    rootProviders: any[],
+) {
     return async function(module: Module) {
         if (!root) return;
         if (module.imports) {
@@ -16,9 +22,24 @@ export function bootstrapModule(src: string, root: HTMLElement, container: Conta
         if (module.root) {
             const moduleApp = createApp(module.root);
             moduleApp.provide('container', container);
+            if (inherit) {
+                addInherit(moduleApp, inherit, rootProviders);
+            }
             moduleApp.mount(root);
         }
     };
+}
+
+function addInherit(moduleApp: App<Element>, inherit?: string[] | boolean, rootProviders: any[]) {
+    const filterList = inherit === true ? [] : (inherit || []);
+    filterList.push('container');
+    // TODO: extract it to an interface
+    // TODO: filter router key
+    rootProviders.forEach(ins => {
+        if (filterList.indexOf(ins.k) === -1) {
+            moduleApp.provide(ins.k, ins.v);
+        }
+    });
 }
 
 /** add providers to container */

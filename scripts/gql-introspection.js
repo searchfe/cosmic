@@ -7,7 +7,7 @@ import { getIntrospectedSchema, minifyIntrospectionQuery } from '@urql/introspec
 
 axios
     .post(
-        'http://localhost:3000/api/graphql',
+        'http://localhost:3001/api/graphql',
         {
             variables: {},
             query: getIntrospectionQuery({ descriptions: false }),

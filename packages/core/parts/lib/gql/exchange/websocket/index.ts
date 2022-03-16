@@ -12,7 +12,7 @@ export const subscriptionExchange = exchange({
             subscribe: sink => {
                 if (!wsClient) {
                     wsClient = createWSClient({
-                        url: 'ws://localhost:3000/api/graphql',
+                        url: 'ws://localhost:3001/api/graphql',
                         connectionParams: {
                             Authorization: `Bearer ${get().token}`,
                         },
