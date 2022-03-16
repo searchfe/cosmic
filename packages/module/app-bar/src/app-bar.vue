@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { inject } from '@cosmic/core/parts';
 import { Button } from 'cosmic-vue';
-import MenuService from './menu.service';
 import ButtonStyle from './component/button/button.module.css';
+import { router } from '@cosmic/core/browser';
 
-const service = inject(MenuService);
 
-function onButtonClicked(index: number, title: string) {
-  service.selectTab(index, { title });
+const r = router.useRouter();
+
+function onButtonClicked(name: string) {
+    r.push({ name });
 }
 </script>
 
@@ -17,26 +17,27 @@ function onButtonClicked(index: number, title: string) {
         <Button
             class="menu-button"
             :styles="ButtonStyle"
-            @click="onButtonClicked(1, '文件')"
+            @click="onButtonClicked('sheikah')"
         >
             资产管理
         </Button>
         <Button
             class="menu-button"
             :styles="ButtonStyle"
-            @click="onButtonClicked(2, '编辑')"
+            @click="onButtonClicked('workbench')"
         >
             设计工具
         </Button>
         <Button
             class="menu-button"
             :styles="ButtonStyle"
-            @click="onButtonClicked(3, 'blueprint')"
+            @click="onButtonClicked('blueprint')"
         >
             Blueprint
         </Button>
     </div>
 </template>
+
 <style scoped>
 .container {
     display: flex;

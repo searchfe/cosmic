@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import urql from '@urql/vue';
+import urqlPlugin from '@urql/vue';
 
 import { gqlClientOptions }  from '@cosmic/core/parts';
 import { MComponent } from '@cosmic-module/core';
@@ -16,7 +16,7 @@ function bootstrap(option: BootstrapOption) {
     // eslint-disable-next-line vue/component-definition-name-casing
     app.component('m-component', MComponent);
     // gql
-    app.use(urql, gqlClientOptions);
+    app.use(urqlPlugin, gqlClientOptions);
     // router
     app.use(routify());
     // ioc container
@@ -28,5 +28,6 @@ function bootstrap(option: BootstrapOption) {
 
 export { bootstrap };
 
-export { interfaces as iocInterface, TOKENS as iocToken } from './ioc/index';
+export * as urql from '@urql/vue';
 export * as router from 'vue-router';
+export { default as lodash } from 'lodash';

@@ -30,7 +30,7 @@ export function login({ username, password }: ILoginData) {
     }
     return axios
         .post<any, { data: { accessToken: string } }>(
-            'http://localhost:3000/auth/login',
+            'http://localhost:3001/auth/login',
             {
                 // TODO: password security, this is only a demo
                 username,
