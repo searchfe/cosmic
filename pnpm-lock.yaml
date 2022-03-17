@@ -9,8 +9,8 @@ importers:
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
       cosmic-icon: 0.0.5
-      cosmic-ui-alpha: ^0.0.16-alpha.14
-      cosmic-vue: 0.0.30-alpha.0
+      cosmic-ui-alpha: 0.0.17-alpha.3
+      cosmic-vue: 0.0.30-alpha.5
       cross-env: 7.0.3
       dts-for-context-bridge: 0.7.1
       electron: 16.0.7
@@ -39,8 +39,8 @@ importers:
       vue: 3.2.29
       vue-tsc: 0.32.1
     dependencies:
-      cosmic-ui-alpha: 0.0.16
-      cosmic-vue: 0.0.30-alpha.0
+      cosmic-ui-alpha: 0.0.17-alpha.3
+      cosmic-vue: 0.0.30-alpha.5
       electron-updater: 4.6.5
       reflect-metadata: 0.1.13
       resolve: 1.22.0
@@ -1474,12 +1474,12 @@ packages:
       - webpack
     dev: true
 
-  /cosmic-ui-alpha/0.0.16:
-    resolution: {integrity: sha512-M9IrxRokq+c+QWNBfiR2XBcULcCY98Z4IwIE4h9mKv1u2Bjn+Olr1qih4FNvtSko8oz1PafzQMzheYgqBkdQug==}
+  /cosmic-ui-alpha/0.0.17-alpha.3:
+    resolution: {integrity: sha512-+/u7Ju9CxpRH9HrGvIOuvwVxm+CXL9c5K7gMyGuLHt0mnV/KzNsAHXUBrcSU2ThO4TZ5NBStnVNJqfwxnKbnMQ==}
     dev: false
 
-  /cosmic-vue/0.0.30-alpha.0:
-    resolution: {integrity: sha512-fn8Iu30asJTj3irayjGadZK4VsDsi7otiwiFt4lfgoU0Nyree5XaBs98CfFaOoveuvNu6l7h6deNqk//OwbFbw==}
+  /cosmic-vue/0.0.30-alpha.5:
+    resolution: {integrity: sha512-YM6wqrwXTqHAyLRxqf4AaiQZGD/V1AJCfD8DHN+kgBtKTDvBByaBH/BLFGqz92/0cLPrScGR7TW7cM1p5yYT/Q==}
     dependencies:
       '@babel/types': 7.17.0
       lodash.kebabcase: 4.1.1
