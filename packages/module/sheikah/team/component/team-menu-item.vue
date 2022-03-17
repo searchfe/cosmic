@@ -1,5 +1,12 @@
 <script lang="ts" setup>
-import { Tree as RTree, TreeNode } from 'cosmic-vue';
+import { Tree as RTree } from 'cosmic-vue';
+import { router as vueRouter } from '@cosmic/core/browser';
+
+const { useRouter } = vueRouter;
+
+const router = useRouter();
+
+
 interface ProjectNode {
     title: string;
     key: string;
@@ -9,9 +16,23 @@ interface ProjectNode {
 
 interface ProjectOptions {
     data: ProjectNode;
+    team: string;
 }
 
-withDefaults(defineProps<ProjectOptions>(), {
+const designTree = [{
+    key: '',
+    title: '设计资产',
+    children: [{
+        key: 'atom',
+        title: '原子',
+    }, {
+        key: 'component',
+        title: '组件',
+    }],
+}];
+
+const props = withDefaults(defineProps<ProjectOptions>(), {
+    team: '',
     data: () => {
         return {
             title: '',
@@ -22,16 +43,25 @@ withDefaults(defineProps<ProjectOptions>(), {
     },
 });
 
+function onToggleProject (data: { key: string}) {
+    const { key: project } = data;
+    if (project) {
+        router.push({ name: 'project:detail', query: { project } });
+    }
+}
+
+function onToggleDesignTree(data: { key: string }) {
+    const { key: designType } = data;
+    if (designType) {
+        router.push({ name: `${designType}:list`, query: { team: props.team } });
+    }
+}
+
 </script>
 
 <template>
-    <r-tree>
-        <tree-node title="设计资产">
-            <tree-node title="原子" />
-            <tree-node title="组件" />
-        </tree-node>
-    </r-tree>
-    <r-tree :data="[data]" />
+    <r-tree :data="designTree" @toggle="onToggleDesignTree" />
+    <r-tree :data="[data]" @toggle="onToggleProject" />
 </template>
 
 <style module>

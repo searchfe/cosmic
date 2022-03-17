@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-    import { Button } from 'cosmic-vue';
     import Card from '../../common/component/card.vue';
 
     interface Props {
@@ -27,9 +26,6 @@
                 </div>
                 <div style="flex: none;">
                     20个
-                </div>
-                <div :class="$style['card-more']">
-                    <Button icon="more_horiz" />
                 </div>
             </div>
             <div :class="$style['card-preview']">
@@ -70,7 +66,7 @@
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    padding: 14px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -85,10 +81,6 @@
 .card-name {
     flex: auto;
     font-size: 16px;
-}
-.card-more {
-    margin-left: 5px;
-    flex: none;
 }
 .card-preview {
     overflow: hidden;
