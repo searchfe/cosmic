@@ -12,7 +12,7 @@ export function generateProjectForest(projects: gql.Project[], teams: string[]) 
 
     teams.forEach(team => {
         teamMap.set(team, {
-            key: team,
+            key: '',
             title: '项目类别',
             children: [],
         });

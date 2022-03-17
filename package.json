@@ -62,7 +62,7 @@
         "vue-tsc": "0.32.1"
     },
     "dependencies": {
-        "cosmic-ui-alpha": "0.0.17-alpha.3",
+        "cosmic-ui-alpha": "^0.0.17-alpha.3",
         "cosmic-vue": "0.0.30-alpha.5",
         "electron-updater": "4.6.5",
         "reflect-metadata": "^0.1.13",

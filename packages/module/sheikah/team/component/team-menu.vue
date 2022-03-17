@@ -32,7 +32,6 @@ async function changeSelectedTeam(arg: string | string[]) {
 }
 
 
-
 watchEffect(() => {
     if (teamData.value && !teamFetching.value) {
         teams.value = teamData.value?.teams || [];
@@ -68,7 +67,7 @@ const defautlAvatar = 'https://fe-dev.bj.bcebos.com/%E4%BE%A7%E8%BE%B9%E6%A0%8F%
                 >
             </template>
             <div class="w-full">
-                <team-item :data="teamMaps.get(team.id)" />
+                <team-item :data="teamMaps.get(team.id)" :team="team.id" />
             </div>
         </collapse-item>
     </collapse>
