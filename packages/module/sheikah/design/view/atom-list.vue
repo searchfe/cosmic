@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue';
 import { router as vueRouter } from '@cosmic/core/browser';
-import Info from '../../common/component/info.vue';
-import AtomMicroCard from '../component/atom/micro-card.vue';
-import Filter from '../component/atom/filter/index.vue';
+import Info from '../../common/component/region.vue';
+import AtomMicroCard from '../component/card/atom.vue';
+import AtomFilter from '../component/filter.vue';
 import { query as queryColor } from '../api/common';
 
 const { useRouter } = vueRouter;
@@ -15,7 +15,6 @@ const colors = ref<gql.Color[]>([]);
 //     key: 'color',
 //     text: '颜色',
 // };
-
 
 const { data, fetching } = queryColor<{ colors: gql.Color[] }, gql.QueryColorDTO>('color', {}, ['team', 'color']);
 watchEffect(() => {
@@ -45,7 +44,51 @@ function onItemClick(id: string) {
 
 <template>
     <Info title="原子">
-        <Filter style="margin: 20px 0" />
+        <div
+            class="flex items-center text-black w-full"
+            :class="$style.filter"
+        >
+            <atom-filter text="颜色" num="12">
+                <template #icon>
+                    <i-cosmic-night />
+                </template>
+                <template #hover-icon>
+                    <i-cosmic-dark />
+                </template>
+            </atom-filter>
+            <atom-filter text="文字" num="12">
+                <template #icon>
+                    <i-cosmic-night />
+                </template>
+                <template #hover-icon>
+                    <i-cosmic-dark />
+                </template>
+            </atom-filter>
+            <atom-filter text="蒙层" num="12">
+                <template #icon>
+                    <i-cosmic-night />
+                </template>
+                <template #hover-icon>
+                    <i-cosmic-dark />
+                </template>
+            </atom-filter>
+            <atom-filter text="描边" num="12">
+                <template #icon>
+                    <i-cosmic-night />
+                </template>
+                <template #hover-icon>
+                    <i-cosmic-dark />
+                </template>
+            </atom-filter>
+            <atom-filter text="阴影" num="12">
+                <template #icon>
+                    <i-cosmic-night />
+                </template>
+                <template #hover-icon>
+                    <i-cosmic-dark />
+                </template>
+            </atom-filter>
+        </div>
     </Info>
     <div :class="$style['atom-grid']">
         <div v-for="color in colors" :key="color.id" @click="onItemClick(color.id)">
@@ -58,8 +101,15 @@ function onItemClick(id: string) {
 .atom-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    column-gap: 28px;
-    row-gap: 20px;
+    column-gap: 24px;
+    row-gap: 24px;
+    margin-top: 12px;
     /* grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-22 xl:gap-26 2xl:gap-14 */
+}
+.filter {
+    overflow-x: scroll;
+}
+.filter::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
 }
 </style>

@@ -13,7 +13,7 @@
     withDefaults(defineProps<Props>(), {
         avatar: 'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%9B%BE%E6%A0%8740*40.png',
         info: '协作 30',
-        name: '',
+        name: '项目名称',
         users: () => [
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F01.png',
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F02.png',
@@ -33,13 +33,11 @@
         :class="$style.card"
         @click.stop="projectClickHandler"
     >
-        <div :class="$style['card-img-container']">
-            <img
-                :class="$style['card-img']"
-                :src="avatar"
-                alt="projcet avatar"
-            >
-        </div>
+        <img
+            :class="$style['card-img-container']"
+            :src="avatar"
+            alt="projcet avatar"
+        >
         <div :class="$style['card-name']">
             {{ name }}
         </div>
@@ -53,7 +51,7 @@
                     alt=""
                 >
             </div>
-            <div>
+            <div class="flex items-center h-full">
                 {{ info }}
             </div>
         </div>
@@ -70,41 +68,37 @@
 .card {
     position: relative;
     overflow: hidden;
-    padding: 0 14px 50%;
+    padding-bottom: 40.7%;
     height: 0;
     font-size: 12px;
 }
 .card-img-container {
-    position: relative;
+    position: absolute;
     overflow: hidden;
     box-sizing: border-box;
-    margin-top: 14px;
-    padding-bottom: 25%;
-    height: 0;
-    width: 25%;
+    height: 40px;
+    width: 40px;
+    top: 12px;
+    left: 12px;
     border-radius: 4px;
 }
-.card-img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
 .card-name {
-    margin-top: 10px;
-    height: 14px;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
+    position: absolute;
+    left: 12px;
+    top: 62px;
+    height: 16px;
+    width: 129px;
     color: #1f1f1f;
     font-weight: 700;
 }
 .card-info {
     position: absolute;
-    left: 0;
-    bottom: 14px;
+    left: 0px;
+    bottom: 12px;
     box-sizing: border-box;
     padding: 0 14px;
     width: 100%;
+    height: 24px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -123,8 +117,8 @@
 }
 .card-more {
     position: absolute;
-    top: 14px;
-    right: 14px;
+    top: 12px;
+    right: 12px;
     background: #f5f5f5;
     width: 26px;
     height: 26px;

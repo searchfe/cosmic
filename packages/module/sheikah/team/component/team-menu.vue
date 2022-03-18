@@ -27,8 +27,11 @@ const { data: projectData, fetching: projectFetching } = useProjects({});
 
 async function changeSelectedTeam(arg: string | string[]) {
     const newValue = Array.isArray(arg) ? arg[0] : arg;
+    if (!newValue) {
+        return;
+    }
     selectedTeam.value = newValue;
-    await router.push({ name: '', query: { team: selectedTeam.value }});
+    await router.push({ name: 'team:detail', query: { team: selectedTeam.value }});
 }
 
 

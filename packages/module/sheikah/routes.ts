@@ -35,7 +35,7 @@ const routes = [{
 }, {
     path: '/',
     redirect: () => {
-        return { path: '/atom/list' };
+        return { name: 'team:detail' };
     },
 }];
 

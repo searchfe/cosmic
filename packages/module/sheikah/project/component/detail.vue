@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-    import ProjectInfo from '../../common/component/info.vue';
+    import ProjectInfo from '../../common/component/region.vue';
     // import { query } from '@urql/vue';
     // import DirCard from './dir-card.vue';
     import FileCard from './file-card.vue';
