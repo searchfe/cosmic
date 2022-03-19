@@ -6,7 +6,7 @@ import type { inversify } from '@cosmic/core/parts';
 
 </script>
 <script setup lang="ts">
-    const container = inject('container') as typeof inversify.Container;
+    const container = inject('container') as inversify.Container;
     const prop = defineProps({
         src: {
             type: String,
@@ -21,7 +21,7 @@ import type { inversify } from '@cosmic/core/parts';
             default: '',
         },
         inherit: {
-            type: Array || Boolean,
+            type: Boolean || Array,
             default: true,
         },
     });
@@ -37,13 +37,12 @@ import type { inversify } from '@cosmic/core/parts';
     }
 
     onMounted(() => {
-        console.log('onMounted', prop.css);
         prop.css && fetchStyle(prop.src, cssPath);
-        fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container, prop.inherit, getRootProviders()));
+        fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container,  getRootProviders(), prop.inherit));
     });
     watch(() => prop.src, function(a) {
         prop.css && fetchStyle(prop.src, cssPath);
-        fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container, prop.inherit, getRootProviders()));
+        fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container, getRootProviders(), prop.inherit));
     });
 
 </script>
