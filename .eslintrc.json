@@ -31,6 +31,7 @@
         "@typescript-eslint/consistent-type-imports": "error",
         "vue/html-indent": [1, 4],
         "vue/max-attributes-per-line": "off",
+        "vue/singleline-html-element-content-newline": ["off"],
         "no-undef": "off",
         /**
         * Having a semicolon helps the optimizer interpret your code correctly.

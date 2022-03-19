@@ -24,10 +24,6 @@ import type { inversify } from '@cosmic/core/parts';
             type: Array || Boolean,
             default: true,
         },
-        context: {
-            type: Object,
-            default: () => ({}),
-        },
     });
 
     const root = ref();
@@ -43,7 +39,7 @@ import type { inversify } from '@cosmic/core/parts';
     onMounted(() => {
         console.log('onMounted', prop.css);
         prop.css && fetchStyle(prop.src, cssPath);
-        fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container, prop.inherit, getRootProviders(), prop.context));
+        fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container, prop.inherit, getRootProviders()));
     });
     watch(() => prop.src, function(a) {
         prop.css && fetchStyle(prop.src, cssPath);

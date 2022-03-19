@@ -163,12 +163,12 @@ function arrowFn({isUp, event} = {}) {
             @focus="focusHandler"
             @blur="blurHandler"
         >
-        <i-cosmic-arrow
+        <i-cosmic-arrow-down
             v-show="showArraw"
             :class="[$style.up]"
             @click.stop="arrowFn({isUp: true})"
         />
-        <i-cosmic-arrow
+        <i-cosmic-arrow-down
             v-show="showArraw"
             :class="[$style.down]"
             @click.stop="arrowFn({isUp: false})"

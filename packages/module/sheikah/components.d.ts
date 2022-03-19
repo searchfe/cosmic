@@ -8,7 +8,6 @@ declare module 'vue' {
     ICosmicLock: typeof import('~icons/cosmic/lock')['default']
     ICosmicMore: typeof import('~icons/cosmic/more')['default']
     ICosmicNight: typeof import('~icons/cosmic/night')['default']
-    ICosmicSan: typeof import('~icons/cosmic/san')['default']
     ICosmicSun: typeof import('~icons/cosmic/sun')['default']
   }
 }

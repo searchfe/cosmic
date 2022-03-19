@@ -10,32 +10,32 @@ const { createRouter, createMemoryHistory } = router;
 
 const routes = [{
     name: 'team:detail',
-    path: '/sheikah/team',
+    path: '/team',
     component: TeamDetail,
 }, {
     name: 'project:detail',
-    path: '/sheikah/project',
+    path: '/project',
     component: ProjectDetail,
 }, {
     name: 'atom:list',
-    path: '/sheikah/atom/list',
+    path: '/atom/list',
     component: AtomList,
 }, {
     name: 'atom:detail',
-    path: '/sheikah/project',
+    path: '/project',
     component: AtomDetail,
 }, {
     name: 'component:list',
-    path: '/sheikah/project/list',
+    path: '/project/list',
     component: ComponentList,
 }, {
     name: 'component:detail',
-    path: '/sheikah/project',
+    path: '/project',
     component: ComponentDetail,
 }, {
     path: '/',
     redirect: () => {
-        return { path: '/sheikah/atom/list' };
+        return { path: '/atom/list' };
     },
 }];
 
