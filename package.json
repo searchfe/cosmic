@@ -28,7 +28,7 @@
         "typecheck:site": "npm run build:preload:types",
         "typecheck:vue": "vue-tsc --noEmit -p ./tsconfig.json",
         "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:site",
-        "clear": "rimraf ./node_modules/.vite & rimraf dist & pnpm run clean -r",
+        "clean": "rimraf ./node_modules/.vite & rimraf dist & pnpm run clean -r",
         "commit": "git-cz"
     },
     "devDependencies": {
