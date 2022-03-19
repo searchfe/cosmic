@@ -12,6 +12,8 @@ import type { BootstrapOption } from '@cosmic/core/parts';
 import MColor from './component/color/color.vue';
 import MTitle from './component/title/title.vue';
 
+import { RouterService } from './service';
+
 
 function bootstrap(option: BootstrapOption) {
     const app = createApp(App);
@@ -26,7 +28,10 @@ function bootstrap(option: BootstrapOption) {
     // router
     app.use(router);
     // ioc container
-    app.provide('container', createContainer({ defaultScope: 'Singleton' }));
+    const container = createContainer({ defaultScope: 'Singleton' });
+    container.bind(RouterService).toConstantValue(new RouterService(router));
+
+    app.provide('container', container);
 
     app.mount(option.root);
 
@@ -34,6 +39,7 @@ function bootstrap(option: BootstrapOption) {
 
 export { bootstrap };
 
+export * as service from './service';
 export * as urql from '@urql/vue';
 export * as router from 'vue-router';
 export { default as lodash } from 'lodash';

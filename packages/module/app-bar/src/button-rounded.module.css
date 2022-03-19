@@ -1,0 +1,30 @@
+.button  {
+    composes: cos-btn -v-text -v-w -v-h -v-border-none from global;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    border-radius: var(--rounded-md);
+    color: #D8D8D8;
+}
+
+.button:hover {
+    /* #BDBDBD */
+    /* background: #343434; */
+    background: #424242;
+}
+
+.button:global(.selected) {
+    background: #424242;
+}
+
+.button[disabled] {
+    cursor: not-allowed;
+}
+
+.prefix {
+    composes: -v-w -v-h from global;
+}
+.suffix {
+    composes: -v-w -v-h from global;
+}

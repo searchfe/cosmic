@@ -25,6 +25,7 @@ export function genConfig(PACKAGE_ROOT) {
       vue(),
       Icons({
           compiler: 'vue3',
+          scale: 1,
           customCollections: {
               ...cosmicCollectionFactory(),
           },
