@@ -100,6 +100,39 @@ importers:
     devDependencies:
       '@types/lodash': 4.14.180
 
+  packages/module/app-bar:
+    specifiers: {}
+
+  packages/module/blueprint:
+    specifiers: {}
+
+  packages/module/border-widget:
+    specifiers: {}
+
+  packages/module/core:
+    specifiers: {}
+
+  packages/module/frame-status-bar:
+    specifiers: {}
+
+  packages/module/frame-workbench:
+    specifiers: {}
+
+  packages/module/mask-widget:
+    specifiers: {}
+
+  packages/module/radius-widget:
+    specifiers: {}
+
+  packages/module/shadow-widget:
+    specifiers: {}
+
+  packages/module/sheikah:
+    specifiers: {}
+
+  packages/module/text-widget:
+    specifiers: {}
+
 packages:
 
   /7zip-bin/5.1.1:

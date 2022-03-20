@@ -21,8 +21,10 @@ const { Content, Header } = Layout;
 </template>
 
 <style>
-@import 'cosmic-ui/ui.css';
+@import 'cosmic-ui/style.css';
+@import 'cosmic-ui/variables.css';
 @import 'cosmic-ui/variables-dark.css';
+@import 'cosmic-ui/utilities.css';
 * {
     box-sizing: border-box;
 }

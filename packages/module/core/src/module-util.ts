@@ -1,4 +1,5 @@
-import type { Module, Container } from '@cosmic/core/parts';
+import type { inversify  } from '@cosmic/core/parts';
+import { type Module  } from '@cosmic/core/parts';
 import { createApp } from 'vue';
 import type { Ref, App } from 'vue';
 import { moduleAssetPath} from './loader';
@@ -6,9 +7,9 @@ import { moduleAssetPath} from './loader';
 export function bootstrapModule(
     src: string,
     root: HTMLElement,
-    container: Container,
-    inherit?: string[] | boolean,
+    container: inversify.Container,
     rootProviders: any[],
+    inherit?: string[] | boolean,
 ) {
     return async function(module: Module) {
         if (!root) return;
@@ -23,14 +24,14 @@ export function bootstrapModule(
             const moduleApp = createApp(module.root);
             moduleApp.provide('container', container);
             if (inherit) {
-                addInherit(moduleApp, inherit, rootProviders);
+                addInherit(moduleApp, rootProviders, inherit);
             }
             moduleApp.mount(root);
         }
     };
 }
 
-function addInherit(moduleApp: App<Element>, inherit?: string[] | boolean, rootProviders: any[]) {
+function addInherit(moduleApp: App<Element>, rootProviders: any[], inherit?: string[] | boolean) {
     const filterList = inherit === true ? [] : (inherit || []);
     filterList.push('container');
     // TODO: extract it to an interface
@@ -43,7 +44,7 @@ function addInherit(moduleApp: App<Element>, inherit?: string[] | boolean, rootP
 }
 
 /** add providers to container */
-function addProviders(container: Container, providers: inversify.ServiceIdentifier[]){
+function addProviders(container: inversify.Container, providers: inversify.ServiceIdentifier[]){
     if (providers) {
         providers.forEach((service) => {
             if(!container.isBound(service)){
@@ -54,7 +55,7 @@ function addProviders(container: Container, providers: inversify.ServiceIdentifi
 }
 
 /** load import module */
-async function loadImports(container: Container,imports: string[]) {
+async function loadImports(container: inversify.Container, imports: string[]) {
     if(imports) {
         for(const imp of imports) {
             if (isImported(container, imp)) return;
@@ -68,7 +69,7 @@ async function loadImports(container: Container,imports: string[]) {
 }
 
 /** mark module which its providers has been added */
-function updateProviderList(container: Container, src: string) {
+function updateProviderList(container: inversify.Container, src: string) {
     let map: {[key: string]: boolean} = {};
     if(container.isBound('_providers_')) {
         map = container.get('_providers_');
@@ -77,7 +78,7 @@ function updateProviderList(container: Container, src: string) {
 }
 
 /** check module if its providers has been added */
-function isImported(container: Container, src: string) {
+function isImported(container: inversify.Container, src: string) {
     if(container.isBound('_providers_')) {
         const map: {[key: string]: boolean} = container.get('_providers_');
         return !!map[src];
