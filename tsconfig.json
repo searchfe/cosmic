@@ -15,6 +15,7 @@
         "paths": {
             "@cosmic/core/*": ["./packages/core/*"],
             "@cosmic-module/*": ["./packages/module/*"],
+            "cosmic-ui": ["./node_modules/cosmic-ui-alpha"],
         }
     },
     "include": [
@@ -26,7 +27,7 @@
     "exclude": [
         "**/*.spec.ts",
         "**/*.test.ts",
-        "**/dist/**", 
+        "**/dist/**",
         "**/node_modules/**"
     ]
 }

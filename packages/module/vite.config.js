@@ -19,6 +19,7 @@ export function genConfig(PACKAGE_ROOT) {
       alias: {
         '@cosmic/core': join(PACKAGE_ROOT, '../../core/dist'),
         '@cosmic-module/': join(PACKAGE_ROOT, '../') + '/',
+        'cosmic-ui': 'cosmic-ui-alpha',
       },
     },
     plugins: [
@@ -73,6 +74,7 @@ export function genConfig(PACKAGE_ROOT) {
         external: [
           'vue',
           'cosmic-vue',
+          'cosmic-ui',
           '@cosmic/core/browser',
           '@cosmic/core/parts',
           ...listOfModule().map(m => `@cosmic-module/${m}`),
