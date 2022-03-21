@@ -1,4 +1,4 @@
-import type { Container } from 'inversify';
+import type { Container } from '@cosmic/core/inversify';
 import { inject as injectVue } from 'vue';
 
 

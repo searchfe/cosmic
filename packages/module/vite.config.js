@@ -77,6 +77,8 @@ export function genConfig(PACKAGE_ROOT) {
           'cosmic-ui',
           '@cosmic/core/browser',
           '@cosmic/core/parts',
+          '@cosmic/core/inversify',
+          '@cosmic/core/rxjs',
           ...listOfModule().map(m => `@cosmic-module/${m}`),
           ...builtinModules.flatMap(p => [p, `node:${p}`]),
         ],

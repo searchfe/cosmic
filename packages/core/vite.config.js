@@ -65,6 +65,8 @@ const config = {
             input: {
                 browser: resolve(__dirname, 'browser/index.ts'),
                 parts: resolve(__dirname, 'parts/index.ts'),
+                inversify: resolve(__dirname, './inversify.ts'),
+                rxjs: resolve(__dirname, './rxjs.ts'),
             },
             output: [
                 {
@@ -85,6 +87,8 @@ const config = {
                 'cosmic-ui',
                 '@cosmic/core/parts',
                 '@cosmic/core/browser',
+                '@cosmic/core/inversify',
+                '@cosmic/core/rxjs',
                 '@cosmic-module/core',
                 ...builtinModules.flatMap(p => [p, `node:${p}`]),
             ],

@@ -1,4 +1,4 @@
-import type { interfaces } from 'inversify';
+import type { interfaces } from '@cosmic/core/inversify';
 import type { DefineComponent } from 'vue';
 
 

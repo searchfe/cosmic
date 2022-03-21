@@ -1,5 +1,4 @@
-import type { interfaces} from 'inversify';
-import { Container  }  from 'inversify';
+import { Container, type interfaces  }  from '@cosmic/core/inversify';
 import { TOKENS } from './token';
 
 import { gqlClient } from './gql';

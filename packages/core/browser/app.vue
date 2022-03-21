@@ -15,7 +15,11 @@ const { Content, Header } = Layout;
             />
         </Header>
         <Content>
-            <router-view />
+            <router-view v-slot="{ Component }">
+                <keep-alive>
+                    <component :is="Component" />
+                </keep-alive>
+            </router-view>
         </Content>
     </Layout>
 </template>
