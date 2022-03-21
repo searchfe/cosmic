@@ -28,7 +28,7 @@ workbenchBarService.getConfigs().subscribe(c => {
             size="xs"
             :class="[config.id === selectedId ? 'active': '', 'min-w-70 mx-1 mt-4']"
             :styles="buttonText"
-            @click="onButtonClicked(config.id)"
+            @mousedown="onButtonClicked(config.id)"
         >
             {{ config.text }}
         </Button>
