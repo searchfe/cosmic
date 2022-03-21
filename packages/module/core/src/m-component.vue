@@ -1,6 +1,6 @@
 <script lang="ts">
-import { inject, onMounted, ref, watch, getCurrentInstance } from 'vue';
-import { fetchModule, fetchStyle, bootstrapModule } from './module-util';
+import { inject, onMounted, ref, watch, getCurrentInstance, onBeforeUnmount, onUnmounted } from 'vue';
+import { fetchModule, fetchStyle, bootstrapModule, removeStyle, removeChildStyle } from './module-util';
 
 import type { Container } from '@cosmic/core/inversify';
 
@@ -27,7 +27,6 @@ import type { Container } from '@cosmic/core/inversify';
     });
 
     const root = ref();
-    const cssPath = ref('');
 
     function getRootProviders() {
         return Reflect.ownKeys(getCurrentInstance()?.appContext.provides || {})
@@ -37,23 +36,24 @@ import type { Container } from '@cosmic/core/inversify';
     }
 
     onMounted(() => {
-        prop.css && fetchStyle(prop.src, cssPath);
+        prop.css && fetchStyle(prop.src);
         fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container,  getRootProviders(), prop.inherit));
     });
     watch(() => prop.src, function(a) {
-        prop.css && fetchStyle(prop.src, cssPath);
+        prop.css && fetchStyle(prop.src);
         fetchModule(prop.src).then(bootstrapModule(prop.src, root.value, container, getRootProviders(), prop.inherit));
     });
-
+    onBeforeUnmount(() => {
+        removeChildStyle(root.value);
+    });
+    onUnmounted(() => {
+        removeStyle(prop.src);
+    });
 </script>
 <template>
-    <link
-        v-if="cssPath"
-        rel="stylesheet"
-        :href="cssPath"
-    >
     <section
         ref="root"
         :class="prop.class"
+        :module="prop.src"
     />
 </template>

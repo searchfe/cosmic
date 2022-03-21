@@ -1,7 +1,7 @@
 import type { Container, interfaces  } from '@cosmic/core/inversify';
 import { type Module  } from '@cosmic/core/parts';
 import { createApp } from 'vue';
-import type { Ref, App } from 'vue';
+import type { App } from 'vue';
 import { moduleAssetPath} from './loader';
 
 export function bootstrapModule(
@@ -98,9 +98,42 @@ export async function fetchModule(src: string) {
     throw new Error('default can not be null!');
 }
 
-export function fetchStyle(src: string, cssPath: Ref<string>) {
+export function fetchStyle(src: string) {
     if (src) {
         const linkSrc = moduleAssetPath(src, 'index.css');
-        if (linkSrc) cssPath.value = linkSrc;
+        if (linkSrc) {
+            addStyleToHead(src, linkSrc);
+        }
     }
+}
+
+export function addStyleToHead(id: string, linkSrc: string) {
+    const existed = document.head.querySelector(`link[module="${id}"]`);
+    if (existed === null) {
+        const linkDom = document.createElement('link');
+        linkDom.rel = 'stylesheet';
+        linkDom.href = linkSrc;
+        linkDom.setAttribute('module', id);
+        document.head.prepend(linkDom);
+    }
+}
+
+export function removeStyle(src: string) {
+    const existed = document.head.querySelector(`link[module="${src}"]`);
+    const existedDom = document.body.querySelectorAll(`[module="${src}"]`);
+    if (existed && existedDom.length === 0) {
+        existed.parentNode?.removeChild(existed);
+    }
+}
+export function removeChildStyle(root: HTMLElement) {
+    root.querySelectorAll('[module]').forEach(node => {
+        const src = node.getAttribute('module');
+        if((node as any)['__vue_app__']) {
+            (node as any)['__vue_app__'].unmount();
+        }
+        if(node) {
+            node.parentNode?.removeChild(node);
+        }
+        if(src) removeStyle(src);
+    });
 }
