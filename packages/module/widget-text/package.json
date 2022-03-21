@@ -1,5 +1,5 @@
 {
-    "name": "@cosmic-module/text-widget",
+    "name": "@cosmic-module/widget-text",
     "version": "0.0.1",
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
