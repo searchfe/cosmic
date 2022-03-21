@@ -114,7 +114,7 @@ export function addStyleToHead(id: string, linkSrc: string) {
         linkDom.rel = 'stylesheet';
         linkDom.href = linkSrc;
         linkDom.setAttribute('module', id);
-        document.head.prepend(linkDom);
+        document.head.append(linkDom);
     }
 }
 
