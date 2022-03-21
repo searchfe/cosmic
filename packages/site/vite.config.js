@@ -36,6 +36,8 @@ const config = {
       // '/@/': join(PACKAGE_ROOT, 'src') + '/',
       '@cosmic/core/browser': join(PACKAGE_ROOT, '../core/dist/es'),
       '@cosmic/core/parts': join(PACKAGE_ROOT, '../core/dist/es'),
+      '@cosmic/core/rxjs':  join(PACKAGE_ROOT, 'packages/core/dist/es'),
+      '@cosmic/core/inversify':  join(PACKAGE_ROOT, 'packages/core/dist/es'),
       '@cosmic/core': join(PACKAGE_ROOT, '../core/dist'),
       'cosmic-ui': 'cosmic-ui-alpha',
       // '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
@@ -45,6 +47,8 @@ const config = {
       imports: {
         '@cosmic/core/browser':  APP_ROOT + 'packages/core/dist/es/browser.mjs',
         '@cosmic/core/parts':  APP_ROOT + 'packages/core/dist/es/parts.mjs',
+        '@cosmic/core/rxjs':  APP_ROOT + 'packages/core/dist/es/rxjs.mjs',
+        '@cosmic/core/inversify':  APP_ROOT + 'packages/core/dist/es/inversify.mjs',
         ...moduleImports(),
         ...development? {} :{
           'cosmic-ui': resolveLib('cosmic-ui-alpha/dist/index.es.js'),

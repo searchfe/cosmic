@@ -1,5 +1,6 @@
 .button {
     composes: cos-btn -v-color-dark -v-bg-inapparent -v-text -v-h -v-px -v-border-none rounded from global;
+    opacity: .9;
 }
 
 .prefix {
@@ -14,6 +15,7 @@
 
 .button.hover, .button:hover {
     background-color: var(--color-gray-300);
+    opacity: 1;
 }
 
 .button.active, .button:active {

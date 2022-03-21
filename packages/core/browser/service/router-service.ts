@@ -1,7 +1,7 @@
 import { type Router, type RouteLocationRaw } from 'vue-router';
-import { inversify } from '@cosmic/core/parts';
+import { injectable } from '@cosmic/core/inversify';
 
-@inversify.injectable()
+@injectable()
 export class RouterService {
     constructor(private router: Router) {}
     push(to: RouteLocationRaw) {

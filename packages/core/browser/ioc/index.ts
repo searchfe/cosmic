@@ -1,6 +1,6 @@
 import { load } from './config';
 
-import type { interfaces } from 'inversify';
+import type { interfaces } from '@cosmic/core/inversify';
 
 export { TOKENS } from './token';
 export * as gqlClient from './gql';

@@ -1,5 +1,9 @@
 .button {
     composes: cos-btn -v-color-dark -v-bg-inapparent -v-text -v-h -v-px -v-border-none rounded from global;
+    background-color: var(--color-gray-400);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    opacity: .5;
 }
 
 .prefix {
@@ -12,10 +16,12 @@
     composes: -v-ml from global;
 }
 
-.button.hover, .button:hover {
+.button:global(.hover), .button:hover {
+    opacity: .8;
     background-color: var(--color-gray-300);
 }
 
-.button.active, .button:active {
+.button:global(.active), .button:active {
+    opacity: 1;
     background-color: var(--color-gray-400);
 }

@@ -10,6 +10,14 @@
             "import": "./dist/es/parts.mjs",
             "require": "./dist/cjs/parts.cjs"
         },
+        "./inversify": {
+            "import": "./dist/es/inversify.mjs",
+            "require": "./dist/cjs/inversify.cjs"
+        },
+        "./rxjs": {
+            "import": "./dist/es/rxjs.mjs",
+            "require": "./dist/cjs/rxjs.cjs"
+        },
         "./browser.css": {
             "import": "./dist/es/browser.css",
             "require": "./dist/cjs/browser.css"
