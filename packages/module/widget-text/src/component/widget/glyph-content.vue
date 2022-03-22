@@ -22,7 +22,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
 
         <Row :class="$style.row">
             <Col :span="4">
-                <div class="w-100">
+                <div class="w-80">
                     <Select
                         size="sm"
                         value="12"
@@ -42,7 +42,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                 </div>
             </Col>
             <Col :span="4">
-                <div class="w-100">
+                <div class="w-80">
                     <Select
                         size="sm"
                         value="400"
@@ -57,7 +57,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                 </div>
             </Col>
             <Col :span="4">
-                <div class="w-100">
+                <div class="w-80">
                     <Select
                         size="sm"
                         value="12"
@@ -74,7 +74,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
         </Row>
         <Row :class="$style.row">
             <Col :span="4">
-                <div :class="[$style['glyph-item']]" class="w-100">
+                <div :class="[$style['glyph-item']]" class="w-80">
                     <Input
                         size="sm"
                         value="121"
@@ -86,7 +86,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                 </div>
             </Col>
             <Col :span="4">
-                <div :class="[$style['glyph-item']]" class="w-100">
+                <div :class="[$style['glyph-item']]" class="w-80">
                     <Select
                         size="sm"
                         value="123"
@@ -112,7 +112,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                 </div>
             </Col>
             <Col :span="4">
-                <div class="w-100">
+                <div class="w-80">
                     <Select
                         size="sm"
                         value="123"
@@ -140,7 +140,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
         <Row :class="$style.row">
             <Col :span="16">
                 <div :class="$style['radio-left']">
-                    <RadioGroup>
+                    <RadioGroup value="1">
                         <RadioButton value="1">
                             <i-cosmic-text-left :class="$style['radio-icon']" />
                         </RadioButton>
@@ -160,7 +160,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
             </Col>
             <Col :span="8">
                 <div>
-                    <RadioGroup>
+                    <RadioGroup value="1">
                         <RadioButton value="1">
                             <i-cosmic-width-auto :class="$style['radio-icon']" />
                         </RadioButton>

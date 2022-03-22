@@ -4,12 +4,13 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ICosmicBorder: typeof import('~icons/cosmic/border')['default']
     ICosmicGridOutline: typeof import('~icons/cosmic/grid-outline')['default']
+    ICosmicHorizonalWidth: typeof import('~icons/cosmic/horizonal-width')['default']
     ICosmicLink: typeof import('~icons/cosmic/link')['default']
     ICosmicMinus: typeof import('~icons/cosmic/minus')['default']
     ICosmicMore: typeof import('~icons/cosmic/more')['default']
     ICosmicPlus: typeof import('~icons/cosmic/plus')['default']
-    ICosmicSun: typeof import('~icons/cosmic/sun')['default']
     ICosmicTextCenter: typeof import('~icons/cosmic/text-center')['default']
     ICosmicTextEven: typeof import('~icons/cosmic/text-even')['default']
     ICosmicTextLeft: typeof import('~icons/cosmic/text-left')['default']
