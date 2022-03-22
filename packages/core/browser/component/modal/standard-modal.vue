@@ -108,7 +108,7 @@ function showDetail(index: number) {
     position: fixed;
     transform: translateX(-100%);
     user-select: none;
-    width: 20vw
+    width: 27rem;
 }
 .title {
     composes: -v-h -v-px md from global;
