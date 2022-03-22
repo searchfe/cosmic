@@ -10,11 +10,13 @@ import { routify } from './routes';
 import type { BootstrapOption } from '@cosmic/core/parts';
 
 import MColor from './component/color/color.vue';
+import MClolorWidget from './component/color/color-widget.vue';
 import MTitle from './component/title/title.vue';
 import MWidget from './component/widget/widget.vue';
 import MStandardModal from './component/modal/standard-modal.vue';
 import MDetailModal from './component/modal/detail-modal.vue';
 import MStandard from './component/standard/standard.vue';
+import { useAtom } from './use/use-atom';
 
 import { RouterService } from './service';
 
@@ -47,4 +49,7 @@ export * as service from './service';
 export * as urql from '@urql/vue';
 export * as router from 'vue-router';
 export { default as lodash } from 'lodash';
-export { MColor, MTitle, MWidget, MStandardModal, MStandard, MDetailModal};
+
+export { MColor, MTitle, MWidget, MStandardModal, MStandard, MDetailModal, MClolorWidget};
+
+export { useAtom };

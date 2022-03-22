@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { Button } from 'cosmic-vue';
+import { Button, Row, Col, Input} from 'cosmic-vue';
 import { buttonSolid } from 'cosmic-ui';
 import { useModal } from './setup';
 
 const props = withDefaults(defineProps<{
     title: string,
-    target: () => HTMLElement,
+    target: HTMLElement,
 }>(), {
     title: '',
 });
@@ -17,7 +17,7 @@ const emits = defineEmits(['cancel', 'ok']);
 
 console.log(props.target);
 
-const { comoutPositionStyle, positionStyle, setContainerTarget } = useModal(props.target?.(), emits);
+const { comoutPositionStyle, positionStyle, setContainerTarget } = useModal(props.target, emits);
 
 comoutPositionStyle();
 
@@ -32,15 +32,42 @@ onMounted(() => {
     <div
         ref="container"
         class="cos-mode-reverse"
-        :class="$style.content"
+        :class="$style.container"
         :style="positionStyle"
+        @click.stop="() => {}"
     >
         <div :class="$style.title">
             <slot name="title">
                 {{ props.title }}
             </slot>
         </div>
-        <slot />
+        <div :class="$style.content">
+            <Row class="flex items-center">
+                <Col :span="2">
+                    标题：
+                </Col>
+                <Col>
+                    <Input
+                        size="sm"
+                        value="标题1"
+                    />
+                </Col>
+            </Row>
+            <Row
+                class="flex items-center h-32"
+                :class="$style['gray-text']"
+            >
+                <Col :span="2">
+                    编码：
+                </Col>
+                <Col>
+                    <span class="-v-px sm">
+                        qweqwe
+                    </span>
+                </Col>
+            </Row>
+            <slot />
+        </div>
 
         <footer
             :class="$style.footer"
@@ -66,7 +93,7 @@ onMounted(() => {
 </template>
 
 <style module>
-.content {
+.container {
     padding: var(--spacing-4) 0;
     background-color: var(--color-gray-50);
     border-radius: var(--spacing-4);
@@ -78,6 +105,12 @@ onMounted(() => {
     composes: -v-h -v-px items-center flex justify-between md from global;
 }
 
+.content {
+    composes: -v-px md from global;
+}
+.gray-text {
+    color: var(--color-gray-500);
+}
 .footer {
     composes: -v-py sm from global;
     padding: 0 25%;

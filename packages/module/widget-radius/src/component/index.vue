@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import {ref} from 'vue';
-import { MTitle, MWidget } from '@cosmic/core/browser';
+import { MTitle, MWidget, MClolorWidget } from '@cosmic/core/browser';
 import Raduis from './radius.vue';
-import Color from './color.vue';
+import { Standard } from '../data';
+
 const open = ref(false);
 
 
@@ -28,7 +29,7 @@ const clickHandler = () => {
             :class="$style.container"
         >
             <Raduis />
-            <Color />
+            <m-clolor-widget :standard-list="Standard" />
         </div>
     </MWidget>
 </template>

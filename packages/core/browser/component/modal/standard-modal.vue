@@ -7,13 +7,13 @@ import { useModal } from './setup';
 
 const props = withDefaults(defineProps<{
     title: string,
-    standard: any[],
-    select: any,
+    standardList: any[],
+    selected: any,
     target: () => HTMLElement,
 }>(), {
     title: '',
     select: () => ({}),
-    standard: () => [],
+    standardList: () => [],
 });
 
 const emits = defineEmits(['cancel', 'showDetail',  'select']);
@@ -22,11 +22,9 @@ const content = ref(null);
 
 const hoverIndex = ref(-1);
 
-const selectStandard = ref({});
-
 const container = ref(null);
 
-const { comoutPositionStyle, positionStyle, setContainerTarget } = useModal(props.target?.(), emits);
+const { comoutPositionStyle, positionStyle, setContainerTarget } = useModal(props.target, emits);
 
 comoutPositionStyle();
 
@@ -66,7 +64,10 @@ function showDetail(index: number) {
                     </Select>
                 </div>
                 <div>
-                    <Input placeholder="请输入关键词" />
+                    <Input
+                        size="sm"
+                        placeholder="请输入关键词"
+                    />
                 </div>
             </div>
         </slot>
@@ -75,11 +76,11 @@ function showDetail(index: number) {
             :class="$style.content"
         >
             <MStandard 
-                v-for="(data, index) of props.standard"
+                v-for="(data, index) of props.standardList"
                 :key="data.title"
                 :standard="data"
                 :can-edit="true"
-                :active="selectStandard === data"
+                :active="selected === data"
                 classes="-v-bg-inapparent"
                 @hover="() => hoverIndex = index"
                 @click="(event) => emits('select', {event, data})"
@@ -107,6 +108,7 @@ function showDetail(index: number) {
     position: fixed;
     transform: translateX(-100%);
     user-select: none;
+    width: 20vw
 }
 .title {
     composes: -v-h -v-px md from global;
@@ -127,7 +129,6 @@ function showDetail(index: number) {
 }
 
 .content {
-    width: 20vw;
     max-height: 400px;
     border-radius: var(--spacing-4);
     overflow: auto;

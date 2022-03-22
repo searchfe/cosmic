@@ -5,8 +5,10 @@
 declare module 'vue' {
   export interface GlobalComponents {
     ICosmicGridOutline: typeof import('~icons/cosmic/grid-outline')['default']
+    ICosmicLink: typeof import('~icons/cosmic/link')['default']
     ICosmicLinkedSquare: typeof import('~icons/cosmic/linked-square')['default']
     ICosmicMinus: typeof import('~icons/cosmic/minus')['default']
+    ICosmicMore: typeof import('~icons/cosmic/more')['default']
     ICosmicPlus: typeof import('~icons/cosmic/plus')['default']
     ICosmicSquare: typeof import('~icons/cosmic/square')['default']
     ICosmicSun: typeof import('~icons/cosmic/sun')['default']

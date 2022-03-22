@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import {ref} from 'vue';
-import { MTitle, MWidget } from '@cosmic/core/browser';
-import Color from './color.vue';
+import { MTitle, MWidget, MClolorWidget } from '@cosmic/core/browser';
 import Stroke from './stroke.vue';
+import { Standard } from '../data';
 
 const isShowDetail = ref(false);
 
@@ -28,7 +28,7 @@ const clickHandler = () => {
             </MTitle>
             <div v-if="isShowDetail" :class="$style.detail">
                 <Stroke />
-                <Color />
+                <m-clolor-widget :standard-list="Standard" />
             </div>
         </MWidget>
     </div>
