@@ -2,10 +2,10 @@
 import { Tree as RTree } from 'cosmic-vue';
 import { router as vueRouter } from '@cosmic/core/browser';
 
+
 const { useRouter } = vueRouter;
 
 const router = useRouter();
-
 
 interface ProjectNode {
     title: string;
@@ -43,6 +43,8 @@ const props = withDefaults(defineProps<ProjectOptions>(), {
     },
 });
 
+const emits = defineEmits(['add-project']);
+
 function onToggleProject (data: { key: string}) {
     const { key: project } = data;
     if (project) {
@@ -57,11 +59,15 @@ function onToggleDesignTree(data: { key: string }) {
     }
 }
 
+function onAddProject(data: { key: string }) {
+    emits('add-project', { parent: data.key || undefined, team: props.team });
+}
+
 </script>
 
 <template>
     <r-tree :data="designTree" @toggle="onToggleDesignTree" />
-    <r-tree :data="[data]" @toggle="onToggleProject" />
+    <r-tree :data="[data]" @toggle="onToggleProject" @click-extra="onAddProject" />
 </template>
 
 <style module>

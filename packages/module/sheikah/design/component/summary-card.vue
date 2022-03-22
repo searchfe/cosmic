@@ -4,20 +4,13 @@ import Card from '../../common/component/card.vue';
 interface Props {
     header: string;
     title: string;
-    infos: Info[];
     imgs: string[];
     extra: string;
-}
-
-interface Info {
-    key: string;
-    value: string;
 }
 
 withDefaults(defineProps<Props>(), {
     header: '',
     title: '',
-    infos: () => [],
     imgs: () => [],
     extra: '',
 });
@@ -26,36 +19,23 @@ withDefaults(defineProps<Props>(), {
 
 <template>
     <Card :class="$style['card-container']">
-        <img
-            :class="$style['card-img']"
-            :src="header"
-            alt=""
-        >
-        <div :class="$style['card-content']">
-            <div :class="$style['card-content-items']">
-                <div :class="$style['card-content-title']">
+        <div :class="$style['card-content']" class="w-full h-full">
+            <img :class="$style['card-img']" class="w-full" :src="header" alt="">
+            <div :class="$style['card-info']" class="flex justify-start items-center py-12 pr-12">
+                <div :class="$style['card-info-prefix']" />
+                <div :class="$style['card-content-title']" class="ml-12 text-lg">
                     {{ title }}
                 </div>
-                <span
-                    v-for="info in infos"
-                    :key="info.key"
-                    style="margin: 0 4px;"
-                >{{ info.key }}&nbsp;{{ info.value }}</span>
+                <div :class="$style['card-content-extra']" class="text-lg">
+                    {{ extra }}
+                </div>
             </div>
-            <div :class="$style['card-content-extra']">
-                {{ extra }}
-            </div>
-        </div>
-        <div :class="$style['card-preview']">
-            <div
-                :class="$style['card-preview-list']"
-                class="flex items-center justify-between"
-            >
+            <div :class="$style['card-preview']" class="w-full pb-12 px-12">
                 <img
                     v-for="img in imgs"
                     :key="img"
-                    :class="$style['card-preview-img']"
                     :src="img"
+                    class="w-full h-full"
                     alt=""
                 >
             </div>
@@ -65,59 +45,49 @@ withDefaults(defineProps<Props>(), {
 
 <style module>
 .card-container {
-    padding-bottom: 75%;
+    position: relative;
+    padding-bottom: 60.9%;
     height: 0;
+    box-sizing: border-box;
     overflow: hidden;
-}
-.card-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 58%;
 }
 .card-content {
     position: absolute;
-    left: 0;
-    top: 62%;
-    width: 100%;
-    height: 10%;
-    border-left: 4px solid #1f1f1f;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    overflow: hidden;
+    font-size: 0;
 }
-.card-content-items {
-    display: flex;
-    justify-content: start;
-    align-items: center;
+.card-img {
+    top: 0;
+    height: 58.3%;
+}
+.card-info {
+    position: relative;
+    box-sizing: border-box;
+    height: 17.9%;
+}
+.card-info-prefix {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 53.6%;
+    width: 4px;
+    background: #1f1f1f;
 }
 .card-content-title {
-    margin-left: 20px;
-    font-size: 16px;
     color: #1f1f1f;
 }
 .card-content-extra {
-    font-size: 16px;
-    margin-right: 14px;
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
 }
 .card-preview {
     position: absolute;
-    top: 76%;
-    width: 100%;
-    height: 20%;
-    padding: 0 14px;
-}
-.card-preview-list {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    /* overflow-hidden w-full height-full grid grid-cols-4 gap-x-1  */
-}
-.card-preview-img {
-    display: flex;
-    width: 100%;
-    height: 100%;
+    height: 23.7%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 12px;
 }
 </style>

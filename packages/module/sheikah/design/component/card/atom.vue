@@ -1,7 +1,7 @@
 <script lang="ts" setup>
     // import { Menu } from 'cosmic-vue';
     import Card from '../../../common/component/card.vue';
-    import Preview from './cell/color.vue';
+    import Preview from '../cell/color.vue';
 
     // TODO delete it after gql modle upgrade
     interface Color {
@@ -34,7 +34,7 @@
             <div :class="$style['atom-title']">
                 {{ title }}
             </div>
-            <div class="mt-6">
+            <div class="mt-7">
                 {{ meta }}
             </div>
         </div>
@@ -55,7 +55,7 @@
 .atom-micro-card {
     display: flex;
     position: relative;
-    padding: 14px;
+    padding: 12px;
     font-size: var(--font-sm);
     color: #1f1f1f;
     border-radius: 9px;

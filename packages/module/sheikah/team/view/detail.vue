@@ -1,82 +1,90 @@
 <script lang="ts" setup>
-    // import { query } from '@urql/vue';
-    import Info from '../component/info.vue';
-    import DesignCard from '../../design/component/summary-card.vue';
-    import ProjectCard from '../../project/component/micro-card.vue';
-    // import { queryProjects } from '../../project/api';
+import { router as vueRouter } from '@cosmic/core/browser';
+import { watchEffect, ref } from 'vue';
+import Region from '../../common/component/region.vue';
+import DesignCard from '../../design/component/summary-card.vue';
+import ProjectCard from '../../project/component/micro-card.vue';
 
-    // export let params: Record<string, string> = {};
-    // const store = queryProjects({ team: params.teamId });
+import { useProjects } from '../../project/api';
 
-    // query(s useRoutetore);
+const { useRouter, useRoute } = vueRouter;
+const router = useRouter();
+const { query = {} } = useRoute();
 
+const { team, project } = query as { team: string; project: string };
 
+const projects = ref<gql.Project[]>([]);
 
-    const tempItem = {
-        header: 'https://fe-dev.bj.bcebos.com/design-card-header.png',
-        title: '原子',
-        infos: [
-            { key: '引用', value: '36' },
-            { key: '自荐', value: '2' },
-        ],
-        imgs: [
-            'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%86%85%E7%BC%A9%E7%95%A5%E5%9B%BE%2001.png',
-            'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%86%85%E7%BC%A9%E7%95%A5%E5%9B%BE%2002.png',
-            'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%86%85%E7%BC%A9%E7%95%A5%E5%9B%BE%2003.png',
-            'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%86%85%E7%BC%A9%E7%95%A5%E5%9B%BE%2004.png',
-        ],
-        extra: '38个',
-    };
-    const teamAssetsData = [
-        tempItem,
-        {
-            ...tempItem,
-            title: '组件',
-        },
-    ];
+const { data, fetching } = useProjects({ team, parent: project});
+
+watchEffect(() => {
+    if (data.value && !fetching.value) {
+        projects.value = data.value?.projects;
+    }
+});
+
+function onClickDesignCard(cardType: string) {
+    if (cardType) {
+        router.push({
+            path: `/${cardType}/list`,
+            query: { project: query.project },
+        });
+    }
+}
+
+const tempItem = {
+    header: 'https://fe-dev.bj.bcebos.com/design-card-header.png',
+    title: '原子',
+    type: 'atom',
+    imgs: [
+        'https://fe-dev.bj.bcebos.com/%E5%B7%A6.png',
+        'https://fe-dev.bj.bcebos.com/%E4%B8%AD.png',
+        'https://fe-dev.bj.bcebos.com/%E4%B8%AD2.png',
+        'https://fe-dev.bj.bcebos.com/%E5%8F%B3.png',
+    ],
+    extra: '38个',
+};
+const teamAssetsData = [
+    tempItem,
+    {
+        ...tempItem,
+        title: '组件',
+        type: 'component',
+    },
+];
 </script>
 
 <template>
-    <div>
-        <Info title="百度搜索" />
-        <div :class="$style['design-title']">
-            设计资产
-        </div>
-
+    <Region title="百度搜索" :level="1" />
+    <Region title="设计资产" inverse>
         <div :class="$style['design-list']">
-            <DesignCard
+            <design-card
                 v-for="item in teamAssetsData"
                 v-bind="item"
                 :key="item.title"
+                @click="onClickDesignCard(item.type)"
             />
         </div>
-        <div :class="$style['project-title']">
-            项目类别
-        </div>
+    </Region>
+
+    <Region title="项目类别" inverse>
         <div :class="$style['project-list']">
-            <ProjectCard />
+            <project-card v-for="pro in projects" :key="pro.id" v-bind="pro" />
         </div>
-    </div>
+    </Region>
 </template>
 
 <style module>
-.design-title {
-    font-size: 24px;
-    margin-bottom: 30px;
-}
 .design-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 22px;
-}
-.project-title {
-    margin-top: 40px;
-    margin-bottom: 30px;
-    font-size: 24px;
+    column-gap: 24px;
 }
 .project-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 24px;
+    row-gap: 24px;
     /* grid grid-cols-2 gap-22 lg:grid-cols-3 xl:gap--26 2xl:grid-cols-4 2xl:gap-14 */
 }
 </style>

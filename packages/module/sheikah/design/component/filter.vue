@@ -5,8 +5,6 @@ import { ref } from 'vue';
 interface Props {
     text: string;
     num: string;
-    hoverIcon: string;
-    icon: string;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -41,11 +39,12 @@ function mouseenterHandler() {
                 {{ num }}
             </div>
         </div>
-        <img
-            :class="$style['filter-item-img']"
-            :src="hovering ? hoverIcon : icon"
-            alt=""
-        >
+        <div :class="$style['filter-item-icon']" :style="{ display: hovering ? 'block' : 'none' }">
+            <slot name="hover-icon" />
+        </div>
+        <div :class="$style['filter-item-icon']" :style="{ display: !hovering ? 'block' : 'none' }">
+            <slot name="icon" />
+        </div>
     </div>
 </template>
 
@@ -55,10 +54,11 @@ function mouseenterHandler() {
     position: relative;
     display: flex;
     justify-content: space-between;
-    margin-right: 10px;
-    padding: 14px;
-    width: 168px;
-    height: 68px;
+    margin-right: 12px;
+    padding: 12px;
+    width: 164px;
+    height: 64px;
+    box-sizing: border-box;
     border-radius: 9px;
     background: #f5f5f5;
     color: #1f1f1f;
@@ -69,6 +69,7 @@ function mouseenterHandler() {
 }
 .filter-item-info {
     flex: auto;
+    height: 100%;
 }
 .filter-item-text {
     font-size: 16px;
@@ -76,11 +77,11 @@ function mouseenterHandler() {
 }
 .filter-item-num {
     font-size: 12px;
-    margin-top: 14px;
+    margin-top: 4px;
 }
-.filter-item-img {
-    display: flex;
+.filter-item-icon {
     height: 40px;
     width: 40px;
+    font-size: 40px;
 }
 </style>

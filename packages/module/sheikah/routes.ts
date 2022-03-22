@@ -22,20 +22,20 @@ const routes = [{
     component: AtomList,
 }, {
     name: 'atom:detail',
-    path: '/project',
+    path: '/atom',
     component: AtomDetail,
 }, {
     name: 'component:list',
-    path: '/project/list',
+    path: '/component/list',
     component: ComponentList,
 }, {
     name: 'component:detail',
-    path: '/project',
+    path: '/component',
     component: ComponentDetail,
 }, {
     path: '/',
     redirect: () => {
-        return { path: '/atom/list' };
+        return { name: 'team:detail' };
     },
 }];
 

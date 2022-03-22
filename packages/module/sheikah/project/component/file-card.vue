@@ -2,14 +2,16 @@
 import Card from '../../common/component/card.vue';
 
 export interface ProjectProps {
+    id: string;
     img: string;
-    title: string;
+    name: string;
     desc: string;
 }
 
 withDefaults(defineProps<ProjectProps>(), {
+    id: '',
     img: 'https://fe-dev.bj.bcebos.com/file-card.png',
-    title: '',
+    name: '',
     desc: '编辑于 昨天',
 });
 
@@ -17,18 +19,15 @@ withDefaults(defineProps<ProjectProps>(), {
 
 <template>
     <Card :class="$style['card-container']">
-        <div :class="$style['card-content']">
-            <div style="flex: auto;">
-                <img
-                    :src="img"
-                    alt=""
-                >
+        <div class="flex flex-col" :class="$style['card-content']">
+            <div class="w-full flex items-center justify-center" :class="$style['card-preview']">
+                项目预览图
             </div>
             <div :class="$style['card-content-info']">
-                <div :class="$style['card-title']">
-                    {{ title }}
+                <div class="h-16 text-md">
+                    {{ name }}
                 </div>
-                <div :class="$style['card-date']">
+                <div class="mt-10 text-sm">
                     {{ desc }}
                 </div>
             </div>
@@ -40,34 +39,30 @@ withDefaults(defineProps<ProjectProps>(), {
 .card-container {
     position: relative;
     overflow: hidden;
-    height: 0;
-    padding-bottom: 75%;
+    padding-bottom: 66.66667%;
     border-radius: 8px;
 }
 .card-content {
     position: absolute;
-    display: flex;
-    flex-direction: column;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
 }
+.card-preview {
+    flex: auto;
+    height: 220px;
+    background: #e5e5e5;
+}
 .card-content-info {
+    flex: none;
     display: flex;
+    box-sizing: border-box;
+    height: 64px;
+    padding: 0 14px;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    height: 78px;
-    padding: 0 14px;
     background: #fff;
-}
-.card-title {
-    font: 16px;
-    height: 16px;
-}
-.card-date {
-    margin-top: 10px;
-    font-size: 12px;
 }
 </style>

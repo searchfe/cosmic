@@ -29,24 +29,30 @@ withDefaults(defineProps<ColorPreview>(), {
         <div class="text-md my-20" :class="$style.desc">
             {{ desc }}
         </div>
-        <div class="flex flex-start">
+        <div class="flex flex-start" style="font-size: 0">
             <div class="mr-12 flex items-center justify-center" :class="$style.cell" :style="{ background: color.day}">
-                <span :class="$style.icon">
+                <span :class="$style.icon" class="text-sm">
                     <i-cosmic-sun />
                 </span>
-                {{ color.day }}
+                <span class="text-sm">
+                    {{ color.day }}
+                </span>
             </div>
             <div class="mr-12 flex items-center justify-center" :class="$style.cell" :style="{ background: color.dark}">
-                <span :class="$style.icon">
+                <span :class="$style.icon" class="text-sm">
                     <i-cosmic-dark />
                 </span>
-                {{ color.dark }}
+                <span class="text-sm">
+                    {{ color.dark }}
+                </span>
             </div>
             <div class="mr-12 flex items-center justify-center" :class="$style.cell" :style="{ background: color.night}">
-                <span :class="$style.icon">
+                <span :class="$style.icon" class="text-sm">
                     <i-cosmic-night />
                 </span>
-                {{ color.night }}
+                <span class="text-sm">
+                    {{ color.night }}
+                </span>
             </div>
         </div>
     </div>
@@ -56,6 +62,7 @@ withDefaults(defineProps<ColorPreview>(), {
 .wrapper {
     padding: 30px;
     background: #fff;
+
 }
 .cell {
     width: 140px;
@@ -68,6 +75,8 @@ withDefaults(defineProps<ColorPreview>(), {
 }
 .icon {
     display: inline-block;
+    height: 12px;
+    line-height: 12px;
     margin-right: 6px;
 }
 </style>
