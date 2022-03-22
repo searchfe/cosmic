@@ -30,7 +30,6 @@ const { RouterView } = router;
     flex: auto;
     overflow-x: hidden;
     overflow-y: scroll;
-    padding: 24px;
     background: #f5f5f5;
 }
 .sider {

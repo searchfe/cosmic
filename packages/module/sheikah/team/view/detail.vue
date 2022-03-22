@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { router as vueRouter } from '@cosmic/core/browser';
 import { watchEffect, ref } from 'vue';
-import Info from '../../common/component/region.vue';
+import Region from '../../common/component/region.vue';
 import DesignCard from '../../design/component/summary-card.vue';
 import ProjectCard from '../../project/component/micro-card.vue';
-import RegionTitle from '../../common/component/title-region.vue';
 
 import { useProjects } from '../../project/api';
 
@@ -27,17 +26,8 @@ watchEffect(() => {
 function onClickDesignCard(cardType: string) {
     if (cardType) {
         router.push({
-            name: `${cardType}:list`,
+            path: `/${cardType}/list`,
             query: { project: query.project },
-        });
-    }
-}
-
-function onClickProjectCard(id: string) {
-    if (id) {
-        router.push({
-            name: 'project:detail',
-            query: { project: id },
         });
     }
 }
@@ -65,9 +55,8 @@ const teamAssetsData = [
 </script>
 
 <template>
-    <div>
-        <Info title="百度搜索" />
-        <region-title title="设计资产" />
+    <Region title="百度搜索" :level="1" />
+    <Region title="设计资产" inverse>
         <div :class="$style['design-list']">
             <design-card
                 v-for="item in teamAssetsData"
@@ -76,11 +65,13 @@ const teamAssetsData = [
                 @click="onClickDesignCard(item.type)"
             />
         </div>
-        <region-title title="项目类别" />
+    </Region>
+
+    <Region title="项目类别" inverse>
         <div :class="$style['project-list']">
-            <project-card v-for="pro in projects" :key="pro.id" :name="pro.name" @click="onClickProjectCard(pro.id)" />
+            <project-card v-for="pro in projects" :key="pro.id" v-bind="pro" />
         </div>
-    </div>
+    </Region>
 </template>
 
 <style module>

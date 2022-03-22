@@ -3,7 +3,7 @@ import { Input } from 'cosmic-vue';
 import { router as vueRouter } from '@cosmic/core/browser';
 import CompCard from '../component/card/comp.vue';
 import CompFilter from '../component/filter.vue';
-import CompInfo from '../../common/component/region.vue';
+import Region from '../../common/component/region.vue';
 
 const { useRouter } = vueRouter;
 
@@ -15,46 +15,46 @@ function onClickComp() {
 
 </script>
 <template>
-    <comp-info title="组件">
+    <Region title="组件">
         <div class="flex flex-start">
             <comp-filter text="基础类" num="82">
                 <template #icon>
-                    <i-cosmic-night />
+                    <i-cosmic-scale />
                 </template>
                 <template #hover-icon>
-                    <i-cosmic-dark />
+                    <i-cosmic-scale style="color: white;" />
                 </template>
             </comp-filter>
             <comp-filter text="布局类" num="13">
                 <template #icon>
-                    <i-cosmic-night />
+                    <i-cosmic-layout />
                 </template>
                 <template #hover-icon>
-                    <i-cosmic-dark />
+                    <i-cosmic-layout style="color: white;" />
                 </template>
             </comp-filter>
             <comp-filter text="展示类" num="20">
                 <template #icon>
-                    <i-cosmic-night />
+                    <i-cosmic-contain />
                 </template>
                 <template #hover-icon>
-                    <i-cosmic-dark />
+                    <i-cosmic-contain style="color: white;" />
                 </template>
             </comp-filter>
             <comp-filter text="输入类" num="8">
                 <template #icon>
-                    <i-cosmic-night />
+                    <i-cosmic-input />
                 </template>
                 <template #hover-icon>
-                    <i-cosmic-dark />
+                    <i-cosmic-input style="color: white;" />
                 </template>
             </comp-filter>
             <comp-filter text="反馈类" num="12">
                 <template #icon>
-                    <i-cosmic-night />
+                    <i-cosmic-feedback />
                 </template>
                 <template #hover-icon>
-                    <i-cosmic-dark />
+                    <i-cosmic-feedback style="color: white;" />
                 </template>
             </comp-filter>
         </div>
@@ -63,13 +63,15 @@ function onClickComp() {
                 <Input placeholder="组件查询" :class="$style.input" />
             </div>
         </template>
-    </comp-info>
-    <div :class="$style['card-list']" @click="onClickComp">
-        <comp-card />
-        <comp-card />
-        <comp-card />
-        <comp-card />
-    </div>
+    </Region>
+    <Region inverse>
+        <div :class="$style['card-list']" @click="onClickComp">
+            <comp-card />
+            <comp-card />
+            <comp-card />
+            <comp-card />
+        </div>
+    </Region>
 </template>
 <style module>
 .card-list {

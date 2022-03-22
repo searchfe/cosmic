@@ -1,24 +1,40 @@
 <script lang="ts" setup>
-withDefaults(defineProps<{ title: string, desc: string }>(), {
+import { useSlots, computed  } from 'vue';
+
+
+const slots = useSlots();
+const hasDefault = computed(() => slots.default?.());
+const hasBottom = computed(() => slots.bottom?.());
+
+interface PropRegion {
+    title: string;
+    desc: string;
+    inverse: boolean;
+    level: number;
+}
+
+withDefaults(defineProps<PropRegion>(), {
     title: '',
     desc: '',
+    inverse: false,
+    level: 2,
 });
 
 </script>
 
 <template>
-    <div :class="$style.info">
-        <div :class="$style['info-title']" class="mb-20">
-            <span class="font-semibold">{{ title }}</span>
+    <div class="text-2xl padding-2xl" :class="{ [$style.info]: true, [$style.inverse]: inverse }">
+        <div :class="{[$style['info-title']]: true, [$style['inverse-title']]: inverse }">
+            <span :class="{'font-semibold': level === 1}">{{ title }}</span>
             <slot name="extra" />
         </div>
-        <div class="mb-20">
+        <div :class="{ 'mt-20': hasDefault }">
             <slot />
         </div>
-        <div v-if="desc" class="mb-20 text-sm">
+        <div v-if="desc" class="text-sm mt-20">
             {{ desc }}
         </div>
-        <div class="mb-20">
+        <div :class="{ 'mt-20': hasBottom }">
             <slot name="bottom" />
         </div>
     </div>
@@ -26,16 +42,22 @@ withDefaults(defineProps<{ title: string, desc: string }>(), {
 
 <style module>
 .info {
-    overflow: hidden;
-    padding: 32px 32px 0;
+    margin: 32px 40px 24px;
+    padding: var(--padding-2xl);
     background: #fff;
     border-radius: 8px;
-    font-size: 24px;
+}
+.inverse {
+    background: none;
+    padding: 0;
+}
+.inverse-title {
+    padding-left: 4px;
+    padding-right: 4px;
 }
 .info-title {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 24px;
 }
 </style>

@@ -28,7 +28,30 @@ export function useCreateProject() {
             }
         }
     `);
-    // mutation<{ createProject: { id: string } }, { project: CreateProjectDTO }>({
-    //     query: ,
-    // });
+}
+
+export function useDeleteProject() {
+    return useMutation<{ deleteProject: boolean }, { id: string }>(`
+        mutation deleteProject($id: String!) {
+            deleteProject(id: $id)
+        }
+    `);
+}
+
+export function useProjectStructure(id: string) {
+    return useQuery<{ projectStructure: gql.ProjectPlus[] }, { id: string }>({
+        query: `
+            query ($id: String!) {
+                projectStructure(id: $id) {
+                    id,
+                    name,
+                    team,
+                    parent,
+                    hasChildren
+                }
+            }
+        `,
+        variables: { id },
+        requestPolicy: 'cache-first',
+    });
 }

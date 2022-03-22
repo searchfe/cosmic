@@ -11,7 +11,7 @@ import CompCard from '../component/card/comp-refs.vue';
             组件构成
         </div>
         <div :class="$style['card-list']">
-            <comp-card v-for="item in [1,]" :key="item" />
+            <comp-card v-for="item in [1, 2, 3, 4, 5, 6]" :key="item" />
         </div>
     </Region>
 </template>
@@ -22,11 +22,8 @@ import CompCard from '../component/card/comp-refs.vue';
     height: 0;
     padding-bottom: 23.25%;
     background-color: #eee;
-    background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),
-    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
-    background-size: 60px 60px;
-    background-position: 0 0, 30px 30px;
-    opacity: .3;
+    background-image: url(https://fe-dev.bj.bcebos.com/%E5%8E%9F%E5%AD%90%E6%96%B9%E5%9D%97%E8%83%8C%E6%99%AF.png);
+    opacity: .2;
     border: 1px solid #979797;
     border-radius: 12px;
 }

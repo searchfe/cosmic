@@ -1,24 +1,33 @@
 <script lang="ts" setup>
-    import Card from '../../common/component/card.vue';
+import Card from '../../common/component/card.vue';
+import { router as vueRouter } from '@cosmic/core/browser';
 
-    interface Props {
-        id: string;
-        name: string;
-        team: string;
-        img: string;
-    }
+const { useRouter } = vueRouter;
 
-    withDefaults(defineProps<Props>(), {
-        id: '',
-        name: '',
-        team: '',
-        img: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1805669441,154121004&fm=30&app=106&f=JPEG?w=312&h=208&s=D5383ED766AB32B0D234CD2603003069',
-    });
+const router = useRouter();
+
+interface Props {
+    id: string;
+    name: string;
+    team: string;
+    img: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    id: '',
+    name: '',
+    team: '',
+    img: 'https://fe-dev.bj.bcebos.com/%E6%96%87%E4%BB%B6%E5%8D%A1%E7%89%87.png',
+});
+
+async function onClickCard() {
+    router.push({ name: 'project:detail', query: { project: props.id }, force: true });
+}
 
 </script>
 
 <template>
-    <Card :class="$style['card']">
+    <Card :class="$style['card']" @click="onClickCard">
         <div :class="$style['card-content']">
             <div :class="$style['card-info']">
                 <div :class="$style['card-name']">

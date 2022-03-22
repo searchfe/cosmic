@@ -1,31 +1,47 @@
 <script lang="ts" setup>
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect, watch } from 'vue';
 import { router as vueRouter } from '@cosmic/core/browser';
-import ProjectInfo from '../../common/component/region.vue';
-// import FileCard from '../component/file-card.vue';
+import Region from '../../common/component/region.vue';
+import FileCard from '../component/file-card.vue';
 import DirCard from '../component/dir-card.vue';
-import { useProjects } from '../api';
+import { useProjectStructure } from '../api';
 
-const { useRoute } = vueRouter;
+const { useRoute, useRouter } = vueRouter;
 
-const projects = ref<gql.Project[]>([]);
-const { query } = useRoute();
-const { data, fetching } = useProjects({ parent: query.project as string });
+const router = useRouter();
+
+// const query = useRoute().query;
+
+const id = useRoute().query.project;
+
+const { data, fetching } = useProjectStructure(id as string);
+
+const projects = ref<gql.ProjectPlus[]>([]);
+
+watch(() => router, () => {
+    // const newId = router.currentRoute.value.query.project;
+    // console.log(newId, '2222')
+    // executeQuery({})
+});
 
 watchEffect(() => {
     if (data.value && !fetching.value) {
-        projects.value = data.value?.projects;
+        projects.value = data.value?.projectStructure;
     }
 });
 
 </script>
 
 <template>
-    <project-info title="搜索通用组件" desc="修改时间" />
-    <div class="w-full" :class="$style['card-list']">
-        <dir-card v-for="project in projects" v-bind="project" :key="project.id" />
-        <!-- <FileCard /> -->
-    </div>
+    <Region title="搜索通用组件" desc="修改时间" />
+    <Region inverse>
+        <div class="w-full" :class="$style['card-list']">
+            <template v-for="project in projects" :key="project.id">
+                <dir-card v-if="project.hasChildren" v-bind="project" />
+                <file-card v-else v-bind="project" />
+            </template>
+        </div>
+    </Region>
 </template>
 
 <style module>

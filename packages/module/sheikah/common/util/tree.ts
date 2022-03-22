@@ -14,6 +14,7 @@ export function generateProjectForest(projects: gql.Project[], teams: string[]) 
         teamMap.set(team, {
             key: '',
             title: '项目类别',
+            extra: '+',
             children: [],
         });
     });
@@ -24,6 +25,7 @@ export function generateProjectForest(projects: gql.Project[], teams: string[]) 
             title: project.name,
             children: [],
             parent: project.parent,
+            extra: '+',
         };
         idNodeMap.set(project.id, treeNode);
         if (!project.parent) {

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import Card from '../../../common/component/card.vue';
 interface CompCardOption {
     img: string;
     title: string;
@@ -11,23 +12,25 @@ withDefaults(defineProps<CompCardOption>(), {
 </script>
 
 <template>
-    <div class="flex flex-col overflow-hidden" :class="$style.card">
-        <div :class="$style.preview" class="flex items-center justify-center">
-            预览区
-        </div>
-        <div :class="$style.info" class="flex flex-col justify-around">
-            <div class="text-lg">
-                2n 按钮
+    <Card>
+        <div class="flex flex-col overflow-hidden" :class="$style.card">
+            <div :class="$style.preview" class="flex items-center justify-center">
+                预览区
             </div>
-            <div :class="$style.ref" class="flex justify-start">
-                <span>综合关联 23</span>
-                <span class="inline-block mx-10"> | </span>
-                <span>设计实例 23</span>
-                <span class="inline-block mx-10"> | </span>
-                <span>线上资产 23</span>
+            <div :class="$style.info" class="flex flex-col justify-around">
+                <div class="text-lg">
+                    2n 按钮
+                </div>
+                <div :class="$style.ref" class="flex justify-start text-sm">
+                    <span>综合关联 23</span>
+                    <span class="inline-block mx-10"> | </span>
+                    <span>设计实例 23</span>
+                    <span class="inline-block mx-10"> | </span>
+                    <span>线上资产 23</span>
+                </div>
             </div>
         </div>
-    </div>
+    </Card>
 </template>
 
 <style module>

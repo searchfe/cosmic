@@ -1,16 +1,18 @@
 <script lang="ts" setup>
+import Region from '../../common/component/region.vue';
+import AtomDetailInfo from '../component/preview/color.vue';
 import CompCard from '../component/card/comp.vue';
 
 </script>
 <template>
-    <div>
-        <div class="h-26 text-lg my-26">
-            组件数量 16
-        </div>
+    <Region>
+        <atom-detail-info />
+    </Region>
+    <Region title=" 组件数量 16" inverse>
         <div :class="$style['comp-list']">
             <comp-card v-for="item in [1, 2, 3, 4]" :key="item" />
         </div>
-    </div>
+    </Region>
 </template>
 
 

@@ -1,16 +1,23 @@
 <script lang="ts" setup>
-    // import { push } from 'svelte-spa-router';
-    // import { urlFor, ROUTES } from '../../routes';
+    import { router as vueRouter } from '@cosmic/core/browser';
     import Card from '../../common/component/card.vue';
+    import { Menu, MenuOption } from 'cosmic-vue';
+    import { useDeleteProject } from '../api';
 
     interface Props {
+        id: string;
         avatar: string;
         users: string[];
         info: string;
         name: string;
     }
 
-    withDefaults(defineProps<Props>(), {
+    const { useRouter } = vueRouter;
+    const router = useRouter();
+
+    const { executeMutation: deleteProject } = useDeleteProject();
+
+    const props = withDefaults(defineProps<Props>(), {
         avatar: 'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%9B%BE%E6%A0%8740*40.png',
         info: '协作 30',
         name: '项目名称',
@@ -19,12 +26,24 @@
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F02.png',
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F03.png',
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F04.png',
-            'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F05.png',
+            'https://s.gravatar.com/avatar/0095e9247f0c7e4d5f23cba12df87cde?s=80',
         ],
+        id: '',
     });
 
     function projectClickHandler() {
-        // push(urlFor(ROUTES.PROJECT_DETAIL, { projectId: data.id }));
+        router.push({
+            name: 'project:detail',
+            query: { project: props.id },
+        });
+    }
+
+    function onSelectMenu(data: { value: string }) {
+        if (data.value === '4') {
+            deleteProject({ id: props.id }).then(res => {
+                console.log(res.data?.deleteProject);
+            });
+        }
     }
 </script>
 
@@ -58,8 +77,17 @@
         <div
             :class="$style['card-more']"
             class="flex items-center justify-center"
+            @click.stop="() => {}"
         >
-            <i-cosmic-more style="font-size: 20px" />
+            <Menu :class="$style.menu" @on-change="onSelectMenu">
+                <template #activator>
+                    <i-cosmic-more style="font-size: 20px" />
+                </template>
+                <menu-option :class="$style['menu-option']" label="新建分组" value="1" />
+                <menu-option :class="$style['menu-option']" label="信息设置" value="2" />
+                <menu-option :class="$style['menu-option']" label="复制项目" value="3" />
+                <menu-option :class="$style['menu-option']" label="删除项目" value="4" />
+            </Menu>
         </div>
     </Card>
 </template>
@@ -67,7 +95,7 @@
 <style module>
 .card {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     padding-bottom: 40.7%;
     height: 0;
     font-size: 12px;
@@ -123,5 +151,12 @@
     width: 26px;
     height: 26px;
     border-radius: var(--rounded-md);
+}
+.menu {
+    border-radius: 8px;
+}
+.menu-option {
+    width: 88px;
+    height: 30px;
 }
 </style>
