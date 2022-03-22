@@ -71,7 +71,7 @@ onMounted(() => {
 
         <footer
             :class="$style.footer"
-            class="flex items-center justify-between"
+            class="flex items-center justify-evenly"
         >
             <Button
                 size="sm"
@@ -99,7 +99,8 @@ onMounted(() => {
     border-radius: var(--spacing-4);
     color: var(--color-dark);
     position: fixed;
-    transform: translateX(-100%)
+    transform: translateX(-100%);
+    width: 27rem;
 }
 .title {
     composes: -v-h -v-px items-center flex justify-between md from global;
@@ -113,6 +114,5 @@ onMounted(() => {
 }
 .footer {
     composes: -v-py sm from global;
-    padding: 0 25%;
 }
 </style>

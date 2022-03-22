@@ -9,15 +9,15 @@ import { Border } from '../data';
         <Row :class="$style.row">
             <Col
                 class="flex"
-                :span="4"
+                :span="3"
             >
-                <div class="w-80">
+                <div class="w-70">
                     <Input
                         size="sm"
                         :value="12"
                     >
                         <template #prefix>
-                            <i-cosmic-grid-outline />
+                            <i-cosmic-border />
                         </template>
                     </Input>
                 </div>
@@ -44,35 +44,35 @@ import { Border } from '../data';
         <Row :class="$style.row">
             <Col
                 class="flex"
-                :span="4"
+                :span="3"
             >
-                <div class="w-80">
+                <div class="w-70">
                     <Input
                         size="sm"
                         :value="12"
                     >
                         <template #prefix>
-                            <i-cosmic-grid-outline />
+                            <i-cosmic-border />
                         </template>
                     </Input>
                 </div>
             </Col>
             <Col 
                 class="flex"
-                :span="4"
+                :span="3"
             >
-                <div class="w-80">
+                <div class="w-70">
                     <Input
                         size="sm"
                         :value="12"
                     >
                         <template #prefix>
-                            <i-cosmic-grid-outline />
+                            <i-cosmic-horizonal-width />
                         </template>
                     </Input>
                 </div>
             </Col>
-            <Col :span="4">
+            <Col :span="6">
                 <RadioGroup>
                     <RadioButton value="1">
                         <i-cosmic-text-left :class="$style['radio-icon']" />

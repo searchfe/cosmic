@@ -32,7 +32,7 @@ const {
             <MStandard :standard="selected" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <div
-                        class="flex items-center w-40 justify-between"
+                        class="flex items-center w-40 justify-around"
                     >
                         <i-cosmic-more @click.stop="(event) => openDetaileModal(container)" />
                         <i-cosmic-link @click.stop="unSelectStandard" />
@@ -67,7 +67,6 @@ const {
 
 <style module>
 .detail-content {
-    width: 20vw;
     max-height: 400px
 }
 
