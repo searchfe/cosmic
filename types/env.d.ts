@@ -16,6 +16,10 @@ interface ImportMetaEnv {
    * The value of the variable is set in scripts/watch.js and depend on packages/app/vite.config.js
    */
   readonly VITE_DEV_SERVER_URL: undefined | string;
+  /**
+   * dotenv config in build phrase
+   */
+  readonly VITE_SERVER: string;
 }
 
 interface ImportMeta {

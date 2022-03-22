@@ -39,6 +39,11 @@ The entire source code of the program is divided into three modules (packages) t
 - [`packages/module`](packages/module)
   Modules for cosmic.
 
+### env config
+- we use [dotenv](https://github.com/motdotla/dotenv) to manage static config, see vite (env-and-mode)[https://vitejs.dev/guide/env-and-mode.html]
+- .env.production is for production compile. Use *.local to overwrite config locally, which are ignored in git
+- ** Do not put any sensitive data in files managed by git, for instance database password or server address in intranet**
+
 ### Compile App
 The next step is to package and compile a ready to distribute Electron app for macOS, Windows and Linux with "auto update" support out of the box.
 
