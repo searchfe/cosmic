@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<{
 <style module>
 .wrapper {
     height: var(--height-md);
+    font-size: 1.2rem;
     font-weight: 700;
 }
 </style>

@@ -60,6 +60,7 @@ const emits = defineEmits(['click', 'hover']);
 
 <style module>
 .standard {
+    font-size: 1.2rem;
     composes: items-center from global;
     color: var(--color-dark);
     height: calc(var(--height-sm) * 3);
