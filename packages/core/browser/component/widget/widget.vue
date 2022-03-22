@@ -9,6 +9,6 @@
 
 <style module>
 .px {
-    padding: 0 1.4rem
+    padding: 0 2rem
 }
 </style>

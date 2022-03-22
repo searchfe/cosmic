@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import StrokeContent from './stroke-content.vue';
-import { MTitle, MStandard, MStandardModal, MDetailModal, useAtom } from '@cosmic/core/browser';
+import { MTitle, MStandard, MStandardModal, useAtom } from '@cosmic/core/browser';
 import { Standard } from '../data';
 
 
@@ -43,7 +43,7 @@ const {
             </MStandard>
         </template>
 
-        <MStandardModal
+        <m-standard-modal
             v-if="isShowStandardModal" 
             title="文字规范" 
             :standard-list="Standard" 
@@ -52,7 +52,7 @@ const {
             @select="(event) => selectStandard(event.data)"
             @show-detail="openDetaileModal"
         />
-        <MDetailModal
+        <m-detail-msodal
             v-if="isShowDetailModal"
             title="文字规范"
             :target="detailTarget"
@@ -63,7 +63,7 @@ const {
                     <StrokeContent />
                 </div>
             </div>
-        </MDetailModal>
+        </m-detail-msodal>
     </div>
 </template>
 
