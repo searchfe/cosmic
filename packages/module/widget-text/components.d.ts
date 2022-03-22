@@ -12,7 +12,6 @@ declare module 'vue' {
     ICosmicLink: typeof import('~icons/cosmic/link')['default']
     ICosmicLinkedSquare: typeof import('~icons/cosmic/linked-square')['default']
     ICosmicMore: typeof import('~icons/cosmic/more')['default']
-    ICosmicSun: typeof import('~icons/cosmic/sun')['default']
     ICosmicTextCenter: typeof import('~icons/cosmic/text-center')['default']
     ICosmicTextEven: typeof import('~icons/cosmic/text-even')['default']
     ICosmicTextLeft: typeof import('~icons/cosmic/text-left')['default']

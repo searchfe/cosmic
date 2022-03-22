@@ -1,64 +1,24 @@
  <script lang="ts" setup>
 import { ref } from 'vue';
-import { MTitle, MStandard, MStandardModal, MDetailModal } from '@cosmic/core/browser';
+import { MTitle, MStandard, MStandardModal, MDetailModal, useAtom } from '@cosmic/core/browser';
 import { Standard } from '../../data';
 import GlyphContent from './glyph-content.vue'; 
-
-let standardTarget:HTMLElement| null = null;
-let detailTarget : HTMLElement| null = null;
-
-const selected = ref(void 0);
-
-const isShowDetailModal = ref(false);
-
-const isShowStandardModal = ref(false);
-
 const container = ref(null);
 
-const unSelectAction = () => {
-    selected.value = void 0;
-};
+const { 
+        isShowStandardModal,
+        isShowDetailModal,
+        selected,
+        detailTarget,
+        standardTarget,
 
-const showDataileModal = (target: HTMLElement) => {
-    if (detailTarget === target && isShowDetailModal.value) {
-        return;
-    }
-    isShowDetailModal.value = false;
-    Promise.resolve().then(() =>  {
-        detailTarget = target;
-        isShowDetailModal.value = true;
-    });
-};
-
-const ok = () => {
-    isShowDetailModal.value = false;
-};
-
-const cancel = () => {
-    isShowDetailModal.value = false;
-};
-
-const selectStandard = (event: {event: MouseEvent, data: any}) => {
-    selected.value = event.data;
-    isShowStandardModal.value = false;
-};
-
-const cancelStandardModal = () => {
-    Promise.resolve().then(() => isShowStandardModal.value = false);
-};
-
-const showStandardModal = (event: MouseEvent) => {
-    standardTarget = event.target as HTMLElement;
-    isShowStandardModal.value = true;
-};
-
-function getStandardTarge(): HTMLElement {
-    return standardTarget as HTMLElement;
-}
-
-function getDetailTarget():HTMLElement {
-    return detailTarget as HTMLElement;
-}
+        cancelStandardModal,
+        cancelDetailModal,
+        selectStandard,
+        openDetaileModal,
+        openStandardModal,
+        unSelectStandard,
+    } = useAtom({property: {}});
 
  </script>
 
@@ -66,19 +26,18 @@ function getDetailTarget():HTMLElement {
     <div ref="container">
         <div v-if="!selected">
             <MTitle title="字形">
-                <i-cosmic-grid-outline @click.stop="showStandardModal" />
+                <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
             <GlyphContent />
         </div>
         <template v-else>
-            <MStandard :standard="selected" :can-edit="false">
+            <MStandard :standard="selected" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-between"
-                        @click.stop="unSelectAction"
                     >
-                        <i-cosmic-more @click.stop="(event) => showDataileModal(container)" />
-                        <i-cosmic-link @click.stop="unSelectAction" />
+                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container)" />
+                        <i-cosmic-link @click.stop="unSelectStandard" />
                     </div>
                 </template>
             </MStandard>
@@ -86,39 +45,19 @@ function getDetailTarget():HTMLElement {
         <MStandardModal
             v-if="isShowStandardModal" 
             title="文字规范" 
-            :standard="Standard" 
-            :target="() => getStandardTarge()" 
+            :standard-list="Standard" 
+            :target="standardTarget" 
             @cancel="cancelStandardModal"
-            @select="selectStandard"
-            @show-detail="showDataileModal"
+            @select="(event) => selectStandard(event.data)"
+            @show-detail="openDetaileModal"
         />
         <MDetailModal
             v-if="isShowDetailModal"
             title="文字规范"
-            :target="() => getDetailTarget()"
-            @ok="ok"
-            @cancel="cancel"
+            :target="detailTarget"
+            @cancel="cancelDetailModal"
         >
             <div :class="$style['detail-content']">
-                <Row class="flex items-center">
-                    <Col :span="2">
-                        标题：
-                    </Col>
-                    <Col>
-                        <Input />
-                    </Col>
-                </Row>
-                <Row
-                    class="flex items-center h-32"
-                    :class="$style['gray-text']"
-                >
-                    <Col :span="2">
-                        编码：
-                    </Col>
-                    <Col>
-                        qweqwe
-                    </Col>
-                </Row>
                 <div :class="$style['glyph-content']">
                     <GlyphContent />
                 </div>
@@ -129,14 +68,10 @@ function getDetailTarget():HTMLElement {
 
 <style module>
 .detail-content {
-    composes: -v-px md from global;
-    width: 25vw;
+    width: 20vw;
     max-height: 400px
 }
 
-.gray-text {
-    color: var(--color-gray-300);
-}
 
 .glyph-content {
     border-top: solid 1px var(--color-gray-100);

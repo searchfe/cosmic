@@ -97,7 +97,7 @@ const themeClickHandler = () => {
 
 <style module>
 .color {
-    composes: -v-px -v-h sm from global;
+    composes: -v-px -v-h  sm from global;
     display: flex;
     align-items: center;
     border: 1px solid rgba(0, 0, 0, 0);
@@ -150,6 +150,8 @@ const themeClickHandler = () => {
     margin-left: .4rem;
 }
 .input {
+    background-color: transparent;
+    color: var(--color-dark);
     border: none;
     outline: none;
     font-size: 1.2rem;
