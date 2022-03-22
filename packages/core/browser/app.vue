@@ -8,7 +8,7 @@ const { Content, Header } = Layout;
 
 <template>
     <Layout style="height: 100vh">
-        <Header style="height: 2.6rem;">
+        <Header class="h-26">
             <m-component
                 src="@cosmic-module/app-bar"
                 class="w-full"
@@ -38,14 +38,11 @@ const { Content, Header } = Layout;
 }
 body {
     margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 /** wait for add */
-.min-w-27 {
-    min-width: 27rem;
-}
-.w-27 {
-    width: 27rem;
-}
 :root {
     --border-style: solid;
     --border-color: var(--color-gray-200);
