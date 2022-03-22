@@ -3,6 +3,7 @@ import { type Module  } from '@cosmic/core/parts';
 import { createApp } from 'vue';
 import type { App } from 'vue';
 import { moduleAssetPath} from './loader';
+import { MComponent } from '@cosmic-module/core';
 
 export function bootstrapModule(
     src: string,
@@ -23,6 +24,7 @@ export function bootstrapModule(
         if (module.root) {
             const moduleApp = createApp(module.root);
             moduleApp.provide('container', container);
+            moduleApp.component('MComponent', MComponent);
             if (inherit) {
                 addInherit(moduleApp, rootProviders, inherit);
             }

@@ -31,11 +31,35 @@ const { Content, Header } = Layout;
 @import 'cosmic-ui/utilities.css';
 * {
     box-sizing: border-box;
+    user-select: none;
 }
 :root {
     font-size: 10px;
 }
 body {
     margin: 0;
+}
+/** wait for add */
+.min-w-27 {
+    min-width: 27rem;
+}
+.w-27 {
+    width: 27rem;
+}
+:root {
+    --border-style: solid;
+    --border-color: var(--color-gray-200);
+}
+.border-left {
+    border-left: var(--border) var(--border-style) var(--border-color);
+}
+.border-right {
+    border-right: var(--border) var(--border-style) var(--border-color);
+}
+.border-bottom {
+    border-bottom: var(--border) var(--border-style) var(--border-color);
+}
+.border-top {
+    border-top: var(--border) var(--border-style) var(--border-color);
 }
 </style>
