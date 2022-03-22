@@ -18,15 +18,15 @@ import { Row, Col } from 'cosmic-vue';
                 :span="3"
             >
                 <m-component
-                    src="@cosmic-module/text-widget"
+                    src="@cosmic-module/widget-text"
                 />
                 <div :class="$style['border-bottom']" />
                 <m-component
-                    src="@cosmic-module/border-widget"
+                    src="@cosmic-module/widget-border"
                 />
                 <div :class="$style['border-bottom']" />
                 <m-component
-                    src="@cosmic-module/radius-widget"
+                    src="@cosmic-module/widget-radius"
                 />
             </Col>
         </Row>

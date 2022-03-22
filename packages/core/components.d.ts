@@ -5,7 +5,10 @@
 declare module 'vue' {
   export interface GlobalComponents {
     ICosmicDark: typeof import('~icons/cosmic/dark')['default']
+    ICosmicMore: typeof import('~icons/cosmic/more')['default']
+    ICosmicPlus: typeof import('~icons/cosmic/plus')['default']
     ICosmicSun: typeof import('~icons/cosmic/sun')['default']
+    ICosmicText: typeof import('~icons/cosmic/text')['default']
   }
 }
 

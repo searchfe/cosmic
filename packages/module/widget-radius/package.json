@@ -1,5 +1,5 @@
 {
-    "name": "@cosmic-module/border-widget",
+    "name": "@cosmic-module/widget-radius",
     "version": "0.0.1",
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",

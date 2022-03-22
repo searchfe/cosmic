@@ -97,14 +97,12 @@ const themeClickHandler = () => {
 
 <style module>
 .color {
+    composes: -v-px -v-h sm from global;
     display: flex;
-    height: 28px;
-    margin: 2px;
     align-items: center;
     border: 1px solid rgba(0, 0, 0, 0);
     box-sizing: border-box;
     border-radius: 4px;
-    margin: 0 var(--padding-md);
 }
 
 .color > div {
@@ -117,7 +115,7 @@ const themeClickHandler = () => {
 
 .color > .theme {
     flex: 0 1 auto;
-    font-size: 16px;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
     margin-right: 5px;
@@ -154,6 +152,7 @@ const themeClickHandler = () => {
 .input {
     border: none;
     outline: none;
+    font-size: 1.2rem;
 }
 
 </style>

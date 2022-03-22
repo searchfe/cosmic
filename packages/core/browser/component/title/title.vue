@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<{
 <template>
     <div
         :class="[$style.wrapper]"
-        class="flex justify-between items-center"
+        class="flex justify-between items-center w-full"
     >
         <span>{{ props.title }}</span>
         <slot />
@@ -20,7 +20,6 @@ const props = withDefaults(defineProps<{
 <style module>
 .wrapper {
     height: var(--height-md);
-    padding: 0 var(--padding-md); 
     font-weight: 700;
 }
 </style>
