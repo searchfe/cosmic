@@ -38,6 +38,7 @@
         "@vue/test-utils": "2.0.0-rc.18",
         "cosmic-icon": "0.0.7",
         "cross-env": "7.0.3",
+        "dotenv": "~16.0.0",
         "dts-for-context-bridge": "0.7.1",
         "electron": "16.0.7",
         "electron-builder": "22.14.5",

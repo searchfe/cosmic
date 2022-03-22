@@ -12,6 +12,7 @@ importers:
       cosmic-ui-alpha: ^0.0.23
       cosmic-vue: 0.0.38
       cross-env: 7.0.3
+      dotenv: ~16.0.0
       dts-for-context-bridge: 0.7.1
       electron: 16.0.7
       electron-builder: 22.14.5
@@ -54,6 +55,7 @@ importers:
       '@vue/test-utils': 2.0.0-rc.18_vue@3.2.29
       cosmic-icon: 0.0.7_vite@2.7.13
       cross-env: 7.0.3
+      dotenv: 16.0.0
       dts-for-context-bridge: 0.7.1
       electron: 16.0.7
       electron-builder: 22.14.5
@@ -1735,6 +1737,11 @@ packages:
 
   /dotenv-expand/5.1.0:
     resolution: {integrity: sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==}
+    dev: true
+
+  /dotenv/16.0.0:
+    resolution: {integrity: sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==}
+    engines: {node: '>=12'}
     dev: true
 
   /dotenv/9.0.2:
