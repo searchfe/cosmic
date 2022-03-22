@@ -108,9 +108,6 @@ importers:
   packages/module/blueprint:
     specifiers: {}
 
-  packages/module/border-widget:
-    specifiers: {}
-
   packages/module/core:
     specifiers: {}
 
@@ -123,13 +120,16 @@ importers:
   packages/module/mask-widget:
     specifiers: {}
 
-  packages/module/radius-widget:
-    specifiers: {}
-
   packages/module/shadow-widget:
     specifiers: {}
 
   packages/module/sheikah:
+    specifiers: {}
+
+  packages/module/widget-border:
+    specifiers: {}
+
+  packages/module/widget-radius:
     specifiers: {}
 
   packages/module/widget-text:

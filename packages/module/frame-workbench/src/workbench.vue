@@ -26,7 +26,7 @@ import { Row, Col } from 'cosmic-vue';
                 />
                 <div :class="$style['border-bottom']" />
                 <m-component
-                    src="@cosmic-module/radius-widget"
+                    src="@cosmic-module/widget-radius"
                 />
             </Col>
         </Row>

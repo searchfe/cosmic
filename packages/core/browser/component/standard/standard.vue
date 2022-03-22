@@ -21,7 +21,7 @@ const emits = defineEmits(['click', 'hover']);
     <div 
         :class="[$style.standard, props.classes]"
         class="flex justify-between"
-        @click.stop="() => emits('click', standard)"
+        @click.stop="(event) => emits('click', {event, standard: props.standard})"
         @mouseenter="() => emits('hover', true)"
         @mouseleave="() => emits('hover', false)"
     >
@@ -29,7 +29,7 @@ const emits = defineEmits(['click', 'hover']);
             :class="[$style.show, props.active ? $style.border : '']"
         >
             <slot name="prefix">
-                <i-cosmic-board />
+                <i-cosmic-text />
             </slot>
         </div>
         <slot>
@@ -37,12 +37,17 @@ const emits = defineEmits(['click', 'hover']);
                 <div :class="$style.item">
                     <span
                         v-if="!canEdit"
-                        class="h-32 flex items-center"
+                        :class="$style.title"
                     >{{ standard?.title }}</span>
-                    <Input
+                    <div
                         v-else
-                        :value="standard?.title"
-                    />
+                        @click.stop="() => {}"
+                    >
+                        <Input
+                            size="sm"
+                            :value="standard?.title"
+                        />
+                    </div>
                 </div>
                 <div :class="[$style.item, $style.description]">
                     {{ standard?.description }}
@@ -87,9 +92,15 @@ const emits = defineEmits(['click', 'hover']);
 
 .item {
     composes: flex items-center from global;
+    margin-right: 2rem;
+}
+
+.title {
+    composes: h-32 flex -v-px sm items-center from global;
 }
 
 .description {
+    composes: -v-px sm from global;
     color: var(--color-gray-500);
 }
 

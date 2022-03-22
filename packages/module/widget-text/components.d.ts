@@ -7,6 +7,7 @@ declare module 'vue' {
     ICosmicArrowDown: typeof import('~icons/cosmic/arrow-down')['default']
     ICosmicFont: typeof import('~icons/cosmic/font')['default']
     ICosmicGridOutline: typeof import('~icons/cosmic/grid-outline')['default']
+    ICosmicHeightAuto: typeof import('~icons/cosmic/height-auto')['default']
     ICosmicLineHeight: typeof import('~icons/cosmic/line-height')['default']
     ICosmicLink: typeof import('~icons/cosmic/link')['default']
     ICosmicLinkedSquare: typeof import('~icons/cosmic/linked-square')['default']

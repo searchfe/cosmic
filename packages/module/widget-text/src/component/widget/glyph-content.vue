@@ -6,17 +6,19 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
 
 <template>
     <div>
-        <Select
-            size="sm"
-            value="1"
-        >
-            <SelectOption
-                v-for="data of GlyphData"
-                :key="data.value"
-                :value="data.value"
-                :label="data.label"
-            />
-        </Select>
+        <div :class="$style.row">
+            <Select
+                size="sm"
+                value="1"
+            >
+                <SelectOption
+                    v-for="data of GlyphData"
+                    :key="data.value"
+                    :value="data.value"
+                    :label="data.label"
+                />
+            </Select>
+        </div>
 
         <Row :class="$style.row">
             <Col :span="4">
@@ -164,7 +166,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                         </RadioButton>
 
                         <RadioButton value="2">
-                            <i-cosmic-linked-square :class="$style['radio-icon']" />
+                            <i-cosmic-height-auto :class="$style['radio-icon']" />
                         </RadioButton>
                         <RadioButton value="3">
                             <i-cosmic-linked-square :class="$style['radio-icon']" />
@@ -178,7 +180,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
 
  <style module>
  .row {
-    composes: -v-my lg from global;
+    composes: mb-10 from global;
  }
 
  

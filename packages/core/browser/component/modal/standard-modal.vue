@@ -1,11 +1,51 @@
 <script lang="ts" setup>
+import { ref, onMounted } from 'vue';
 import {Select, SelectOption, Input} from 'cosmic-vue';
 import MTitle from '../title/title.vue';
+import MStandard from '../standard/standard.vue';
+import { useModal } from './setup';
+
+const props = withDefaults(defineProps<{
+    title: string,
+    standard: any[],
+    select: any,
+    target: () => HTMLElement,
+}>(), {
+    title: '',
+    select: () => ({}),
+    standard: () => [],
+});
+
+const emits = defineEmits(['cancel', 'showDetail',  'select']);
+
+const content = ref(null);
+
+const hoverIndex = ref(-1);
+
+const selectStandard = ref({});
+
+const container = ref(null);
+
+const { comoutPositionStyle, positionStyle, setContainerTarget } = useModal(props.target?.(), emits);
+
+comoutPositionStyle();
+
+onMounted(() => {
+    setContainerTarget(container.value as unknown as HTMLElement);
+});
+
+function showDetail(index: number) {
+    const target = (content.value! as HTMLElement).children[index];
+    emits('showDetail', target);
+}
+
 </script>
 
 <template>
     <div
-        :class="$style.content"
+        ref="container"
+        :class="$style.container"
+        :style="positionStyle"
         class="cos-mode-reverse"
     >
         <slot name="title">
@@ -30,18 +70,43 @@ import MTitle from '../title/title.vue';
                 </div>
             </div>
         </slot>
-        <slot />
+        <div
+            ref="content"
+            :class="$style.content"
+        >
+            <MStandard 
+                v-for="(data, index) of props.standard"
+                :key="data.title"
+                :standard="data"
+                :can-edit="true"
+                :active="selectStandard === data"
+                classes="-v-bg-inapparent"
+                @hover="() => hoverIndex = index"
+                @click="(event) => emits('select', {event, data})"
+            >
+                <template #subfix>
+                    <div
+                        v-if="index === hoverIndex"
+                        class="flex items-center w-40"
+                    >
+                        <i-cosmic-more @click.stop="showDetail(index)" />
+                    </div>
+                </template>
+            </MStandard>
+        </div>
     </div>
 </template>
 
 <style module>
 
-.content {
+.container {
     padding: var(--spacing-4) 0;
     background-color: var(--color-gray-50);
     border-radius: var(--spacing-4);
     color: var(--color-light);
-
+    position: fixed;
+    transform: translateX(-100%);
+    user-select: none;
 }
 .title {
     composes: -v-h -v-px md from global;
@@ -49,9 +114,8 @@ import MTitle from '../title/title.vue';
 }
 
 .filter {
-    composes: -v-mx flex sm from global;
-    border-top: solid 1px var(--color-gray-100);
-    border-bottom: solid 1px var(--color-gray-100);
+    composes: flex m-10 from global;
+    border: solid 1px var(--color-gray-400);
 }
 
 .filter > div:first-child {
@@ -61,4 +125,12 @@ import MTitle from '../title/title.vue';
 .filter > div:last-child {
     flex: 3
 }
+
+.content {
+    width: 20vw;
+    max-height: 400px;
+    border-radius: var(--spacing-4);
+    overflow: auto;
+}
+
 </style>
