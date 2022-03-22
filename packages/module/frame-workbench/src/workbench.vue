@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import WidgetProperties from './properties.vue';
-import WidgetResources from './resources.vue';
+import WidgetAssets from './assets.vue';
 </script>
 
 <template>
     <div class="h-full flex">
-        <widget-resources class="h-full w-27 min-w-27 border-right" />
+        <widget-assets class="h-full w-270 min-w-270 border-right" />
         <div class="h-full w-full overflow-hidden" :class="$style.canvas" />
-        <widget-properties class="h-full w-27 min-w-27 border-left" />
+        <widget-properties class="h-full w-270 min-w-270 border-left" />
     </div>
 </template>
 <style module>
