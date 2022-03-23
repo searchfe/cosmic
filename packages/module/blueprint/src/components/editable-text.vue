@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, type Component } from 'vue';
 import { Input } from 'cosmic-vue';
+
 const props = defineProps<{
     value: string;
-    onUpdateValue: (s: string) => void;
+    textComponent: Component<any, any, any>;
+    onUpdateValue?: (v: string) => void;
 }>();
+
+const emits = defineEmits(['on-update:value']);
 
 const isEdit = ref(false);
 const inputRef = ref();
@@ -16,7 +20,8 @@ function handleOnClick() {
     });
 }
 function handleChange() {
-    props.onUpdateValue(inputValue.value);
+    emits('on-update:value', inputValue.value);
+    props.onUpdateValue?.(inputValue.value);
     isEdit.value = false;
 }
 </script>
@@ -27,10 +32,9 @@ function handleChange() {
             v-if="isEdit || value === ''"
             ref="inputRef"
             :value="inputValue"
-            @update-value="(v) => (inputValue = v)"
-            @change="handleChange"
-            @blur="handleChange"
+            @update:value="v => inputValue = v"
+            @on-blur="handleChange"
         />
-        <span v-else>{{ value }}</span>
+        <component :is="textComponent" v-else>{{ value }}</component>
     </section>
 </template>
