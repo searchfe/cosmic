@@ -48,7 +48,7 @@ function showDetail(index: number) {
     >
         <slot name="title">
             <div :class="$style.title">
-                <MTitle title="文字规范">
+                <MTitle :title="title">
                     <i-cosmic-plus />
                 </MTitle>
             </div>
@@ -75,7 +75,7 @@ function showDetail(index: number) {
             ref="content"
             :class="$style.content"
         >
-            <MStandard 
+            <MStandard
                 v-for="(data, index) of props.standardList"
                 :key="data.title"
                 :standard="data"
@@ -85,13 +85,21 @@ function showDetail(index: number) {
                 @hover="() => hoverIndex = index"
                 @click="(event) => emits('select', {event, data})"
             >
+                <template #prefix>
+                    <slot
+                        name="prefix"
+                        :standard="data"
+                    />
+                </template>
                 <template #subfix>
-                    <div
-                        v-if="index === hoverIndex"
-                        class="flex items-center w-40"
-                    >
-                        <i-cosmic-more @click.stop="showDetail(index)" />
-                    </div>
+                    <slot name="subfix">
+                        <div
+                            v-if="index === hoverIndex"
+                            class="flex items-center w-40"
+                        >
+                            <i-cosmic-more @click.stop="showDetail(index)" />
+                        </div>
+                    </slot>
                 </template>
             </MStandard>
         </div>

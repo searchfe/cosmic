@@ -22,7 +22,7 @@ export function useAtom(data: Atom) {
 
     const standardTarget = ref<HtmlElement | null >(null);
 
-    const selected = ref(null); 
+    const selected = ref(null);
 
     function cancelStandardModal() {
         isShowStandardModal.value = false;
@@ -52,6 +52,8 @@ export function useAtom(data: Atom) {
 
     function unSelectStandard() {
         selected.value =  null;
+        isShowStandardModal.value = false;
+        isShowDetailModal.value = false;
     }
 
     return {
