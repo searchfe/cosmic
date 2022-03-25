@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { Cascader, Row, Col, Popover, Card } from 'cosmic-vue';
 import { ref } from 'vue';
-import Yuzhi from './yuzhi.vue';
-import styles from './yuzhi.module.css';
+import Yuzhi from './prefab.vue';
+import styles from './prefab.module.css';
 
 const yuzhiList = {
     localYz: [{
