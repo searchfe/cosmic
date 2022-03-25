@@ -1520,21 +1520,12 @@ packages:
       - webpack
     dev: true
 
-<<<<<<< Updated upstream
-  /cosmic-ui-alpha/0.0.28:
-    resolution: {integrity: sha512-CSn442PNrPMWMTTbgfpkS1VuWaJiD/cL/b92fvFnY9dxmUbc5D9XYE2qlWHjqB8GrLak3DsOgdtnH8jDGv+4wA==}
-    dev: false
-
-  /cosmic-vue/0.0.43:
-    resolution: {integrity: sha512-3BTuTPOGS/2My+cIiTJAnKGJnzQAbSMr6OvkN+ghpo4TfJMx0Kf0nEjT+ytVyPOev1vck2H/opEo2M/dsA/7SA==}
-=======
   /cosmic-ui-alpha/0.0.30:
     resolution: {integrity: sha512-+o13HuSZJerTK40u1zvxD/AI5l9QajZE3+/z4IZZ54dnLJDWXwvooS0BazJt2D/WOrv3uK4F/t68XuINVY+C7A==}
     dev: false
 
   /cosmic-vue/0.0.44:
     resolution: {integrity: sha512-XBuVm6kXDdq+Xk8VFE/Xbu5af+AFL4V6pxbffyhT2h20SxqVdUALaS+xn2z+ZMysK6779v9pr+vKdcC/nWxAEg==}
->>>>>>> Stashed changes
     dependencies:
       '@babel/types': 7.17.0
       lodash.kebabcase: 4.1.1
