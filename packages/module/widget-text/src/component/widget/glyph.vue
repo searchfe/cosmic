@@ -37,7 +37,7 @@ const {
                         class="flex items-center w-40 justify-around"
                     >
                         <i-cosmic-more @click.stop="(event) => openDetaileModal(container)" />
-                        <i-cosmic-link @click.stop="unSelectStandard" />
+                        <i-cosmic-lock @click.stop="unSelectStandard" />
                     </div>
                 </template>
             </MStandard>
