@@ -1,4 +1,4 @@
-import root from './src/mask-widget.vue';
+import root from './src/index.vue';
 import MaskService from './src/service/mask.service';
 
 export default {

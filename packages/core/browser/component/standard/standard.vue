@@ -18,14 +18,14 @@ const emits = defineEmits(['click', 'hover']);
 
 
 <template>
-    <div 
+    <div
         :class="[$style.standard, props.classes]"
         class="flex justify-between"
         @click.stop="(event) => emits('click', {event, standard: props.standard})"
         @mouseenter="() => emits('hover', true)"
         @mouseleave="() => emits('hover', false)"
     >
-        <div 
+        <div
             :class="[$style.show, props.active ? $style.border : '']"
         >
             <slot name="prefix">
@@ -84,6 +84,7 @@ const emits = defineEmits(['click', 'hover']);
                     linear-gradient(45deg, var(--color-gray-100) 26%, transparent 26%, transparent 74%, var(--color-gray-100) 74%, var(--color-gray-100));
     background-size: 10px 10px;
     background-position: 0 0, 5px 5px;
+    overflow: hidden;
 }
 
 .info {

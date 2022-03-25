@@ -33,7 +33,7 @@ export function useModal(target: HTMLElement, emits: EmitFn<EE[]>) {
 
     onMounted(() => {
         window.document.body.addEventListener('click', autoClose);
-    }); 
+    });
 
     return {
         emits,

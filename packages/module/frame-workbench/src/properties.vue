@@ -17,6 +17,10 @@ function change(opt: any) {
             <m-component src="@cosmic-module/widget-border" />
             <div class="border-bottom" />
             <m-component src="@cosmic-module/widget-radius" />
+            <div class="border-bottom" />
+            <m-component src="@cosmic-module/widget-shadow" />
+            <div class="border-bottom" />
+            <m-component src="@cosmic-module/widget-mask" />
         </div>
         <div :hidden="activeIdx != '1'" />
     </div>

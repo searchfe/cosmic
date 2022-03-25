@@ -1,5 +1,5 @@
 {
-    "name": "@cosmic-module/shadow-widget",
+    "name": "@cosmic-module/widget-mask",
     "version": "0.0.1",
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
