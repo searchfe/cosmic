@@ -86,7 +86,6 @@ const {
 <style module>
 .color-content {
     composes: -v-py w-full md from global;
-    min-width: 20vw;
     max-height: 400px
 }
 </style>
