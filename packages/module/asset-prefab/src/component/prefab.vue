@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { ref, useSlots } from 'vue';
 import { Card, Menu, MenuOption } from 'cosmic-vue';
-import styles from './yuzhi.module.css';
+import styles from './prefab.module.css';
 
 interface Yzdata {
     state: string;

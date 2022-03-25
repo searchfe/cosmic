@@ -1,7 +1,7 @@
-import type { TreeNodeOption } from 'cosmic-vue';
+import type { TreeDataProps } from 'cosmic-vue';
 
 
-interface TreeNode extends TreeNodeOption {
+interface TreeNode extends TreeDataProps {
     parent?: gql.Nullable<string>;
 }
 
@@ -12,8 +12,8 @@ export function generateProjectForest(projects: gql.Project[], teams: string[]) 
 
     teams.forEach(team => {
         teamMap.set(team, {
-            key: '',
-            title: '项目类别',
+            id: '',
+            label: '项目类别',
             extra: '+',
             children: [],
         });
@@ -21,8 +21,8 @@ export function generateProjectForest(projects: gql.Project[], teams: string[]) 
 
     projects.forEach(project => {
         const treeNode = {
-            key: project.id,
-            title: project.name,
+            id: project.id,
+            label: project.name,
             children: [],
             parent: project.parent,
             extra: '+',
