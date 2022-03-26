@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Tree } from 'cosmic-vue';
+import { Tree, TreeNodeState } from 'cosmic-vue';
 import { treeSecondary } from 'cosmic-ui';
 import { ref } from 'vue';
 const treedata = ref([
@@ -47,6 +47,10 @@ const treedata = ref([
         :data="treedata"
         :styles="treeSecondary"
     >
+        <template #arrow="slotProps">
+            <span v-if="slotProps.state == TreeNodeState.open" class="inline-block w-10 pb-2">▾</span>
+            <span v-if="slotProps.state == TreeNodeState.close" class="inline-block w-10 pb-2">▸</span>
+        </template>
         <template #prefix="slotProps">
             <i-cosmic-board v-if="slotProps.nodeData.children" />
             <i-cosmic-rounded-square v-if="!slotProps.nodeData.children" />
@@ -63,5 +67,9 @@ const treedata = ref([
     .customlized {
         --font-md : 1.2rem;
         --icon-md : 1.4rem;
+        --leading-md: 0;
+    }
+    .customlized input {
+        font-size: 1.2rem;
     }
 </style>
