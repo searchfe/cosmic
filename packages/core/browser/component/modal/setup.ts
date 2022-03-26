@@ -23,7 +23,7 @@ export function useModal(target: HTMLElement, emits: EmitFn<EE[]>) {
     function comoutPositionStyle() {
         if (!target) return {};
         const react = (target as HTMLElement).getBoundingClientRect();
-        positionStyle.value = {left: `${react.left}px`, top: `${react.top}px`};
+        positionStyle.value = {left: `${react.left}px`, top: `${react.top}px`, zIndex: 9};
     }
 
 

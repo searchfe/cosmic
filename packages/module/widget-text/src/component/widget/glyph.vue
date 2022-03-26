@@ -2,12 +2,13 @@
 import { ref } from 'vue';
 import { MTitle, MStandard, MStandardModal, MDetailModal, useAtom } from '@cosmic/core/browser';
 import { Standard } from '../../data';
-import GlyphContent from './glyph-content.vue'; 
+import GlyphContent from './glyph-content.vue';
 const container = ref(null);
 
-const { 
+const {
         isShowStandardModal,
         isShowDetailModal,
+        isSelected,
         selected,
         detailTarget,
         standardTarget,
@@ -24,7 +25,7 @@ const {
 
 <template>
     <div ref="container">
-        <div v-if="!selected">
+        <div v-if="!isSelected">
             <MTitle title="字形">
                 <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
@@ -36,17 +37,17 @@ const {
                     <div
                         class="flex items-center w-40 justify-around"
                     >
-                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container)" />
+                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container, selected)" />
                         <i-cosmic-lock @click.stop="unSelectStandard" />
                     </div>
                 </template>
             </MStandard>
         </template>
         <MStandardModal
-            v-if="isShowStandardModal" 
-            title="文字规范" 
-            :standard-list="Standard" 
-            :target="standardTarget" 
+            v-if="isShowStandardModal"
+            title="文字规范"
+            :standard-list="Standard"
+            :target="standardTarget"
             @cancel="cancelStandardModal"
             @select="(event) => selectStandard(event.data)"
             @show-detail="openDetaileModal"
@@ -55,7 +56,9 @@ const {
             v-if="isShowDetailModal"
             title="文字规范"
             :target="detailTarget"
+            :standard="selected"
             @cancel="cancelDetailModal"
+            @ok="cancelDetailModal"
         >
             <div :class="$style['detail-content']">
                 <div :class="$style['glyph-content']">

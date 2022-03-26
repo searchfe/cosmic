@@ -58,6 +58,9 @@ export const Standard = [
         style: {
             boxShadow: '0px 20px 20px 10px fuchsia',
         },
+        dayColor: 'red',
+        darkColor: 'fuchsia',
+        blackColor: 'cyan',
     },
     {
         title: '阴影二阴影一阴影一阴影一阴影一阴影一阴影一阴影一阴影一',
@@ -66,6 +69,8 @@ export const Standard = [
         style: {
             boxShadow: '0px 20px 20px 10px cyan',
         },
+        darkColor: 'blue',
+        blackColor: 'cyan',
     },
     {
         title: '阴影三',
@@ -73,6 +78,7 @@ export const Standard = [
         style: {
             boxShadow: '0px 20px 20px 10px yellow',
         },
+        darkColor: 'purple',
     },
     {
         title: '阴影四',
