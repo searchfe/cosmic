@@ -100,7 +100,7 @@ function onCancel() {
         </collapse-item>
     </collapse>
     <Dialog :open="openDialog">
-        <template #title>
+        <template #label>
             <div class="pl-10">
                 创建项目
             </div>

@@ -4,8 +4,8 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ICosmicMinus: typeof import('~icons/cosmic/minus')['default']
-    ICosmicPlus: typeof import('~icons/cosmic/plus')['default']
+    ICosmicComp: typeof import('~icons/cosmic/comp')['default']
+    ICosmicMore: typeof import('~icons/cosmic/more')['default']
   }
 }
 

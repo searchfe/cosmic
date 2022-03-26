@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import LayerTree from './layer-tree.vue';
 </script>
 <template>
     <div class="flex">
-        Layer
+        <layer-tree />
     </div>
 </template>
