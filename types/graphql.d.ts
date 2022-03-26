@@ -1,9 +1,3 @@
-/*
-* -------------------------------------------------------
-* THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
-* -------------------------------------------------------
-*/
-declare namespace gql {
 
 /*
  * -------------------------------------------------------
@@ -13,38 +7,7 @@ declare namespace gql {
 
 /* tslint:disable */
 /* eslint-disable */
-export enum ETextUnit {
-    PIXELS = "PIXELS",
-    PERCENT = "PERCENT",
-    AUTO = "AUTO"
-}
-
-export enum ETextAlignHorizontal {
-    LEFT = "LEFT",
-    CENTER = "CENTER",
-    RIGHT = "RIGHT",
-    JUSTIFIED = "JUSTIFIED"
-}
-
-export enum ETextAlignVertical {
-    TOP = "TOP",
-    CENTER = "CENTER",
-    BOTTOM = "BOTTOM"
-}
-
-export enum EConstaintType {
-    MIN = "MIN",
-    CENTER = "CENTER",
-    MAX = "MAX",
-    STRETCH = "STRETCH",
-    SCALE = "SCALE"
-}
-
-export enum EShadowType {
-    INSET = "INSET",
-    OUTSET = "OUTSET"
-}
-
+namespace gql {
 export interface QueryProjectDTO {
     id?: Nullable<string>;
     name?: Nullable<string>;
@@ -52,29 +15,9 @@ export interface QueryProjectDTO {
     parent?: Nullable<string>;
 }
 
-export interface QueryColorDTO {
-    id?: Nullable<string>;
-    team?: Nullable<string>;
-}
-
-export interface QueryTextDTO {
-    id?: Nullable<string>;
-    team?: Nullable<string>;
-}
-
-export interface QueryStrokeDTO {
-    id?: Nullable<string>;
-    team?: Nullable<string>;
-}
-
-export interface QueryConstraintDTO {
-    id?: Nullable<string>;
-    team?: Nullable<string>;
-}
-
-export interface QueryShadowDTO {
-    id?: Nullable<string>;
-    team?: Nullable<string>;
+export interface QueryBaseDTO {
+    id: string;
+    team: string;
 }
 
 export interface CreateUserDTO {
@@ -157,43 +100,62 @@ export interface UpdateProjectDTO {
 }
 
 export interface CreateColorDTO {
-    color: string;
-    team?: Nullable<string>;
+    name: string;
+    team: string;
+    day: string;
+    night?: Nullable<string>;
+    dark?: Nullable<string>;
 }
 
-export interface CreateTextDTO {
-    fontSize: number;
-    fontName?: Nullable<FontNameDTO>;
-    textAlignHorizontal?: Nullable<ETextAlignHorizontal>;
-    textAlignVertical?: Nullable<ETextAlignVertical>;
-    letterSpacing?: Nullable<TextValuePropDTO>;
-    lineHeight?: Nullable<TextValuePropDTO>;
-}
-
-export interface FontNameDTO {
-    family: string;
+export interface CreateFontDTO {
+    name: string;
+    team: string;
     style: string;
-}
-
-export interface TextValuePropDTO {
-    value?: Nullable<number>;
-    unit: ETextUnit;
-}
-
-export interface CreatStrokeDTO {
-    paint: string[];
-    weight: number;
-}
-
-export interface CreateConstraintDTO {
-    vertical: EConstaintType;
-    horizontal: EConstaintType;
+    variant: string;
+    weight: string;
+    size: string;
+    lineHeight: string;
+    family: string;
 }
 
 export interface CreateShadowDTO {
-    type?: Nullable<EShadowType>;
-    spread?: Nullable<number>;
-    blur: number;
+    name: string;
+    team: string;
+    type?: Nullable<string>;
+    offsetX?: Nullable<string>;
+    offsetY?: Nullable<string>;
+    blur: string;
+    spread?: Nullable<string>;
+    color?: Nullable<string>;
+}
+
+export interface CreateBorderDTO {
+    name: string;
+    team: string;
+    top: BorderItemInput;
+    right: BorderItemInput;
+    bottom: BorderItemInput;
+    left: BorderItemInput;
+}
+
+export interface BorderItemInput {
+    weight: string;
+    style: string;
+}
+
+export interface CreateCornerDTO {
+    name: string;
+    team: string;
+    tl: string[];
+    tr: string[];
+    bl: string[];
+    br: string[];
+}
+
+export interface CreateOpacityDTO {
+    name: string;
+    team: string;
+    opacity: number;
 }
 
 export interface User {
@@ -257,52 +219,67 @@ export interface Category {
 
 export interface Color {
     id: string;
+    name: string;
     team: string;
-    color: string;
+    day: string;
+    night: string;
+    dark: string;
 }
 
-export interface TextValueProp {
-    value: number;
-    unit: ETextUnit;
-}
-
-export interface FontName {
-    family: string;
+export interface Font {
+    id: string;
+    name: string;
+    team: string;
     style: string;
-}
-
-export interface Text {
-    id: string;
-    team: string;
-    fontSize: number;
-    textAlignHorizontal: ETextAlignHorizontal;
-    textAlignVertical: ETextAlignVertical;
-    fontName: FontName;
-    letterSpacing: TextValueProp;
-    lineHeight: TextValueProp;
-}
-
-export interface Constraint {
-    id: string;
-    team: string;
-    horizontal: EConstaintType;
-    vertical: EConstaintType;
+    variant: string;
+    weight: string;
+    size: string;
+    lineHeight: string;
+    family: string;
 }
 
 export interface Shadow {
     id: string;
+    name: string;
     team: string;
+    type?: Nullable<string>;
+    offsetX?: Nullable<string>;
+    offsetY?: Nullable<string>;
+    blur: string;
+    spread?: Nullable<string>;
     color?: Nullable<string>;
-    type?: Nullable<EShadowType>;
-    spread?: Nullable<number>;
-    blur: number;
 }
 
-export interface Stroke {
+export interface BorderItem {
+    weight: string;
+    style: string;
+}
+
+export interface Border {
     id: string;
+    name: string;
     team: string;
-    paint: string[];
-    weight: number;
+    top: BorderItem;
+    right: BorderItem;
+    bottom: BorderItem;
+    left: BorderItem;
+}
+
+export interface Corner {
+    id: string;
+    name: string;
+    team: string;
+    tl: string[];
+    tr: string[];
+    bl: string[];
+    br: string[];
+}
+
+export interface Opacity {
+    id: string;
+    name: string;
+    team: string;
+    opacity: number;
 }
 
 export interface Property {
@@ -332,15 +309,17 @@ export interface IQuery {
     projects(project?: Nullable<QueryProjectDTO>): Project[] | Promise<Project[]>;
     projectStructure(id: string): ProjectPlus[] | Promise<ProjectPlus[]>;
     getColor(fields?: Nullable<string[]>, id: string): Nullable<Color> | Promise<Nullable<Color>>;
-    colors(fields?: Nullable<string[]>, query?: Nullable<QueryColorDTO>): Color[] | Promise<Color[]>;
-    getText(fields?: Nullable<string[]>, id: string): Nullable<Text> | Promise<Nullable<Text>>;
-    texts(fields?: Nullable<string[]>, query?: Nullable<QueryTextDTO>): Text[] | Promise<Text[]>;
-    getStroke(fields?: Nullable<string[]>, id: string): Nullable<Stroke> | Promise<Nullable<Stroke>>;
-    strokes(fields?: Nullable<string[]>, query?: Nullable<QueryStrokeDTO>): Stroke[] | Promise<Stroke[]>;
-    getConstraint(fields?: Nullable<string[]>, id: string): Nullable<Constraint> | Promise<Nullable<Constraint>>;
-    constraints(fields?: Nullable<string[]>, query?: Nullable<QueryConstraintDTO>): Constraint[] | Promise<Constraint[]>;
+    colors(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Color[] | Promise<Color[]>;
+    getFont(fields?: Nullable<string[]>, id: string): Nullable<Font> | Promise<Nullable<Font>>;
+    fonts(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Font[] | Promise<Font[]>;
     getShadow(fields?: Nullable<string[]>, id: string): Nullable<Shadow> | Promise<Nullable<Shadow>>;
-    shadows(fields?: Nullable<string[]>, query?: Nullable<QueryShadowDTO>): Shadow[] | Promise<Shadow[]>;
+    shadows(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Shadow[] | Promise<Shadow[]>;
+    getBorder(fields?: Nullable<string[]>, id: string): Nullable<Border> | Promise<Nullable<Border>>;
+    borders(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Border[] | Promise<Border[]>;
+    getCorner(fields?: Nullable<string[]>, id: string): Nullable<Corner> | Promise<Nullable<Corner>>;
+    corners(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Corner[] | Promise<Corner[]>;
+    getOpacity(fields?: Nullable<string[]>, id: string): Nullable<Opacity> | Promise<Nullable<Opacity>>;
+    opacitys(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Opacity[] | Promise<Opacity[]>;
     component(id: string): Component | Promise<Component>;
     components(): Component[] | Promise<Component[]>;
 }
@@ -372,29 +351,31 @@ export interface IMutation {
     createColor(data: CreateColorDTO): Color | Promise<Color>;
     updateColor(data: CreateColorDTO): Color | Promise<Color>;
     deleteColor(id: string): Color | Promise<Color>;
-    createText(data: CreateTextDTO): Text | Promise<Text>;
-    updateText(data: CreateTextDTO): Text | Promise<Text>;
-    deleteText(id: string): Text | Promise<Text>;
-    createStroke(data: CreatStrokeDTO): Stroke | Promise<Stroke>;
-    updateStroke(data: CreatStrokeDTO): Stroke | Promise<Stroke>;
-    deleteStroke(id: string): Stroke | Promise<Stroke>;
-    createConstraint(data: CreateConstraintDTO): Constraint | Promise<Constraint>;
-    updateConstraint(data: CreateConstraintDTO): Constraint | Promise<Constraint>;
-    deleteConstraint(id: string): Constraint | Promise<Constraint>;
+    createFont(data: CreateFontDTO): Font | Promise<Font>;
+    updateFont(data: CreateFontDTO): Font | Promise<Font>;
+    deleteFont(id: string): Font | Promise<Font>;
     createShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
     updateShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
     deleteShadow(id: string): Shadow | Promise<Shadow>;
+    createBorder(data: CreateBorderDTO): Border | Promise<Border>;
+    updateBorder(data: CreateBorderDTO): Border | Promise<Border>;
+    deleteBorder(id: string): Border | Promise<Border>;
+    createCorner(data: CreateCornerDTO): Corner | Promise<Corner>;
+    updateCorner(data: CreateCornerDTO): Corner | Promise<Corner>;
+    deleteCorner(id: string): Corner | Promise<Corner>;
+    createOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
+    updateOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
+    deleteOpacity(id: string): Opacity | Promise<Opacity>;
 }
 
 export interface ISubscription {
     onColorCreate(): Color | Promise<Color>;
-    onTextCreate(): Text | Promise<Text>;
-    onStrokeCreate(): Stroke | Promise<Stroke>;
-    onConstraintCreate(): Constraint | Promise<Constraint>;
+    onFontCreate(): Font | Promise<Font>;
     onShadowCreate(): Shadow | Promise<Shadow>;
+    onBorderCreate(): Border | Promise<Border>;
+    onCornerCreate(): Corner | Promise<Corner>;
+    onOpacityCreate(): Opacity | Promise<Opacity>;
 }
 
 type Nullable<T> = T | null;
-
 }
-

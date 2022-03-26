@@ -31,13 +31,13 @@ const { data: projectData, fetching: projectFetching } = useProjects({});
 let newProject: gql.CreateProjectDTO;
 const openDialog = ref(false);
 
-async function changeSelectedTeam(arg: string | string[]) {
-    const newValue = Array.isArray(arg) ? arg[0] : arg;
+async function changeSelectedTeam(arg: string | { keys: string[] }) {
+    const newValue = typeof arg === 'string' ? arg : arg.keys[0];
     if (!newValue) {
         return;
     }
     selectedTeam.value = newValue;
-    await router.push({ name: 'team:detail', query: { team: selectedTeam.value }});
+    router.push({ name: 'team:detail', query: { team: selectedTeam.value }});
 }
 
 

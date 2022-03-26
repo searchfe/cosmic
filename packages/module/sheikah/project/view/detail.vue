@@ -1,28 +1,18 @@
 <script lang="ts" setup>
-import { ref, watchEffect, watch } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { router as vueRouter } from '@cosmic/core/browser';
 import Region from '../../common/component/region.vue';
 import FileCard from '../component/file-card.vue';
 import DirCard from '../component/dir-card.vue';
 import { useProjectStructure } from '../api';
 
-const { useRoute, useRouter } = vueRouter;
-
-const router = useRouter();
-
-// const query = useRoute().query;
+const { useRoute } = vueRouter;
 
 const id = useRoute().query.project;
 
 const { data, fetching } = useProjectStructure(id as string);
 
 const projects = ref<gql.ProjectPlus[]>([]);
-
-watch(() => router, () => {
-    // const newId = router.currentRoute.value.query.project;
-    // console.log(newId, '2222')
-    // executeQuery({})
-});
 
 watchEffect(() => {
     if (data.value && !fetching.value) {
@@ -48,9 +38,24 @@ watchEffect(() => {
 .card-list {
     margin-top: 24px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     column-gap: 24px;
     row-gap: 24px;
+}
+@media (min-width: 960px) {
+    .card-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (min-width: 1280px) {
+    .card-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media (min-width: 1920px) {
+    .card-list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 }
 </style>
 

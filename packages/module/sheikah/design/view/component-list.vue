@@ -59,8 +59,11 @@ function onClickComp() {
             </comp-filter>
         </div>
         <template #bottom>
-            <div>
+            <div class="flex justify-between items-center">
                 <Input placeholder="组件查询" :class="$style.input" />
+                <div :class="$style.add" class="flex justify-center items-center">
+                    <i-cosmic-plus class="text-md" />
+                </div>
             </div>
         </template>
     </Region>
@@ -77,7 +80,7 @@ function onClickComp() {
 .card-list {
     margin-top: 24px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     column-gap: 24px;
     row-gap: 24px;
 }
@@ -86,5 +89,26 @@ function onClickComp() {
     border: 1px solid #1f1f1f;
     border-radius: 4px;
     opacity: .3;
+}
+.add {
+    height: 36px;
+    width: 36px;
+    border-radius: 4px;
+    background: #f5f5f5;
+}
+@media (min-width: 960px) {
+    .card-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (min-width: 1280px) {
+    .card-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media (min-width: 1920px) {
+    .card-list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 }
 </style>
