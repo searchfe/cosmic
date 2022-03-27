@@ -20,7 +20,7 @@ const routes = [{
     name: 'home',
     path: '/',
     redirect: () => {
-        return { name: 'sheikah' };
+        return { name: 'workbench' };
     },
 }];
 

@@ -1,10 +1,15 @@
-import { type Router, type RouteLocationRaw } from 'vue-router';
 import { routify } from './routes';
 
+import type { Ref } from 'vue';
+import type { Router, RouteLocationRaw, NavigationFailure, RouteLocationNormalizedLoaded } from 'vue-router';
 
+
+type RouteChangeResult = Promise<NavigationFailure | void | undefined>;
 export interface RouterServiceAPI {
     getRouterConfig(): Router;
-    push(to: RouteLocationRaw): void;
+    push(to: RouteLocationRaw): RouteChangeResult;
+    replace(to: RouteLocationRaw): RouteChangeResult;
+    currentRoute(): Ref<RouteLocationNormalizedLoaded>;
 }
 
 
@@ -31,7 +36,15 @@ export class RouterService implements RouterServiceAPI {
     }
 
     push(to: RouteLocationRaw) {
-        this.router.push(to);
+        return this.router.push(to);
+    }
+
+    replace(to: RouteLocationRaw) {
+        return this.router.replace(to);
+    }
+
+    currentRoute() {
+        return this.router.currentRoute;
     }
 
 }
