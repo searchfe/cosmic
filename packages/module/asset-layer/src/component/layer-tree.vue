@@ -1,44 +1,40 @@
 <script lang="ts" setup>
-import { Tree, TreeNodeState } from 'cosmic-vue';
+import { Tree, TreeNodeState, type TreeDataProps, type TreeNodeEvent } from 'cosmic-vue';
 import { treeSecondary } from 'cosmic-ui';
 import { ref } from 'vue';
-const treedata = ref([
-    {
-        label: '画板-1',
-        id: '0-0',
-        readonly: '1',
-        children: [
-            {
-                label: '头部卡片',
-                id: '0-0-0',
-                open: '0',
-                children: [
-                    { label: '标题', id: '0-0-0-0' },
-                    { label: '副标题', id: '0-0-0-1' },
-                    { label: '日期', id: '0-0-0-2' },
-                ],
-            },
-            {
-                label: '图片组件',
-                id: '0-0-2',
-            },
-        ],
-    },
-    {
-        label: '画板-2',
-        id: '0-1',
-        open: '0',
-        children: [
-            { label: '图层-21', id: '0-1-0-0' },
-            { label: '图层-22', id: '0-1-0-1' },
-            { label: '图层-23', id: '0-1-0-2' },
-        ],
-    },
-    {
-        label: '画板-3',
-        id: '0-2',
-    },
-]);
+import { service } from '@cosmic/core/browser';
+import { inject, TextNode  } from '@cosmic/core/parts';
+import type { DocumentNode, PageNode, SceneNode } from '@cosmic/core/parts';
+
+const treedata = ref<TreeData[]>([]);
+
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+nodeService.document().subscribe(document => {
+   treedata.value = nodeToTree(document);
+});
+nodeService.selection().subscribe(node => console.log(node));
+
+function nodeToTree(node: DocumentNode | SceneNode| PageNode) {
+    const tree: TreeData[] = [];
+    if (node instanceof TextNode) return [];
+    node.children.forEach(n => {
+        tree.push({
+            id: n.id,
+            label: n.name,
+            children: nodeToTree(n),
+        });
+    });
+    return tree as TreeData[];
+}
+
+interface TreeData extends TreeDataProps {
+    children?: TreeData[];
+}
+
+function changeSelection(event: TreeNodeEvent){
+    nodeService.change(event.id);
+}
+
 </script>
 <template>
     <tree
@@ -46,6 +42,7 @@ const treedata = ref([
         class="m-10 customlized"
         :data="treedata"
         :styles="treeSecondary"
+        @click-node="changeSelection"
     >
         <template #arrow="slotProps">
             <span v-if="slotProps.state == TreeNodeState.open" class="inline-block w-10 pb-2">▾</span>

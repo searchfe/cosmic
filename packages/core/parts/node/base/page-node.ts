@@ -7,7 +7,8 @@ export default class PageNode
     extends Mixin(BaseNodeMixin, ChildrenMixin, ExportMixin) implements Internal.PageNode {
     readonly type = 'PAGE';
     clone() {
-        return '' as any;
+        // TODO
+        return new PageNode();
     }
 
     guides = [];

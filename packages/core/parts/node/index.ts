@@ -2,8 +2,34 @@ import DocumentNode from './base/document-node';
 import PageNode from './base/page-node';
 import ComponentNode from './sence/component-node';
 import TextNode from './sence/text-node';
-import { type SenceNode } from './sence/sence-node';
 
 export { DocumentNode, PageNode };
 
-export { SenceNode, ComponentNode, TextNode};
+export { ComponentNode, TextNode};
+
+export type SceneNode = ComponentNode | TextNode;
+
+// type SceneNode =
+//   SliceNode |
+//   FrameNode |
+//   GroupNode |
+//   ComponentSetNode |
+//   ComponentNode |
+//   InstanceNode |
+//   BooleanOperationNode |
+//   VectorNode |
+//   StarNode |
+//   LineNode |
+//   EllipseNode |
+//   PolygonNode |
+//   RectangleNode |
+//   TextNode |
+//   StickyNode |
+//   ConnectorNode |
+//   ShapeWithTextNode |
+//   CodeBlockNode |
+//   StampNode |
+//   WidgetNode |
+//   EmbedNode |
+//   LinkUnfurlNode |
+//   MediaNode
