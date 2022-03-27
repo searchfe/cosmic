@@ -8,6 +8,3 @@ export default class DefaultFrameMixin
     implements Internal.DefaultFrameMixin {
 
 }
-// BaseFrameMixin,
-// FramePrototypingMixin,
-// ReactionMixin { }

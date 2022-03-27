@@ -1,36 +1,48 @@
-type PageNode = Internal.PageNode;
-type SceneNode = Internal.SceneNode;
+import type{  SceneNode, PageNode } from '../index';
+
 type NodeType = Internal.NodeType;
 
 export default class ChildrenMixin implements Internal.ChildrenMixin {
-    readonly children: ReadonlyArray<SceneNode>;
+    readonly children: Array<SceneNode> = [];
   
     appendChild(child: SceneNode) {
-        // TODO
+        this.children.push(child);
     }
     insertChild(index: number, child: SceneNode) {
-        // TODO
+        this.children.splice(index, 0, child);
     }
     findChildren(callback?: (node: SceneNode) => boolean){
-        // TODO
-        return [];
+        if (!callback) return this.children;
+        return this.children.filter(callback);
     }
     findChild(callback: (node: SceneNode) => boolean){
-        // TODO
-        return null;
+        return this.children.filter(callback)[0];
     }
   
     findAll(callback?: (node: SceneNode) => boolean) {
-        // TODO
-        return [];
+        const all: Array<SceneNode> = [];
+        this.children.map(node => {
+            if (callback) {
+                if (callback(node)) {
+                    all.push(node);
+                }
+            } else {
+                all.push(node);
+            }
+            if (node instanceof ChildrenMixin && node.findAll) {
+                node.findAll(callback).forEach(rs => { all.push(rs); });
+            }
+        })[0];
+        return all;
     }
   
     findOne(callback: (node: SceneNode) => boolean) {
-        // TODO
-        return null;
+        return this.findAll(callback)[0];
     }
   
     findAllWithCriteria<T extends NodeType[]>(criteria: { types: T }) {
-        return [];
+        return this.findAll(node => {
+            return criteria.types.indexOf(node.type) > -1;
+        });
     }
 }
