@@ -18,14 +18,14 @@ export class WorkbenchBarService {
     private source: Subject<WorkbenchBarItem[]>;
     constructor() {
         this.configs = [{
-            id: 'sheikah',
-            text: '资产管理',      
-            order: 10,
-        },{
             id: 'workbench',
             text: '设计工具',
+            order: 10,
+        }, {
+            id: 'sheikah',
+            text: '资产管理',
             order: 20,
-        },{
+        }, {
             id: 'blueprint',
             text: 'Blueprint',
             order: 30,
@@ -36,6 +36,6 @@ export class WorkbenchBarService {
     //     // do sth.
     // }
     public getConfigs() {
-        return this.source; 
+        return this.source;
     }
 }
