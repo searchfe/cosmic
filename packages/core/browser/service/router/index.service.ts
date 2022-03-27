@@ -1,6 +1,5 @@
 import { routify } from './routes';
 
-import type { Ref } from 'vue';
 import type { Router, RouteLocationRaw, NavigationFailure, RouteLocationNormalizedLoaded } from 'vue-router';
 
 
@@ -9,7 +8,7 @@ export interface RouterServiceAPI {
     getRouterConfig(): Router;
     push(to: RouteLocationRaw): RouteChangeResult;
     replace(to: RouteLocationRaw): RouteChangeResult;
-    currentRoute(): Ref<RouteLocationNormalizedLoaded>;
+    currentRoute(): RouteLocationNormalizedLoaded;
 }
 
 
@@ -44,7 +43,7 @@ export class RouterService implements RouterServiceAPI {
     }
 
     currentRoute() {
-        return this.router.currentRoute;
+        return this.router.currentRoute.value;
     }
 
 }
