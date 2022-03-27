@@ -14,13 +14,10 @@ const selectedId = ref();
 
 workbenchBarService.getConfigs().subscribe(currentConfig => {
     configs.value = currentConfig;
-    // 新的事件来临时，重置路由，暂时没这个必要
-    // const first = currentConfig[0]?.id;
-    // if (first && selectedId.value !== first && routerService.currentRoute().name !== selectedId.value) {
-    //     console.log('ininininin', routerService.currentRoute().name);
-    //     console.log('ininininin', selectedId.value);
-    //     changeRoute(first, true);
-    // }
+    const first = currentConfig[0]?.id;
+    if (first && !selectedId.value) {
+        selectedId.value = first;
+    }
 });
 
 onBeforeMount(async () => {

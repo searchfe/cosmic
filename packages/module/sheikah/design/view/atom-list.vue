@@ -118,6 +118,10 @@ function changeAtom(atom: AtomType) {
     currentType.value = atom;
 }
 
+function onAdd() {
+    console.log('in');
+}
+
 </script>
 
 <template>
@@ -174,7 +178,7 @@ function changeAtom(atom: AtomType) {
         </div>
         <template #bottom>
             <div class="flex justify-end">
-                <div :class="$style.add" class="flex justify-center items-center">
+                <div :class="$style.add" class="flex justify-center items-center" @click.stop="onAdd">
                     <i-cosmic-plus class="text-md" />
                 </div>
             </div>
