@@ -32,6 +32,7 @@ importers:
       rimraf: ^3.0.2
       rxjs: ^7.5.5
       simple-git-hooks: 2.7.0
+      ts-mixer: ^6.0.1
       typescript: 4.5.5
       unplugin-icons: ^0.13.2
       unplugin-vue-components: ^0.17.21
@@ -48,6 +49,7 @@ importers:
       reflect-metadata: 0.1.13
       resolve: 1.22.0
       rxjs: 7.5.5
+      ts-mixer: 6.0.1
       vue: 3.2.29
     devDependencies:
       '@typescript-eslint/eslint-plugin': 5.10.1_9bad3f0b1ac4f26537bddef47278c136
@@ -4252,6 +4254,10 @@ packages:
     dependencies:
       utf8-byte-length: 1.0.4
     dev: true
+
+  /ts-mixer/6.0.1:
+    resolution: {integrity: sha512-hvE+ZYXuINrx6Ei6D6hz+PTim0Uf++dYbK9FFifLNwQj+RwKquhQpn868yZsCtJYiclZF1u8l6WZxxKi+vv7Rg==}
+    dev: false
 
   /ts-morph/13.0.2:
     resolution: {integrity: sha512-SjeeHaRf/mFsNeR3KTJnx39JyEOzT4e+DX28gQx5zjzEOuFs2eGrqeN2PLKs/+AibSxPmzV7RD8nJVKmFJqtLA==}
