@@ -6,7 +6,7 @@ import buttonText from './workbench-button.module.css';
 import { WorkbenchBarService, type WorkbenchBarItem } from './workbench-bar.service';
 import { ref } from 'vue';
 
-const routerService = inject(service.RouterService);
+const routerService = inject<service.RouterServiceAPI>(service.TOKENS.Router);
 const workbenchBarService = inject(WorkbenchBarService);
 
 routerService.push({name: 'workbench'});

@@ -1,6 +1,6 @@
-import Blueprint from './blueprint.vue';
-import Workbench from './workbench.vue';
-import Sheika from './sheikah.vue';
+import Blueprint from './view/blueprint.vue';
+import Workbench from './view/workbench.vue';
+import Sheika from './view/sheikah.vue';
 import { createRouter, createMemoryHistory } from 'vue-router';
 
 

@@ -1,7 +1,3 @@
-<script lang="ts" setup>
-
-</script>
-
 <template>
     <m-component
         src="@cosmic-module/frame-workbench"
