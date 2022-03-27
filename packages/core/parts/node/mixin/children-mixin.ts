@@ -1,10 +1,11 @@
+import { hasMixin } from 'ts-mixer';
 import type{  SceneNode, PageNode } from '../index';
 
 type NodeType = Internal.NodeType;
 
 export default class ChildrenMixin implements Internal.ChildrenMixin {
     readonly children: Array<SceneNode> = [];
-  
+
     appendChild(child: SceneNode) {
         this.children.push(child);
     }
@@ -18,7 +19,7 @@ export default class ChildrenMixin implements Internal.ChildrenMixin {
     findChild(callback: (node: SceneNode) => boolean){
         return this.children.filter(callback)[0];
     }
-  
+
     findAll(callback?: (node: SceneNode) => boolean) {
         const all: Array<SceneNode> = [];
         this.children.map(node => {
@@ -29,17 +30,17 @@ export default class ChildrenMixin implements Internal.ChildrenMixin {
             } else {
                 all.push(node);
             }
-            if (node instanceof ChildrenMixin && node.findAll) {
+            if (hasMixin(node, ChildrenMixin)) {
                 node.findAll(callback).forEach(rs => { all.push(rs); });
             }
-        })[0];
+        });
         return all;
     }
-  
+
     findOne(callback: (node: SceneNode) => boolean) {
         return this.findAll(callback)[0];
     }
-  
+
     findAllWithCriteria<T extends NodeType[]>(criteria: { types: T }) {
         return this.findAll(node => {
             return criteria.types.indexOf(node.type) > -1;

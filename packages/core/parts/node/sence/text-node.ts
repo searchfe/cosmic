@@ -10,15 +10,15 @@ export default class TextNode
         TextSublayerNode,
     )
     implements Internal.TextNode{
-    readonly type: 'TEXT';
+    readonly type = 'TEXT';
     clone() {
         return this as any;
     }
-  
+
     textAlignHorizontal: 'LEFT' | 'CENTER' | 'RIGHT' | 'JUSTIFIED';
     textAlignVertical: 'TOP' | 'CENTER' | 'BOTTOM';
     textAutoResize: 'NONE' | 'WIDTH_AND_HEIGHT' | 'HEIGHT';
     autoRename: boolean;
-  
+
     textStyleId: string | Internal.PluginAPI['mixed'];
 }

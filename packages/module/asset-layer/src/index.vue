@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import LayerTree from './layer-tree.vue';
-import SearchBox from './search-box.vue';
+import LayerTree from './layer-tree/index.vue';
+import SearchBox from './search-box/index.vue';
 </script>
 <template>
     <div class="flex flex-col">

@@ -1,38 +1,25 @@
 <script lang="ts" setup>
-import { Tree, TreeNodeState, type TreeDataProps, type TreeNodeEvent } from 'cosmic-vue';
+import { Tree, TreeNodeState, type TreeNodeEvent } from 'cosmic-vue';
 import { treeSecondary } from 'cosmic-ui';
 import { ref } from 'vue';
 import { service } from '@cosmic/core/browser';
-import { inject, TextNode  } from '@cosmic/core/parts';
-import type { DocumentNode, PageNode, SceneNode } from '@cosmic/core/parts';
+import { inject } from '@cosmic/core/parts';
+import { type LayerTreeData, nodeToTree } from './layer-tree';
 
-const treedata = ref<TreeData[]>([]);
+
+const treedata = ref<LayerTreeData[]>([]);
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-nodeService.document().subscribe(document => {
-   treedata.value = nodeToTree(document);
+
+nodeService.document.subscribe(document => {
+    treedata.value = nodeToTree(document);
+    console.log(treedata.value);
 });
-nodeService.selection().subscribe(node => console.log(node));
 
-function nodeToTree(node: DocumentNode | SceneNode| PageNode) {
-    const tree: TreeData[] = [];
-    if (node instanceof TextNode) return [];
-    node.children.forEach(n => {
-        tree.push({
-            id: n.id,
-            label: n.name,
-            children: nodeToTree(n),
-        });
-    });
-    return tree as TreeData[];
-}
-
-interface TreeData extends TreeDataProps {
-    children?: TreeData[];
-}
+nodeService.selection.subscribe(node => console.log(node));
 
 function changeSelection(event: TreeNodeEvent){
-    nodeService.change(event.id);
+    nodeService.setSelection([event.id]);
 }
 
 </script>
@@ -49,8 +36,10 @@ function changeSelection(event: TreeNodeEvent){
             <span v-if="slotProps.state == TreeNodeState.close" class="inline-block w-10 pb-2">▸</span>
         </template>
         <template #prefix="slotProps">
-            <i-cosmic-board v-if="slotProps.nodeData.children" />
-            <i-cosmic-rounded-square v-if="!slotProps.nodeData.children" />
+            <i-cosmic-board v-if="slotProps.nodeData.type === 'PAGE'" />
+            <i-cosmic-comp v-else-if="slotProps.nodeData.type === 'COMPONENT'" />
+            <i-cosmic-text v-else-if="slotProps.nodeData.type === 'TEXT'" />
+            <i-cosmic-square v-else />
         </template>
         <template #label="slotProps">
             {{ slotProps.nodeData.label }}
