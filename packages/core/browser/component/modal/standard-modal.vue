@@ -32,9 +32,9 @@ onMounted(() => {
     setContainerTarget(container.value as unknown as HTMLElement);
 });
 
-function showDetail(index: number) {
+function showDetail(index: number, data) {
     const target = (content.value! as HTMLElement).children[index];
-    emits('showDetail', target);
+    emits('showDetail', target, data);
 }
 
 </script>
@@ -80,7 +80,7 @@ function showDetail(index: number) {
                 :key="data.title"
                 :standard="data"
                 :can-edit="true"
-                :active="selected === data"
+                :active="hoverIndex === index"
                 classes="-v-bg-inapparent"
                 @hover="() => hoverIndex = index"
                 @click="(event) => emits('select', {event, data})"
@@ -97,7 +97,7 @@ function showDetail(index: number) {
                             v-if="index === hoverIndex"
                             class="flex items-center w-40"
                         >
-                            <i-cosmic-more @click.stop="showDetail(index)" />
+                            <i-cosmic-more @click.stop="showDetail(index, data)" />
                         </div>
                     </slot>
                 </template>
@@ -109,9 +109,9 @@ function showDetail(index: number) {
 <style module>
 
 .container {
-    padding: var(--spacing-4) 0;
+    padding: .4rem 0;
     background-color: var(--color-gray-50);
-    border-radius: var(--spacing-4);
+    border-radius: var(--rounded-md);
     color: var(--color-light);
     position: fixed;
     transform: translateX(-100%);
@@ -138,7 +138,7 @@ function showDetail(index: number) {
 
 .content {
     max-height: 400px;
-    border-radius: var(--spacing-4);
+    border-radius: var(--rounded-md);
     overflow: auto;
 }
 

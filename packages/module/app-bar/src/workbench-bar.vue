@@ -9,6 +9,7 @@ import { ref } from 'vue';
 const routerService = inject(service.RouterService);
 const workbenchBarService = inject(WorkbenchBarService);
 
+routerService.push({name: 'workbench'});
 function onButtonClicked(id: string) {
     routerService.push({name: id});
     selectedId.value = id;
