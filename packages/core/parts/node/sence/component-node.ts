@@ -8,7 +8,7 @@ export default class ComponentNode extends Mixin(
     PublishableMixin,
     VariantMixin,
 ) implements Internal.ComponentNode {
-    readonly type: 'COMPONENT';
+    readonly type = 'COMPONENT';
     clone() {
         // TODO
         return '' as any;

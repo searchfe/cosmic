@@ -5,9 +5,10 @@ import { type SceneNode, DocumentNode, PageNode, ComponentNode, TextNode } from 
 
 @injectable()
 export default class NodeService {
+    public document: Subject<DocumentNode>;
+    public selection: Subject<Array<PageNode | SceneNode>>;
+
     private _document: DocumentNode;
-    private documentSubject: Subject<DocumentNode>;
-    private _selection: Subject<PageNode | SceneNode>;
     constructor() {
         this._document = new DocumentNode();
         const page = new PageNode();
@@ -23,16 +24,16 @@ export default class NodeService {
         comp.appendChild(text);
         page.appendChild(comp);
         this._document.appendChild(page);
-        this.documentSubject = new BehaviorSubject(this._document);
-        this._selection = new Subject();
+        this.document = new BehaviorSubject(this._document);
+        this.selection = new Subject();
     }
-    change(id: string) {
-        this._selection.next(this._document.findOne(node => node.id == id));
-    }
-    selection() {
-        return this._selection;
-    }
-    document() {
-        return this.documentSubject;
+    setSelection(ids: string[]) {
+        if (ids.length === 0) return;
+        if (ids.length === 1) {
+            this.selection.next([this._document.findOne(node => node.id == ids[0])]);
+            return;
+        }
+        const rs = this.selection.next(this._document.findAll(node => ids.indexOf(node.id) > -1));
+
     }
 }

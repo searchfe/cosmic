@@ -9,6 +9,8 @@ export { ComponentNode, TextNode};
 
 export type SceneNode = ComponentNode | TextNode;
 
+export { hasMixin } from 'ts-mixer';
+
 // type SceneNode =
 //   SliceNode |
 //   FrameNode |
@@ -33,3 +35,5 @@ export type SceneNode = ComponentNode | TextNode;
 //   EmbedNode |
 //   LinkUnfurlNode |
 //   MediaNode
+
+export { default as ChildrenMixin } from './mixin/children-mixin';
