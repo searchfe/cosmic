@@ -26,7 +26,6 @@
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F02.png',
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F03.png',
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F04.png',
-            'https://s.gravatar.com/avatar/0095e9247f0c7e4d5f23cba12df87cde?s=80',
         ],
         id: '',
     });
