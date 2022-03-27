@@ -24,13 +24,14 @@ withDefaults(defineProps<PropRegion>(), {
 
 <template>
     <div class="text-2xl padding-2xl" :class="{ [$style.info]: true, [$style.inverse]: inverse }">
-        <div :class="{[$style['info-title']]: true, [$style['inverse-title']]: inverse }">
+        <div
+            class="flex justify-between items-center"
+            :class="{[$style['inverse-title']]: inverse, 'mb-20': hasDefault }"
+        >
             <span :class="{'font-semibold': level === 1}">{{ title }}</span>
             <slot name="extra" />
         </div>
-        <div :class="{ 'mt-20': hasDefault }">
-            <slot />
-        </div>
+        <slot />
         <div v-if="desc" class="text-sm mt-20">
             {{ desc }}
         </div>
@@ -54,10 +55,5 @@ withDefaults(defineProps<PropRegion>(), {
 .inverse-title {
     padding-left: 4px;
     padding-right: 4px;
-}
-.info-title {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
 }
 </style>

@@ -41,6 +41,8 @@ withDefaults(defineProps<ColorPreviewOption>(), {
     width: 72px;
     height: 72px;
     border-radius: var(--rounded-md);
+    background-image: url(https://fe-dev.bj.bcebos.com/%E5%8E%9F%E5%AD%90%E6%96%B9%E5%9D%97%E8%83%8C%E6%99%AF.png);
+    background-size: 100% 100%;
 }
 .cell {
     flex: 1 1 30%;
