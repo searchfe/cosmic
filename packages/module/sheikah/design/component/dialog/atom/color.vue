@@ -9,7 +9,7 @@ import ColorCell from '../../cell/color.vue';
 import type { AtomType } from '../../../types';
 
 
-const { executeMutation: save } = createUnique('color', ['id']);
+const { executeMutation: save } = createUnique(['id']);
 
 interface AtomModal {
     atomType: AtomType;
@@ -64,6 +64,7 @@ function onOK(args: { name: string, team: string }) {
     }).then(res => {
         if (res.data?.createUniqueColor?.id) {
             emits('success');
+            showDialog.value = false;
         } else {
             const duplicatData = res.error?.graphQLErrors?.[0]?.extensions?.data;
             console.log(duplicatData);
