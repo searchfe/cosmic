@@ -7,7 +7,7 @@ import { useModal } from './setup';
 const props = withDefaults(defineProps<{
     title: string,
     target: HTMLElement,
-    standard: Record<string, string>
+    standard: Record<string, string> | null,
 }>(), {
     title: '',
     standard: () => ({}),
@@ -49,7 +49,7 @@ onMounted(() => {
                 </div>
                 <Input
                     size="sm"
-                    :value="standard.title"
+                    :value="standard.name"
                 />
             </div>
             <div

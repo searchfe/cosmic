@@ -1,6 +1,21 @@
 <script lang="ts" setup>
- import { Select, Row, Col, Input, RadioGroup, RadioButton } from 'cosmic-vue';
+import { Select, Row, Col, Input, RadioGroup, RadioButton } from 'cosmic-vue';
 import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
+import { useStyle, TOKENS } from '@cosmic/core/browser';
+
+const props = withDefaults(defineProps<{
+    id: string,
+    showLayout: boolean
+}>(), {
+    id: '1',
+    showLayout: true,
+});
+
+const {
+    textStyle,
+} = useStyle(TOKENS.TextStyle, props.id);
+
+
 </script>
 
 
@@ -9,7 +24,8 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
         <div :class="$style.row">
             <Select
                 size="sm"
-                value="1"
+                :value="textStyle.fontName.fontFamily"
+                @on-change="(event) => textStyle.fontName.fontFamily = event.value"
             >
                 <SelectOption
                     v-for="data of GlyphData"
@@ -19,15 +35,15 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                 />
             </Select>
         </div>
-
         <Row :class="$style.row">
             <Col :span="4">
                 <div class="w-80">
                     <Select
                         size="sm"
-                        value="12"
+                        :value="textStyle.fontSize"
                         allow-input
                         :class="$style['margin-left']"
+                        @on-change="(event) => textStyle.fontSize = event.value"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="$style.icon" />
@@ -77,7 +93,8 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                 <div :class="[$style['glyph-item']]" class="w-80">
                     <Input
                         size="sm"
-                        value="121"
+                        :value="textStyle.lineHeight.value"
+                        @on-change="(event) => textStyle.lineHeight.value = event.value"
                     >
                         <template #prefix>
                             <i-cosmic-line-height :class="[$style.icon]" />
@@ -89,9 +106,10 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                 <div :class="[$style['glyph-item']]" class="w-80">
                     <Select
                         size="sm"
-                        value="123"
+                        :value="textStyle.letterSpacing.value"
                         allow-input
                         :class="$style['margin-left']"
+                        @on-change="(event) => textStyle.letterSpacing.value = event.value"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="[$style.icon]" />
@@ -115,8 +133,9 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                 <div class="w-80">
                     <Select
                         size="sm"
-                        value="123"
+                        :value="textStyle.paragraphSpacing"
                         allow-input
+                        @on-change="(event) => textStyle.paragraphSpacing = event.value"
                     >
                         <template #prefix>
                             <i-cosmic-vertical-height :class="[$style.icon]" />
@@ -137,7 +156,7 @@ import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
                 </div>
             </Col>
         </Row>
-        <Row :class="$style.row">
+        <Row v-if="showlayout" :class="$style.row">
             <Col :span="16">
                 <div :class="$style['radio-left']">
                     <RadioGroup value="1">

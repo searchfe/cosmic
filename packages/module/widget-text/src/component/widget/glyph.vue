@@ -1,71 +1,78 @@
  <script lang="ts" setup>
 import { ref } from 'vue';
-import { MTitle, MStandard, MStandardModal, MDetailModal, useAtom } from '@cosmic/core/browser';
-import { Standard } from '../../data';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, TOKENS} from '@cosmic/core/browser';
 import GlyphContent from './glyph-content.vue';
-const container = ref(null);
+
+const containerRef = ref(null);
 
 const {
+        isStandard,
+        standard,
+        styleId,
+
         isShowStandardModal,
         isShowDetailModal,
-        isSelected,
         selected,
         detailTarget,
         standardTarget,
+        standardList,
+        detailEdit,
 
         cancelStandardModal,
         cancelDetailModal,
         selectStandard,
         openDetaileModal,
         openStandardModal,
-        unSelectStandard,
-    } = useAtom({property: {}});
+        unRef,
+        updateStyle,
+    } = usePropterty(TOKENS.TextStyle);
 
  </script>
 
 <template>
-    <div ref="container">
-        <div v-if="!isSelected">
+    <div ref="containerRef">
+        <div v-if="!isStandard">
             <MTitle title="字形">
                 <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
-            <GlyphContent />
+            <glyph-content :id="styleId" />
         </div>
         <template v-else>
-            <MStandard :standard="selected" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
+            <m-standard :standard="standard" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-around"
                     >
-                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container, selected)" />
-                        <i-cosmic-lock @click.stop="unSelectStandard" />
+                        <i-cosmic-more @click.stop="(event) => openDetaileModal(containerRef, selected)" />
+                        <i-cosmic-lock @click.stop="unRef" />
                     </div>
                 </template>
-            </MStandard>
+            </m-standard>
         </template>
-        <MStandardModal
+        <m-standard-modal
             v-if="isShowStandardModal"
             title="文字规范"
-            :standard-list="Standard"
+            :standard-list="standardList"
             :target="standardTarget"
+            @change="updateStyle"
             @cancel="cancelStandardModal"
             @select="(event) => selectStandard(event.data)"
-            @show-detail="openDetaileModal"
+            @show-detail="(event) => openDetaileModal(event.target, event.data)"
         />
-        <MDetailModal
+        <m-detail-modal
             v-if="isShowDetailModal"
             title="文字规范"
             :target="detailTarget"
-            :standard="selected"
+            :standard="detailEdit"
             @cancel="cancelDetailModal"
             @ok="cancelDetailModal"
         >
             <div :class="$style['detail-content']">
                 <div :class="$style['glyph-content']">
-                    <GlyphContent />
+                    <glyph-content :show-layout="false" />
                 </div>
             </div>
-        </MDetailModal>
+        </m-detail-modal>
     </div>
 </template>
 
