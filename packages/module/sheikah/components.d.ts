@@ -13,6 +13,7 @@ declare module 'vue' {
     ICosmicIntersection: typeof import('~icons/cosmic/intersection')['default']
     ICosmicLayout: typeof import('~icons/cosmic/layout')['default']
     ICosmicLock: typeof import('~icons/cosmic/lock')['default']
+    ICosmicMinus: typeof import('~icons/cosmic/minus')['default']
     ICosmicMore: typeof import('~icons/cosmic/more')['default']
     ICosmicNight: typeof import('~icons/cosmic/night')['default']
     ICosmicPlus: typeof import('~icons/cosmic/plus')['default']
