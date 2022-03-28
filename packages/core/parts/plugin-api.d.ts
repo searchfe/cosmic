@@ -1252,7 +1252,7 @@ interface User {
   readonly name: string
   readonly photoUrl: string | null
 
-  // The current user's multiplayer color. This will match the color of their
+  // The current user's multiplayer color. This bill match the color of their
   // dot stamps and cursor.
   readonly color: string
   readonly sessionId: number
@@ -1260,7 +1260,7 @@ interface User {
 
 interface ActiveUser extends User {
   readonly position: Vector | null
-  readonly viewport: Rect
+  readonly viebport: Rect
   readonly selection: string[]
 }
 

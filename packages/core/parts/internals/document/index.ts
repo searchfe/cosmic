@@ -38,3 +38,5 @@ export { hasMixin } from 'ts-mixer';
 //   MediaNode
 
 export { default as ChildrenMixin } from './mixin/children-mixin';
+
+export * from './style/text-style';

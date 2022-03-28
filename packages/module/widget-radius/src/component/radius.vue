@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MTitle, MStandard, MStandardModal, MDetailModal, useAtom } from '@cosmic/core/browser';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty } from '@cosmic/core/browser';
 import RadiusContent from './radius-content.vue';
 import { Standard } from '../data';
 
@@ -17,7 +17,7 @@ const {
         openDetaileModal,
         openStandardModal,
         unSelectStandard,
-    } = useAtom({property: {}});
+    } = usePropterty();
 
 </script>
 

@@ -3,8 +3,8 @@ import { TOKENS } from './token';
 import { gqlClient, type GqlClient } from './gql.service';
 import { RouterService, type RouterServiceAPI } from './router/index.service';
 import NodeService from './document/node.service';
-import TextStyleService from './document/text-style.service';
 import ComponentService from './document/component.service';
+import TextStyleService from './styles/text-style.service';
 
 
 /**
