@@ -9,7 +9,7 @@ import ExportMixin from './export-mixin';
 import GeometryMixin from './geometry-mixin';
 import LayoutMixin from './layout-mixin';
 import RectangleCornerMixin from './rectangle-corner-mixin';
-import SenceNodeMixin from './sence-node-mixin';
+import SenceNodeMixin from './scene-node-mixin';
 
 export default class BaseFrameMixin
     extends Mixin(

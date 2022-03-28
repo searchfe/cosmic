@@ -2,8 +2,9 @@ import { Container, type interfaces  }  from '@cosmic/core/inversify';
 import { TOKENS } from './token';
 import { gqlClient, type GqlClient } from './gql.service';
 import { RouterService, type RouterServiceAPI } from './router/index.service';
-import NodeService from './node.service';
-import TextStyleService from './text-style.service';
+import NodeService from './document/node.service';
+import TextStyleService from './document/text-style.service';
+import ComponentService from './document/component.service';
 
 
 /**
@@ -24,6 +25,8 @@ export function load(options: interfaces.ContainerOptions) {
 
     container.bind<NodeService>(TOKENS.Node).to(NodeService);
     container.bind<TextStyleService>(TOKENS.TextStyle).to(TextStyleService);
+
+    container.bind<ComponentService>(TOKENS.Component).to(ComponentService);
 
     return container;
 }

@@ -1,4 +1,4 @@
-import PluginDataMixinx from '../mixin/plugin-data-mixin';
+import PluginDataMixinx from './plugin-data-mixin';
 
 export default class BaseNodeMixin extends PluginDataMixinx implements Internal.PluginDataMixin{
     id: string;

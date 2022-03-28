@@ -13,7 +13,6 @@ const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 nodeService.document.subscribe(document => {
     treedata.value = nodeToTree(document);
-    console.log(treedata.value);
 });
 
 nodeService.selection.subscribe(node => console.log(node));
