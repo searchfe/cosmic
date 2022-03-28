@@ -20,6 +20,11 @@ export interface QueryBaseDTO {
     team: string;
 }
 
+export interface QueryComponentDTO {
+    team: string;
+    name: string;
+}
+
 export interface CreateUserDTO {
     name?: Nullable<string>;
     username: string;
@@ -158,6 +163,36 @@ export interface CreateOpacityDTO {
     opacity: number;
 }
 
+export interface CreateComponentDTO {
+    name: string;
+    team: string;
+    displayName: string;
+    desc: string;
+    keyNodes: CreateKeyNode[];
+    properties: CreateProperty[];
+    variants: CreateVariant[];
+}
+
+export interface CreateKeyNode {
+    type: string;
+    name: string;
+    desc: string;
+}
+
+export interface CreateProperty {
+    name: string;
+    type: string;
+    defaultValue: string;
+    desc: string;
+}
+
+export interface CreateVariant {
+    name: string;
+    type: string;
+    defaultValue: string;
+    desc: string;
+}
+
 export interface User {
     id: string;
     email: string;
@@ -289,11 +324,28 @@ export interface Property {
     desc: string;
 }
 
+export interface Variant {
+    name: string;
+    type: string;
+    defaultValue: string;
+    desc: string;
+}
+
+export interface KeyNode {
+    type: string;
+    name: string;
+    desc: string;
+}
+
 export interface Component {
     id: string;
     name: string;
+    team: string;
+    displayName: string;
     desc: string;
+    keyNodes: KeyNode[];
     properties: Property[];
+    variants: Variant[];
 }
 
 export interface IQuery {
@@ -320,8 +372,8 @@ export interface IQuery {
     corners(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Corner[] | Promise<Corner[]>;
     getOpacity(fields?: Nullable<string[]>, id: string): Nullable<Opacity> | Promise<Nullable<Opacity>>;
     opacitys(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Opacity[] | Promise<Opacity[]>;
-    component(id: string): Component | Promise<Component>;
-    components(): Component[] | Promise<Component[]>;
+    getComponent(fields?: Nullable<string[]>, id: string): Nullable<Component> | Promise<Nullable<Component>>;
+    components(fields?: Nullable<string[]>, query?: Nullable<QueryComponentDTO>): Component[] | Promise<Component[]>;
 }
 
 export interface ProjectPlus {
@@ -366,6 +418,9 @@ export interface IMutation {
     createOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
     updateOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
     deleteOpacity(id: string): Opacity | Promise<Opacity>;
+    createComponent(data: CreateComponentDTO): Component | Promise<Component>;
+    updateComponent(data: CreateComponentDTO): Component | Promise<Component>;
+    deleteComponent(id: string): Component | Promise<Component>;
 }
 
 export interface ISubscription {
@@ -375,6 +430,7 @@ export interface ISubscription {
     onBorderCreate(): Border | Promise<Border>;
     onCornerCreate(): Corner | Promise<Corner>;
     onOpacityCreate(): Opacity | Promise<Opacity>;
+    onComponentCreate(): Component | Promise<Component>;
 }
 
 type Nullable<T> = T | null;
