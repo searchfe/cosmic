@@ -25,8 +25,8 @@ const contentMap = {
             return {
                 team,
                 name: name.value,
-                day: color.day ? `#${color.night}` : '',
-                night: color.night ? `#${color.day}` : '',
+                day: color.day ? `#${color.day}` : '',
+                night: color.night ? `#${color.night}` : '',
                 dark: color.dark ? `#${color.dark}` : '',
             };
         },

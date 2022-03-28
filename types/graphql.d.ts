@@ -15,9 +15,22 @@ export interface QueryProjectDTO {
     parent?: Nullable<string>;
 }
 
+export interface QueryColorDTO {
+    id?: Nullable<string>;
+    team?: Nullable<string>;
+    day?: Nullable<string>;
+    night?: Nullable<string>;
+    dark?: Nullable<string>;
+}
+
 export interface QueryBaseDTO {
-    id: string;
+    id?: Nullable<string>;
+    team?: Nullable<string>;
+}
+
+export interface QueryComponentDTO {
     team: string;
+    name: string;
 }
 
 export interface QueryComponentDTO {
@@ -361,7 +374,7 @@ export interface IQuery {
     projects(project?: Nullable<QueryProjectDTO>): Project[] | Promise<Project[]>;
     projectStructure(id: string): ProjectPlus[] | Promise<ProjectPlus[]>;
     getColor(fields?: Nullable<string[]>, id: string): Nullable<Color> | Promise<Nullable<Color>>;
-    colors(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Color[] | Promise<Color[]>;
+    colors(fields?: Nullable<string[]>, query?: Nullable<QueryColorDTO>): Color[] | Promise<Color[]>;
     getFont(fields?: Nullable<string[]>, id: string): Nullable<Font> | Promise<Nullable<Font>>;
     fonts(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Font[] | Promise<Font[]>;
     getShadow(fields?: Nullable<string[]>, id: string): Nullable<Shadow> | Promise<Nullable<Shadow>>;
@@ -401,24 +414,31 @@ export interface IMutation {
     updateProject(project: UpdateProjectDTO): boolean | Promise<boolean>;
     deleteProject(id: string): boolean | Promise<boolean>;
     createColor(data: CreateColorDTO): Color | Promise<Color>;
+    createUniqueColor(filter: QueryColorDTO, data: CreateColorDTO): Color | Promise<Color>;
     updateColor(data: CreateColorDTO): Color | Promise<Color>;
     deleteColor(id: string): Color | Promise<Color>;
     createFont(data: CreateFontDTO): Font | Promise<Font>;
+    createUniqueFont(filter: QueryBaseDTO, data: CreateFontDTO): Font | Promise<Font>;
     updateFont(data: CreateFontDTO): Font | Promise<Font>;
     deleteFont(id: string): Font | Promise<Font>;
     createShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
+    createUniqueShadow(filter: QueryBaseDTO, data: CreateShadowDTO): Shadow | Promise<Shadow>;
     updateShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
     deleteShadow(id: string): Shadow | Promise<Shadow>;
     createBorder(data: CreateBorderDTO): Border | Promise<Border>;
+    createUniqueBorder(filter: QueryBaseDTO, data: CreateBorderDTO): Border | Promise<Border>;
     updateBorder(data: CreateBorderDTO): Border | Promise<Border>;
     deleteBorder(id: string): Border | Promise<Border>;
     createCorner(data: CreateCornerDTO): Corner | Promise<Corner>;
+    createUniqueCorner(filter: QueryBaseDTO, data: CreateCornerDTO): Corner | Promise<Corner>;
     updateCorner(data: CreateCornerDTO): Corner | Promise<Corner>;
     deleteCorner(id: string): Corner | Promise<Corner>;
     createOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
+    createUniqueOpacity(filter: QueryBaseDTO, data: CreateOpacityDTO): Opacity | Promise<Opacity>;
     updateOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
     deleteOpacity(id: string): Opacity | Promise<Opacity>;
     createComponent(data: CreateComponentDTO): Component | Promise<Component>;
+    createUniqueComponent(filter: QueryComponentDTO, data: CreateComponentDTO): Component | Promise<Component>;
     updateComponent(data: CreateComponentDTO): Component | Promise<Component>;
     deleteComponent(id: string): Component | Promise<Component>;
 }

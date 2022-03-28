@@ -59,3 +59,15 @@ export function create<Result, Data>(schema: string, fields: string[] = []) {
         }`,
     );
 }
+
+export function createUnique<Result, Data, Filter>(schema: string, fields: string[] = []) {
+    const capializeName = capitalize(schema);
+    return useMutation<Result, { data: Data, filter: Filter }>(
+        `mutation ($data: Create${capializeName}DTO!, $filter: QueryBaseDTO!) {
+            createUnique${capializeName}(data: $data, filter: $filer) {
+                id,
+                ${fields.join(',')}
+            }
+        }`,
+    );
+}
