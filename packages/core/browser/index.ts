@@ -15,7 +15,6 @@ import MWidget from './component/widget/widget.vue';
 import MStandardModal from './component/modal/standard-modal.vue';
 import MDetailModal from './component/modal/detail-modal.vue';
 import MStandard from './component/standard/standard.vue';
-import { useAtom } from './use/use-atom';
 
 
 function bootstrap(option: BootstrapOption) {
@@ -40,11 +39,13 @@ function bootstrap(option: BootstrapOption) {
 
 export { bootstrap };
 
-export * as service from './service/index';
+// export * as service from './service/index';
 export * as urql from '@urql/vue';
 export * as router from 'vue-router';
 export { default as lodash } from 'lodash';
 
 export { MColor, MTitle, MWidget, MStandardModal, MStandard, MDetailModal, MClolorWidget};
 
-export { useAtom };
+export * from './use';
+
+export * from './service';

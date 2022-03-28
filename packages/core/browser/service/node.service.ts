@@ -6,6 +6,7 @@ import { type SenceNode } from '@cosmic/core/parts';
 @injectable()
 export default class NodeService {
     selection() {
+        console.log('NodeService', '==========================');
         return of() as Observable<SenceNode>;
     }
 }

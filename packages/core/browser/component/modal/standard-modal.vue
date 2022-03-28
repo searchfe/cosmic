@@ -8,15 +8,15 @@ import { useModal } from './setup';
 const props = withDefaults(defineProps<{
     title: string,
     standardList: any[],
-    selected: any,
-    target: () => HTMLElement,
+    selected?: any,
+    target?: HTMLElement,
 }>(), {
     title: '',
     select: () => ({}),
     standardList: () => [],
 });
 
-const emits = defineEmits(['cancel', 'showDetail',  'select']);
+const emits = defineEmits(['cancel', 'showDetail',  'select', 'add', 'change']);
 
 const content = ref(null);
 
@@ -34,7 +34,7 @@ onMounted(() => {
 
 function showDetail(index: number, data) {
     const target = (content.value! as HTMLElement).children[index];
-    emits('showDetail', target, data);
+    emits('showDetail', {target, data});
 }
 
 </script>
@@ -49,7 +49,7 @@ function showDetail(index: number, data) {
         <slot name="title">
             <div :class="$style.title">
                 <MTitle :title="title">
-                    <i-cosmic-plus />
+                    <i-cosmic-plus @click.stop="emits('add')" />
                 </MTitle>
             </div>
         </slot>
@@ -75,7 +75,7 @@ function showDetail(index: number, data) {
             ref="content"
             :class="$style.content"
         >
-            <MStandard
+            <m-standard
                 v-for="(data, index) of props.standardList"
                 :key="data.title"
                 :standard="data"
@@ -84,6 +84,7 @@ function showDetail(index: number, data) {
                 classes="-v-bg-inapparent"
                 @hover="() => hoverIndex = index"
                 @click="(event) => emits('select', {event, data})"
+                @change="(event) => emits('change', event)"
             >
                 <template #prefix>
                     <slot
@@ -101,7 +102,7 @@ function showDetail(index: number, data) {
                         </div>
                     </slot>
                 </template>
-            </MStandard>
+            </m-standard>
         </div>
     </div>
 </template>

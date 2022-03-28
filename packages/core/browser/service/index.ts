@@ -9,3 +9,4 @@ export function createContainer(options: interfaces.ContainerOptions) {
 export { TOKENS } from './token';
 export * from './gql.service';
 export type { RouterServiceAPI } from './router/index.service';
+export * from './styles';

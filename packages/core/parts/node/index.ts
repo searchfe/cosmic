@@ -3,7 +3,10 @@ import PageNode from './base/page-node';
 import ComponentNode from './sence/component-node';
 import TextNode from './sence/text-node';
 import { type SenceNode } from './sence/sence-node';
+import TextStyle from './style/text-style';
 
 export { DocumentNode, PageNode };
 
 export { SenceNode, ComponentNode, TextNode};
+
+export { TextStyle };

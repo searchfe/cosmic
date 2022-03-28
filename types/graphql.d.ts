@@ -83,7 +83,7 @@ export interface CreateLevelDTO {
 export interface CreateItemDTO {
     name: string;
     imgs?: Nullable<string[]>;
-    text?: Nullable<string>;
+    f?: Nullable<string>;
     info?: Nullable<string>;
     meta?: Nullable<string>;
 }
