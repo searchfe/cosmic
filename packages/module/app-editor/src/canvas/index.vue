@@ -1,48 +1,128 @@
 <script lang="ts" setup>
-import { useDrag, useWheel } from '@vueuse/gesture';
 import { ref, onMounted } from 'vue';
-import { useSpring } from './gesturer';
+import WidgetGuides from 'vue-guides';
+import { Gesturer } from './gesturer';
 
-const gesturer = ref<HTMLElement>();
-const content = ref<HTMLElement>();
+const wrapper = ref();
+const content = ref();
 
-const { set, setCenter } = useSpring(content, gesturer);
+const guideHorizontal = ref();
+const guideVertical = ref();
 
-useDrag(({ movement: [x, y], dragging, event }) => {
-    if (event.target !== gesturer.value) return;
-    set({ x, y, cursor: dragging ? 'grabbing' : 'grab', end: !dragging });
-},{ domTarget: gesturer });
+const gesturer = new Gesturer({
+    content, wrapper,
+    scrollX: guideHorizontal,
+    scrollY: guideVertical});
 
-useWheel(({ movement: [x, y], wheeling }) => {
-    set({ x, y, cursor: wheeling ? 'grabbing': 'grab', end: !wheeling });
-}, { domTarget: gesturer });
 
+const box = ref();
 onMounted(() => {
-    setCenter();
+    gesturer.resize();
+    window.addEventListener('resize', () => { gesturer.resize(); });
+    gesturer.moveToCenter();
 });
-
+function onChange(e: any) {
+    console.log(e);
+}
 </script>
 <template>
-    <div ref="gesturer" :class="$style.canvas" :style="{cursor: 'grabbing'}">
+    <!-- <div ref="gesturer" :class="$style.canvas" :style="{cursor: 'grabbing'}">
         <div ref="content" class="ease-in-out cursor-default inline-block">
             <div class="w-32 h-32" :style="{ background: 'red' }" />
         </div>
+    </div>-->
+    <div ref="wrapper" class="relative w-full h-full overflow-hidden canvas">
+        <div ref="box" class="box" @click="() => gesturer.moveToStart()" />
+        <div class="ruler horizontal">
+            <widget-guides
+                ref="guideHorizontal"
+                type="horizontal"
+                background-color="#FCFCFC"
+                :text-offset="[0,5]"
+                text-color="#BDBDBD"
+                line-color="#BDBDBD"
+                :ruler-style="{
+                    left: '25px',
+                    width: 'calc(100% - 25px)',
+                    height: '25px',
+                }"
+                @change-guides="onChange"
+            />
+        </div>
+        <div class="ruler vertical">
+            <widget-guides
+                ref="guideVertical"
+                type="vertical"
+                display-drag-pos="true"
+                background-color="#FCFCFC"
+                :text-offset="[5,0]"
+                text-color="#BBBBBB"
+                line-color="#BBBBBB"
+                :ruler-style="{
+                    top: '25px',
+                    height: 'calc(100% - 25px)',
+                    width: '25px',
+                }"
+                @change-guides="onChange"
+            />
+        </div>
+
+        <div ref="content" class="container inline-block">
+            <slot />
+        </div>
     </div>
 </template>
-<style module>
+<style scoped>
 .canvas {
     background-color: var(--color-gray-100);
 }
-.board {
-    position: relative;
-    background-color: var(--color-white);
-    border: 1px solid var(--color-gray-200);
-    font-size: 1.2rem;
-    color: var(--color-gray-300);
-}
-.title {
+
+.ruler {
     position: absolute;
-    top: -2rem;
+    top: 0;
     left: 0;
+    z-index: 20;
 }
+.ruler.horizontal {
+  left: 0px;
+  width: 100%;
+  height: 25px;
+  cursor: row-resize;
+}
+.ruler.vertical {
+  top: 0px;
+  width: 25px;
+  height: 100%;
+  cursor: col-resize;
+}
+.box {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: #FCFCFC;
+    box-sizing: border-box;
+    z-index: 21;
+    cursor:crosshair;
+}
+.box:before,
+.box:after {
+    position: absolute;
+    content: "";
+    background: #BDBDBD;
+}
+.box:before {
+    width: 1px;
+    height: 100%;
+    left: 100%;
+}
+.box:after {
+    height: 1px;
+    width: 100%;
+    top: 100%;
+}
+
+.container {
+    background: var(--color-white);
+}
+
 </style>
