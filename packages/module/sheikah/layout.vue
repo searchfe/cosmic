@@ -35,6 +35,9 @@ const route = useRoute();
     overflow-y: scroll;
     background: #f5f5f5;
 }
+.content::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+}
 .sider {
     box-sizing: border-box;
     width: 272px;
