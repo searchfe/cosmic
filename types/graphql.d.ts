@@ -85,12 +85,6 @@ export interface QueryComponentDTO {
     name?: Nullable<string>;
 }
 
-export interface QueryDraftDTO {
-    name?: Nullable<string>;
-    team?: Nullable<string>;
-    id?: Nullable<string>;
-}
-
 export interface CreateUserDTO {
     name?: Nullable<string>;
     username: string;
