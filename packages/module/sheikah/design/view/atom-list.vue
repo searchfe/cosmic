@@ -5,7 +5,9 @@ import Region from '../../common/component/region.vue';
 import AtomCard from '../component/card/atom.vue';
 import AtomFilter from '../component/filter.vue';
 import { query, queryBorder } from '../api/common';
+import AtomDialog from '../component/dialog/atom/index.vue';
 
+import type { urql } from '@cosmic/core/browser';
 import type { AtomType } from '../types';
 
 
@@ -22,22 +24,31 @@ const router = useRouter();
 const currentType = ref<AtomType>('color');
 const atoms = ref<AtomData[]>([]);
 
-const { data: colorData, fetching: colorFetching } = query<{ colors: gql.Color[] }, gql.QueryBaseDTO>(
+const { data: colorData, fetching: colorFetching, executeQuery: refreshColor } = query<{ colors: gql.Color[] }, gql.QueryBaseDTO>(
     'color', {}, ['id', 'team', 'day', 'night', 'dark', 'name'],
 );
-const { data: borderData, fetching: borderFetching } = queryBorder({});
-const { data: cornerData, fetching: cornerFetching } = query<{ corners: gql.Corner[] }, gql.QueryBaseDTO>(
+const { data: borderData, fetching: borderFetching, executeQuery: refreshBorder } = queryBorder({});
+const { data: cornerData, fetching: cornerFetching, executeQuery: refreshCorner } = query<{ corners: gql.Corner[] }, gql.QueryBaseDTO>(
     'corner', {}, ['id', 'team', 'tl', 'tr', 'bl', 'br', 'name'],
 );
-const { data: opacityData, fetching: opacityFetching } = query<{ opacitys: gql.Opacity[] }, gql.QueryBaseDTO>(
+const { data: opacityData, fetching: opacityFetching, executeQuery: refreshOpacity } = query<{ opacitys: gql.Opacity[] }, gql.QueryBaseDTO>(
     'opacity', {}, ['id', 'team', 'opacity', 'name'],
 );
-const { data: shadowData, fetching: shadowFetching } = query<{ shadows: gql.Shadow[] }, gql.QueryBaseDTO>(
+const { data: shadowData, fetching: shadowFetching, executeQuery: refreshShadow } = query<{ shadows: gql.Shadow[] }, gql.QueryBaseDTO>(
     'shadow', {}, ['id', 'team', 'type', 'offsetX', 'offsetY', 'blur', 'spread', 'color', 'name'],
 );
-const { data: fontData, fetching: fontFetching } = query<{ fonts: gql.Font[] }, gql.QueryBaseDTO>(
+const { data: fontData, fetching: fontFetching, executeQuery: refreshFont } = query<{ fonts: gql.Font[] }, gql.QueryBaseDTO>(
     'font', {}, ['id', 'team', 'style', 'variant', 'weight', 'size', 'lineHeight', 'family', 'name'],
 );
+
+const refreshers: Record<AtomType, (opts?: any) => urql.UseQueryResponse<unknown, unknown>> = {
+    color: refreshColor,
+    shadow: refreshShadow,
+    border: refreshBorder,
+    font: refreshFont,
+    opacity: refreshOpacity,
+    corner: refreshCorner,
+};
 
 watchEffect(() => {
     if (currentType.value === 'color' && colorData.value && !colorFetching.value) {
@@ -118,8 +129,8 @@ function changeAtom(atom: AtomType) {
     currentType.value = atom;
 }
 
-function onAdd() {
-    console.log('in');
+function refresh() {
+    refreshers[currentType.value]();
 }
 
 </script>
@@ -178,9 +189,7 @@ function onAdd() {
         </div>
         <template #bottom>
             <div class="flex justify-end">
-                <div :class="$style.add" class="flex justify-center items-center" @click.stop="onAdd">
-                    <i-cosmic-plus class="text-md" />
-                </div>
+                <atom-dialog :type="currentType" @success="refresh" />
             </div>
         </template>
     </Region>
@@ -221,11 +230,5 @@ function onAdd() {
 }
 .filter::-webkit-scrollbar {
     display: none; /* Chrome Safari */
-}
-.add {
-    height: 36px;
-    width: 36px;
-    border-radius: 4px;
-    background: #f5f5f5;
 }
 </style>
