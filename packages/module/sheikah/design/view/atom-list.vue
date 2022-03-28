@@ -5,7 +5,8 @@ import Region from '../../common/component/region.vue';
 import AtomCard from '../component/card/atom.vue';
 import AtomFilter from '../component/filter.vue';
 import { query, queryBorder } from '../api/common';
-import AtomDialog from '../component/dialog/atom/index.vue';
+import { query as queryColor } from '../api/color';
+import ColorDialog from '../component/dialog/atom/color.vue';
 
 import type { urql } from '@cosmic/core/browser';
 import type { AtomType } from '../types';
@@ -24,7 +25,7 @@ const router = useRouter();
 const currentType = ref<AtomType>('color');
 const atoms = ref<AtomData[]>([]);
 
-const { data: colorData, fetching: colorFetching, executeQuery: refreshColor } = query<{ colors: gql.Color[] }, gql.QueryBaseDTO>(
+const { data: colorData, fetching: colorFetching, executeQuery: refreshColor } = queryColor(
     'color', {}, ['id', 'team', 'day', 'night', 'dark', 'name'],
 );
 const { data: borderData, fetching: borderFetching, executeQuery: refreshBorder } = queryBorder({});
@@ -189,7 +190,7 @@ function refresh() {
         </div>
         <template #bottom>
             <div class="flex justify-end">
-                <atom-dialog :type="currentType" @success="refresh" />
+                <color-dialog :atom-type="currentType" @success="refresh" />
             </div>
         </template>
     </Region>
