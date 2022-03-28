@@ -23,6 +23,7 @@ importers:
       eslint: 8.7.0
       eslint-plugin-vue: 8.3.0
       fs-extra: ^10.0.0
+      gesto: ^1.7.0
       git-cz: ~4.8.0
       graphql: ~16.3.0
       happy-dom: 2.30.1
@@ -48,6 +49,7 @@ importers:
       cosmic-ui-alpha: 0.0.33
       cosmic-vue: 0.0.48
       electron-updater: 4.6.5
+      gesto: 1.7.0
       reflect-metadata: 0.1.13
       resolve: 1.22.0
       rxjs: 7.5.5
@@ -118,7 +120,10 @@ importers:
     specifiers: {}
 
   packages/module/app-editor:
-    specifiers: {}
+    specifiers:
+      vue-guides: ^0.17.1
+    dependencies:
+      vue-guides: 0.17.1
 
   packages/module/asset-component:
     specifiers: {}
@@ -217,6 +222,10 @@ packages:
       '@babel/helper-validator-identifier': 7.16.7
       to-fast-properties: 2.0.0
 
+  /@daybrush/utils/1.6.0:
+    resolution: {integrity: sha512-9MjMoOLl1U+l8lXByN3BbLZXf+mktoLyeb6t78Jz2WZ7LRldK0FNg8oW//9giO2hHCUyxS7LX6jS1hToGIfRWA==}
+    dev: false
+
   /@develar/schema-utils/2.6.5:
     resolution: {integrity: sha512-0cp4PsWQ/9avqTVMCtZ+GirikIA36ikvjtHweU4/j8yLtgObI0+JUPhYFScgwlteveGB1rt3Cm8UhN04XayDig==}
     engines: {node: '>= 8.9.0'}
@@ -224,6 +233,10 @@ packages:
       ajv: 6.12.6
       ajv-keywords: 3.5.2_ajv@6.12.6
     dev: true
+
+  /@egjs/list-differ/1.0.0:
+    resolution: {integrity: sha512-HsbMKc0ZAQH+EUeCmI/2PvTYSybmkaWwakU8QGDYYgMVIg9BQ5sM0A0Nnombjxo2+JzXHxmH+jw//yGX+y6GYw==}
+    dev: false
 
   /@electron/get/1.14.1:
     resolution: {integrity: sha512-BrZYyL/6m0ZXz/lDxy/nlVhQz+WF+iPS6qXolEU8atw7h6v1aYkjwJZ63m+bJMBTxDE66X+r2tPS4a/8C82sZw==}
@@ -376,6 +389,44 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
+
+  /@scena/event-emitter/1.0.5:
+    resolution: {integrity: sha512-AzY4OTb0+7ynefmWFQ6hxDdk0CySAq/D4efljfhtRHCOP7MBF9zUfhKG3TJiroVjASqVgkRJFdenS8ArZo6Olg==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+    dev: false
+
+  /@scena/guides/0.18.1:
+    resolution: {integrity: sha512-uV0ISFZD+4/eNJ3bOSldf838dqdXT+QpJrINm6Sza+Chfb+e5S18B052exiEaGDW/mTQGubVfOk7zUgXYgcCgQ==}
+    dependencies:
+      '@scena/event-emitter': 1.0.5
+      react-compat-guides: 0.15.1
+      react-simple-compat: 1.2.2
+    dev: false
+
+  /@scena/matrix/1.1.1:
+    resolution: {integrity: sha512-JVKBhN0tm2Srl+Yt+Ywqu0oLgLcdemDQlD1OxmN9jaCTwaFPZ7tY8n6dhVgMEaR9qcR7r+kAlMXnSfNyYdE+Vg==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+    dev: false
+
+  /@scena/react-guides/0.17.1:
+    resolution: {integrity: sha512-qmVKDw681kdsLvirevHPQ9jQy7aenQDy8VNsMdFgsak9GS/GcZz6wBT8lqp6otmQ5oEFjS7+4ZyFsH3tpMiDSQ==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+      '@scena/react-ruler': 0.9.1
+      css-to-mat: 1.0.3
+      framework-utils: 1.1.0
+      gesto: 1.7.0
+      react-css-styled: 1.0.3
+    dev: false
+
+  /@scena/react-ruler/0.9.1:
+    resolution: {integrity: sha512-OO3KvUWrY1Wi9JL8uVVf7BLM4UyqEWFkJ0CHVcAWmbKWyDaOCWi4cnqb0s7mOtb57jftylUM56U1vaXdQ+51OQ==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+      framework-utils: 1.1.0
+    dev: false
 
   /@sindresorhus/is/0.14.0:
     resolution: {integrity: sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==}
@@ -1625,6 +1676,20 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /css-styled/1.0.0:
+    resolution: {integrity: sha512-lDdPvM2/djv+La110zVY3RGQ7X4OOlzLS+IEjRcn8UlUmJd1+GNcGfDFmsKWwnLBupsY1w0QM1gRgV4RdcCjfw==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+      string-hash: 1.1.3
+    dev: false
+
+  /css-to-mat/1.0.3:
+    resolution: {integrity: sha512-HADRhVqPc8wFqEp6ClK+uuPYg+FMBinNo2ReLyI/KQCncmHPJ60o5zldyJG7NjsTqXWbdfGJO51jnoxfMvWJiA==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+      '@scena/matrix': 1.1.1
+    dev: false
+
   /css/3.0.0:
     resolution: {integrity: sha512-DG9pFfwOrzc+hawpmqX/dHYHJG+Bsdb0klhyi1sDneOgGOXy9wQIC8hzyVp1e4NRYDBdxcylvywPkkXCHAzTyQ==}
     dependencies:
@@ -2451,6 +2516,10 @@ packages:
       mime-types: 2.1.35
     dev: true
 
+  /framework-utils/1.1.0:
+    resolution: {integrity: sha512-KAfqli5PwpFJ8o3psRNs8svpMGyCSAe8nmGcjQ0zZBWN2H6dZDnq+ABp3N3hdUmFeMrLtjOCTXD4yplUJIWceg==}
+    dev: false
+
   /fs-extra/10.0.1:
     resolution: {integrity: sha512-NbdoVMZso2Lsrn/QwLXOy6rm0ufY2zEOKCDzJR/0kBsb0E6qed0P3iYK+Ath3BfvXEeu4JhEtXLgILx5psUfag==}
     engines: {node: '>=12'}
@@ -2495,6 +2564,13 @@ packages:
   /functional-red-black-tree/1.0.1:
     resolution: {integrity: sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=}
     dev: true
+
+  /gesto/1.7.0:
+    resolution: {integrity: sha512-gPwWUYVPlYATOL59Gl1g2pPtCvbYJIU2kaj85lGvGCde1jgWAh5QI/rwlLgTWpH+Nl53pmPGFmp/oGqJ9d7grw==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+      '@scena/event-emitter': 1.0.5
+    dev: false
 
   /get-caller-file/2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
@@ -3807,6 +3883,43 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
+  /react-compat-css-styled/1.0.8:
+    resolution: {integrity: sha512-CG0kVbpKjiLMQc85pP50+Z0R9PGp7NIkkGqO88QTjEsSMOGKYlCXIAnXdKR2ZII23NJmA4XrJry03jkXOxTUkg==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+      css-styled: 1.0.0
+      framework-utils: 1.1.0
+      react-css-styled: 1.0.3
+    dev: false
+
+  /react-compat-guides/0.15.1:
+    resolution: {integrity: sha512-LkY38uGOuswRPvndwSco8znF+cOJJcXpighekRIdF+KTJ9h/2edI2RzBb0v5EvaG8gCXxGDdKMISTrDdzKnSFQ==}
+    dependencies:
+      '@scena/react-guides': 0.17.1
+      react-compat-css-styled: 1.0.8
+      react-compat-ruler: 0.8.1
+    dev: false
+
+  /react-compat-ruler/0.8.1:
+    resolution: {integrity: sha512-btq323xPXX2UxrDWzTJFtYmssnammF+ojuUa5lgbMtXf2ZGuXqlwAWCh9yFr6hsz9l646Pg36o67Gy+3XaPaBg==}
+    dependencies:
+      '@scena/react-ruler': 0.9.1
+    dev: false
+
+  /react-css-styled/1.0.3:
+    resolution: {integrity: sha512-6H3aZPO66PYmYg9wx12WzOJpPlBEdA7O5JefCh+4SldlihVKBCxA6mityfWSGWL5ldOkJdHJWGwHR6nGPcVm+A==}
+    dependencies:
+      css-styled: 1.0.0
+      framework-utils: 1.1.0
+    dev: false
+
+  /react-simple-compat/1.2.2:
+    resolution: {integrity: sha512-DYa9MHplwzjL/9xDKmTvM70umky8R162aZsKsWC2XRD7d+mIXyr8IQmAoRMlH2uwl4yGGgZbg7bj20qlCMhIYA==}
+    dependencies:
+      '@daybrush/utils': 1.6.0
+      '@egjs/list-differ': 1.0.0
+    dev: false
+
   /read-config-file/6.2.0:
     resolution: {integrity: sha512-gx7Pgr5I56JtYz+WuqEbQHj/xWo+5Vwua2jhb1VwM4Wid5PqYmZ4i00ZB0YEGIfkVBsCv9UrjgyqCiQfS/Oosg==}
     engines: {node: '>=12.0.0'}
@@ -4126,6 +4239,10 @@ packages:
     resolution: {integrity: sha512-jH9EhtKIjuXZ2cWxmXS8ZP80XyC3iasQxMDV8jzhNJpfDb7VbQLVW4Wvsxz9QZvzV+G4YoSfBUVKDOyxLzi/sg==}
     engines: {node: '>= 6'}
     dev: true
+
+  /string-hash/1.1.3:
+    resolution: {integrity: sha1-6Kr8CsGFW0Zmkp7X3RJ1311sgRs=}
+    dev: false
 
   /string-width/4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -4825,6 +4942,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /vue-guides/0.17.1:
+    resolution: {integrity: sha512-JkUnW38TI7GVtLWOFuGONu1Kdh/Dqr7joM9BKL1xM8qcuIeLl+XagDhQ/lZt00aLwZ4/S46SdxQvIXsdXhZI5Q==}
+    dependencies:
+      '@scena/guides': 0.18.1
+      framework-utils: 1.1.0
+    dev: false
 
   /vue-router/4.0.14_vue@3.2.29:
     resolution: {integrity: sha512-wAO6zF9zxA3u+7AkMPqw9LjoUCjSxfFvINQj3E/DceTt6uEz1XZLraDhdg2EYmvVwTBSGlLYsUw8bDmx0754Mw==}
