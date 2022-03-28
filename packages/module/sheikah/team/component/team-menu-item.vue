@@ -64,12 +64,17 @@ function onAddProject(data: { id: string }) {
     emits('add-project', { parent: data.id || undefined, team: props.team });
 }
 
+
 </script>
 
 <template>
     <div class="mx-10">
-        <r-tree size="sm" :styles="treeSecondary" :data="designTree" @toggle="onToggleDesignTree" />
-        <r-tree size="sm" :styles="treeSecondary" :data="[data]" @toggle="onToggleProject" @click-extra="onAddProject" />
+        <r-tree size="sm" :styles="treeSecondary" :data="designTree" @click-node="onToggleDesignTree" />
+        <r-tree size="sm" :styles="treeSecondary" :data="[data]" @click-node="onToggleProject" @click-subfix="onAddProject">
+            <template #subfix>
+                <i-cosmic-plus />
+            </template>
+        </r-tree>
     </div>
 </template>
 

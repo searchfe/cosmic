@@ -8,10 +8,28 @@ const { useQuery, useMutation  } = urql;
 
 export function query<Data, QueryDTO>(schema: string, query: MaybeRef<QueryDTO>, fields: string[] = []) {
     return useQuery<Data, { query: QueryDTO }>({
-        query: `query ($fields: [String!], $query: Query${capitalize(schema)}DTO) {
-            colors(fields: $fields, query: $query) {
+        query: `query ($fields: [String!], $query: QueryBaseDTO) {
+            ${schema}s(fields: $fields, query: $query) {
                 id,
                 ${fields.join(',')}
+            }
+        }`,
+        variables: query,
+        requestPolicy: 'cache-and-network',
+    });
+}
+
+export function queryBorder(query: MaybeRef<gql.QueryBaseDTO>) {
+    return useQuery<{ borders: gql.Border[] }, { query: gql.QueryBaseDTO }>({
+        query: `query ($fields: [String!], $query: QueryBaseDTO) {
+            borders(fields: $fields, query: $query) {
+                id,
+                name,
+                team,
+                top { weight, style },
+                bottom { weight, style },
+                left { weight, style },
+                right { weight, style }
             }
         }`,
         variables: query,

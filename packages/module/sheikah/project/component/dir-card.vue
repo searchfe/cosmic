@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 async function onClickCard() {
-    router.push({ name: 'project:detail', query: { project: props.id }, force: true });
+    router.push({ name: 'project:detail', query: { project: props.id } });
 }
 
 </script>

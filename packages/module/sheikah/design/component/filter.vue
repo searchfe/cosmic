@@ -5,29 +5,34 @@ import { ref } from 'vue';
 interface Props {
     text: string;
     num: string;
+    selected: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
     text: '',
     num: '',
-    hoverIcon: '',
-    icon: '',
+    selected: false,
 });
 
 const hovering = ref(false);
 
 function mouseleaveHandler() {
     hovering.value = false;
+
 }
 function mouseenterHandler() {
     hovering.value = true;
+
 }
 
 </script>
 
 <template>
     <div
-        :class="$style['filter-item']"
+        :class="{
+            [$style['filter-item']]: true,
+            [$style['filter-selected']]: selected,
+        }"
         @mouseleave="mouseleaveHandler"
         @mouseenter.stop="mouseenterHandler"
     >
@@ -39,10 +44,10 @@ function mouseenterHandler() {
                 {{ num }}
             </div>
         </div>
-        <div :class="$style['filter-item-icon']" :style="{ display: hovering ? 'block' : 'none' }">
+        <div :class="$style['filter-item-icon']" :style="{ display: selected || hovering ? 'block' : 'none' }">
             <slot name="hover-icon" />
         </div>
-        <div :class="$style['filter-item-icon']" :style="{ display: !hovering ? 'block' : 'none' }">
+        <div :class="$style['filter-item-icon']" :style="{ display: !hovering && !selected ? 'block' : 'none' }">
             <slot name="icon" />
         </div>
     </div>
@@ -63,7 +68,7 @@ function mouseenterHandler() {
     background: #f5f5f5;
     color: #1f1f1f;
 }
-.filter-item:hover {
+.filter-item:hover, .filter-selected {
     background: #546bff;
     color: #fff;
 }

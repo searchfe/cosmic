@@ -1,38 +1,49 @@
 <script lang="ts" setup>
-    // import { Menu } from 'cosmic-vue';
-    import Card from '../../../common/component/card.vue';
-    import Preview from '../cell/color.vue';
+import Card from '../../../common/component/card.vue';
+import Color from '../cell/color.vue';
+import Border from '../cell/border.vue';
+import Font from '../cell/font.vue';
+import Shadow from '../cell/shadow.vue';
+import Corner from '../cell/corner.vue';
+import Opacity from '../cell/opacity.vue';
 
-    // TODO delete it after gql modle upgrade
-    interface Color {
-        value: {
-            day: string;
-            night: string;
-            dark: string;
-        },
-        title?: string;
-        meta?: string;
-        refCount: number;
-    }
+import type { AtomType } from '../../types';
 
-    withDefaults(defineProps<Color>(), {
-        value: () => {
-            return { day: 'none', night: 'none', dark: 'none'};
-        },
-        title: '',
-        meta: '',
-    });
+
+interface AtomCardOption {
+    data: Record<string, unknown>,
+    name?: string;
+    type: AtomType;
+    meta?: string;
+    refCount: number;
+}
+
+const COMP_MAP = {
+    'color': Color,
+    'font': Font,
+    'border': Border,
+    'corner': Corner,
+    'shadow': Shadow,
+    'opacity': Opacity,
+};
+
+withDefaults(defineProps<AtomCardOption>(), {
+    data: () => ({}),
+    name: '',
+    meta: '描述信息',
+    refCount: 0,
+});
 
 </script>
 
 <template>
     <Card :class="$style['atom-micro-card']">
         <div :class="$style['atom-preview']">
-            <Preview v-bind="value" />
+            <component :is="COMP_MAP[type]" v-bind="data" />
         </div>
         <div :class="$style['atom-info']">
             <div :class="$style['atom-title']">
-                {{ title }}
+                {{ name }}
             </div>
             <div class="mt-7">
                 {{ meta }}

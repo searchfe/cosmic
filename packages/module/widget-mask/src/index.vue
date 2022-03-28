@@ -31,5 +31,3 @@ const clickHandler = () => {
     </MWidget>
 </template>
 
-<style scoped></style>
-

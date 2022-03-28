@@ -27,12 +27,14 @@ const onInput = (data) => {
                 :type="val.type"
                 :model="key"
                 :value="val.value"
-                @onInput="onInput"
+                @on-input="onInput"
             >
-                <i-cosmic-x v-if="val.icon === 'x'" :class="[$style['icon']]" />
-                <i-cosmic-y v-if="val.icon === 'y'" :class="[$style['icon']]" />
-                <i-cosmic-fuzzy v-if="val.icon === 'fuzzy'" :class="[$style['icon']]" />
-                <i-cosmic-expand v-if="val.icon === 'expand'" :class="[$style['icon']]" />
+                <template #prefix>
+                    <i-cosmic-x v-if="val.icon === 'x'" :class="[$style['icon']]" />
+                    <i-cosmic-y v-if="val.icon === 'y'" :class="[$style['icon']]" />
+                    <i-cosmic-fuzzy v-if="val.icon === 'fuzzy'" :class="[$style['icon']]" />
+                    <i-cosmic-expand v-if="val.icon === 'expand'" :class="[$style['icon']]" />
+                </template>
             </InputText>
         </div>
     </div>

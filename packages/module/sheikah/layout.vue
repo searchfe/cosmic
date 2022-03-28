@@ -3,7 +3,10 @@ import { Layout, Content, Sider } from 'cosmic-vue';
 import { router } from '@cosmic/core/browser';
 import TeamMenu from './team/component/team-menu.vue';
 
-const { RouterView } = router;
+const { RouterView, useRoute } = router;
+
+const route = useRoute();
+
 
 </script>
 
@@ -15,7 +18,7 @@ const { RouterView } = router;
             </div>
         </Sider>
         <Content :class="$style.content">
-            <router-view />
+            <router-view :key="route.fullPath" />
         </Content>
     </Layout>
 </template>

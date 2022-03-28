@@ -23,6 +23,7 @@ export function useAtom(data: Atom) {
     const standardTarget = ref<HtmlElement | null >(null);
 
     const selected = ref(null);
+    const isSelected = ref(false);
 
     function cancelStandardModal() {
         isShowStandardModal.value = false;
@@ -32,8 +33,10 @@ export function useAtom(data: Atom) {
         isShowDetailModal.value = false;
     }
 
-    function openDetaileModal(target: HtmlElement) {
-        console.log(target);
+    function openDetaileModal(target: HtmlElement, standard) {
+        if (standard) {
+            selected.value = standard;
+        }
         detailTarget.value = target;
         isShowDetailModal.value = true;
     }
@@ -44,13 +47,14 @@ export function useAtom(data: Atom) {
     }
 
     function selectStandard(standard) {
+        isSelected.value = true;
         selected.value = standard;
-        console.log(standard);
         isShowStandardModal.value = false;
         isShowDetailModal.value = false;
     }
 
     function unSelectStandard() {
+        isSelected.value = false;
         selected.value =  null;
         isShowStandardModal.value = false;
         isShowDetailModal.value = false;
@@ -60,6 +64,7 @@ export function useAtom(data: Atom) {
         property: proxyProperty,
         isShowStandardModal,
         isShowDetailModal,
+        isSelected,
         selected,
         detailTarget,
         standardTarget,
