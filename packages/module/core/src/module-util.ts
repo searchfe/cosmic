@@ -25,6 +25,7 @@ export function bootstrapModule(
             const moduleApp = createApp(module.root);
             moduleApp.provide('container', container);
             moduleApp.component('MComponent', MComponent);
+            if (module.init) module.init(moduleApp);
             if (inherit) {
                 addInherit(moduleApp, rootProviders, inherit);
             }

@@ -1,6 +1,6 @@
  <script lang="ts" setup>
 import { ref } from 'vue';
-import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, TOKENS} from '@cosmic/core/browser';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service} from '@cosmic/core/browser';
 import GlyphContent from './glyph-content.vue';
 
 const containerRef = ref(null);
@@ -12,7 +12,6 @@ const {
 
         isShowStandardModal,
         isShowDetailModal,
-        selected,
         detailTarget,
         standardTarget,
         standardList,
@@ -25,7 +24,7 @@ const {
         openStandardModal,
         unRef,
         updateStyle,
-    } = usePropterty(TOKENS.TextStyle);
+    } = usePropterty(service.TOKENS.TextStyle);
 
  </script>
 
