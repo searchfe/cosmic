@@ -7,7 +7,6 @@ declare module 'vue' {
     ICosmicBoard: typeof import('~icons/cosmic/board')['default']
     ICosmicComp: typeof import('~icons/cosmic/comp')['default']
     ICosmicEyeOpen: typeof import('~icons/cosmic/eye-open')['default']
-    ICosmicRoundedSquare: typeof import('~icons/cosmic/rounded-square')['default']
     ICosmicSearch: typeof import('~icons/cosmic/search')['default']
     ICosmicSquare: typeof import('~icons/cosmic/square')['default']
     ICosmicText: typeof import('~icons/cosmic/text')['default']
