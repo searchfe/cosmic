@@ -3,9 +3,9 @@ import { ref, watchEffect } from 'vue';
 import { Space, Input, Button } from 'cosmic-vue';
 import { inject } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
-import type Panel from './components/panel.vue';
+import Panel from './components/panel.vue';
 import { useCreateComponent } from './api';
-import type { KeyNode, Property, Variant } from './data';
+import { KeyNode, Property, Variant } from './data';
 
 const routerService = inject<service.RouterServiceAPI>(service.TOKENS.Router);
 const { executeMutation: createComponent } = useCreateComponent();
