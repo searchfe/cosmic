@@ -27,7 +27,7 @@ function addComponent() {
 </script>
 <template>
     <Region title="组件">
-        <div class="flex flex-start">
+        <div class="flex flex-start" :class="$style.filter">
             <comp-filter text="基础类" num="82">
                 <template #icon>
                     <i-cosmic-scale />
@@ -141,5 +141,12 @@ function addComponent() {
     .card-list {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
+}
+
+.filter {
+    overflow-x: scroll;
+}
+.filter::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
 }
 </style>
