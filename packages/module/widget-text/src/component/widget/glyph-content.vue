@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Select, Row, Col, Input, RadioGroup, RadioButton } from 'cosmic-vue';
 import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
-import { useStyle, TOKENS } from '@cosmic/core/browser';
+import { useStyle, service } from '@cosmic/core/browser';
 
 const props = withDefaults(defineProps<{
     id: string,
@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
 
 const {
     textStyle,
-} = useStyle(TOKENS.TextStyle, props.id);
+} = useStyle(service.TOKENS.TextStyle, props.id);
 
 
 </script>

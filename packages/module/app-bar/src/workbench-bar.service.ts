@@ -18,7 +18,7 @@ export class WorkbenchBarService {
     private source: Subject<WorkbenchBarItem[]>;
     constructor() {
         this.configs = [{
-            id: 'workbench',
+            id: 'editor',
             text: '设计工具',
             order: 10,
         }, {

@@ -1,5 +1,4 @@
 import { injectable } from '@cosmic/core/inversify';
-import { NodeService } from '../node.service';
 @injectable()
 export class BaseService<T extends Record<string, unknown> & {id: string}> {
 

@@ -47,5 +47,4 @@ export { default as lodash } from 'lodash';
 export { MColor, MTitle, MWidget, MStandardModal, MStandard, MDetailModal, MClolorWidget};
 
 export * from './use';
-
-export * from './service';
+export * as service from './service/index';
