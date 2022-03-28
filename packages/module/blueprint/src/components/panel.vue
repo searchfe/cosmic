@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref, watchEffect, h } from 'vue';
-import { Table, Card, Button, Space } from 'cosmic-vue';
-import EditableText from '../editable-text.vue';
+import { Table, Card, Button, Space, Input } from 'cosmic-vue';
+
+const emit = defineEmits(['update:data']);
+defineExpose({ save });
 
 const props = defineProps<{
     title: string
@@ -26,15 +28,21 @@ function createColumn(title: string, key: string) {
         title,
         key,
         render: (data: Record<string, any>, index: number) =>
-            h(EditableText, {
-                textComponent: h('span'),
+            h(Input, {
                 value: data[key],
-                onUpdateValue: (v) => {
+                onInput: ({ target }) => {
+                    const value = target.value;
                     isEditedRef.value = true;
-                    dataRef.value[index][key] = v;
+                    dataRef.value[index][key] = value;
+                    emit('update:data', [...dataRef.value]);
                 },
             }),
     };
+}
+
+function save() {
+    isEditedRef.value = false;
+    emit('update:data', [...dataRef.value]);
 }
 </script>
 
@@ -49,16 +57,21 @@ function createColumn(title: string, key: string) {
             :row-key="row => row.name"
             @on-update:checked-row-keys="v => checkedRowSizeRef = v.length"
         />
-        <template v-if="isEditedRef || checkedRowSizeRef" #footer>
-            <Space justify="space-between" :inline="false">
+        <template #footer>
+            <Space justify="space-between" :inline="false" size="sm">
                 <Space>
                     <Button @click="dataRef.push({ ...emptyData });">增加一行</Button>
-                    <Button :disabled="!checkedRowSizeRef">删除 {{ checkedRowSizeRef }} 行</Button>
+                    <Button
+                        v-if="checkedRowSizeRef"
+                        :disabled="!checkedRowSizeRef"
+                    >
+                        删除 {{ checkedRowSizeRef }} 行
+                    </Button>
                 </Space>
 
-                <Space>
+                <Space v-if="isEditedRef">
                     <Button @click="dataRef = [...oldDataRef]; isEditedRef = false;">取消</Button>
-                    <Button @click="isEditedRef = false">保存</Button>
+                    <Button @click="save">保存</Button>
                 </Space>
             </Space>
         </template>

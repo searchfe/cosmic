@@ -4,11 +4,8 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Construction: typeof import('./src/components/proposal/construction.vue')['default']
     EditableText: typeof import('./src/components/editable-text.vue')['default']
-    Panel: typeof import('./src/components/proposal/panel.vue')['default']
-    Property: typeof import('./src/components/proposal/property.vue')['default']
-    Variant: typeof import('./src/components/proposal/variant.vue')['default']
+    Panel: typeof import('./src/components/panel.vue')['default']
   }
 }
 
