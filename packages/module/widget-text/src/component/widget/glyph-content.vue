@@ -9,10 +9,9 @@ const props = withDefaults(defineProps<{
     textStyle?: TextStyle,
 }>(), {
     showLayout: true,
-    textStyle: {},
+    textStyle: () => ({} as unknown as TextStyle),
 });
 
-console.log(props.textStyle);
 
 const realStyle = reactive(props.textStyle);
 

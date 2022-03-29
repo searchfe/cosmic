@@ -1,39 +1,62 @@
 <script lang="ts" setup>
-import {ref} from 'vue';
-
+import {reactive} from 'vue';
 import InputText from './input-text.vue';
+import type { EffectStyle } from '@cosmic/core/parts';
 
-import {Shadow} from '../data';
+const props = withDefaults(defineProps<{
+    effectStyle: EffectStyle,
+}>(), {
+    effectStyle: () => ({}),
+});
 
-const inputData = ref(Shadow);
 
-const emits = defineEmits(['onInput']);
+const effectStyle = reactive(props.effectStyle);
 
-const onInput = (data) => {
-    emits('onInput', data);
-};
 </script>
 
 <template>
     <div :class="[$style['input-list'], 'flex items-center flex-wrap']">
-        <div
-            v-for="(val, key) in inputData"
-            :key="key"
-            :class="[$style['item']]"
-        >
+        <div :class="[$style['item']]">
             <InputText
-                :id="key"
                 :class="[$style['input']]"
-                :type="val.type"
-                :model="key"
-                :value="val.value"
-                @on-input="onInput"
+                :value="effectStyle.offset.x"
+                @on-input="(data) => effectStyle.offset.x = data.value"
             >
                 <template #prefix>
-                    <i-cosmic-x v-if="val.icon === 'x'" :class="[$style['icon']]" />
-                    <i-cosmic-y v-if="val.icon === 'y'" :class="[$style['icon']]" />
-                    <i-cosmic-fuzzy v-if="val.icon === 'fuzzy'" :class="[$style['icon']]" />
-                    <i-cosmic-expand v-if="val.icon === 'expand'" :class="[$style['icon']]" />
+                    <i-cosmic-x :class="[$style['icon']]" />
+                </template>
+            </InputText>
+        </div>
+        <div :class="[$style['item']]">
+            <InputText
+                :class="[$style['input']]"
+                :value="effectStyle.offset.y"
+                @on-input="(data) => effectStyle.offset.y = data.value"
+            >
+                <template #prefix>
+                    <i-cosmic-y :class="[$style['icon']]" />
+                </template>
+            </InputText>
+        </div>
+        <div :class="[$style['item']]">
+            <InputText
+                :class="[$style['input']]"
+                :value="effectStyle.blur"
+                @on-input="(data) => effectStyle.blur = data.value"
+            >
+                <template #prefix>
+                    <i-cosmic-fuzzy :class="[$style['icon']]" />
+                </template>
+            </InputText>
+        </div>
+        <div :class="[$style['item']]">
+            <InputText
+                :class="[$style['input']]"
+                :value="effectStyle.spread"
+                @on-input="(data) => effectStyle.spread = data.value"
+            >
+                <template #prefix>
+                    <i-cosmic-expand :class="[$style['icon']]" />
                 </template>
             </InputText>
         </div>

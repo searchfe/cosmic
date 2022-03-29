@@ -40,3 +40,7 @@ export { hasMixin } from 'ts-mixer';
 export { default as ChildrenMixin } from './mixin/children-mixin';
 
 export * from './style/text-style';
+export * from './style/fill-style';
+export * from './style/radius-style';
+export * from './style/effect-style';
+export * from './style/stroke-style';
