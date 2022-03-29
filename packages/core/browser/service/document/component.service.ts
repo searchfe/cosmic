@@ -10,6 +10,6 @@ export default class ComponentService {
         const components = useTeamComponents({
             team: '62400d235a1f0899ad341838',
         });
-        from(components.then(({ data }) => data.value!)).subscribe(this.components);
+        from(components.then(({ data }) => data.value!.components)).subscribe(this.components);
     }
 }
