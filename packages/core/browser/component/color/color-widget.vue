@@ -6,85 +6,77 @@ import MStandard from '../standard/standard.vue';
 import MStandardModal from '../modal/standard-modal.vue';
 import MDetailModal from '../modal/detail-modal.vue';
 import { usePropterty } from '../../use/use-property';
-
-const props = withDefaults(defineProps<{
-    standardList: any[],
-}>(), {
-    standardList: () => ([]),
-});
+import { service } from '@cosmic/core/browser';
 
 const content = ref(null);
 
-const {
-        isShowStandardModal,
-        isShowDetailModal,
-        isSelected,
-        selected,
-        detailTarget,
-        standardTarget,
 
-        cancelStandardModal,
-        cancelDetailModal,
-        selectStandard,
-        openDetaileModal,
-        openStandardModal,
-    } = usePropterty();
+const {
+    isStandard,
+    standard,
+    standardList,
+    isShowStandardModal,
+    isShowDetailModal,
+    detailTarget,
+    standardTarget,
+
+    cancelStandardModal,
+    cancelDetailModal,
+    selectStandard,
+    openDetaileModal,
+    openStandardModal,
+    getDetailEdit,
+    unRef,
+} = usePropterty(service.TOKENS.FillStyle);
+
+function text(standard) {
+     console.log(standard);
+}
 
 </script>
 
 <template>
     <div class="w-full">
-        <MTitle title="颜色">
-            <div
-                class="flex justify-between items-center w-30"
-            >
-                <i-cosmic-sun />
-                <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
-            </div>
-        </MTitle>
         <div ref="content">
-            <MColor v-if="!isSelected" />
+            <div
+                v-if="!isStandard" 
+            >
+                <m-title title="颜色">
+                    <div
+                        class="flex justify-between items-center w-30"
+                    >
+                        <i-cosmic-sun />
+                        <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
+                    </div>
+                </m-title>
+                <m-color
+                    :color-style="standard"
+                />
+            </div>
             <m-standard
                 v-else
                 classes="-v-bg-inapparent"
-                :standard="selected"
+                :standard="standard"
                 :can-edit="false"
                 @click="(event) => openStandardModal(event.event.currentTarget)"
             >
                 <!-- demo 样式 -->
-                <template #prefix>
-                    <slot
-                        name="prefix"
-                        :standard="selected"
-                    >
-                        <div :class="[$style['demo'], 'flex']">
-                            <div
-                                :class="[$style['demo-item'], 'flex items-center align-center']"
-                                :style="{backgroundColor: selected?.dayColor}"
-                            >
-                                <i-cosmic-question v-if="!selected?.dayColor" />
-                            </div>
-                            <div
-                                :class="[$style['demo-item'], 'flex items-center align-center']"
-                                :style="{backgroundColor: selected?.darkColor}"
-                            >
-                                <i-cosmic-question v-if="!selected?.darkColor" />
-                            </div>
-                            <div
-                                :class="[$style['demo-item'], 'flex items-center align-center']"
-                                :style="{backgroundColor: selected?.blackColor}"
-                            >
-                                <i-cosmic-question v-if="!selected?.blackColor" />
-                            </div>
+                <template #prefix="data">
+                    <div :class="[$style['demo'], 'flex']">
+                        <div
+                            :class="[$style['demo-item'], 'flex items-center align-center']"
+                            :style="{backgroundColor: `rgba(${data.standard?.color?.r}, ${data.standard?.color?.g}, ${data.standard?.color?.b}, 1)`}"
+                        >
+                            <i-cosmic-question v-if="!standard?.color" />
                         </div>
-                    </slot>
+                    </div>
                 </template>
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-between"
                     >
-                        <i-cosmic-more @click.stop="openDetaileModal(content, selected)" />
-                        <i-cosmic-link @click.stop="unSelectStandard" />
+                        <i-cosmic-more @click.stop="openDetaileModal(content, standard)" />
+                        <i-cosmic-lock @click.stop="unRef" />
                     </div>
                 </template>
             </m-standard>
@@ -94,51 +86,35 @@ const {
     <m-standard-modal
         v-if="isShowStandardModal"
         title="文字规范"
-        :standard-list="props.standardList"
+        :standard-list="standardList"
         :target="standardTarget"
         @cancel="cancelStandardModal"
         @select="(event) => selectStandard(event.data)"
-        @show-detail="openDetaileModal"
+        @show-detail="(event) => openDetaileModal(event.target, event.data)"
     >
         <!-- demo 样式 -->
-        <template #prefix="standard">
-            <slot
-                name="prefix"
-                :standard="standard.standard"
-            >
-                <div :class="[$style['demo'], 'flex']">
-                    <div
-                        :class="[$style['demo-item'], 'flex items-center align-center']"
-                        :style="{backgroundColor: standard?.standard?.dayColor}"
-                    >
-                        <i-cosmic-question v-if="!standard?.standard?.dayColor" />
-                    </div>
-                    <div
-                        :class="[$style['demo-item'], 'flex items-center align-center']"
-                        :style="{backgroundColor: standard?.standard?.darkColor}"
-                    >
-                        <i-cosmic-question v-if="!standard?.standard?.darkColor" />
-                    </div>
-                    <div
-                        :class="[$style['demo-item'], 'flex items-center align-center']"
-                        :style="{backgroundColor: standard?.standard?.blackColor}"
-                    >
-                        <i-cosmic-question v-if="!standard?.standard?.blackColor" />
-                    </div>
+        <template #prefix="data">
+            <div :class="[$style['demo'], 'flex']">
+                <div
+                    :class="[$style['demo-item'], 'flex items-center align-center']"
+                    :style="{backgroundColor: `rgba(${data.standard.color.r}, ${data.standard?.color?.g}, ${data.standard?.color?.b}, 1)`}"
+                    @mouseover="text(data)"
+                >
+                    <i-cosmic-question v-if="!data.standard?.color" />
                 </div>
-            </slot>
+            </div>
         </template>
     </m-standard-modal>
     <m-detail-modal
         v-if="isShowDetailModal"
         title="文字规范"
         :target="detailTarget"
-        :standard="selected"
+        :standard="getDetailEdit()"
         @cancel="cancelDetailModal"
         @ok="cancelDetailModal"
     >
         <div :class="$style['color-content']">
-            <MColor />
+            <m-color :color-style="getDetailEdit()" />
         </div>
     </m-detail-modal>
 </template>

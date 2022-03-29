@@ -57,6 +57,7 @@ export class BaseService<T extends Record<string, unknown> & {id: string}> {
     }
 
     public async addServiceStyle(style: T): Promise<T[]> {
+        
         this.serviceStyles.set(style.id, style);
         return style;
     }
@@ -92,7 +93,6 @@ export class BaseService<T extends Record<string, unknown> & {id: string}> {
     }
 
     public isLocalStyle(styleId: string) {
-        console.log(this.localStyles.has(styleId));
         return this.localStyles.has(styleId);
     }
 }

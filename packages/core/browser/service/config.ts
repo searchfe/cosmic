@@ -5,6 +5,10 @@ import { RouterService, type RouterServiceAPI } from './router/index.service';
 import NodeService from './document/node.service';
 import ComponentService from './document/component.service';
 import TextStyleService from './styles/text-style.service';
+import FillStyleService from './styles/fill-style.service';
+import RadiusStyleService from './styles/radius-style.service';
+import EffectStyleService from './styles/effect-style.service';
+import StrokeStyleService from './styles/stroke-style.service';
 
 
 /**
@@ -25,7 +29,10 @@ export function load(options: interfaces.ContainerOptions) {
 
     container.bind<NodeService>(TOKENS.Node).to(NodeService);
     container.bind<TextStyleService>(TOKENS.TextStyle).to(TextStyleService);
-
+    container.bind<FillStyleService>(TOKENS.FillStyle).to(FillStyleService);
+    container.bind<RadiusStyleService>(TOKENS.RadiusStyle).to(RadiusStyleService);
+    container.bind<EffectStyleService>(TOKENS.EffectStyle).to(EffectStyleService);
+    container.bind<StrokeStyleService>(TOKENS.StrokeStyle).to(StrokeStyleService);
     container.bind<ComponentService>(TOKENS.Component).to(ComponentService);
 
     return container;

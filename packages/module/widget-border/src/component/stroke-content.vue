@@ -1,6 +1,16 @@
 <script lang="ts" setup>
+import { reactive } from 'vue';
 import { Row, Col, Input, Select, SelectOption, RadioGroup, RadioButton } from 'cosmic-vue';
+import type { StrokeStyle } from '@cosmic/core/parts';
 import { Border } from '../data';
+const props = withDefaults(defineProps<{
+    strokeStyle: StrokeStyle
+}>(), {
+    strokeStyle: () => ({} as unknown as StrokeStyle),
+});
+
+const strokeStyle = reactive(props.strokeStyle);
+
 
 </script>
 
@@ -14,10 +24,11 @@ import { Border } from '../data';
                 <div class="w-70">
                     <Input
                         size="sm"
-                        :value="12"
+                        :value="strokeStyle.strokeWeight"
+                        @on-input="(event) => strokeStyle.strokeWeight = event.value"
                     >
                         <template #prefix>
-                            <i-cosmic-border />
+                            <i-cosmic-text-even />
                         </template>
                     </Input>
                 </div>
@@ -29,7 +40,8 @@ import { Border } from '../data';
                 <div class="w-80">
                     <Select
                         size="sm"
-                        value="1"
+                        :value="strokeStyle.strokeAlign"
+                        @on-change="(event) => strokeStyle.strokeAlign = event.value"
                     >
                         <SelectOption
                             v-for="data of Border"
@@ -49,7 +61,8 @@ import { Border } from '../data';
                 <div class="w-70">
                     <Input
                         size="sm"
-                        :value="12"
+                        :value="strokeStyle.dashPattern"
+                        @on-input="(event) => strokeStyle.dashPattern = event.value"
                     >
                         <template #prefix>
                             <i-cosmic-border />
@@ -64,7 +77,8 @@ import { Border } from '../data';
                 <div class="w-70">
                     <Input
                         size="sm"
-                        :value="12"
+                        :value="strokeStyle.solidPattern"
+                        @on-input="(event) => strokeStyle.solidPattern = event.value"
                     >
                         <template #prefix>
                             <i-cosmic-horizonal-width />
@@ -75,18 +89,15 @@ import { Border } from '../data';
             <Col :span="6">
                 <RadioGroup>
                     <RadioButton value="1">
-                        <i-cosmic-text-left :class="$style['radio-icon']" />
+                        <i-cosmic-inner-point :class="$style['radio-icon']" />
                     </RadioButton>
 
                     <RadioButton value="2">
-                        <i-cosmic-text-center :class="$style['radio-icon']" />
+                        <i-cosmic-circleend :class="$style['radio-icon']" />
                     </RadioButton>
 
                     <RadioButton value="3">
-                        <i-cosmic-text-right :class="$style['radio-icon']" />
-                    </RadioButton>
-                    <RadioButton value="4">
-                        <i-cosmic-text-even :class="$style['radio-icon']" />
+                        <i-cosmic-endpoint :class="$style['radio-icon']" />
                     </RadioButton>
                 </RadioGroup>
             </Col>
