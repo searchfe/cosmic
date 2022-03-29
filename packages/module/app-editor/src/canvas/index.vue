@@ -126,6 +126,7 @@ function onChange(e: any) {
 
 .container {
     background: var(--color-white);
+    cursor: default;
 }
 
 </style>
