@@ -1,31 +1,29 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
 import { Dialog, Button, Input } from 'cosmic-vue';
-import { buttonSolid } from 'cosmic-ui';
+import { buttonSolid, buttonLight } from 'cosmic-ui';
 import { router as vueRouter } from '@cosmic/core/browser';
 
-withDefaults(defineProps<{ title: string, visible: boolean }>(), {
-    title: '', visible: false,
+withDefaults(defineProps<{ title: string, visible: boolean, name: string, editMode: boolean }>(), {
+    title: '',
+    visible: false,
+    name: '',
+    editMode: false,
 });
 
 const team = vueRouter.useRoute().query?.team;
 
-const name = ref('');
-
-
-const emits = defineEmits(['ok', 'update:visible']);
+const emits = defineEmits(['ok', 'update:visible', 'update:name']);
 
 function onCancel() {
-    name.value = '';
+    emits('update:name', '');
     onUpdateVisible(false);
 }
 
 function onOK() {
-    emits('ok', { name: name.value, team });
+    emits('ok', { team });
 }
 
 function onAdd() {
-    name.value = '';
     onUpdateVisible(true);
 }
 
@@ -33,12 +31,19 @@ function onUpdateVisible(value: boolean) {
     emits('update:visible', value);
 }
 
+function onUpdateName(data: {value: string}) {
+    emits('update:name', data.value);
+}
+
 </script>
 
 <template>
     <div :class="$style.container">
-        <div :class="$style.add" class="flex justify-center items-center" @click.stop="onAdd">
+        <div v-if="!editMode" :class="$style.add" class="flex justify-center items-center" @click.stop="onAdd">
             <i-cosmic-plus class="text-md" />
+        </div>
+        <div v-else class="flex justify-center items-center text-md" @click.stop="onAdd">
+            <Button size="lg" :styles="buttonLight">编辑</Button>
         </div>
         <Dialog
             :visible="visible"
@@ -54,7 +59,7 @@ function onUpdateVisible(value: boolean) {
                 <div :class="$style['title-label']">
                     名称
                 </div>
-                <Input v-model:value="name" size="sm" placeholder="起个名字吧" />
+                <Input :value="name" size="sm" placeholder="起个名字吧" @on-input="onUpdateName" />
             </div>
             <div class="py-6 mb-20">
                 <slot />
@@ -102,6 +107,13 @@ function onUpdateVisible(value: boolean) {
     border-radius: 4px;
     background: #f5f5f5;
 }
+
+.edit {
+    width: 90px;
+    height: 36px;
+    background: #d8d8d8;
+}
+
 .close {
     position: absolute;
     right: 17px;

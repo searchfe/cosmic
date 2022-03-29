@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ref, watchEffect, toRaw } from 'vue';
+import { ref, watchEffect, toRaw, watch } from 'vue';
 import { Input } from 'cosmic-vue';
-import { createUnique } from '../../../api/color';
+import { createUnique, update } from '../../../api/color';
 import Dialog from '../common.vue';
 import { color } from '@cosmic/core/browser';
 import ColorCell from '../../cell/color.vue';
@@ -9,21 +9,41 @@ import ColorCell from '../../cell/color.vue';
 import type { AtomType } from '../../../types';
 
 
-const { executeMutation: save } = createUnique(['id']);
+const { executeMutation: createColor } = createUnique(['id']);
+const { executeMutation: updateColor } = update();
 
 interface AtomModal {
     atomType: AtomType;
+    name: string;
     id: string;
+    day: string;
+    night: string;
+    dark: string;
 }
 
-withDefaults(defineProps<AtomModal>(), {
+const props = withDefaults(defineProps<AtomModal>(), {
     id: '',
-});
-
-const data = ref({
+    name: '',
     day: '',
     night: '',
     dark: '',
+});
+
+// 输入框双向绑定
+const data = ref({
+    name: '',
+    day: '',
+    night: '',
+    dark: '',
+});
+
+watch(() => [props.id, props.name, props.dark, props.night, props.day], () => {
+    data.value = {
+        name: props.name,
+        day: props.day ? props.day.substring(1) : props.day,
+        night: props.night ? props.night.substring(1) : props.night,
+        dark: props.dark ? props.dark.substring(1) : props.dark,
+    };
 });
 
 const exsistingData = ref<Partial<gql.Color>[]>([]);
@@ -42,27 +62,28 @@ watchEffect(() => {
 
 const emits = defineEmits(['success']);
 
-function onOK(args: { name: string, team: string }) {
-    if (!args.name) {
+function onOK(args: { team: string }) {
+    const { day, night, dark, name} = toRaw(data.value);
+    if (!name) {
         alert('请输入名字');
         return;
     }
-    const { day, night, dark } = toRaw(data.value);
     const newColor = {
+        name,
         day: day ? color(`#${day}`).hex() : '',
         night: night ? color(`#${night}`).hex() : '',
         dark: dark ? color(`#${dark}`).hex() : '',
     };
-    save({
-        data: {
-            ...args,
-            ...newColor,
-        },
-        filter: {
-            ...newColor,
-        },
-    }).then(res => {
-        if (res.data?.createUniqueColor?.id) {
+    const queryData = {
+        ...args,
+        ...newColor,
+    };
+    const operation = props.id ? updateColor({ data: { ...queryData, id: props.id} }) : createColor({
+        data: queryData,
+        filter: newColor,
+    });
+    operation.then(res => {
+        if (res.data) {
             emits('success');
             showDialog.value = false;
         } else {
@@ -76,9 +97,14 @@ function onOK(args: { name: string, team: string }) {
 }
 </script>
 <template>
-    <Dialog v-model:visible="showDialog" title="新建颜色" @ok="onOK">
+    <Dialog
+        v-model:visible="showDialog"
+        v-model:name="data.name"
+        :title="id ? '编辑颜色' : '新建颜色'"
+        :edit-mode="id !== ''"
+        @ok="onOK"
+    >
         <div :class="$style.container">
-            <!-- day -->
             <i-cosmic-sun class="text-lg" />
             <div :style="{ background: backgroundDay }" :class="$style.color" />
             <div>
