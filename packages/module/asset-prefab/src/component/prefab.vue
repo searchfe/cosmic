@@ -32,7 +32,6 @@
             </div>
         </div>
         <div v-show="hovering" :class="[styles['yz-tootip'], styles['yz-card-title']]">{{ props.yzdata.title }}</div>
-        <div :class="[styles['yz-tootip'], styles['yz-card-title']]">{{ props.yzdata.title }}</div>
     </div>
 </template>
 <script setup lang="ts">
