@@ -4,4 +4,5 @@ export const TOKENS = {
     Node: Symbol.for('NodeService'),
     TextStyle: Symbol.for('TextStyleService'),
     Component: Symbol.for('ComponentService'),
+    Keyboard: Symbol.for('KeyboardService'),
 };

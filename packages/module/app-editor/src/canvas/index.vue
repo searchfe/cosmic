@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { service } from '@cosmic/core/browser';
+import { inject } from '@cosmic/core/parts';
 import { ref, onMounted } from 'vue';
 import WidgetGuides from 'vue-guides';
 import { Gesturer } from './gesturer';
@@ -12,7 +14,13 @@ const guideVertical = ref();
 const gesturer = new Gesturer({
     content, wrapper,
     scrollX: guideHorizontal,
-    scrollY: guideVertical});
+    scrollY: guideVertical,
+});
+
+const keyboardService = inject<service.KeyboardService>(service.TOKENS.Keyboard);
+
+keyboardService.keydown('Space').subscribe(() => gesturer.enableDrag());
+keyboardService.keyup('Space').subscribe(() => gesturer.disableDrag());
 
 
 const box = ref();
@@ -26,11 +34,6 @@ function onChange(e: any) {
 }
 </script>
 <template>
-    <!-- <div ref="gesturer" :class="$style.canvas" :style="{cursor: 'grabbing'}">
-        <div ref="content" class="ease-in-out cursor-default inline-block">
-            <div class="w-32 h-32" :style="{ background: 'red' }" />
-        </div>
-    </div>-->
     <div ref="wrapper" class="relative w-full h-full overflow-hidden canvas">
         <div ref="box" class="box" @click="() => gesturer.moveToStart()" />
         <div class="ruler horizontal">
