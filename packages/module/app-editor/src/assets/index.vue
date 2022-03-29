@@ -13,8 +13,8 @@ function change(opt: Ref<string>) {
             <TabPane class="mx-2" label="组件" value="1" />
             <TabPane class="mx-2" label="预制" value="2" />
         </Tabs>
-        <m-component :hidden="activeIdx != '0'" src="@cosmic-module/asset-layer" />
-        <m-component :hidden="activeIdx != '1'" src="@cosmic-module/asset-component" />
-        <m-component :hidden="activeIdx != '2'" src="@cosmic-module/asset-prefab" />
+        <m-component :hidden="activeIdx != '0'" src="@cosmic-module/asset-layer" class="h-full" />
+        <m-component :hidden="activeIdx != '1'" src="@cosmic-module/asset-component" class="h-full" />
+        <m-component :hidden="activeIdx != '2'" src="@cosmic-module/asset-prefab" class="h-full" />
     </div>
 </template>

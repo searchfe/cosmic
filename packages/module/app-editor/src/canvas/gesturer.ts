@@ -41,7 +41,7 @@ export class Gesturer {
         useWheel(({ movement: [x, y], wheeling }) => {
             this.wheeling = wheeling;
             if (!this._enableWhile) return;
-            this.delta({ x, y, cursor: wheeling ? 'grabbing': 'default', end: !wheeling });
+            this.delta({ x: x * -1, y: y * -1, cursor: wheeling ? 'grabbing': 'default', end: !wheeling });
         }, { domTarget: this.wrapper });
     }
     delta(option: SetOption) {

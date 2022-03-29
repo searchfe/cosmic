@@ -41,6 +41,7 @@ body {
     height: 100%;
     width: 100%;
     overflow: hidden;
+    overscroll-behavior-x: none;
 }
 /** wait for add */
 :root {
