@@ -23,13 +23,20 @@ interface ProjectOptions {
 const designTree = [{
     id: '',
     label: '设计资产',
-    children: [{
-        id: 'atom',
-        label: '原子',
-    }, {
-        id: 'component',
-        label: '组件',
-    }],
+    children: [
+        {
+            id: 'atom',
+            label: '原子',
+        },
+        {
+            id: 'component',
+            label: '组件',
+        },
+        {
+            id: 'prefab',
+            label: '预制',
+        },
+    ],
 }];
 
 const props = withDefaults(defineProps<ProjectOptions>(), {
@@ -46,7 +53,7 @@ const props = withDefaults(defineProps<ProjectOptions>(), {
 
 const emits = defineEmits(['add-project']);
 
-function onToggleProject (data: { id: string}) {
+function onToggleProject(data: { id: string }) {
     const { id: project } = data;
     if (project) {
         router.push({ name: 'project:detail', query: { project, team: props.team } });
@@ -69,8 +76,19 @@ function onAddProject(data: { id: string }) {
 
 <template>
     <div class="mx-10">
-        <r-tree size="sm" :styles="treeSecondary" :data="designTree" @click-node="onToggleDesignTree" />
-        <r-tree size="sm" :styles="treeSecondary" :data="[data]" @click-node="onToggleProject" @click-subfix="onAddProject">
+        <r-tree
+            size="sm"
+            :styles="treeSecondary"
+            :data="designTree"
+            @click-node="onToggleDesignTree"
+        />
+        <r-tree
+            size="sm"
+            :styles="treeSecondary"
+            :data="[data]"
+            @click-node="onToggleProject"
+            @click-subfix="onAddProject"
+        >
             <template #subfix>
                 <i-cosmic-plus />
             </template>
