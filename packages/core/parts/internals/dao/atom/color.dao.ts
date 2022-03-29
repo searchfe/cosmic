@@ -1,14 +1,13 @@
-import { urql } from '@cosmic/core/browser';
+import { useQuery, useMutation } from '@urql/vue';
 
 
-const { useQuery, useMutation  } = urql;
-
-export function query(query: gql.QueryColorDTO, fields: string[] = []) {
-    return useQuery<{ colors: Partial<gql.Color>[] }, gql.QueryColorDTO>({
+export function query(schema: string, query: gql.QueryColorDTO, fields: string[]) {
+    const projection = fields || ['id', 'name', 'day', 'night', 'dark'];
+    return useQuery<Partial<gql.Color>, gql.QueryColorDTO>({
         query: `query ($fields: [String!], $query: QueryColorDTO) {
             colors(fields: $fields, query: $query) {
                 id,
-                ${fields.join(',')}
+                ${projection.join(',')}
             }
         }`,
         variables: query,
@@ -16,8 +15,8 @@ export function query(query: gql.QueryColorDTO, fields: string[] = []) {
     });
 }
 
-export function create(fields: string[] = []) {
-    return useMutation<{ createColor: Partial<gql.Color> }, { data: gql.CreateColorDTO }>(
+export function create(schema: string, fields: string[] = ['id']) {
+    return useMutation<Partial<gql.Color>, { data: gql.CreateColorDTO }>(
         `mutation ($data: CreateColorDTO!) {
             createColor(data: $data) {
                 id,
@@ -27,7 +26,7 @@ export function create(fields: string[] = []) {
     );
 }
 
-export function createUnique(fields: string[] = []) {
+export function createUnique(schema: string, fields: string[] = ['id']) {
     return useMutation<
         { createUniqueColor: Partial<gql.Color> },
         { data: gql.CreateColorDTO, filter: gql.QueryColorDTO }

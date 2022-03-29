@@ -16,26 +16,79 @@ export interface QueryProjectDTO {
 }
 
 export interface QueryColorDTO {
-    id?: Nullable<string>;
+    name?: Nullable<string>;
     team?: Nullable<string>;
     day?: Nullable<string>;
     night?: Nullable<string>;
     dark?: Nullable<string>;
-}
-
-export interface QueryBaseDTO {
     id?: Nullable<string>;
+}
+
+export interface QueryFontDTO {
+    name?: Nullable<string>;
     team?: Nullable<string>;
+    style?: Nullable<string>;
+    variant?: Nullable<string>;
+    weight?: Nullable<string>;
+    size?: Nullable<string>;
+    lineHeight?: Nullable<string>;
+    family?: Nullable<string>;
+    id?: Nullable<string>;
+}
+
+export interface QueryShadowDTO {
+    name?: Nullable<string>;
+    team?: Nullable<string>;
+    type?: Nullable<string>;
+    offsetX?: Nullable<string>;
+    offsetY?: Nullable<string>;
+    blur?: Nullable<string>;
+    spread?: Nullable<string>;
+    color?: Nullable<string>;
+    id?: Nullable<string>;
+}
+
+export interface QueryBorderDTO {
+    name?: Nullable<string>;
+    team?: Nullable<string>;
+    top?: Nullable<BorderItemInput>;
+    right?: Nullable<BorderItemInput>;
+    bottom?: Nullable<BorderItemInput>;
+    left?: Nullable<BorderItemInput>;
+    id?: Nullable<string>;
+}
+
+export interface BorderItemInput {
+    weight: string;
+    style: string;
+}
+
+export interface QueryCornerDTO {
+    name?: Nullable<string>;
+    team?: Nullable<string>;
+    tl?: Nullable<string[]>;
+    tr?: Nullable<string[]>;
+    bl?: Nullable<string[]>;
+    br?: Nullable<string[]>;
+    id?: Nullable<string>;
+}
+
+export interface QueryOpacityDTO {
+    name?: Nullable<string>;
+    team?: Nullable<string>;
+    opacity?: Nullable<number>;
+    id?: Nullable<string>;
 }
 
 export interface QueryComponentDTO {
-    team: string;
-    name: string;
+    team?: Nullable<string>;
+    name?: Nullable<string>;
 }
 
-export interface QueryComponentDTO {
-    team: string;
-    name: string;
+export interface QueryDraftDTO {
+    name?: Nullable<string>;
+    team?: Nullable<string>;
+    id?: Nullable<string>;
 }
 
 export interface CreateUserDTO {
@@ -101,7 +154,7 @@ export interface CreateLevelDTO {
 export interface CreateItemDTO {
     name: string;
     imgs?: Nullable<string[]>;
-    f?: Nullable<string>;
+    text?: Nullable<string>;
     info?: Nullable<string>;
     meta?: Nullable<string>;
 }
@@ -156,11 +209,6 @@ export interface CreateBorderDTO {
     left: BorderItemInput;
 }
 
-export interface BorderItemInput {
-    weight: string;
-    style: string;
-}
-
 export interface CreateCornerDTO {
     name: string;
     team: string;
@@ -204,6 +252,11 @@ export interface CreateVariant {
     type: string;
     defaultValue: string;
     desc: string;
+}
+
+export interface CreateDraftDTO {
+    name: string;
+    team: string;
 }
 
 export interface User {
@@ -361,6 +414,12 @@ export interface Component {
     variants: Variant[];
 }
 
+export interface Draft {
+    id: string;
+    name: string;
+    team: string;
+}
+
 export interface IQuery {
     user(id: string): User | Promise<User>;
     team(id: string): Team | Promise<Team>;
@@ -376,17 +435,19 @@ export interface IQuery {
     getColor(fields?: Nullable<string[]>, id: string): Nullable<Color> | Promise<Nullable<Color>>;
     colors(fields?: Nullable<string[]>, query?: Nullable<QueryColorDTO>): Color[] | Promise<Color[]>;
     getFont(fields?: Nullable<string[]>, id: string): Nullable<Font> | Promise<Nullable<Font>>;
-    fonts(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Font[] | Promise<Font[]>;
+    fonts(fields?: Nullable<string[]>, query?: Nullable<QueryFontDTO>): Font[] | Promise<Font[]>;
     getShadow(fields?: Nullable<string[]>, id: string): Nullable<Shadow> | Promise<Nullable<Shadow>>;
-    shadows(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Shadow[] | Promise<Shadow[]>;
+    shadows(fields?: Nullable<string[]>, query?: Nullable<QueryShadowDTO>): Shadow[] | Promise<Shadow[]>;
     getBorder(fields?: Nullable<string[]>, id: string): Nullable<Border> | Promise<Nullable<Border>>;
-    borders(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Border[] | Promise<Border[]>;
+    borders(fields?: Nullable<string[]>, query?: Nullable<QueryBorderDTO>): Border[] | Promise<Border[]>;
     getCorner(fields?: Nullable<string[]>, id: string): Nullable<Corner> | Promise<Nullable<Corner>>;
-    corners(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Corner[] | Promise<Corner[]>;
+    corners(fields?: Nullable<string[]>, query?: Nullable<QueryCornerDTO>): Corner[] | Promise<Corner[]>;
     getOpacity(fields?: Nullable<string[]>, id: string): Nullable<Opacity> | Promise<Nullable<Opacity>>;
-    opacitys(fields?: Nullable<string[]>, query?: Nullable<QueryBaseDTO>): Opacity[] | Promise<Opacity[]>;
+    opacitys(fields?: Nullable<string[]>, query?: Nullable<QueryOpacityDTO>): Opacity[] | Promise<Opacity[]>;
     getComponent(fields?: Nullable<string[]>, id: string): Nullable<Component> | Promise<Nullable<Component>>;
     components(fields?: Nullable<string[]>, query?: Nullable<QueryComponentDTO>): Component[] | Promise<Component[]>;
+    getDraft(fields?: Nullable<string[]>, id: string): Nullable<Draft> | Promise<Nullable<Draft>>;
+    drafts(fields?: Nullable<string[]>, query?: Nullable<QueryDraftDTO>): Draft[] | Promise<Draft[]>;
 }
 
 export interface ProjectPlus {
@@ -418,29 +479,33 @@ export interface IMutation {
     updateColor(data: CreateColorDTO): Color | Promise<Color>;
     deleteColor(id: string): Color | Promise<Color>;
     createFont(data: CreateFontDTO): Font | Promise<Font>;
-    createUniqueFont(filter: QueryBaseDTO, data: CreateFontDTO): Font | Promise<Font>;
+    createUniqueFont(filter: QueryFontDTO, data: CreateFontDTO): Font | Promise<Font>;
     updateFont(data: CreateFontDTO): Font | Promise<Font>;
     deleteFont(id: string): Font | Promise<Font>;
     createShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
-    createUniqueShadow(filter: QueryBaseDTO, data: CreateShadowDTO): Shadow | Promise<Shadow>;
+    createUniqueShadow(filter: QueryShadowDTO, data: CreateShadowDTO): Shadow | Promise<Shadow>;
     updateShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
     deleteShadow(id: string): Shadow | Promise<Shadow>;
     createBorder(data: CreateBorderDTO): Border | Promise<Border>;
-    createUniqueBorder(filter: QueryBaseDTO, data: CreateBorderDTO): Border | Promise<Border>;
+    createUniqueBorder(filter: QueryBorderDTO, data: CreateBorderDTO): Border | Promise<Border>;
     updateBorder(data: CreateBorderDTO): Border | Promise<Border>;
     deleteBorder(id: string): Border | Promise<Border>;
     createCorner(data: CreateCornerDTO): Corner | Promise<Corner>;
-    createUniqueCorner(filter: QueryBaseDTO, data: CreateCornerDTO): Corner | Promise<Corner>;
+    createUniqueCorner(filter: QueryCornerDTO, data: CreateCornerDTO): Corner | Promise<Corner>;
     updateCorner(data: CreateCornerDTO): Corner | Promise<Corner>;
     deleteCorner(id: string): Corner | Promise<Corner>;
     createOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
-    createUniqueOpacity(filter: QueryBaseDTO, data: CreateOpacityDTO): Opacity | Promise<Opacity>;
+    createUniqueOpacity(filter: QueryOpacityDTO, data: CreateOpacityDTO): Opacity | Promise<Opacity>;
     updateOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
     deleteOpacity(id: string): Opacity | Promise<Opacity>;
     createComponent(data: CreateComponentDTO): Component | Promise<Component>;
     createUniqueComponent(filter: QueryComponentDTO, data: CreateComponentDTO): Component | Promise<Component>;
     updateComponent(data: CreateComponentDTO): Component | Promise<Component>;
     deleteComponent(id: string): Component | Promise<Component>;
+    createDraft(data: CreateDraftDTO): Draft | Promise<Draft>;
+    createUniqueDraft(filter: QueryDraftDTO, data: CreateDraftDTO): Draft | Promise<Draft>;
+    updateDraft(data: CreateDraftDTO): Draft | Promise<Draft>;
+    deleteDraft(id: string): Draft | Promise<Draft>;
 }
 
 export interface ISubscription {
@@ -451,6 +516,7 @@ export interface ISubscription {
     onCornerCreate(): Corner | Promise<Corner>;
     onOpacityCreate(): Opacity | Promise<Opacity>;
     onComponentCreate(): Component | Promise<Component>;
+    onDraftCreate(): Draft | Promise<Draft>;
 }
 
 type Nullable<T> = T | null;
