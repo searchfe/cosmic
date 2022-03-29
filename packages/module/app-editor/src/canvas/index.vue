@@ -26,11 +26,6 @@ function onChange(e: any) {
 }
 </script>
 <template>
-    <!-- <div ref="gesturer" :class="$style.canvas" :style="{cursor: 'grabbing'}">
-        <div ref="content" class="ease-in-out cursor-default inline-block">
-            <div class="w-32 h-32" :style="{ background: 'red' }" />
-        </div>
-    </div>-->
     <div ref="wrapper" class="relative w-full h-full overflow-hidden canvas">
         <div ref="box" class="box" @click="() => gesturer.moveToStart()" />
         <div class="ruler horizontal">
@@ -123,6 +118,7 @@ function onChange(e: any) {
 
 .container {
     background: var(--color-white);
+    cursor: default;
 }
 
 </style>
