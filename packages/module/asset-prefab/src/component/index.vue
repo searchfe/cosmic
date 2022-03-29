@@ -1,33 +1,33 @@
 <script lang="ts" setup>
 import { Cascader, Row, Col, Popover, Card, Input } from 'cosmic-vue';
 import { ref } from 'vue';
-import Yuzhi from './prefab.vue';
+import Prefab from './prefab.vue';
 import styles from './prefab.module.css';
 
 const yuzhiList = {
     localYz: [{
-        state: 'yz-new',
+        state: 'prefab-new',
         title: '预置1',
     },
     {
-        state: 'yz-repeat',
+        state: 'prefab-repeat',
         title: '预置2',
     },
     {
-        state: 'yz-regular',
+        state: 'prefab-regular',
         title: '预置3',
     },
     ],
     regularYz:[{
-        state: 'yz-new',
+        state: 'prefab-new',
         title: '预置1',
     },
     {
-        state: 'yz-repeat',
+        state: 'prefab-repeat',
         title: '预置2',
     },
     {
-        state: 'yz-regular',
+        state: 'prefab-regular',
         title: '预置3',
     },
     ],
@@ -62,39 +62,39 @@ const value = ref('');
 </script>
 <template>
     <div>
-        <div :class="[styles['yz-search']]">
+        <div :class="[styles['prefab-search']]">
             <Input
                 v-model:value="value"
                 size="sm"
                 placeholder="搜索"
             >
                 <template #prefix>
-                    <i-cosmic-caution :class="[styles['yz-icon']]" />
+                    <i-cosmic-caution :class="[styles['prefab-icon']]" />
                 </template>
             </Input>
         </div>
-        <div :class="[styles['yz-module']]">
-            <div :class="[styles['yz-title']]" class="font-bold text-sm mt-16">
-                <span :class="[styles['yz-title-icon']]"><i-cosmic-arrow-down /></span>
+        <div :class="[styles['prefab-module']]">
+            <div :class="[styles['prefab-title']]" class="font-bold text-sm mt-16">
+                <span :class="[styles['prefab-title-icon']]"><i-cosmic-arrow-down /></span>
                 <span>文档使用预制</span>
             </div>
                 
-            <div :class="[styles['yz-container']]">
-                <yuzhi v-for="(item, i) in yuzhiList.localYz" :key="i" :yzdata="item" :class="[styles['yz-content']]">
+            <div :class="[styles['prefab-container']]">
+                <prefab v-for="(item, i) in yuzhiList.localYz" :key="i" :yzdata="item" :class="[styles['prefab-content']]">
                     <template #iconLeft="props">
                         <i-cosmic-comp :class="props.class" />
                     </template>
                     <template #iconRight="props">
                         <i-cosmic-more :class="props.class" />
                     </template>
-                </yuzhi>
+                </prefab>
             </div>
             <div>
-                <div :class="[styles['yz-title']]" class="font-bold text-sm mt-16">
-                    <span :class="[styles['yz-title-icon']]"><i-cosmic-arrow-down /></span>
+                <div :class="[styles['prefab-title']]" class="font-bold text-sm mt-16">
+                    <span :class="[styles['prefab-title-icon']]"><i-cosmic-arrow-down /></span>
                     <span>业务规范预制</span>
                 </div>
-                <Row :class="[styles['yz-bus-filter']]">
+                <Row :class="[styles['prefab-bus-filter']]">
                     <Col>
                         <Cascader
                             v-model:source="source"
@@ -103,51 +103,51 @@ const value = ref('');
                             @update:selected="fn"
                         />
                     </Col>
-                    <Col :class="[styles['yz-filter-container']]">
+                    <Col :class="[styles['prefab-filter-container']]">
                         <Popover placement="bottomRight">
-                            <div :class="[styles['yz-filter']]">
+                            <div :class="[styles['prefab-filter']]">
                                 <i-cosmic-more />
                             </div>
                             <template #content>
-                                <Card title="筛选组件" :class="[styles['yz-filter-content']]">
-                                    <div :class="[styles['yz-filter-list']]">
-                                        <div :class="[styles['yz-filter-smart']]">
+                                <Card title="筛选组件" :class="[styles['prefab-filter-content']]">
+                                    <div :class="[styles['prefab-filter-list']]">
+                                        <div :class="[styles['prefab-filter-smart']]">
                                             <p>智能组件</p>
-                                            <div :class="[styles['yz-filter-components']]">
-                                                <span :class="[styles['yz-filter-tag']]">输入框</span>
-                                                <span :class="[styles['yz-filter-tag']]">输入框</span>
-                                                <span :class="[styles['yz-filter-tag']]">输入框</span>
-                                                <span :class="[styles['yz-filter-tag']]">输入框</span>
-                                                <span :class="[styles['yz-filter-tag']]">输入框</span>
-                                                <span :class="[styles['yz-filter-tag']]">输入框</span>
-                                                <span :class="[styles['yz-filter-tag']]">输入框</span>
-                                                <span :class="[styles['yz-filter-tag']]">输入框</span>
-                                                <span :class="[styles['yz-filter-tag']]">输入框</span>
+                                            <div :class="[styles['prefab-filter-components']]">
+                                                <span :class="[styles['prefab-filter-tag']]">输入框</span>
+                                                <span :class="[styles['prefab-filter-tag']]">输入框</span>
+                                                <span :class="[styles['prefab-filter-tag']]">输入框</span>
+                                                <span :class="[styles['prefab-filter-tag']]">输入框</span>
+                                                <span :class="[styles['prefab-filter-tag']]">输入框</span>
+                                                <span :class="[styles['prefab-filter-tag']]">输入框</span>
+                                                <span :class="[styles['prefab-filter-tag']]">输入框</span>
+                                                <span :class="[styles['prefab-filter-tag']]">输入框</span>
+                                                <span :class="[styles['prefab-filter-tag']]">输入框</span>
                                             </div>
                                         </div>
-                                        <div :class="[styles['yz-filter-type']]">
+                                        <div :class="[styles['prefab-filter-type']]">
                                             <p>类型</p>
-                                            <div :class="[styles['yz-filter-components']]">
-                                                <span :class="[styles['yz-filter-tag']]">基础</span>
-                                                <span :class="[styles['yz-filter-tag']]">复合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
-                                                <span :class="[styles['yz-filter-tag']]">组合</span>
+                                            <div :class="[styles['prefab-filter-components']]">
+                                                <span :class="[styles['prefab-filter-tag']]">基础</span>
+                                                <span :class="[styles['prefab-filter-tag']]">复合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
+                                                <span :class="[styles['prefab-filter-tag']]">组合</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div :class="[styles['yz-filter-btn']]">
-                                        <span :class="[styles['yz-filter-tag']]">重置</span>
-                                        <span :class="[styles['yz-filter-tag'],styles['yz-filter-close']]">收起</span>
+                                    <div :class="[styles['prefab-filter-btn']]">
+                                        <span :class="[styles['prefab-filter-tag']]">重置</span>
+                                        <span :class="[styles['prefab-filter-tag'],styles['prefab-filter-close']]">收起</span>
                                     </div>
                                 </Card>
                             </template>
@@ -155,12 +155,12 @@ const value = ref('');
                     </Col>
                 </Row>
             
-                <div :class="[styles['yz-container']]">
-                    <yuzhi v-for="(item, i) in yuzhiList.regularYz" :key="i" :yzdata="item" :class="[styles['yz-content']]">
+                <div :class="[styles['prefab-container']]">
+                    <prefab v-for="(item, i) in yuzhiList.regularYz" :key="i" :yzdata="item" :class="[styles['prefab-content']]">
                         <template #iconRight="props">
                             <i-cosmic-more :class="props.class" />
                         </template>
-                    </yuzhi>
+                    </prefab>
                 </div>
             </div>
         </div>
