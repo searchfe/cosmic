@@ -1,24 +1,29 @@
 <template>
-    <Card 
-        :class="[yzClick]" 
+    <div 
+        :class="[styles['yz-card-container'], yzClick]" 
         @mouseenter="onContententer"
         @mouseleave="onContentLeave"
         @click="onContentClick"
     >
-        <div class="yz-card">
-            <div :class="[styles['dc-yz'], hovering]">
-                <section v-if="slots.iconLeft" :class="[styles['header-icon'], props.yzdata.state, (hovering || yzClick) ? size : '']">
-                    <slot name="iconLeft" />
-                </section>
+        <div :class="[styles['yz-card']]">
+            <div :class="[hovering && props.yzdata.state !== 'yz-regular' ? hovering: '']">
+                <Popover placement="bottom">
+                    <section v-if="slots.iconLeft" :class="[styles['header-icon'], props.yzdata.state, size]">
+                        <slot name="iconLeft" />
+                    </section>
+                    <template #content>
+                        <div :class="[styles['yz-tootip']]" class="ope-regular">加入规范</div>
+                    </template>
+                </Popover>
             </div>
-            <div class="menu">
+            <div :class="[hovering]" class="menu">
                 <Menu
                     :size="state"
                     value="2"
                     @on-change="menuChangeHandler"
                 >
                     <template #activator>
-                        <section v-if="slots.iconRight" :class="[styles['header-icon'], (hovering || yzClick) ? size : '']">
+                        <section v-if="slots.iconRight" :class="[styles['header-icon'], size]">
                             <slot name="iconRight" />
                         </section>
                     </template>
@@ -26,11 +31,12 @@
                 </Menu>
             </div>
         </div>
-    </Card>
+        <div v-show="hovering" :class="[styles['yz-tootip'], styles['yz-card-title']]">{{ props.yzdata.title }}</div>
+    </div>
 </template>
 <script setup lang="ts">
 import { ref, useSlots } from 'vue';
-import { Card, Menu, MenuOption } from 'cosmic-vue';
+import { Menu, MenuOption, Popover } from 'cosmic-vue';
 import styles from './prefab.module.css';
 
 interface Yzdata {
@@ -89,9 +95,10 @@ const opeSelect = ref([{
 ]);
 </script>
 <style scoped>
-    .yz-card {
-        display: flex;
-        place-content: flex-start space-between;
+    
+    .ope-regular {
+        width: 60px;
+        padding: 2px;
     }
 </style>
 
