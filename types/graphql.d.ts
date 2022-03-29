@@ -85,6 +85,13 @@ export interface QueryComponentDTO {
     name?: Nullable<string>;
 }
 
+export interface QueryDraftDTO {
+    name?: Nullable<string>;
+    team?: Nullable<string>;
+    project?: Nullable<string>;
+    id?: Nullable<string>;
+}
+
 export interface CreateUserDTO {
     name?: Nullable<string>;
     username: string;
@@ -251,6 +258,7 @@ export interface CreateVariant {
 export interface CreateDraftDTO {
     name: string;
     team: string;
+    project: string;
 }
 
 export interface User {
@@ -412,6 +420,7 @@ export interface Draft {
     id: string;
     name: string;
     team: string;
+    project: string;
 }
 
 export interface IQuery {
