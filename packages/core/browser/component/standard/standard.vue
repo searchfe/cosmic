@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
     active: false,
     standard: () => ({}),
     classes: '',
-    canEdit: true,
+    canEdit: false,
 });
 const emits = defineEmits(['click', 'hover', 'change']);
 

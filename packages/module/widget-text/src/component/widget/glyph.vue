@@ -8,22 +8,21 @@ const containerRef = ref(null);
 const {
         isStandard,
         standard,
-        styleId,
 
         isShowStandardModal,
         isShowDetailModal,
         detailTarget,
         standardTarget,
         standardList,
-        detailEdit,
 
+        getDetailEdit,
         cancelStandardModal,
         cancelDetailModal,
+        saveDetail,
         selectStandard,
         openDetaileModal,
         openStandardModal,
         unRef,
-        updateStyle,
     } = usePropterty(service.TOKENS.TextStyle);
 
  </script>
@@ -34,7 +33,7 @@ const {
             <MTitle title="字形">
                 <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
-            <glyph-content :id="styleId" />
+            <glyph-content :text-style="standard" />
         </div>
         <template v-else>
             <m-standard :standard="standard" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
@@ -53,7 +52,6 @@ const {
             title="文字规范"
             :standard-list="standardList"
             :target="standardTarget"
-            @change="updateStyle"
             @cancel="cancelStandardModal"
             @select="(event) => selectStandard(event.data)"
             @show-detail="(event) => openDetaileModal(event.target, event.data)"
@@ -62,13 +60,13 @@ const {
             v-if="isShowDetailModal"
             title="文字规范"
             :target="detailTarget"
-            :standard="detailEdit"
+            :standard="getDetailEdit()"
             @cancel="cancelDetailModal"
-            @ok="cancelDetailModal"
+            @ok="saveDetail"
         >
             <div :class="$style['detail-content']">
                 <div :class="$style['glyph-content']">
-                    <glyph-content :show-layout="false" />
+                    <glyph-content :text-style="getDetailEdit()" :show-layout="false" />
                 </div>
             </div>
         </m-detail-modal>

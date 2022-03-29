@@ -63,6 +63,7 @@ export class BaseService<T extends Record<string, unknown> & {id: string}> {
 
     public unref(styleId: string): T {
         const style = this.get(styleId).clone();
+        style.id = Date.now();
         this.addLocalStyle(style);
         return style;
     }
@@ -77,12 +78,17 @@ export class BaseService<T extends Record<string, unknown> & {id: string}> {
 
     public async updateStyle(style: T) {
         await Promise.resolve();
-        this.updateLocalStyles(style);
+
+        this.updateServiceStyles(style);
         return style;
     }
 
     public updateLocalStyles(style: T): T {
         this.localStyles.set(style.id, style);
+    }
+
+    public updateServiceStyles(style: T): T {
+        this.serviceStyles.set(style.id, style);
     }
 
     public isLocalStyle(styleId: string) {
