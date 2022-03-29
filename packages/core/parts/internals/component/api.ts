@@ -1,8 +1,8 @@
-import { urql } from '@cosmic/core/browser';
+import * as urql from '@urql/vue';
 
 const { useQuery, useMutation } = urql;
 
-type QueryComponentResult = Pick<
+export type QueryComponentResult = Pick<
     gql.Component,
     | 'name'
     | 'displayName'
@@ -56,10 +56,10 @@ variants {
     desc
 }`;
 
-export function useTeamComponent<T extends gql.QueryComponentDTO>(component: T) {
-    return useQuery<QueryComponentResult>({
+export function useTeamComponents<T extends gql.QueryComponentDTO>(component: T) {
+    return useQuery<QueryComponentResult[]>({
         query: `
-            query ($query: QueryComponentDTO!) {
+            query ($query: QueryComponentDTO) {
                 components(query: $query) { ${queryFields} }
             }
         `,

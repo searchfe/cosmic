@@ -1,2 +1,3 @@
 export * from './document';
-export * from './dao';
+export * from './component';
+// export * from './dao';
