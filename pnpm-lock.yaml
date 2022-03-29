@@ -23,6 +23,7 @@ importers:
       eslint: 8.7.0
       eslint-plugin-vue: 8.3.0
       fs-extra: ^10.0.0
+      gesto: ^1.7.0
       git-cz: ~4.8.0
       graphql: ~16.3.0
       happy-dom: 2.30.1
@@ -48,6 +49,7 @@ importers:
       cosmic-ui-alpha: 0.0.33
       cosmic-vue: 0.0.48
       electron-updater: 4.6.5
+      gesto: 1.7.0
       reflect-metadata: 0.1.13
       resolve: 1.22.0
       rxjs: 7.5.5
