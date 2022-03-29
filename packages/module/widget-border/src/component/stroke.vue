@@ -1,47 +1,48 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import StrokeContent from './stroke-content.vue';
-import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty } from '@cosmic/core/browser';
-import { Standard } from '../data';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service} from '@cosmic/core/browser';
 
 const containerRef = ref(null);
 
 const {
+        isStandard,
+        standard,
+        standardList,
+
         isShowStandardModal,
         isShowDetailModal,
-        isSelected,
-        selected,
         detailTarget,
         standardTarget,
-        detailEdit,
 
         cancelStandardModal,
         cancelDetailModal,
         selectStandard,
         openDetaileModal,
         openStandardModal,
-        unSelectStandard,
-    } = usePropterty();
+        unRef,
+        getDetailEdit,
+    } = usePropterty(service.TOKENS.StrokeStyle);
 
 </script>
 
 
 <template>
     <div ref="containerRef">
-        <div v-if="!isSelected">
+        <div v-if="!isStandard">
             <MTitle title="描边">
                 <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
-            <StrokeContent />
+            <stroke-content :stroke-style="standard" />
         </div>
         <template v-else>
-            <m-standard :standard="selected" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
+            <m-standard :standard="standard" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-around"
                     >
-                        <i-cosmic-more @click.stop="() => openDetaileModal(containerRef, selected)" />
-                        <i-cosmic-link @click.stop="unSelectStandard" />
+                        <i-cosmic-more @click.stop="() => openDetaileModal(containerRef, standard)" />
+                        <i-cosmic-link @click.stop="unRef" />
                     </div>
                 </template>
             </m-standard>
@@ -50,7 +51,7 @@ const {
         <m-standard-modal
             v-if="isShowStandardModal"
             title="文字规范"
-            :standard-list="Standard"
+            :standard-list="standardList"
             :target="standardTarget"
             @cancel="cancelStandardModal"
             @select="(event) => selectStandard(event.data)"
@@ -60,13 +61,13 @@ const {
             v-if="isShowDetailModal"
             title="文字规范"
             :target="detailTarget"
-            :standard="detailEdit"
+            :standard="getDetailEdit()"
             @cancel="cancelDetailModal"
             @ok="cancelDetailModal"
         >
             <div :class="$style['detail-content']">
                 <div :class="$style['glyph-content']">
-                    <StrokeContent />
+                    <stroke-content :stroke-style="getDetailEdit()" />
                 </div>
             </div>
         </m-detail-modal>

@@ -1,15 +1,15 @@
 export const Border = [
     {
         label: '内描边',
-        value: '1',
+        value: 'INSIDE',
     },
     {
         label: '居中描边',
-        value: '2',
+        value: 'CENTER',
     },
     {
         label: '外描边',
-        value: '3',
+        value: 'OUTSIDE',
     },
 ];
 export const Standard = [

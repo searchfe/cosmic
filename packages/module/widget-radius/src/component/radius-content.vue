@@ -1,6 +1,14 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, reactive} from 'vue';
 import { Row, Col, RadioGroup, RadioButton, Input} from 'cosmic-vue';
+
+const props = withDefaults(defineProps<{
+    radiusStyle: any,
+}>(), {
+    radiusStyle: () => ({}),
+});
+
+const radiusStyle = reactive(props.radiusStyle);
 
 const multiple = ref(false);
 
@@ -34,14 +42,16 @@ const changeHandler = () => {
             <div class="w-60">
                 <Input
                     size="sm"
-                    value="12"
+                    :value="radiusStyle.tl"
+                    @on-change="event => radiusStyle.tl = event.value"
                 />
             </div>
             <div class="w-60">
                 <Input
                     v-if="multiple"
                     size="sm"
-                    value="12"
+                    :value="radiusStyle.tr"
+                    @on-change="event => radiusStyle.tr = event.value"
                 />
             </div>
         </Col>
@@ -58,13 +68,15 @@ const changeHandler = () => {
             <div class="w-60">
                 <Input
                     size="sm"
-                    value="12"
+                    :value="radiusStyle.bl"
+                    @on-change="event => radiusStyle.bl = event.value"
                 />
             </div>
             <div class="w-60">
                 <Input
                     size="sm"
-                    value="12"
+                    :value="radiusStyle.br"
+                    @on-change="event => radiusStyle.bl = event.value"
                 />
             </div>
         </Col>
