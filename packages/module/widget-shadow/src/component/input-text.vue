@@ -75,7 +75,6 @@ const uniqueId = computed(
 const emits = defineEmits(['onChange', 'onInput', 'onKeydown', 'onFocus', 'onBlur']);
 
 const changeHandler = (event: Event) => {
-    console.log('changeHandler', event);
     emits('onChange', {event});
 };
 
@@ -96,11 +95,11 @@ const inputHandler = (event: InputEvent) => {
     }
     inputModel.value = val;
     const args = {
+        value: val,
         event,
         model: props.model,
     };
-    args[props.model] = inputModel.value;
-    console.log('inputHandler', event, args);
+    args[props.model] = val;
     emits('onInput', args);
 };
 
@@ -134,10 +133,11 @@ const blurHandler = (event: FocusEvent) => {
     }
     inputModel.value = val;
     const args = {
+        value: val,
         event,
         model: props.model,
     };
-    args[props.model] = inputModel.value;
+    args[props.model] = val;
     emits('onBlur', args);
 };
 
@@ -151,10 +151,11 @@ function arrowFn({isUp, event}: { isUp: boolean, event: KeyboardEvent | PointerE
     }
     inputModel.value = val;
     const args = {
+        value: val,
         event,
         model: props.model,
     };
-    args[props.model] = inputModel.value;
+    args[props.model] = val;
     setTimeout(() => {
         inputRef.value.select();
     });
@@ -166,8 +167,8 @@ function arrowFn({isUp, event}: { isUp: boolean, event: KeyboardEvent | PointerE
 <template>
     <div :class="[$style['input-text'], 'w-100 h-26 -v-border-inapparent -v-bg-inapparent']">
         <label :for="uniqueId">
-            <div :class="[$style['icon']]">
-                <slot />
+            <div :class="[$style['icon'], 'flex items-center justify-center']">
+                <slot name="prefix" />
             </div>
         </label>
         <input
@@ -198,23 +199,22 @@ function arrowFn({isUp, event}: { isUp: boolean, event: KeyboardEvent | PointerE
 
 <style module>
 .input-text {
-    box-sizing: content-box;
-    border-radius: var(--rounded-md);
+    composes: -v-bg-inapparent -v-h -v-px -v-text from global;
     position: relative;
-    color: var(--color-gray-700);
-    border-width: var(--border-md);
-    border-style: solid;
+    color: var(--color-dark);
+    border-radius: 0.4rem;
+}
+.input-text:active, .input-text.active {
+    background-color: var(--color-gray-100);
 }
 
 .icon {
+    height: 100%;
     position: absolute;
-    top: 50%;
+    top: 0;
     left: .6rem;
-    transform: translateY(-50%);
-    width: 1.2rem;
-    height: 1.2rem;
-    font-size: 1.2rem;
-    color: var(--color-gray-700);
+    font-size: var(--font-sm);
+    color: var(--color-gray-400);
 }
 
 .input {
@@ -227,7 +227,8 @@ function arrowFn({isUp, event}: { isUp: boolean, event: KeyboardEvent | PointerE
     outline: none;
     border-radius: var(--rounded-md);
     text-align: center;
-    color: var(--color-gray-700);
+    font-size: var(--font-sm);
+    color: var(--color-dark);
     background-color: transparent;
 }
 
@@ -235,7 +236,7 @@ function arrowFn({isUp, event}: { isUp: boolean, event: KeyboardEvent | PointerE
 .down {
     position: absolute;
     right: .6rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--hsl-gray-200);
 }
 

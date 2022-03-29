@@ -1,5 +1,5 @@
 import type { interfaces } from '@cosmic/core/inversify';
-import type { DefineComponent } from 'vue';
+import type { App, DefineComponent } from 'vue';
 
 
 type QuerySelector = string;
@@ -16,4 +16,5 @@ export interface Module {
   providers?: interfaces.ServiceIdentifier[],
   // declarations: [],
   imports?: ModuleId[],
+  init?: (app: App<Element>) => void;
 }

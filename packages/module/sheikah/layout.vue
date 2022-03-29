@@ -3,7 +3,10 @@ import { Layout, Content, Sider } from 'cosmic-vue';
 import { router } from '@cosmic/core/browser';
 import TeamMenu from './team/component/team-menu.vue';
 
-const { RouterView } = router;
+const { RouterView, useRoute } = router;
+
+const route = useRoute();
+
 
 </script>
 
@@ -15,7 +18,7 @@ const { RouterView } = router;
             </div>
         </Sider>
         <Content :class="$style.content">
-            <router-view />
+            <router-view :key="route.fullPath" />
         </Content>
     </Layout>
 </template>
@@ -31,6 +34,9 @@ const { RouterView } = router;
     overflow-x: hidden;
     overflow-y: scroll;
     background: #f5f5f5;
+}
+.content::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
 }
 .sider {
     box-sizing: border-box;

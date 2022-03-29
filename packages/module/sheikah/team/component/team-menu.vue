@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { watchEffect, ref } from 'vue';
-import { Collapse, CollapseItem, Button, Input } from 'cosmic-vue';
+import { Collapse, CollapseItem, Input, Dialog } from 'cosmic-vue';
 import { router as vueRouter } from '@cosmic/core/browser';
 import TeamItem from './team-menu-item.vue';
 import { generateProjectForest } from '../../common/util/tree';
 import { useProjects } from '../../project/api';
 import { useAllTeams } from '../api';
 import { useCreateProject } from '../../project/api';
-import Dialog from '../../common/component/dialog.vue';
+
 
 interface Team extends gql.Team{
     avatar?: string;
@@ -31,13 +31,13 @@ const { data: projectData, fetching: projectFetching } = useProjects({});
 let newProject: gql.CreateProjectDTO;
 const openDialog = ref(false);
 
-async function changeSelectedTeam(arg: string | string[]) {
-    const newValue = Array.isArray(arg) ? arg[0] : arg;
+async function changeSelectedTeam(arg: string | { keys: string[] }) {
+    const newValue = typeof arg === 'string' ? arg : arg.keys[0];
     if (!newValue) {
         return;
     }
     selectedTeam.value = newValue;
-    await router.push({ name: 'team:detail', query: { team: selectedTeam.value }});
+    router.push({ name: 'team:detail', query: { team: selectedTeam.value }});
 }
 
 
@@ -57,7 +57,6 @@ watchEffect(() => {
 const defautlAvatar = 'https://fe-dev.bj.bcebos.com/%E4%BE%A7%E8%BE%B9%E6%A0%8F%E5%9B%BE%E6%A0%8714*14.png';
 
 function onAddProject(data: gql.CreateProjectDTO) {
-    console.log(1);
     newProject = data;
     openDialog.value = true;
 }
@@ -66,16 +65,12 @@ function onChangeNewProjectName(e: { value: string }) {
     newProject.name = e.value;
 }
 
-function onSaveProject() {
+function saveProject() {
     if (newProject && newProject.name) {
         createProject({ project: newProject }).finally(() => {
             openDialog.value = false;
         });
     }
-}
-
-function onCancel() {
-    openDialog.value = false;
 }
 
 </script>
@@ -99,16 +94,9 @@ function onCancel() {
             </div>
         </collapse-item>
     </collapse>
-    <Dialog :open="openDialog">
-        <template #label>
-            <div class="pl-10">
-                创建项目
-            </div>
-        </template>
-        <Input placeholder="请输入项目名称" @on-input="onChangeNewProjectName" />
-        <template #actions>
-            <Button class="mr-20" @click="onCancel">取消</Button>
-            <Button @click="onSaveProject">创建</Button>
-        </template>
+    <Dialog v-model:visible="openDialog" title="创建项目" :show-close-icon="false" @ok="saveProject">
+        <div class="my-20">
+            <Input placeholder="请输入项目名称" @on-input="onChangeNewProjectName" />
+        </div>
     </Dialog>
 </template>

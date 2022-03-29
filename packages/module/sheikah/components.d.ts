@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     ICosmicBorder: typeof import('~icons/cosmic/border')['default']
+    ICosmicCaution: typeof import('~icons/cosmic/caution')['default']
     ICosmicContain: typeof import('~icons/cosmic/contain')['default']
     ICosmicCorner: typeof import('~icons/cosmic/corner')['default']
     ICosmicDark: typeof import('~icons/cosmic/dark')['default']
@@ -13,8 +14,11 @@ declare module 'vue' {
     ICosmicIntersection: typeof import('~icons/cosmic/intersection')['default']
     ICosmicLayout: typeof import('~icons/cosmic/layout')['default']
     ICosmicLock: typeof import('~icons/cosmic/lock')['default']
+    ICosmicMinus: typeof import('~icons/cosmic/minus')['default']
     ICosmicMore: typeof import('~icons/cosmic/more')['default']
     ICosmicNight: typeof import('~icons/cosmic/night')['default']
+    ICosmicPlus: typeof import('~icons/cosmic/plus')['default']
+    ICosmicQuestion: typeof import('~icons/cosmic/question')['default']
     ICosmicScale: typeof import('~icons/cosmic/scale')['default']
     ICosmicShadow: typeof import('~icons/cosmic/shadow')['default']
     ICosmicSun: typeof import('~icons/cosmic/sun')['default']

@@ -3,9 +3,8 @@ import urqlPlugin from '@urql/vue';
 
 import { gqlClientOptions }  from '@cosmic/core/parts';
 import { MComponent } from '@cosmic-module/core';
-import { createContainer } from './ioc/index';
+import { createContainer, TOKENS, type RouterServiceAPI } from './service/index';
 import App from './app.vue';
-import { routify } from './routes';
 
 import type { BootstrapOption } from '@cosmic/core/parts';
 
@@ -16,9 +15,6 @@ import MWidget from './component/widget/widget.vue';
 import MStandardModal from './component/modal/standard-modal.vue';
 import MDetailModal from './component/modal/detail-modal.vue';
 import MStandard from './component/standard/standard.vue';
-import { useAtom } from './use/use-atom';
-
-import { RouterService } from './service';
 
 
 function bootstrap(option: BootstrapOption) {
@@ -29,13 +25,11 @@ function bootstrap(option: BootstrapOption) {
     // gql
     app.use(urqlPlugin, gqlClientOptions);
 
-    const router = routify();
-
-    // router
-    app.use(router);
     // ioc container
     const container = createContainer({ defaultScope: 'Singleton' });
-    container.bind(RouterService).toConstantValue(new RouterService(router));
+
+    const routerPlugin = container.get<RouterServiceAPI>(TOKENS.Router);
+    app.use(routerPlugin.getRouterConfig());
 
     app.provide('container', container);
 
@@ -45,11 +39,13 @@ function bootstrap(option: BootstrapOption) {
 
 export { bootstrap };
 
-export * as service from './service';
+// export * as service from './service/index';
 export * as urql from '@urql/vue';
 export * as router from 'vue-router';
 export { default as lodash } from 'lodash';
+export { default as color } from 'color';
 
 export { MColor, MTitle, MWidget, MStandardModal, MStandard, MDetailModal, MClolorWidget};
 
-export { useAtom };
+export * from './use';
+export * as service from './service/index';

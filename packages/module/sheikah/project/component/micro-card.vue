@@ -1,8 +1,8 @@
 <script lang="ts" setup>
     import { router as vueRouter } from '@cosmic/core/browser';
     import Card from '../../common/component/card.vue';
-    import { Menu, MenuOption } from 'cosmic-vue';
-    import { useDeleteProject } from '../api';
+    import Dropdown from '../../common/component/dropdown.vue';
+
 
     interface Props {
         id: string;
@@ -15,7 +15,7 @@
     const { useRouter } = vueRouter;
     const router = useRouter();
 
-    const { executeMutation: deleteProject } = useDeleteProject();
+
 
     const props = withDefaults(defineProps<Props>(), {
         avatar: 'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%9B%BE%E6%A0%8740*40.png',
@@ -26,10 +26,25 @@
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F02.png',
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F03.png',
             'https://fe-dev.bj.bcebos.com/%E5%A4%B4%E5%83%8F04.png',
-            'https://s.gravatar.com/avatar/0095e9247f0c7e4d5f23cba12df87cde?s=80',
         ],
         id: '',
     });
+
+    const emits = defineEmits(['delete']);
+
+    const menuData = [{
+        label: '新建分组',
+        id: '1',
+    }, {
+        label: '信息设置',
+        id: '2',
+    }, {
+        label: '复制项目',
+        id: '3',
+    }, {
+        label: '删除项目',
+        id: '4',
+    }];
 
     function projectClickHandler() {
         router.push({
@@ -38,11 +53,9 @@
         });
     }
 
-    function onSelectMenu(data: { value: string }) {
-        if (data.value === '4') {
-            deleteProject({ id: props.id }).then(res => {
-                console.log(res.data?.deleteProject);
-            });
+    function onDropdownChange(data: { id: string }) {
+        if (data.id === '4') {
+            emits('delete', { id: props.id });
         }
     }
 </script>
@@ -79,15 +92,7 @@
             class="flex items-center justify-center"
             @click.stop="() => {}"
         >
-            <Menu :class="$style.menu" @on-change="onSelectMenu">
-                <template #activator>
-                    <i-cosmic-more style="font-size: 20px" />
-                </template>
-                <menu-option :class="$style['menu-option']" label="新建分组" value="1" />
-                <menu-option :class="$style['menu-option']" label="信息设置" value="2" />
-                <menu-option :class="$style['menu-option']" label="复制项目" value="3" />
-                <menu-option :class="$style['menu-option']" label="删除项目" value="4" />
-            </Menu>
+            <Dropdown :data="menuData" @change="onDropdownChange" />
         </div>
     </Card>
 </template>
@@ -148,8 +153,8 @@
     top: 12px;
     right: 12px;
     background: #f5f5f5;
-    width: 26px;
-    height: 26px;
+    width: 25px;
+    height: 25px;
     border-radius: var(--rounded-md);
 }
 .menu {

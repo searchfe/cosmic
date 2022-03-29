@@ -1,0 +1,24 @@
+.root {
+    composes: -v-h -v-px -v-text from global;
+    color: var(--color-gray-300);
+}
+
+.input {
+    composes: -v-text from global;
+    color: var(--color-gray-700);
+    outline: none;
+    border: none;
+    background-color: transparent;
+    user-select: none;
+}
+.input::placeholder{
+    color: var(--color-gray-300);
+}
+
+.prefix {
+    margin-right: var(--margin-md);
+}
+
+.subfix {
+    margin-left: var(--margin-md);
+}

@@ -1,15 +1,19 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
 import StrokeContent from './stroke-content.vue';
-import { MTitle, MStandard, MStandardModal, useAtom } from '@cosmic/core/browser';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty } from '@cosmic/core/browser';
 import { Standard } from '../data';
 
+const containerRef = ref(null);
 
-const { 
+const {
         isShowStandardModal,
         isShowDetailModal,
+        isSelected,
         selected,
         detailTarget,
         standardTarget,
+        detailEdit,
 
         cancelStandardModal,
         cancelDetailModal,
@@ -17,53 +21,55 @@ const {
         openDetaileModal,
         openStandardModal,
         unSelectStandard,
-    } = useAtom({property: {}});
+    } = usePropterty();
 
 </script>
 
 
 <template>
-    <div>
-        <div v-if="!selected">
+    <div ref="containerRef">
+        <div v-if="!isSelected">
             <MTitle title="描边">
                 <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
             <StrokeContent />
         </div>
         <template v-else>
-            <MStandard :standard="selected" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
+            <m-standard :standard="selected" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-around"
                     >
-                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container)" />
+                        <i-cosmic-more @click.stop="() => openDetaileModal(containerRef, selected)" />
                         <i-cosmic-link @click.stop="unSelectStandard" />
                     </div>
                 </template>
-            </MStandard>
+            </m-standard>
         </template>
 
         <m-standard-modal
-            v-if="isShowStandardModal" 
-            title="文字规范" 
-            :standard-list="Standard" 
-            :target="standardTarget" 
+            v-if="isShowStandardModal"
+            title="文字规范"
+            :standard-list="Standard"
+            :target="standardTarget"
             @cancel="cancelStandardModal"
             @select="(event) => selectStandard(event.data)"
-            @show-detail="openDetaileModal"
+            @show-detail="(event) => openDetaileModal(event.target, event.data)"
         />
-        <m-detail-msodal
+        <m-detail-modal
             v-if="isShowDetailModal"
             title="文字规范"
             :target="detailTarget"
+            :standard="detailEdit"
             @cancel="cancelDetailModal"
+            @ok="cancelDetailModal"
         >
             <div :class="$style['detail-content']">
                 <div :class="$style['glyph-content']">
                     <StrokeContent />
                 </div>
             </div>
-        </m-detail-msodal>
+        </m-detail-modal>
     </div>
 </template>
 

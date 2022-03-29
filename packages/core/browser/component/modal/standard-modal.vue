@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, toRaw } from 'vue';
 import {Select, SelectOption, Input} from 'cosmic-vue';
 import MTitle from '../title/title.vue';
 import MStandard from '../standard/standard.vue';
@@ -8,15 +8,15 @@ import { useModal } from './setup';
 const props = withDefaults(defineProps<{
     title: string,
     standardList: any[],
-    selected: any,
-    target: () => HTMLElement,
+    selected?: any,
+    target?: HTMLElement,
 }>(), {
     title: '',
     select: () => ({}),
     standardList: () => [],
 });
 
-const emits = defineEmits(['cancel', 'showDetail',  'select']);
+const emits = defineEmits(['cancel', 'showDetail',  'select', 'add', 'change']);
 
 const content = ref(null);
 
@@ -32,9 +32,22 @@ onMounted(() => {
     setContainerTarget(container.value as unknown as HTMLElement);
 });
 
-function showDetail(index: number) {
+const filterTitle = ref('2');
+
+const inputValue = ref(null);
+
+const filterStandardList = computed(() => {
+    const arr = toRaw(props.standardList).filter(item => !inputValue.value || item.name.includes(inputValue.value));
+    return arr;
+});
+
+function showDetail(index: number, data) {
     const target = (content.value! as HTMLElement).children[index];
-    emits('showDetail', target);
+    emits('showDetail', {target, data});
+}
+
+function filterHandler(data: string) {
+    inputValue.value = data.value;
 }
 
 </script>
@@ -49,16 +62,19 @@ function showDetail(index: number) {
         <slot name="title">
             <div :class="$style.title">
                 <MTitle :title="title">
-                    <i-cosmic-plus />
+                    <i-cosmic-plus @click.stop="emits('add')" />
                 </MTitle>
             </div>
         </slot>
         <slot name="filter">
             <div :class="$style.filter">
                 <div>
-                    <Select allow-input>
+                    <Select
+                        allow-input
+                        :value="filterTitle"
+                    >
                         <SelectOption
-                            label="1"
+                            label="标题"
                             value="2"
                         />
                     </Select>
@@ -67,6 +83,7 @@ function showDetail(index: number) {
                     <Input
                         size="sm"
                         placeholder="请输入关键词"
+                        @on-input="filterHandler"
                     />
                 </div>
             </div>
@@ -75,15 +92,15 @@ function showDetail(index: number) {
             ref="content"
             :class="$style.content"
         >
-            <MStandard
-                v-for="(data, index) of props.standardList"
+            <m-standard
+                v-for="(data, index) of filterStandardList"
                 :key="data.title"
                 :standard="data"
-                :can-edit="true"
-                :active="selected === data"
+                :active="hoverIndex === index"
                 classes="-v-bg-inapparent"
                 @hover="() => hoverIndex = index"
                 @click="(event) => emits('select', {event, data})"
+                @change="(event) => emits('change', event)"
             >
                 <template #prefix>
                     <slot
@@ -97,11 +114,11 @@ function showDetail(index: number) {
                             v-if="index === hoverIndex"
                             class="flex items-center w-40"
                         >
-                            <i-cosmic-more @click.stop="showDetail(index)" />
+                            <i-cosmic-more @click.stop="showDetail(index, data)" />
                         </div>
                     </slot>
                 </template>
-            </MStandard>
+            </m-standard>
         </div>
     </div>
 </template>
@@ -109,9 +126,9 @@ function showDetail(index: number) {
 <style module>
 
 .container {
-    padding: var(--spacing-4) 0;
+    padding: .4rem 0;
     background-color: var(--color-gray-50);
-    border-radius: var(--spacing-4);
+    border-radius: var(--rounded-md);
     color: var(--color-light);
     position: fixed;
     transform: translateX(-100%);
@@ -138,7 +155,7 @@ function showDetail(index: number) {
 
 .content {
     max-height: 400px;
-    border-radius: var(--spacing-4);
+    border-radius: var(--rounded-md);
     overflow: auto;
 }
 

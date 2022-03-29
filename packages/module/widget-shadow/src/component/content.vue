@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import {MTitle, MClolorWidget, MStandard, MStandardModal, MDetailModal, useAtom} from '@cosmic/core/browser';
+import {MTitle, MClolorWidget, MStandard, MStandardModal, MDetailModal, usePropterty} from '@cosmic/core/browser';
 import InputList from './input-list.vue';
 
 import {Standard, InputValue, SelectValue, SelectList} from '../data';
+import {ref} from 'vue';
 
 defineProps({
     insetTitle: {
@@ -11,9 +12,12 @@ defineProps({
     },
 });
 
+const container = ref(null);
+
 const {
     isShowStandardModal,
     isShowDetailModal,
+    isSelected,
     selected,
     detailTarget,
     standardTarget,
@@ -24,25 +28,26 @@ const {
     openDetaileModal,
     openStandardModal,
     unSelectStandard,
-} = useAtom({property: {}});
+} = usePropterty();
 
 </script>
 
 <template>
-    <div>
-        <div v-if="!selected">
+    <div ref="container">
+        <div v-if="!isSelected">
             <MTitle aria-label="效果属性" title="效果">
                 <i-cosmic-grid-outline
                     class="-v-bg-inapparent"
                     @click.stop="(event) => openStandardModal(event.currentTarget)"
                 />
             </MTitle>
-            <InputList @onInput="onInput" />
+            <InputList @on-input="onInput" />
         </div>
         <template v-else>
             <MStandard
                 aria-label="选中效果"
                 classes="-v-bg-inapparent"
+                :class="[$style['border']]"
                 :standard="selected"
                 :can-edit="false"
                 @click="(event) => openStandardModal(event.event.currentTarget)"
@@ -57,7 +62,7 @@ const {
                     <div
                         class="flex items-center w-40 justify-around"
                     >
-                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container)" />
+                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container, selected)" />
                         <i-cosmic-lock @click.stop="unSelectStandard" />
                     </div>
                 </template>
@@ -89,11 +94,13 @@ const {
             aria-label="编辑阴影规范"
             :title="'编辑' + insetTitle + '规范'"
             :target="detailTarget"
+            :standard="selected"
             @cancel="cancelDetailModal"
+            @ok="cancelDetailModal"
         >
             <div :class="$style['detail-content']">
                 <div :class="$style['glyph-content']">
-                    <InputList @onInput="onInput" />
+                    <InputList @on-input="onInput" />
                 </div>
             </div>
         </MDetailModal>

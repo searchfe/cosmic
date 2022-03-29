@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { defineEmits } from 'vue';
+import { defineEmits, toRaw } from 'vue';
 import { Input } from 'cosmic-vue';
 
 const props = withDefaults(defineProps<{
-    standard: Record<string, string>,
+    standard: Record<string, string> | null,
     active: boolean,
     classes?: string,
     canEdit: boolean,
@@ -11,9 +11,15 @@ const props = withDefaults(defineProps<{
     active: false,
     standard: () => ({}),
     classes: '',
-    canEdit: true,
+    canEdit: false,
 });
-const emits = defineEmits(['click', 'hover']);
+const emits = defineEmits(['click', 'hover', 'change']);
+
+function changeHandler({value}: {value: string}) {
+    const style = toRaw(props.standard);
+    emits('change', {...style, name: value});
+}
+
 </script>
 
 
@@ -38,14 +44,15 @@ const emits = defineEmits(['click', 'hover']);
                     <span
                         v-if="!canEdit"
                         :class="$style.title"
-                    >{{ standard?.title }}</span>
+                    >{{ standard?.name }}</span>
                     <div
                         v-else
                         @click.stop="() => {}"
                     >
                         <Input
                             size="sm"
-                            :value="standard?.title"
+                            :value="standard?.name"
+                            @on-change="changeHandler"
                         />
                     </div>
                 </div>
@@ -64,20 +71,28 @@ const emits = defineEmits(['click', 'hover']);
     composes: items-center from global;
     color: var(--color-dark);
     height: calc(var(--height-sm) * 3);
-    border-radius: var(--spacing-4);
+    border-radius: var(--rounded-md);
     padding: 0 var(--padding-sm);
     margin: var(--margin-sm) 0;
 }
 
-.border {
-    border: 1px solid var(--color-light);
+.border:after {
+    display: block;
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url(https://psstatic.cdn.bcebos.com/operation/demo-border_1647516533000.png) no-repeat scroll center center / contain;
 }
 
 .show {
-    composes: flex -v-px md justify-center items-center -v-mr sm from global;
-    width: calc(var(--height-sm) * 2.5);
-    height: calc(var(--height-sm) * 2.5);
-    border-radius: var(--spacing-4);
+    position: relative;
+    composes: flex justify-center items-center -v-mr from global;
+    width: 5rem;
+    height: 5rem;
+    border-radius: var(--rounded-md);
     font-size: 26px;
     background-color: var(--color-gray-300);
     background-image: linear-gradient(45deg, var(--color-gray-100) 25%, transparent 25%, transparent 75%, var(--color-gray-100) 75%, var(--color-gray-100)),

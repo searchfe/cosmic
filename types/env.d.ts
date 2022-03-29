@@ -1,5 +1,4 @@
 /// <reference types="vite/client" />
-import type { Observer } from './../packages/core/browser/lib/observable';
 
 /**
  * Describes all existing environment variables and their types.
@@ -24,11 +23,4 @@ interface ImportMetaEnv {
 
 interface ImportMeta {
   readonly env: ImportMetaEnv
-}
-
-
-declare global {
-    interface Window {
-        eventHub: Observer;
-    }
 }

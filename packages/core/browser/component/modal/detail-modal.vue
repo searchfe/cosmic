@@ -1,21 +1,22 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { Button, Row, Col, Input} from 'cosmic-vue';
+import { onMounted, ref, reactive } from 'vue';
+import { Button, Input} from 'cosmic-vue';
 import { buttonSolid } from 'cosmic-ui';
 import { useModal } from './setup';
 
 const props = withDefaults(defineProps<{
     title: string,
     target: HTMLElement,
+    standard: Record<string, string> | null,
 }>(), {
     title: '',
+    standard: () => ({}),
 });
 
 const container = ref(null);
 
 const emits = defineEmits(['cancel', 'ok']);
 
-console.log(props.target);
 
 const { comoutPositionStyle, positionStyle, setContainerTarget } = useModal(props.target, emits);
 
@@ -24,6 +25,8 @@ comoutPositionStyle();
 onMounted(() => {
     setContainerTarget(container.value as unknown as HTMLElement);
 });
+
+const styles = reactive(props.standard);
 
 </script>
 
@@ -42,30 +45,29 @@ onMounted(() => {
             </slot>
         </div>
         <div :class="$style.content">
-            <Row class="flex items-center">
-                <Col :span="2">
+            <div class="flex items-center">
+                <div :class="$style['text']">
                     标题：
-                </Col>
-                <Col>
-                    <Input
-                        size="sm"
-                        value="标题1"
-                    />
-                </Col>
-            </Row>
-            <Row
+                </div>
+                <Input
+                    size="sm"
+                    :value="styles.name"
+                    @on-input="(event) => styles.name = event.value"
+                />
+            </div>
+            <div
                 class="flex items-center h-32"
                 :class="$style['gray-text']"
             >
-                <Col :span="2">
+                <div :class="$style['text']">
                     编码：
-                </Col>
-                <Col>
+                </div>
+                <div>
                     <span class="-v-px sm">
-                        qweqwe
+                        {{ styles.description }}
                     </span>
-                </Col>
-            </Row>
+                </div>
+            </div>
             <slot />
         </div>
 
@@ -77,14 +79,14 @@ onMounted(() => {
                 size="sm"
                 :styles="buttonSolid"
                 class="rounded-full w-64"
-                @click="() => emits('ok')"
+                @click="() => emits('cancel')"
             >
                 取消
             </Button>
             <Button
                 size="sm"
                 class="rounded-full w-64"
-                @click="() => emits('cancel')"
+                @click="() => emits('ok')"
             >
                 确定
             </Button>
@@ -94,9 +96,9 @@ onMounted(() => {
 
 <style module>
 .container {
-    padding: var(--spacing-4) 0;
+    padding: .4rem 0;
     background-color: var(--color-gray-50);
-    border-radius: var(--spacing-4);
+    border-radius: var(--rounded-md);
     color: var(--color-dark);
     position: fixed;
     transform: translateX(-100%);
@@ -111,6 +113,10 @@ onMounted(() => {
 }
 .gray-text {
     color: var(--color-gray-500);
+}
+.text {
+    width: 3.6rem;
+    flex-shrink: 0;
 }
 .footer {
     composes: -v-py sm from global;
