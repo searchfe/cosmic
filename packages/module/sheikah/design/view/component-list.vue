@@ -6,23 +6,67 @@ import CompCard from '../component/card/comp.vue';
 import CompFilter from '../component/filter.vue';
 import Region from '../../common/component/region.vue';
 import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { inject, type QueryComponentResult, createFetchTeamComponentsRequest, deleteComponentQuery } from '@cosmic/core/parts';
+import { urql } from '@cosmic/core/browser';
 
-const { useRouter, useRoute } = vueRouter;
+const { useRoute } = vueRouter;
+const { useQuery, useMutation } = urql;
 
 const routerService = inject<service.RouterServiceAPI>(service.TOKENS.Router);
-const router = useRouter();
+const componentService = inject<service.ComponentService>(service.TOKENS.Component);
 const route = useRoute();
+const team = route.query.team as string;
 const createComponentDialogIsOpenRef = ref(false);
 const newComponentNameRef = ref('');
+const componentsRef = ref<QueryComponentResult[]>();
 
-function onClickComp() {
-    router.push({ name: 'component:detail' });
+const { executeQuery: fetchTeamComponents } = useQuery(createFetchTeamComponentsRequest({ team }));
+
+fetchTeamComponents().then(({ data }) => data.value!.components).then(data => {
+    componentService.components.next(data);
+});
+
+const { executeMutation: deleteComponentMutation } = useMutation<
+    { deleteComponentByTeamAndName: number },
+    { data: gql.QueryComponentDTO }
+>(deleteComponentQuery);
+
+componentService.components.subscribe(next => {
+    componentsRef.value = next;
+});
+
+componentService.component.subscribe(next => {
+    let isNew = true;
+    componentsRef.value = componentsRef.value?.map(i => {
+        if (i.name === next.name) {
+            isNew = false;
+            return next;
+        }
+        return i;
+    });
+    if (isNew) {
+        componentsRef.value?.push(next);
+    }
+});
+
+function onClickComp(component: QueryComponentResult) {
+    routerService.push({ name: 'blueprint', params: { raw: JSON.stringify({ ...component, team }) } });
 }
 
 function addComponent() {
-    const team: string = route.query.team;
     routerService.push({ name: 'blueprint', params: { team, name: newComponentNameRef.value } });
+    createComponentDialogIsOpenRef.value = false;
+}
+
+function deleteComponent(name: string) {
+    deleteComponentMutation({ data: { team, name } }).then(({ data }) => {
+        const cnt = data?.deleteComponentByTeamAndName;
+        if (cnt === 1) {
+            fetchTeamComponents().then(({ data }) => data.value!.components).then(data => {
+                componentService.components.next(data);
+            });
+        }
+    });
 }
 </script>
 <template>
@@ -83,20 +127,27 @@ function addComponent() {
         </template>
     </Region>
     <Region inverse>
-        <div :class="$style['card-list']" @click="onClickComp">
-            <comp-card />
-            <comp-card />
-            <comp-card />
-            <comp-card />
+        <div :class="$style['card-list']">
+            <section v-for="i, index of componentsRef" :key="index" :class="['relative', $style.card]">
+                <comp-card :title="i.displayName" :meta="[i.name, i.desc]" @click="onClickComp(i)" />
+                <i-cosmic-close
+                    :class="['absolute', $style['card-delete']]"
+                    @click="deleteComponent(i.name)"
+                />
+            </section>
         </div>
     </Region>
-    <Dialog v-model:visible="createComponentDialogIsOpenRef" :show-close-icon="false" title="创建组件">
-        <div class="my-12 flex justify-between items-center">
-            <span style="flex-shrink: 0;">名称</span>
-            <Input v-model:value="newComponentNameRef" size="sm" placeholder="起个名字吧" />
-        </div>
+    <Dialog
+        v-model:visible="createComponentDialogIsOpenRef"
+        :show-close-icon="false"
+        title="创建组件"
+        :class="$style.dialog"
+    >
+        <section class="my-12 flex justify-between items-center">
+            <Input v-model:value="newComponentNameRef" placeholder="请输入组件名称" />
+        </section>
         <template #actions>
-            <Space justify="end">
+            <Space justify="end" class="w-full">
                 <Button
                     @click="createComponentDialogIsOpenRef = false; newComponentNameRef = '';"
                 >
@@ -114,6 +165,14 @@ function addComponent() {
     grid-template-columns: 1fr;
     column-gap: 24px;
     row-gap: 24px;
+}
+.card:not(:hover) .card-delete {
+    display: none;
+}
+.card-delete {
+    top: 1.2rem;
+    right: 1.2rem;
+    color: #e11d48;
 }
 .input {
     width: 268px;
@@ -148,5 +207,9 @@ function addComponent() {
 }
 .filter::-webkit-scrollbar {
     display: none; /* Chrome Safari */
+}
+
+.dialog {
+    box-shadow: 1px 4px 6px #0000001a;
 }
 </style>

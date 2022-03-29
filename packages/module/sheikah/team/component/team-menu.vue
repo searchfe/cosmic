@@ -72,7 +72,6 @@ function saveProject() {
         });
     }
 }
-
 </script>
 
 <template>
