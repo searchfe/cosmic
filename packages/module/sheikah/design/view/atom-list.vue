@@ -4,8 +4,14 @@ import { router as vueRouter } from '@cosmic/core/browser';
 import Region from '../../common/component/region.vue';
 import AtomCard from '../component/card/atom.vue';
 import AtomFilter from '../component/filter.vue';
-import { query, queryBorder } from '../api/common';
-import AtomDialog from '../component/dialog/atom/index.vue';
+import ColorDialog from '../component/dialog/atom/color.vue';
+
+import { query as queryBorder } from '../api/border';
+import { query as queryColor } from '../api/color';
+import { query as queryShadow } from '../api/shadow';
+import { query as queryOpacity } from '../api/opacity';
+import { query as queryCorner } from '../api/corner';
+import { query as queryFont } from '../api/font';
 
 import type { urql } from '@cosmic/core/browser';
 import type { AtomType } from '../types';
@@ -14,8 +20,8 @@ import type { AtomType } from '../types';
 // TODO: 筛选功能把组件和原子抽象为一套组件, 数据请求部分抽象为通用函数，减少模版代码
 // query api 拆分为每个原子，可以避免每次查询都声明使用的字段
 // 可以创造一种机制，通过gql内省拿到数据类型，用户通过取对象的get方式，拿到数据，类似ORM
-interface AtomData extends Record<string, unknown> {
-    id: string;
+interface AtomData extends Record<string, any> {
+    id?: string;
 }
 
 const { useRouter } = vueRouter;
@@ -24,22 +30,41 @@ const router = useRouter();
 const currentType = ref<AtomType>('color');
 const atoms = ref<AtomData[]>([]);
 
-const { data: colorData, fetching: colorFetching, executeQuery: refreshColor } = query<{ colors: gql.Color[] }, gql.QueryBaseDTO>(
-    'color', {}, ['id', 'team', 'day', 'night', 'dark', 'name'],
-);
-const { data: borderData, fetching: borderFetching, executeQuery: refreshBorder } = queryBorder({});
-const { data: cornerData, fetching: cornerFetching, executeQuery: refreshCorner } = query<{ corners: gql.Corner[] }, gql.QueryBaseDTO>(
-    'corner', {}, ['id', 'team', 'tl', 'tr', 'bl', 'br', 'name'],
-);
-const { data: opacityData, fetching: opacityFetching, executeQuery: refreshOpacity } = query<{ opacitys: gql.Opacity[] }, gql.QueryBaseDTO>(
-    'opacity', {}, ['id', 'team', 'opacity', 'name'],
-);
-const { data: shadowData, fetching: shadowFetching, executeQuery: refreshShadow } = query<{ shadows: gql.Shadow[] }, gql.QueryBaseDTO>(
-    'shadow', {}, ['id', 'team', 'type', 'offsetX', 'offsetY', 'blur', 'spread', 'color', 'name'],
-);
-const { data: fontData, fetching: fontFetching, executeQuery: refreshFont } = query<{ fonts: gql.Font[] }, gql.QueryBaseDTO>(
-    'font', {}, ['id', 'team', 'style', 'variant', 'weight', 'size', 'lineHeight', 'family', 'name'],
-);
+const {
+    data: colorData,
+    fetching: colorFetching,
+    executeQuery: refreshColor,
+} = queryColor({}, ['id', 'team', 'day', 'night', 'dark', 'name']);
+
+const {
+    data: borderData,
+    fetching: borderFetching,
+    executeQuery: refreshBorder,
+} = queryBorder({});
+
+const {
+    data: cornerData,
+    fetching: cornerFetching,
+    executeQuery: refreshCorner,
+} = queryCorner({}, ['id', 'team', 'tl', 'tr', 'bl', 'br', 'name']);
+
+const {
+    data: opacityData,
+    fetching: opacityFetching,
+    executeQuery: refreshOpacity,
+} = queryOpacity({}, ['id', 'team', 'opacity', 'name']);
+
+const {
+    data: shadowData,
+    fetching: shadowFetching,
+    executeQuery: refreshShadow,
+} = queryShadow({}, ['id', 'team', 'type', 'offsetX', 'offsetY', 'blur', 'spread', 'color', 'name']);
+
+const {
+    data: fontData,
+    fetching: fontFetching,
+    executeQuery: refreshFont,
+} = queryFont({}, ['id', 'team', 'style', 'variant', 'weight', 'size', 'lineHeight', 'family', 'name']);
 
 const refreshers: Record<AtomType, (opts?: any) => urql.UseQueryResponse<unknown, unknown>> = {
     color: refreshColor,
@@ -189,7 +214,7 @@ function refresh() {
         </div>
         <template #bottom>
             <div class="flex justify-end">
-                <atom-dialog :type="currentType" @success="refresh" />
+                <color-dialog :atom-type="currentType" @success="refresh" />
             </div>
         </template>
     </Region>

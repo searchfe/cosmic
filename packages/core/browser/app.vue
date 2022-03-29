@@ -14,7 +14,7 @@ const { Content, Header } = Layout;
                 class="w-full"
             />
         </Header>
-        <Content>
+        <Content class="overflow-hidden">
             <router-view v-slot="{ Component }">
                 <keep-alive>
                     <component :is="Component" />

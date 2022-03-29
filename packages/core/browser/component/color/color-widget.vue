@@ -5,7 +5,7 @@ import MColor from './color.vue';
 import MStandard from '../standard/standard.vue';
 import MStandardModal from '../modal/standard-modal.vue';
 import MDetailModal from '../modal/detail-modal.vue';
-import { useAtom } from '../../use/use-atom';
+import { usePropterty } from '../../use/use-property';
 
 const props = withDefaults(defineProps<{
     standardList: any[],
@@ -28,8 +28,7 @@ const {
         selectStandard,
         openDetaileModal,
         openStandardModal,
-        unSelectStandard,
-    } = useAtom({property: {}});
+    } = usePropterty();
 
 </script>
 

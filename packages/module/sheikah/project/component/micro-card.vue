@@ -6,6 +6,7 @@
 
     interface Props {
         id: string;
+        team: string;
         avatar: string;
         users: string[];
         info: string;
@@ -14,8 +15,6 @@
 
     const { useRouter } = vueRouter;
     const router = useRouter();
-
-
 
     const props = withDefaults(defineProps<Props>(), {
         avatar: 'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%9B%BE%E6%A0%8740*40.png',
@@ -49,7 +48,7 @@
     function projectClickHandler() {
         router.push({
             name: 'project:detail',
-            query: { project: props.id },
+            query: { project: props.id, team: props.team },
         });
     }
 

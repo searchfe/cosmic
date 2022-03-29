@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {MTitle, MClolorWidget, MStandard, MStandardModal, MDetailModal, useAtom} from '@cosmic/core/browser';
+import {MTitle, MClolorWidget, MStandard, MStandardModal, MDetailModal, usePropterty} from '@cosmic/core/browser';
 import InputList from './input-list.vue';
 
 import {Standard, InputValue, SelectValue, SelectList} from '../data';
@@ -28,7 +28,7 @@ const {
     openDetaileModal,
     openStandardModal,
     unSelectStandard,
-} = useAtom({property: {}});
+} = usePropterty();
 
 </script>
 

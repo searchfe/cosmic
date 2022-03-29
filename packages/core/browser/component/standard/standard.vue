@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { defineEmits } from 'vue';
+import { defineEmits, toRaw } from 'vue';
 import { Input } from 'cosmic-vue';
 
 const props = withDefaults(defineProps<{
-    standard: Record<string, string>,
+    standard: Record<string, string> | null,
     active: boolean,
     classes?: string,
     canEdit: boolean,
@@ -11,9 +11,15 @@ const props = withDefaults(defineProps<{
     active: false,
     standard: () => ({}),
     classes: '',
-    canEdit: true,
+    canEdit: false,
 });
-const emits = defineEmits(['click', 'hover']);
+const emits = defineEmits(['click', 'hover', 'change']);
+
+function changeHandler({value}: {value: string}) {
+    const style = toRaw(props.standard);
+    emits('change', {...style, name: value});
+}
+
 </script>
 
 
@@ -38,14 +44,15 @@ const emits = defineEmits(['click', 'hover']);
                     <span
                         v-if="!canEdit"
                         :class="$style.title"
-                    >{{ standard?.title }}</span>
+                    >{{ standard?.name }}</span>
                     <div
                         v-else
                         @click.stop="() => {}"
                     >
                         <Input
                             size="sm"
-                            :value="standard?.title"
+                            :value="standard?.name"
+                            @on-change="changeHandler"
                         />
                     </div>
                 </div>

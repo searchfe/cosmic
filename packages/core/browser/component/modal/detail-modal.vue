@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, reactive } from 'vue';
 import { Button, Input} from 'cosmic-vue';
 import { buttonSolid } from 'cosmic-ui';
 import { useModal } from './setup';
@@ -7,7 +7,7 @@ import { useModal } from './setup';
 const props = withDefaults(defineProps<{
     title: string,
     target: HTMLElement,
-    standard: Record<string, string>
+    standard: Record<string, string> | null,
 }>(), {
     title: '',
     standard: () => ({}),
@@ -25,6 +25,8 @@ comoutPositionStyle();
 onMounted(() => {
     setContainerTarget(container.value as unknown as HTMLElement);
 });
+
+const styles = reactive(props.standard);
 
 </script>
 
@@ -49,7 +51,8 @@ onMounted(() => {
                 </div>
                 <Input
                     size="sm"
-                    :value="standard.title"
+                    :value="styles.name"
+                    @on-input="(event) => styles.name = event.value"
                 />
             </div>
             <div
@@ -61,7 +64,7 @@ onMounted(() => {
                 </div>
                 <div>
                     <span class="-v-px sm">
-                        {{ standard.description }}
+                        {{ styles.description }}
                     </span>
                 </div>
             </div>
@@ -76,14 +79,14 @@ onMounted(() => {
                 size="sm"
                 :styles="buttonSolid"
                 class="rounded-full w-64"
-                @click="() => emits('ok')"
+                @click="() => emits('cancel')"
             >
                 取消
             </Button>
             <Button
                 size="sm"
                 class="rounded-full w-64"
-                @click="() => emits('cancel')"
+                @click="() => emits('ok')"
             >
                 确定
             </Button>

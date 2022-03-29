@@ -21,7 +21,7 @@ withDefaults(defineProps<ProjectProps>(), {
     <Card :class="$style['card-container']">
         <div class="flex flex-col" :class="$style['card-content']">
             <div class="w-full flex items-center justify-center" :class="$style['card-preview']">
-                项目预览图
+                稿件预览图
             </div>
             <div :class="$style['card-content-info']">
                 <div class="h-16 text-md">

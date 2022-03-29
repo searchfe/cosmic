@@ -49,7 +49,7 @@ const emits = defineEmits(['add-project']);
 function onToggleProject (data: { id: string}) {
     const { id: project } = data;
     if (project) {
-        router.push({ name: 'project:detail', query: { project } });
+        router.push({ name: 'project:detail', query: { project, team: props.team } });
     }
 }
 

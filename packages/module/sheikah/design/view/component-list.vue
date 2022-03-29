@@ -1,22 +1,33 @@
 <script lang="ts" setup>
-import { Input } from 'cosmic-vue';
+import { ref } from 'vue';
+import { Input, Dialog, Button, Space } from 'cosmic-vue';
 import { router as vueRouter } from '@cosmic/core/browser';
 import CompCard from '../component/card/comp.vue';
 import CompFilter from '../component/filter.vue';
 import Region from '../../common/component/region.vue';
+import { service } from '@cosmic/core/browser';
+import { inject } from '@cosmic/core/parts';
 
-const { useRouter } = vueRouter;
+const { useRouter, useRoute } = vueRouter;
 
+const routerService = inject<service.RouterServiceAPI>(service.TOKENS.Router);
 const router = useRouter();
+const route = useRoute();
+const createComponentDialogIsOpenRef = ref(false);
+const newComponentNameRef = ref('');
 
 function onClickComp() {
     router.push({ name: 'component:detail' });
 }
 
+function addComponent() {
+    const team: string = route.query.team;
+    routerService.push({ name: 'blueprint', params: { team, name: newComponentNameRef.value } });
+}
 </script>
 <template>
     <Region title="组件">
-        <div class="flex flex-start">
+        <div class="flex flex-start" :class="$style.filter">
             <comp-filter text="基础类" num="82">
                 <template #icon>
                     <i-cosmic-scale />
@@ -61,7 +72,11 @@ function onClickComp() {
         <template #bottom>
             <div class="flex justify-between items-center">
                 <Input placeholder="组件查询" :class="$style.input" />
-                <div :class="$style.add" class="flex justify-center items-center">
+                <div
+                    :class="$style.add"
+                    class="flex justify-center items-center"
+                    @click="createComponentDialogIsOpenRef = true"
+                >
                     <i-cosmic-plus class="text-md" />
                 </div>
             </div>
@@ -75,6 +90,22 @@ function onClickComp() {
             <comp-card />
         </div>
     </Region>
+    <Dialog v-model:visible="createComponentDialogIsOpenRef" :show-close-icon="false" title="创建组件">
+        <div class="my-12 flex justify-between items-center">
+            <span style="flex-shrink: 0;">名称</span>
+            <Input v-model:value="newComponentNameRef" size="sm" placeholder="起个名字吧" />
+        </div>
+        <template #actions>
+            <Space justify="end">
+                <Button
+                    @click="createComponentDialogIsOpenRef = false; newComponentNameRef = '';"
+                >
+                    取消
+                </Button>
+                <Button @click="addComponent">确定</Button>
+            </Space>
+        </template>
+    </Dialog>
 </template>
 <style module>
 .card-list {
@@ -88,7 +119,7 @@ function onClickComp() {
     width: 268px;
     border: 1px solid #1f1f1f;
     border-radius: 4px;
-    opacity: .3;
+    opacity: 0.3;
 }
 .add {
     height: 36px;
@@ -110,5 +141,12 @@ function onClickComp() {
     .card-list {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
+}
+
+.filter {
+    overflow-x: scroll;
+}
+.filter::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
 }
 </style>
