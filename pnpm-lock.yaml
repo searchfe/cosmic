@@ -9,7 +9,6 @@ importers:
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
       '@vueuse/gesture': ^2.0.0-beta.1
-      color: ~4.2.1
       cosmic-icon: 0.0.7
       cosmic-ui-alpha: ^0.0.33
       cosmic-vue: ^0.0.48
@@ -46,7 +45,6 @@ importers:
       vue-tsc: 0.32.1
     dependencies:
       '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.29
-      color: 4.2.1
       cosmic-ui-alpha: 0.0.33
       cosmic-vue: 0.0.48
       electron-updater: 4.6.5
