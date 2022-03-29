@@ -18,6 +18,7 @@ export class TextStyle extends BaseStyle implements Internal.TextStyle {
 
     public clone(): TextStyle {
         const target = JSON.parse(JSON.stringify(this));
-        return {...target, id: `${Date.now()}`};
+        target.clone = this.clone;
+        return {...target};
     }
 }

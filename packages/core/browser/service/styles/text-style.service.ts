@@ -1,6 +1,22 @@
 import { injectable } from '@cosmic/core/inversify';
 import { BaseService } from './base.service';
 import { TextStyle } from '@cosmic/core/parts';
+// import { urql } from '@cosmic/core/browser';
+
+// const { useQuery, useMutation  } = urql;
+
+// export function query<Data, QueryDTO>(schema: string, query: MaybeRef<QueryDTO>, fields: string[] = []) {
+//     return useQuery<Data, { query: QueryDTO }>({
+//         query: `query ($fields: [String!], $query: QueryBaseDTO) {
+//             ${schema}s(fields: $fields, query: $query) {
+//                 id,
+//                 ${fields.join(',')}
+//             }
+//         }`,
+//         variables: query,
+//         requestPolicy: 'cache-and-network',
+//     });
+// }
 
 /**
  * todo: figma 字体没有fontweight
@@ -10,11 +26,12 @@ import { TextStyle } from '@cosmic/core/parts';
 export default class TextService extends BaseService<TextStyle> {
     constructor() {
         super();
+        // this.fetchServiceStyles();
         this.setType('TEXT');
         [1,2,3,4].map(item => this.transformToLocal({
             id: item + '',
             description: item,
-            name: item,
+            name: item + '',
             fontSize: '12',
             fontFamily: '1',
             style: '',
@@ -24,7 +41,7 @@ export default class TextService extends BaseService<TextStyle> {
         [5,6,7,8].map(item => this.transformToLocal({
             id: item + '',
             description: item,
-            name: item,
+            name: item + '',
             fontSize: '12',
             fontFamily: '1',
             style: '',
@@ -38,7 +55,9 @@ export default class TextService extends BaseService<TextStyle> {
     }
 
     public fetchServiceStyles(): TextStyle[] {
-        this.setserviceStyles([]);
+        // const { data: fontData, fetching: fontFetching, executeQuery: refreshFont } = query<{ fonts: gql.Font[] }, gql.QueryBaseDTO>(
+        //     'font', {}, ['id', 'team', 'style', 'variant', 'weight', 'size', 'lineHeight', 'family', 'name'],
+        // );
     }
 
     public transformToLocal(fontStyle: gql.Font): TextStyle {

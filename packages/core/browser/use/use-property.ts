@@ -1,4 +1,4 @@
-import { reactive, ref, watch, computed } from 'vue';
+import { reactive, ref, watch, computed, nextTick, toRaw } from 'vue';
 import { inject } from '@cosmic/core/parts';
 import type { BaseStyle } from '@cosmic/core/parts';
 import type { interfaces } from '@cosmic/core/inversify';
@@ -13,11 +13,13 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     const styleId = ref('1');
 
-    const isStandard = computed(() => !baseService.isLocalStyle(styleId.value));
+    const reset = ref(1);
 
-    const standard = computed(() => !baseService.isLocalStyle(styleId.value) ?  baseService.get(styleId.value) : {});
-    
-    const standardList = ref(baseService.getServiceStyles());
+    const isStandard = computed(() => reset.value && !baseService.isLocalStyle(styleId.value));
+
+    const standard = computed(() => reset.value && baseService.get(styleId.value));
+
+    const standardList = computed(() => reset.value && baseService.getServiceStyles());
 
     const isShowStandardModal = ref(false);
 
@@ -25,10 +27,9 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     const detailTarget = ref<HtmlElement | null | undefined>(null);
 
-    const detailEdit = ref(null);
-
     const standardTarget = ref<HtmlElement | null >(null);
 
+    let detailEdit = null;
 
     function cancelStandardModal() {
         isShowStandardModal.value = false;
@@ -38,8 +39,16 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         isShowDetailModal.value = false;
     }
 
-    function openDetaileModal(target: HtmlElement, standard) {
-        detailEdit.value = standard || baseService.get(styleId.value);
+    async function saveDetail() {
+        isShowDetailModal.value = false;
+        await baseService.updateStyle(detailEdit);
+        reset.value++;
+    }
+
+    async function openDetaileModal(target: HtmlElement, standard) {
+        isShowDetailModal.value = false;
+        await nextTick();
+        detailEdit = (toRaw(standard) || baseService.get(styleId.value)).clone();
         detailTarget.value = target;
         isShowDetailModal.value = true;
     }
@@ -57,7 +66,6 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     function unRef() {
         styleId.value = baseService.unref(styleId.value)?.id;
-        console.log(styleId.value);
         isShowStandardModal.value = false;
         isShowDetailModal.value = false;
     }
@@ -71,6 +79,10 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         standardList.value = baseService.getLocalStyles();
     }
 
+    function getDetailEdit() {
+        return detailEdit;
+    }
+
     return {
         styleId,
         isStandard,
@@ -80,14 +92,15 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         detailTarget,
         standardTarget,
         standardList,
-        detailEdit,
 
         updateStyle,
         cancelStandardModal,
         cancelDetailModal,
+        saveDetail,
         selectStandard,
         openDetaileModal,
         openStandardModal,
         unRef,
+        getDetailEdit,
     };
 }
