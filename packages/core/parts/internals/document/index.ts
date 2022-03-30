@@ -46,3 +46,5 @@ export * from './style/fill-style';
 export * from './style/radius-style';
 export * from './style/effect-style';
 export * from './style/stroke-style';
+
+export * from './property';

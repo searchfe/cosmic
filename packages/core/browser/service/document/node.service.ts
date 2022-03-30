@@ -1,7 +1,7 @@
 import { type Observable, Subject, BehaviorSubject, of } from '@cosmic/core/rxjs';
 import { injectable } from '@cosmic/core/inversify';
 
-import { type SceneNode, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode } from '@cosmic/core/parts';
+import { type SceneNode, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeService {
@@ -17,23 +17,27 @@ export default class NodeService {
         this._document.id = id();
         this.document = new BehaviorSubject(this._document);
         this.selection = new Subject();
-        this.currentPage = new Subject();
         this.addPage();
     }
     setSelection(ids: string[]) {
-        if (ids.length === 0) return;
-        if (ids.length === 1) {
+        if (ids.length === 0) {
+            // do sth
+            this._selection = [];
+        } else if (ids.length === 1) {
             this._selection = [this._document.findOne(node => node.id == ids[0])];
         } else {
             this._selection = this._document.findAll(node => ids.indexOf(node.id) > -1);
         }
-        this.updatePage(findParentPage(this._selection[0]));
+        if (this._selection.length) {
+            this.updateCurrentPage(findParentPage(this._selection[0]));
+        }
         this.selection.next(this._selection);
     }
     addPage() {
         const page = new PageNode();
         page.name = `页面 ${increaseId(this._document, page.type)}`;
         page.id = id();
+        page.backgrounds = [new SolidPaint({r: 244, g: 244, b: 244})];
         this._document.appendChild(page);
         this.updateDocument();
         this.setSelection([page.id]);
@@ -50,16 +54,32 @@ export default class NodeService {
         this.setSelection([frame.id]);
     }
     deleteSelection() {
+        let shouldChangePage = false;
+        this._selection.forEach(node => {
+            if (node.id === this._currentPage.id) {
+                shouldChangePage = true;
+            }
+            node.remove();
+        });
         this.document.next(this._document);
-        this._selection.forEach(node => node.remove());
+        if (shouldChangePage && this._document.children.length) {
+            this.updateCurrentPage(this._document.children[0]);
+            this.setSelection([this._document.children[0].id]);
+        } else {
+            this.setSelection([]);
+        }
     }
     updateDocument() {
         this.document.next(this._document);
     }
-    updatePage(page?: PageNode) {
+    updateCurrentPage(page?: PageNode) {
         if (page && page.id !== this._currentPage?.id) {
             this._currentPage = page;
-            this.currentPage.next(this._currentPage);
+            if (this.currentPage) {
+                this.currentPage.next(this._currentPage);
+            } else {
+                this.currentPage = new BehaviorSubject(this._currentPage);
+            }
         }
     }
 }
