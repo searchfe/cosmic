@@ -1,7 +1,7 @@
 import { type Observable, Subject, BehaviorSubject, of } from '@cosmic/core/rxjs';
 import { injectable } from '@cosmic/core/inversify';
 
-import { type SceneNode, DocumentNode, PageNode, ComponentNode, TextNode } from '@cosmic/core/parts';
+import { type SceneNode, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeService {
@@ -12,21 +12,10 @@ export default class NodeService {
     private _selection: Array<PageNode | SceneNode> = [];
     constructor() {
         this._document = new DocumentNode();
-        // const page = new PageNode();
-        // const comp = new ComponentNode();
-        // const text = new TextNode();
-        // text.name = '文本';
-        // page.name = '模板-1';
-        // comp.name = '组件';
-        // text.id = '10';
-        // page.id = '20';
-        // comp.id = '30';
         this._document.id = id();
-        // comp.appendChild(text);
-        // page.appendChild(comp);
-        // this._document.appendChild(page);
         this.document = new BehaviorSubject(this._document);
         this.selection = new Subject();
+        this.addPage();
     }
     setSelection(ids: string[]) {
         if (ids.length === 0) return;
@@ -39,19 +28,35 @@ export default class NodeService {
     }
     addPage() {
         const page = new PageNode();
-        const existedPage = this._document.findAll(node => node.type === 'PAGE');
-        page.name = `页面-${existedPage.length}`;
+        page.name = `页面 ${increaseId(this._document, page.type)}`;
         page.id = id();
         this._document.appendChild(page);
-        this.document.next(this._document);
+        this.updateDocument();
+    }
+    addFrame() {
+        const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
+        if (!page) return;
+        const frame = new FrameNode();
+        frame.id = id();
+        frame.name = `画框 ${increaseId(this._document, frame.type)}`;
+        page.appendChild(frame);
+        this.updateDocument();
     }
     deleteSelection() {
         this._selection.forEach(node => node.remove());
         console.log(this._selection, this._document);
         this.document.next(this._document);
     }
+    updateDocument() {
+        this.document.next(this._document);
+    }
 }
 
 function id() {
     return new Date().getTime().toString();
+}
+
+function increaseId(document: DocumentNode | PageNode, type: string) {
+    const existed = document.findAll(node => node.type === type);
+    return existed.length + 1;
 }
