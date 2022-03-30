@@ -16,7 +16,7 @@ const { executeMutation: createComponent } = useMutation<
 >(createComponentQuery);
 
 const { executeMutation: updateComponent } = useMutation<
-    { updateComponent: boolean },
+    { updateComponentByTeamAndName: boolean },
     { data: gql.CreateComponentDTO }
 >(updateComponentQuery);
 
@@ -88,7 +88,7 @@ function save() {
         } else {
             console.log(data);
             updateComponent({ data }).then(res => {
-                if (res.data?.updateComponent) {
+                if (res.data?.updateComponentByTeamAndName) {
                     componentService.component.next(data);
                     routerService.back();
                 }
