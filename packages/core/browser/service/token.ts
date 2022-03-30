@@ -9,4 +9,5 @@ export const TOKENS = {
     StrokeStyle: Symbol.for('StrokeStyleService'),
     Component: Symbol.for('ComponentService'),
     Keyboard: Symbol.for('KeyboardService'),
+    Tool: Symbol.for('ToolService'),
 };

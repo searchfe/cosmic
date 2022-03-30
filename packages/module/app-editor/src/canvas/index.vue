@@ -17,25 +17,38 @@ const gesturer = new Gesturer({
     scrollY: guideVertical,
 });
 
-const keyboardService = inject<service.KeyboardService>(service.TOKENS.Keyboard);
+const toolService = inject<service.ToolService>(service.TOKENS.Tool);
 
-keyboardService.keydown('Space').subscribe(() => gesturer.enableDrag());
-keyboardService.keyup('Space').subscribe(() => gesturer.disableDrag());
+toolService.state().subscribe(state => {
+    if (state !== service.ToolState.Hand) {
+        gesturer.disableDrag();
+    }
+    switch(state) {
+        case service.ToolState.Hand:
+            gesturer.enableDrag();
+            break;
+        case service.ToolState.Frame:
+            wrapper.value.style.cursor = 'crosshair';
+            break;
+        default:
+            wrapper.value.style.cursor = 'default';
+    }
 
+});
 
 const box = ref();
 onMounted(() => {
     gesturer.resize();
     window.addEventListener('resize', () => { gesturer.resize(); });
-    gesturer.moveToCenter();
+    gesturer.moveTo(100, 100);
 });
 function onChange(e: any) {
     console.log(e);
 }
 </script>
 <template>
-    <div ref="wrapper" class="relative w-full h-full overflow-hidden canvas">
-        <div ref="content" class="container inline-block">
+    <div ref="wrapper" class="relative w-full h-full overflow-hidden">
+        <div ref="content" class="inline-block overflow-visable w-0 h-0">
             <slot />
         </div>
         <div ref="box" class="box" @click="() => gesturer.moveToStart()" />
@@ -75,10 +88,6 @@ function onChange(e: any) {
     </div>
 </template>
 <style scoped>
-.canvas {
-    background-color: var(--color-gray-100);
-}
-
 .ruler {
     position: absolute;
     top: 0;
@@ -102,7 +111,7 @@ function onChange(e: any) {
     height: 25px;
     background: #FCFCFC;
     box-sizing: border-box;
-    cursor:crosshair;
+    cursor: crosshair;
     top: 0;
     left: 0;
     z-index: 1;
@@ -122,10 +131,6 @@ function onChange(e: any) {
     height: 1px;
     width: 100%;
     top: 100%;
-}
-
-.container {
-    background: var(--color-white);
 }
 
 </style>

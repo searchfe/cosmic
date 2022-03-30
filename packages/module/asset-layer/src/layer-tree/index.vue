@@ -45,8 +45,8 @@ function changeSelection(event: TreeNodeEvent){
         <template #label="slotProps">
             {{ slotProps.nodeData.label }}
         </template>
-        <template #subfix>
-            <i-cosmic-eye-open />
+        <template #subfix="slotProps">
+            <i-cosmic-eye-open v-if="slotProps.nodeData.type !== 'PAGE'" />
         </template>
     </tree>
 </template>
