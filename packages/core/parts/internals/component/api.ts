@@ -78,6 +78,6 @@ export const deleteComponentQuery = `
 
 export const updateComponentQuery = `
     mutation ($data: CreateComponentDTO!) {
-        updateComponent(data: $data)
+        updateComponentByTeamAndName(data: $data)
     }
 `;
