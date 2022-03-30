@@ -11,9 +11,12 @@ declare module 'vue' {
     ICosmicCorner: typeof import('~icons/cosmic/corner')['default']
     ICosmicDark: typeof import('~icons/cosmic/dark')['default']
     ICosmicFeedback: typeof import('~icons/cosmic/feedback')['default']
+    ICosmicFont: typeof import('~icons/cosmic/font')['default']
     ICosmicInput: typeof import('~icons/cosmic/input')['default']
     ICosmicIntersection: typeof import('~icons/cosmic/intersection')['default']
     ICosmicLayout: typeof import('~icons/cosmic/layout')['default']
+    ICosmicLineHeight: typeof import('~icons/cosmic/line-height')['default']
+    ICosmicLineWidth: typeof import('~icons/cosmic/line-width')['default']
     ICosmicLock: typeof import('~icons/cosmic/lock')['default']
     ICosmicMinus: typeof import('~icons/cosmic/minus')['default']
     ICosmicMore: typeof import('~icons/cosmic/more')['default']
@@ -24,6 +27,7 @@ declare module 'vue' {
     ICosmicShadow: typeof import('~icons/cosmic/shadow')['default']
     ICosmicSun: typeof import('~icons/cosmic/sun')['default']
     ICosmicText: typeof import('~icons/cosmic/text')['default']
+    ICosmicWidthAuto: typeof import('~icons/cosmic/width-auto')['default']
   }
 }
 

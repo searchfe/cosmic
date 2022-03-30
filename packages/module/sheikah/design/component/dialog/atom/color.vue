@@ -6,14 +6,11 @@ import Dialog from '../common.vue';
 import { color } from '@cosmic/core/browser';
 import ColorCell from '../../cell/color.vue';
 
-import type { AtomType } from '../../../types';
-
 
 const { executeMutation: createColor } = createUnique(['id']);
 const { executeMutation: updateColor } = update();
 
-interface AtomModal {
-    atomType: AtomType;
+interface ColorOption {
     name: string;
     id: string;
     day: string;
@@ -21,7 +18,7 @@ interface AtomModal {
     dark: string;
 }
 
-const props = withDefaults(defineProps<AtomModal>(), {
+const props = withDefaults(defineProps<ColorOption>(), {
     id: '',
     name: '',
     day: '',
@@ -179,6 +176,8 @@ function onOK(args: { team: string }) {
     grid-template-rows: 26px;
     align-items: center;
     row-gap: 6px;
+    padding-left: 17px;
+    padding-right: 17px;
 }
 .color {
     width: 14px;
