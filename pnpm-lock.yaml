@@ -11,7 +11,7 @@ importers:
       '@vueuse/gesture': ^2.0.0-beta.1
       cosmic-icon: 0.0.7
       cosmic-ui-alpha: ^0.0.33
-      cosmic-vue: ^0.0.48
+      cosmic-vue: ^0.0.49
       cross-env: 7.0.3
       csstype: ^2.6
       dotenv: ~16.0.0
@@ -46,7 +46,7 @@ importers:
     dependencies:
       '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.29
       cosmic-ui-alpha: 0.0.33
-      cosmic-vue: 0.0.48
+      cosmic-vue: 0.0.49
       electron-updater: 4.6.5
       reflect-metadata: 0.1.13
       resolve: 1.22.0
@@ -1635,8 +1635,8 @@ packages:
     resolution: {integrity: sha512-cQGkzAW7jrxUiccKxOczMzmFK8bkOdXmsaCgUDHYA8KN4mRLG/2levIkpx5ZvMFlz5oDIkEeBy6xAEvI2Ot0NA==}
     dev: false
 
-  /cosmic-vue/0.0.48:
-    resolution: {integrity: sha512-3gGvSKdGmXxsNVVeRflaVViBKQFTV4XvMhti17Tx8KYNldocBtoNKMu1I2qMRNj0G6tE0qBpQat7nIExjX3kTQ==}
+  /cosmic-vue/0.0.49:
+    resolution: {integrity: sha512-5uCFc+3akjR4iMk7RNo/stgx79XCJPsIMOxvUEY7i8STBLBaH6EhFm4wPtZqG9RiIa6jJIulQggvBFdUlB4vJQ==}
     dependencies:
       '@babel/types': 7.17.0
       lodash.kebabcase: 4.1.1

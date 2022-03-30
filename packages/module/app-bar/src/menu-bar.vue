@@ -7,10 +7,16 @@ import buttonMenu from './menu-button.module.css';
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 function handler(e) {
-    if (e.value === 'new-page') {
-        nodeService.addPage();
-    } else if (e.value === 'del') {
-        nodeService.deleteSelection();
+    switch(e.value) {
+        case 'new-page':
+            nodeService.addPage();
+            break;
+        case 'new-frame':
+            nodeService.addFrame();
+            break;
+        case 'del':
+            nodeService.deleteSelection();
+            break;
     }
 }
 </script>
@@ -37,7 +43,7 @@ function handler(e) {
                 <Button class="min-w-40 mx-1" :styles="buttonMenu" size="xs">置入</Button>
             </template>
             <MenuOption
-                v-for="data of [{id: 'new-page', label: '新页面'}]"
+                v-for="data of [{id: 'new-page', label: '页面'}, {id: 'new-frame', label: '画框'}]"
                 :key="data.id"
                 :value="data.id"
                 :label="data.label"
