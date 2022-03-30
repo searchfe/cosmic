@@ -1,24 +1,24 @@
 <template>
     <div 
-        :class="[styles['yz-card-container'], yzClick]" 
+        :class="[styles['prefab-card-container'], yzClick]" 
         @mouseenter="onContententer"
         @mouseleave="onContentLeave"
         @click="onContentClick"
     >
-        <div :class="[styles['yz-card']]">
-            <div :class="[hovering && props.yzdata.state !== 'yz-regular' ? hovering: '']">
+        <div :class="[styles['prefab-card']]">
+            <div :class="[hovering && props.yzdata.state !== 'prefab-regular' ? hovering: '']">
                 <Popover placement="bottom">
                     <section v-if="slots.iconLeft" :class="[styles['header-icon'], props.yzdata.state, size]">
                         <slot name="iconLeft" />
                     </section>
                     <template #content>
-                        <div :class="[styles['yz-tootip']]" class="ope-regular">加入规范</div>
+                        <div :class="[styles['prefab-tootip']]" class="ope-regular">加入规范</div>
                     </template>
                 </Popover>
             </div>
             <div :class="[hovering]" class="menu">
                 <Menu
-                    :size="state"
+                    size="sm"
                     value="2"
                     @on-change="menuChangeHandler"
                 >
@@ -31,7 +31,7 @@
                 </Menu>
             </div>
         </div>
-        <div v-show="hovering" :class="[styles['yz-tootip'], styles['yz-card-title']]">{{ props.yzdata.title }}</div>
+        <div v-show="hovering" :class="[styles['prefab-tootip'], styles['prefab-card-title']]">{{ props.yzdata.title }}</div>
     </div>
 </template>
 <script setup lang="ts">
@@ -58,13 +58,13 @@ const hovering = ref('');
 const yzClick = ref('');
 
 const onContententer = function () {
-    hovering.value = 'yz-hovering';
+    hovering.value = 'prefab-hovering';
 };
 const onContentLeave = function () {
     hovering.value = '';
 };
 const onContentClick = function () {
-    yzClick.value = 'yz-click';
+    yzClick.value = 'prefab-click';
 };
 const menuChangeHandler = () => {
     // eslint-disable-next-line no-console

@@ -4,7 +4,7 @@ import { buttonLight, buttonSolid, buttonDashed, buttonText, buttonLink} from 'c
 import ThemePicker from './theme-picker.vue';
 </script>
 <template>
-    <div class="board-test relative min-w-560">
+    <div class="board-test relative min-w-500">
         <theme-picker />
         <div class="font-bold text-lg">Button List</div>
         <div>Size - xs / sm / md / lg</div>

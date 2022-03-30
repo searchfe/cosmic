@@ -9,6 +9,7 @@ export interface RouterServiceAPI {
     push(to: RouteLocationRaw): RouteChangeResult;
     replace(to: RouteLocationRaw): RouteChangeResult;
     currentRoute(): RouteLocationNormalizedLoaded;
+    back(): void;
 }
 
 
@@ -46,5 +47,8 @@ export class RouterService implements RouterServiceAPI {
         return this.router.currentRoute.value;
     }
 
+    back() {
+        return this.router.back();
+    }
 }
 

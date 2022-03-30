@@ -35,6 +35,9 @@ function onChange(e: any) {
 </script>
 <template>
     <div ref="wrapper" class="relative w-full h-full overflow-hidden canvas">
+        <div ref="content" class="container inline-block">
+            <slot />
+        </div>
         <div ref="box" class="box" @click="() => gesturer.moveToStart()" />
         <div class="ruler horizontal">
             <widget-guides
@@ -69,10 +72,6 @@ function onChange(e: any) {
                 @change-guides="onChange"
             />
         </div>
-
-        <div ref="content" class="container inline-block">
-            <slot />
-        </div>
     </div>
 </template>
 <style scoped>
@@ -84,7 +83,6 @@ function onChange(e: any) {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 20;
 }
 .ruler.horizontal {
   left: 0px;
@@ -104,8 +102,10 @@ function onChange(e: any) {
     height: 25px;
     background: #FCFCFC;
     box-sizing: border-box;
-    z-index: 21;
     cursor:crosshair;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 .box:before,
 .box:after {

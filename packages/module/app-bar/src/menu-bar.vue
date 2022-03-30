@@ -1,6 +1,18 @@
 <script lang="ts" setup>
-import { Button } from 'cosmic-vue';
+import { service } from '@cosmic/core/browser';
+import { inject } from '@cosmic/core/parts';
+import { Button, Menu, MenuOption } from 'cosmic-vue';
 import buttonMenu from './menu-button.module.css';
+
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+
+function handler(e) {
+    if (e.value === 'new-page') {
+        nodeService.addPage();
+    } else if (e.value === 'del') {
+        nodeService.deleteSelection();
+    }
+}
 </script>
 <template>
     <div class="flex justify-start ml-6">
@@ -8,12 +20,46 @@ import buttonMenu from './menu-button.module.css';
             <i-cosmic-play />
         </Button>
         <Button class="min-w-40 mx-1" :styles="buttonMenu" size="xs">文件</Button>
-        <Button class="min-w-40 mx-1" :styles="buttonMenu" size="xs">编辑</Button>
+        <Menu size="xs" value="2" :class="$style.menu" @on-change="handler">
+            <template #activator>
+                <Button class="min-w-40 mx-1" :styles="buttonMenu" size="xs">编辑</Button>
+            </template>
+            <MenuOption
+                v-for="data of [{id: 'del', label: '删除'}]"
+                :key="data.id"
+                :value="data.id"
+                :label="data.label"
+                :has-check="false"
+            />
+        </Menu>
+        <Menu size="xs" value="2" :class="$style.menu" @on-change="handler">
+            <template #activator>
+                <Button class="min-w-40 mx-1" :styles="buttonMenu" size="xs">置入</Button>
+            </template>
+            <MenuOption
+                v-for="data of [{id: 'new-page', label: '新页面'}]"
+                :key="data.id"
+                :value="data.id"
+                :label="data.label"
+                :has-check="false"
+            />
+        </Menu>
         <Button class="min-w-40 mx-1" :styles="buttonMenu" size="xs">帮助</Button>
         <!-- <Button>文件</Button>
         <Button>编辑</Button>
-        <Button>帮助</Button> -->
+        <Button>帮助</Button>-->
     </div>
 </template>
 <style module>
+.menu ul, .menu li{
+    background: var(--color-gray-200);
+    color: var(--color-dark);
+    font-size: 1.2rem;
+}
+.menu li:hover{
+    background: var(--color-gray-300);
+}
+.menu li:active, .menu li:global(.active){
+    background: var(--color-gray-400);
+}
 </style>

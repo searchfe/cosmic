@@ -3,7 +3,7 @@ import Card from '../../../common/component/card.vue';
 interface CompCardOption {
     img: string;
     title: string;
-    meta: string;
+    meta: string[];
 }
 withDefaults(defineProps<CompCardOption>(), {
     img: 'https://fe-dev.bj.bcebos.com/image.png',
@@ -19,14 +19,13 @@ withDefaults(defineProps<CompCardOption>(), {
             </div>
             <div :class="$style.info" class="flex flex-col justify-around">
                 <div class="text-lg">
-                    2n 按钮
+                    {{ title }}
                 </div>
                 <div :class="$style.ref" class="flex justify-start text-sm">
-                    <span>综合关联 23</span>
-                    <span class="inline-block mx-10"> | </span>
-                    <span>设计实例 23</span>
-                    <span class="inline-block mx-10"> | </span>
-                    <span>线上资产 23</span>
+                    <template v-for="str, index of meta" :key="index">
+                        <span>{{ str }}</span>
+                        <span v-if="index !== meta.length - 1" class="inline-block mx-10"> | </span>
+                    </template>
                 </div>
             </div>
         </div>

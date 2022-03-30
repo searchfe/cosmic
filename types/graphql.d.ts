@@ -1,4 +1,3 @@
-
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -88,7 +87,6 @@ export interface QueryComponentDTO {
 export interface QueryDraftDTO {
     name?: Nullable<string>;
     team?: Nullable<string>;
-    project?: Nullable<string>;
     id?: Nullable<string>;
 }
 
@@ -258,7 +256,6 @@ export interface CreateVariant {
 export interface CreateDraftDTO {
     name: string;
     team: string;
-    project: string;
 }
 
 export interface User {
@@ -420,7 +417,6 @@ export interface Draft {
     id: string;
     name: string;
     team: string;
-    project: string;
 }
 
 export interface IQuery {
@@ -479,35 +475,36 @@ export interface IMutation {
     deleteProject(id: string): boolean | Promise<boolean>;
     createColor(data: CreateColorDTO): Color | Promise<Color>;
     createUniqueColor(filter: QueryColorDTO, data: CreateColorDTO): Color | Promise<Color>;
-    updateColor(data: CreateColorDTO): Color | Promise<Color>;
+    updateColor(data: CreateColorDTO): boolean | Promise<boolean>;
     deleteColor(id: string): Color | Promise<Color>;
     createFont(data: CreateFontDTO): Font | Promise<Font>;
     createUniqueFont(filter: QueryFontDTO, data: CreateFontDTO): Font | Promise<Font>;
-    updateFont(data: CreateFontDTO): Font | Promise<Font>;
+    updateFont(data: CreateFontDTO): boolean | Promise<boolean>;
     deleteFont(id: string): Font | Promise<Font>;
     createShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
     createUniqueShadow(filter: QueryShadowDTO, data: CreateShadowDTO): Shadow | Promise<Shadow>;
-    updateShadow(data: CreateShadowDTO): Shadow | Promise<Shadow>;
+    updateShadow(data: CreateShadowDTO): boolean | Promise<boolean>;
     deleteShadow(id: string): Shadow | Promise<Shadow>;
     createBorder(data: CreateBorderDTO): Border | Promise<Border>;
     createUniqueBorder(filter: QueryBorderDTO, data: CreateBorderDTO): Border | Promise<Border>;
-    updateBorder(data: CreateBorderDTO): Border | Promise<Border>;
+    updateBorder(data: CreateBorderDTO): boolean | Promise<boolean>;
     deleteBorder(id: string): Border | Promise<Border>;
     createCorner(data: CreateCornerDTO): Corner | Promise<Corner>;
     createUniqueCorner(filter: QueryCornerDTO, data: CreateCornerDTO): Corner | Promise<Corner>;
-    updateCorner(data: CreateCornerDTO): Corner | Promise<Corner>;
+    updateCorner(data: CreateCornerDTO): boolean | Promise<boolean>;
     deleteCorner(id: string): Corner | Promise<Corner>;
     createOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
     createUniqueOpacity(filter: QueryOpacityDTO, data: CreateOpacityDTO): Opacity | Promise<Opacity>;
-    updateOpacity(data: CreateOpacityDTO): Opacity | Promise<Opacity>;
+    updateOpacity(data: CreateOpacityDTO): boolean | Promise<boolean>;
     deleteOpacity(id: string): Opacity | Promise<Opacity>;
     createComponent(data: CreateComponentDTO): Component | Promise<Component>;
     createUniqueComponent(filter: QueryComponentDTO, data: CreateComponentDTO): Component | Promise<Component>;
-    updateComponent(data: CreateComponentDTO): Component | Promise<Component>;
+    updateComponent(data: CreateComponentDTO): boolean | Promise<boolean>;
     deleteComponent(id: string): Component | Promise<Component>;
+    deleteComponentByTeamAndName(data: QueryComponentDTO): number | Promise<number>;
     createDraft(data: CreateDraftDTO): Draft | Promise<Draft>;
     createUniqueDraft(filter: QueryDraftDTO, data: CreateDraftDTO): Draft | Promise<Draft>;
-    updateDraft(data: CreateDraftDTO): Draft | Promise<Draft>;
+    updateDraft(data: CreateDraftDTO): boolean | Promise<boolean>;
     deleteDraft(id: string): Draft | Promise<Draft>;
 }
 

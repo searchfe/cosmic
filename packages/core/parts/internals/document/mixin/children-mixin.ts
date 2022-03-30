@@ -4,7 +4,7 @@ import type{  SceneNode, PageNode } from '../index';
 type NodeType = Internal.NodeType;
 
 export default class ChildrenMixin implements Internal.ChildrenMixin {
-    readonly children: Array<SceneNode> = [];
+    children: Array<SceneNode> = [];
 
     appendChild(child: SceneNode) {
         this.children.push(child);
