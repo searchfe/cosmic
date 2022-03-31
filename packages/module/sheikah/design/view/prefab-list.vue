@@ -1,20 +1,33 @@
 <script lang="ts" setup>
+import { watchEffect, ref } from 'vue';
 import { Input } from 'cosmic-vue';
 import { router as vueRouter } from '@cosmic/core/browser';
 import CompCard from '../component/card/comp.vue';
 import CompFilter from '../component/filter.vue';
 import Region from '../../common/component/region.vue';
+import { query } from '../api/prefab';
 
 const { useRouter } = vueRouter;
 
 const router = useRouter();
+const { data, fetching } = query({});
+const prefabs = ref<Partial<gql.Prefab>[]>([]);
 
-function onClickComp() {
-    router.push({ name: 'component:detail' });
+watchEffect(() => {
+    if (data.value?.prefabs && !fetching.value) {
+        prefabs.value = data.value.prefabs || [];
+    }
+});
+
+function onClickComp(id?: string) {
+    if (id) {
+        router.push({ name: 'prefab:detail', query: { prefab: id } });
+    }
 }
 </script>
+
 <template>
-    <Region title="组件">
+    <Region title="预置">
         <div class="flex flex-start" :class="$style.filter">
             <comp-filter text="基础类" num="82">
                 <template #icon>
@@ -67,11 +80,8 @@ function onClickComp() {
         </template>
     </Region>
     <Region inverse>
-        <div :class="$style['card-list']" @click="onClickComp">
-            <comp-card />
-            <comp-card />
-            <comp-card />
-            <comp-card />
+        <div :class="$style['card-list']">
+            <comp-card v-for="prefab in prefabs" :key="prefab.id" v-bind="prefab" @click.stop="onClickComp(prefab.id)" />
         </div>
     </Region>
 </template>

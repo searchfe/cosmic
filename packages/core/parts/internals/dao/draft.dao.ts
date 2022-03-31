@@ -1,5 +1,6 @@
 import type { Client } from '@urql/core';
 
+
 type DraftFields = (keyof gql.Draft)[];
 
 export default function draftDAO(client: Client) {
