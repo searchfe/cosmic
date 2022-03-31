@@ -5,7 +5,7 @@ import { type ObjectDirective } from 'vue';
 export default {
     mounted(el: HTMLElement, binding) {
         const container = binding.instance?.$.appContext.provides?.container;
-        const targetNode: PageNode | FrameNode | GroupNode = binding.value.target;
+        let targetNode: PageNode | FrameNode | GroupNode = binding.value.target;
         const root: HTMLElement = binding.value.container && el.getElementsByClassName(binding.value.container)[0] || el;
         if (!container) return;
         const toolService: service.ToolService = container.get(service.TOKENS.Tool);
@@ -38,8 +38,15 @@ export default {
         });
         el.addEventListener('mousemove', (event: MouseEvent) => {
             if (editState && editingChild) {
-                editingChild.width = Math.max(event.offsetX - startX, 10);
-                editingChild.height = Math.max(event.offsetY - startY, 10);
+                const width = event.offsetX - startX;
+                const height = event.offsetY - startY;
+                editingChild.width = Math.abs(width);
+                editingChild.height = Math.abs(height);
+                editingChild.x = width > 0 ? originX : originX + width;
+                editingChild.y = height > 0 ? originY : originY + height ;
+
+                // editingChild.width = Math.max(event.offsetX - startX, 10);
+                // editingChild.height = Math.max(event.offsetY - startY, 10);
                 nodeService.update([editingChild]);
             }
         });
@@ -53,6 +60,7 @@ export default {
         });
 
         function appendChild(x: number, y: number, width = 10, height = 10) {
+            targetNode = (el as any).__c_target || targetNode;
             switch(editState) {
                 case service.ToolState.Frame:
                     editingChild = nodeService.addFrame(targetNode, {
@@ -72,5 +80,8 @@ export default {
                 break;
             }
         }
+    },
+    updated(el, binding) {
+        (el as any).__c_target = binding.value.target;
     },
 } as ObjectDirective;

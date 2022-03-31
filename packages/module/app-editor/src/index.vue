@@ -12,8 +12,9 @@ const page = ref();
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 nodeService.currentPage.subscribe(pageNode => {
-    console.log('update pageNode', pageNode);
     page.value = pageNode;
+    
+
 });
 
 </script>
@@ -21,7 +22,9 @@ nodeService.currentPage.subscribe(pageNode => {
 <template>
     <div class="h-full flex">
         <widget-assets class="h-full w-270 min-w-270 border-right" />
-        <page-node-render v-creator="{target: page, container: 'base-point'}" :node="page" class="h-full w-full">
+        <page-node-render
+            v-creator="{target: page, container: 'base-point'}" :node="page" class="h-full w-full"
+        >
             <widget-canvas class="h-full w-full overflow-hidden">
                 <children-render :children="page.children" />
             </widget-canvas>

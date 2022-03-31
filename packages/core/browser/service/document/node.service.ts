@@ -35,6 +35,9 @@ export default class NodeService {
         }
         this.selection.next(this._selection);
     }
+    getSelection() {
+        return this._selection || [];
+    }
     addPage() {
         const page = new PageNode();
         page.name = `页面 ${increaseId(this._document, page.type)}`;
@@ -52,7 +55,6 @@ export default class NodeService {
         frame.name = `画框 ${increaseId(this._document, frame.type)}`;
         frame.parent = target;
         frame.backgrounds = [new SolidPaint({r: 255, g: 255, b: 255})];
-
         target.appendChild(frame);
         this.updateDocument();
         this.setSelection([frame.id]);
