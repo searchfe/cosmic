@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import Card from '../../../common/component/card.vue';
+
 withDefaults(defineProps<{ name: string }>(), {
     name: '2n 按钮',
 });
 </script>
 <template>
-    <Card style="border: 1px solid rgba(151, 151, 151, .7);">
+    <Card style="border: 1px solid rgba(151, 151, 151, .1);">
         <div :class="$style.card">
             <div :class="$style['card-content']" class="w-full h-full">
                 <div :class="$style.preview" class="w-full" />

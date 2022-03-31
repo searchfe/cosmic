@@ -36,9 +36,9 @@ function refresh() {
             </div>
         </template>
     </Region>
-    <Region title=" 组件数量 4" inverse>
+    <Region title=" 组件数量 1" inverse>
         <div :class="$style['comp-list']">
-            <comp-card v-for="item in [1, 2, 3, 4]" :key="item" />
+            <comp-card v-for="item in [1]" :key="item" />
         </div>
     </Region>
 </template>
