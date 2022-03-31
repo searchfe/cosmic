@@ -15,6 +15,9 @@ function handler(e) {
         case 'new-frame':
             toolService.set(service.ToolState.Frame);
             break;
+        case 'new-text':
+            toolService.set(service.ToolState.Text);
+            break;
         case 'del':
             nodeService.deleteSelection();
             break;
@@ -59,7 +62,11 @@ function handler(e) {
                 <Button class="min-w-40 mx-1" :styles="buttonMenu" size="xs">置入</Button>
             </template>
             <MenuOption
-                v-for="data of [{id: 'new-page', label: '页面&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P'}, {id: 'new-frame', label: '画框&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F'}]"
+                v-for="data of [
+                    {id: 'new-page', label: '页面&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P'},
+                    {id: 'new-frame', label: '画框&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F'},
+                    {id: 'new-text', label: '文本&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T'},
+                ]"
                 :key="data.id"
                 :value="data.id"
                 :label="data.label"

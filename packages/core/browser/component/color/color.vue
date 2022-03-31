@@ -13,7 +13,7 @@ const reactivStyle = reactive(props.colorStyle);
 
 const emits = defineEmits(['onChange']);
 
-const c = new Color.rgb(props.colorStyle.color.r, props.colorStyle.color.g, props.colorStyle.color.b).hex();
+const c = Color.rgb(props.colorStyle.color.r, props.colorStyle.color.g, props.colorStyle.color.b).hex();
 
 const rg = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/;
 
@@ -37,7 +37,6 @@ const colorBurHandler = () => {
 };
 
 const opacityBurHandler = () => {
-    console.log(opacity.value);
     let number = Number(opacity.value || 100);
     if (Object.is(NaN, number)) number = 100;
     let value = number;

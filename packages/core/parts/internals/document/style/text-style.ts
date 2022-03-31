@@ -8,12 +8,12 @@ export class TextStyle extends BaseStyle implements Internal.TextStyle {
     lineHeight: Internal.LineHeight;
     paragraphIndent: number;
     paragraphSpacing: number;
-    textCase: TextCase;
+    textCase: Internal.TextCase;
 
-    constructor() {
-        super();
+    constructor(id: string) {
+        super(id, 'TEXT');
         // TODO:
-        this.text = 'TEXT';
+        this.type = 'TEXT';
     }
 
     public clone(): TextStyle {

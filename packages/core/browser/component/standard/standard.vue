@@ -4,7 +4,7 @@ import { Input } from 'cosmic-vue';
 
 const props = withDefaults(defineProps<{
     standard: Record<string, string> | null,
-    active: boolean,
+    active?: boolean,
     classes?: string,
     canEdit?: boolean,
 }>(), {

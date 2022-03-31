@@ -1,14 +1,29 @@
 <script lang="ts" setup>
-import  type { SceneNode} from '@cosmic/core/parts';
+import { service } from '@cosmic/core/browser';
+import  { type SceneNode, inject} from '@cosmic/core/parts';
+import { ref } from 'vue';
 import FrameRender from './frame.vue';
 interface RenderNodeProps {
     children: SceneNode[],
 }
-
+interface updateList {
+    [id: string]: string;
+}
 
 withDefaults(defineProps<RenderNodeProps>(), {
 
 });
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+
+nodeService.renderNodes.subscribe(([nodes, timestamp]) => {
+    const value: updateList = {};
+    nodes.forEach(node => {
+        value[node.id] = timestamp;
+    });
+    changeNode.value = value;
+});
+
+const changeNode = ref<updateList>({});
 
 </script>
 <template>
@@ -16,6 +31,6 @@ withDefaults(defineProps<RenderNodeProps>(), {
         v-for="child in children"
         :key="child.id"
     >
-        <frame-render v-if="child.type === 'FRAME'" :node="child" />
+        <frame-render v-if="child.type === 'FRAME'" :timestamp="changeNode[child.id]" :node="child" />
     </template>
 </template>

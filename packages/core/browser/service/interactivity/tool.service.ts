@@ -41,6 +41,7 @@ export default class ToolService {
 export enum ToolState {
     Null,
     Frame,
+    Text,
     Hand,
 }
 

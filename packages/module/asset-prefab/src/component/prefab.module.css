@@ -162,3 +162,9 @@
     top: 11rem;
     z-index: 10;
 }
+.prefab-menu-footer {
+    display: flex;
+    place-content: flex-start space-between;
+    border: 1px solid #FF1C1C20;
+    padding: 12px;
+}
