@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import { Select, Row, Col, Input, RadioGroup, RadioButton } from 'cosmic-vue';
+import { Select, SelectOption, Row, Col, Input, RadioGroup, RadioButton } from 'cosmic-vue';
 import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
 import type { TextStyle } from '@cosmic/core/parts';
 
@@ -156,7 +156,7 @@ const realStyle = reactive(props.textStyle);
                 </div>
             </Col>
         </Row>
-        <Row v-if="showlayout" :class="$style.row">
+        <Row v-if="props.showlayout" :class="$style.row">
             <Col :span="16">
                 <div :class="$style['radio-left']">
                     <RadioGroup value="1">

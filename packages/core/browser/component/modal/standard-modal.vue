@@ -7,13 +7,11 @@ import { useModal } from './setup';
 
 const props = withDefaults(defineProps<{
     title: string,
-    standardList: any[],
-    selected?: any,
-    target?: HTMLElement,
+    standardList: unknown[],
+    target: HTMLElement,
 }>(), {
     title: '',
     select: () => ({}),
-    standardList: () => [],
 });
 
 const emits = defineEmits(['cancel', 'showDetail',  'select', 'add', 'change']);
