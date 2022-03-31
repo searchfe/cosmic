@@ -48,7 +48,7 @@ function onChange(e: any) {
 </script>
 <template>
     <div ref="wrapper" class="relative w-full h-full overflow-hidden">
-        <div ref="content" class="inline-block overflow-visable w-0 h-0">
+        <div ref="content" class="relative inline-block overflow-visable w-0 h-0 base-point flex">
             <slot />
         </div>
         <div ref="box" class="box" @click="() => gesturer.moveToStart()" />

@@ -1,6 +1,6 @@
 import { Container, type interfaces  }  from '@cosmic/core/inversify';
 import { TOKENS } from './token';
-import { gqlClient, type GqlClient } from './gql.service';
+import { create as createGqlClient, type GqlClient } from './gql.service';
 import { RouterService, type RouterServiceAPI } from './router/index.service';
 import NodeService from './document/node.service';
 import ComponentService from './document/component.service';
@@ -20,12 +20,7 @@ export function load(options: interfaces.ContainerOptions) {
     const container = new Container(options);
 
     // urql: gql client
-    container.bind<GqlClient>(TOKENS.GqlClient).toFactory<GqlClient>(() => {
-        return () => {
-            return gqlClient;
-        };
-    });
-
+    container.bind<GqlClient>(TOKENS.GqlClient).toConstantValue(createGqlClient());
     // router
     container.bind<RouterServiceAPI>(TOKENS.Router).toConstantValue(RouterService.create());
     container.bind<KeyboardService>(TOKENS.Keyboard).to(KeyboardService);

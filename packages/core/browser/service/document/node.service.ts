@@ -1,7 +1,7 @@
 import { type Observable, Subject, BehaviorSubject, of } from '@cosmic/core/rxjs';
 import { injectable } from '@cosmic/core/inversify';
 
-import { type SceneNode, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint } from '@cosmic/core/parts';
+import { type SceneNode, type FrameNodeOptions, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeService {
@@ -42,16 +42,19 @@ export default class NodeService {
         this.updateDocument();
         this.setSelection([page.id]);
     }
-    addFrame() {
-        const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
-        if (!page) return;
-        const frame = new FrameNode();
+    addFrame(target: PageNode | FrameNode | GroupNode, options?: FrameNodeOptions) {
+        // const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
+        // if (!page) return;
+        const frame = new FrameNode(options);
         frame.id = id();
         frame.name = `画框 ${increaseId(this._document, frame.type)}`;
-        frame.parent = page;
-        page.appendChild(frame);
+        frame.parent = target;
+        frame.backgrounds = [new SolidPaint({r: 255, g: 255, b: 255})];
+
+        target.appendChild(frame);
         this.updateDocument();
         this.setSelection([frame.id]);
+        return frame;
     }
     deleteSelection() {
         let shouldChangePage = false;
@@ -71,6 +74,7 @@ export default class NodeService {
     }
     updateDocument() {
         this.document.next(this._document);
+        if (this._currentPage) this.currentPage.next(this._currentPage);
     }
     updateCurrentPage(page?: PageNode) {
         if (page && page.id !== this._currentPage?.id) {

@@ -2,10 +2,11 @@
     border: 1px solid var(--color-primary-500);
 }
 .info {
-    background-color: var(--color-primary-500);
+    position: relative;
+    bottom: -2rem;
     color: var(--color-light);
-    font-size: 1.2rem;
-    bottom: 0;
-    left: 50%;
-    margin-left: -50%;
+    font-size: 1.0rem;
+    line-height: 1.4rem;
+    padding: 0 0.2rem 0.1rem 0.2rem;
+    border-radius: 0.2rem;
 }
