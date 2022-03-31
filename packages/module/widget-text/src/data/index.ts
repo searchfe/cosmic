@@ -26,16 +26,39 @@ export const GlyphData = [
 
 export const FontSize = [
     {
-        value: '12',
+        value: 12,
         label: '12',
     },
     {
-        value: '13',
+        value: 13,
         label: '13',
     },
     {
-        value: '14',
+        value: 14,
         label: '14',
+    },
+    {
+        value: 15,
+        label: '15',
+    },
+    {
+        value: 16,
+        label: '16',
+    },
+    {
+        value: 20,
+        label: '20',
+    },
+    {
+        value: 24,
+        label: '24',
+    },{
+        value: 32,
+        label: '32',
+    },
+    {
+        value: 36,
+        label: '36',
     },
 ];
 
