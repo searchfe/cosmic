@@ -2,7 +2,7 @@
 import WidgetProperties from './properties/index.vue';
 import WidgetAssets from './assets/index.vue';
 import WidgetCanvas from './canvas/index.vue';
-import PageNode from './node/page.vue';
+import PageNodeRender from './render/page.vue';
 
 import { inject } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
@@ -20,11 +20,11 @@ nodeService.currentPage.subscribe(pageNode => {
 <template>
     <div class="h-full flex">
         <widget-assets class="h-full w-270 min-w-270 border-right" />
-        <page-node :node="page" class="h-full w-full">
+        <page-node-render v-creator="{target: page, container: 'base-point'}" :node="page" class="h-full w-full">
             <widget-canvas class="h-full w-full overflow-hidden">
-                {{ page.id }}
+                <children-render :children="page.children" />
             </widget-canvas>
-        </page-node>
+        </page-node-render>
         <widget-properties class="h-full w-270 min-w-270 border-left" />
     </div>
 </template>

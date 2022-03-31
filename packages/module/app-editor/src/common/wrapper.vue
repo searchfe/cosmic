@@ -9,14 +9,14 @@ interface WrapperProps {
 
 withDefaults(defineProps<WrapperProps>(), {
     styles:() => _styles,
-    hidden: true,
+    hidden: false,
     info: '',
-    
+
 });
 </script>
 <template>
-    <div :hidden="hidden" class="relative" :class="styles.root">
-        <div class="absolute" :class="styles.info">{{ info }}</div>
+    <div v-if="!hidden" class="relative w-full h-full flex flex-col-reverse items-center" :class="styles.root">
+        <div :class="styles.info">{{ info }}</div>
     </div>
 </template>
 <style>
