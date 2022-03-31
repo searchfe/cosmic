@@ -7,7 +7,7 @@ import { useModal } from './setup';
 const props = withDefaults(defineProps<{
     title: string,
     target: HTMLElement,
-    standard: Record<string, string> | null,
+    standard: Record<string, string>,
 }>(), {
     title: '',
     standard: () => ({}),

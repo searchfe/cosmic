@@ -29,10 +29,6 @@ const {
     unRef,
 } = usePropterty(service.TOKENS.FillStyle);
 
-function text(standard) {
-     console.log(standard);
-}
-
 </script>
 
 <template>
@@ -85,7 +81,7 @@ function text(standard) {
 
     <m-standard-modal
         v-if="isShowStandardModal"
-        title="文字规范"
+        title="颜色"
         :standard-list="standardList"
         :target="standardTarget"
         @cancel="cancelStandardModal"
@@ -107,7 +103,7 @@ function text(standard) {
     </m-standard-modal>
     <m-detail-modal
         v-if="isShowDetailModal"
-        title="文字规范"
+        title="颜色"
         :target="detailTarget"
         :standard="getDetailEdit()"
         @cancel="cancelDetailModal"

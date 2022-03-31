@@ -10,4 +10,6 @@ export const TOKENS = {
     Component: Symbol.for('ComponentService'),
     Keyboard: Symbol.for('KeyboardService'),
     Tool: Symbol.for('ToolService'),
+    
+    FontDao: Symbol.for('FontDaoService'),
 };

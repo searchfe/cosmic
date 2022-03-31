@@ -23,6 +23,7 @@ const {
         openDetaileModal,
         openStandardModal,
         unRef,
+        saveStyle,
     } = usePropterty(service.TOKENS.TextStyle);
 
  </script>
@@ -52,6 +53,7 @@ const {
             title="文字规范"
             :standard-list="standardList"
             :target="standardTarget"
+            @add="saveStyle"
             @cancel="cancelStandardModal"
             @select="(event) => selectStandard(event.data)"
             @show-detail="(event) => openDetaileModal(event.target, event.data)"

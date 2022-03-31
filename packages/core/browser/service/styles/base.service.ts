@@ -1,6 +1,9 @@
 import { injectable } from '@cosmic/core/inversify';
+import { Subject } from '@cosmic/core/rxjs';
 @injectable()
-export class BaseService<T extends Record<string, unknown> & {id: string}> {
+export class BaseService<T extends {id: string, clone: () => T}, P> {
+
+    public subject: Subject<P>;
 
     // 当前service类型
     protected type: string;
@@ -14,17 +17,27 @@ export class BaseService<T extends Record<string, unknown> & {id: string}> {
         this.serviceStyles = new Map<string, T>();
     }
 
+    public create(): any {
+        // todo
+    }
+
     public setType(type: string) {
         this.type = type;
     }
 
     public get(styleId: string) {
-        return this.localStyles.get(styleId) || this.serviceStyles.get(styleId);
+        let style = this.localStyles.get(styleId) || this.serviceStyles.get(styleId);
+        // 当前style为空的时候创建默认
+        if (!style) {
+            style = this.create() as T;
+            this.addLocalStyle(style);
+        }
+        return style;
     }
 
-    public delete(styleId: string): T {
+    public delete(styleId: string) {
         if (this.localStyles.has(styleId)) {
-            return this.localStyles.remove(styleId);
+            return this.localStyles.delete(styleId);
         }
         this.deleteService(styleId);
     }
@@ -40,8 +53,8 @@ export class BaseService<T extends Record<string, unknown> & {id: string}> {
         return style;
     }
 
-    public deleteService(styleId: string): T{
-        return this.localStyles.remove(styleId);
+    public deleteService(styleId: string) {
+        return this.localStyles.delete(styleId);
     }
     
     public initLocalStyles(styles: T[]) {
@@ -56,15 +69,14 @@ export class BaseService<T extends Record<string, unknown> & {id: string}> {
         return [...this.serviceStyles.values()];
     }
 
-    public async addServiceStyle(style: T): Promise<T[]> {
-        
+    public async addServiceStyle(style: T) {
         this.serviceStyles.set(style.id, style);
         return style;
     }
 
     public unref(styleId: string): T {
         const style = this.get(styleId).clone();
-        style.id = Date.now();
+        style.id = Date.now() + '';
         this.addLocalStyle(style);
         return style;
     }
@@ -78,18 +90,11 @@ export class BaseService<T extends Record<string, unknown> & {id: string}> {
     }
 
     public async updateStyle(style: T) {
-        await Promise.resolve();
-
-        this.updateServiceStyles(style);
-        return style;
+        // TODO
     }
 
     public updateLocalStyles(style: T): T {
         this.localStyles.set(style.id, style);
-    }
-
-    public updateServiceStyles(style: T): T {
-        this.serviceStyles.set(style.id, style);
     }
 
     public isLocalStyle(styleId: string) {

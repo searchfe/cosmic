@@ -1,4 +1,4 @@
-import { reactive, ref, watch, computed, nextTick, toRaw, watch } from 'vue';
+import { reactive, ref, watch, computed, nextTick, toRaw, watch, watchEffect, toRefs } from 'vue';
 import { inject } from '@cosmic/core/parts';
 import type { BaseStyle } from '@cosmic/core/parts';
 import type { interfaces } from '@cosmic/core/inversify';
@@ -15,20 +15,11 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     const styleId = ref('1');
 
-    const reset = ref(1);
+    const isStandard = ref(false);
 
-    const isStandard = computed(() => reset.value && !baseService.isLocalStyle(styleId.value));
+    const standard = ref(resetStyle(styleId.value));
 
-    const standard = computed(() => {
-        if (stopWatch) {
-            stopWatch();
-        }
-        const style = reset.value && reactive(baseService.get(styleId.value));
-        stopWatch = watch(style, changeStyle);
-        return style;
-    });
-
-    const standardList = computed(() => reset.value && baseService.getServiceStyles());
+    const standardList = ref(baseService.getServiceStyles());
 
     const isShowStandardModal = ref(false);
 
@@ -40,8 +31,36 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     let detailEdit = null;
 
+    baseService.subject?.subscribe(subject => {
+        switch (subject.type) {
+            case 'R':
+                standardList.value = subject.data;
+                resetStyle();
+        } 
+    });
+
+    watchEffect(() =>  {
+        standard.value = resetStyle(styleId.value);
+    });
+
+    function resetStyle(id: string) {
+        if (stopWatch) {
+            stopWatch();
+        }
+        const style = baseService.get(id);
+        if (styleId.value !== style.id) {
+            styleId.value = style.id;
+        }
+        isStandard.value = !baseService.isLocalStyle(styleId.value);
+        const reactivStyle = reactive(style);
+        stopWatch = watch([reactivStyle], changeStyle);
+        return reactivStyle;
+    }
+
+    
+
     function changeStyle() {
-        console.log(122112);
+        // TODO
     }
 
     function cancelStandardModal() {
@@ -55,7 +74,6 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
     async function saveDetail() {
         isShowDetailModal.value = false;
         await baseService.updateStyle(detailEdit);
-        reset.value++;
     }
 
     async function openDetaileModal(target: HtmlElement, standard) {
@@ -92,8 +110,11 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         standardList.value = baseService.getLocalStyles();
     }
 
+    async function saveStyle() {
+        baseService.saveStyle(styleId.value);
+    }
+
     function getDetailEdit() {
-        console.log(1);
         return detailEdit;
     }
 
@@ -116,5 +137,6 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         openStandardModal,
         unRef,
         getDetailEdit,
+        saveStyle,
     };
 }
