@@ -4,6 +4,7 @@ import  { type SceneNode, inject} from '@cosmic/core/parts';
 import { ref } from 'vue';
 import FrameRender from './frame.vue';
 import TextRender from './text.vue';
+import ComponentRender from './component.vue';
 interface RenderNodeProps {
     children: SceneNode[],
 }
@@ -34,5 +35,6 @@ const changeNode = ref<updateList>({});
     >
         <frame-render v-if="child.type === 'FRAME'" :timestamp="changeNode[child.id]" :node="child" />
         <text-render v-if="child.type === 'TEXT'" :timestamp="changeNode[child.id]" :node="child" />
+        <component-render v-else-if="child.type === 'COMPONENT'" :timestamp="changeNode[child.id]" :node="child" />
     </template>
 </template>

@@ -22,6 +22,14 @@ function handler(e) {
             nodeService.deleteSelection();
             break;
     }
+    if (e?.value?.match(/screen-([\d]+)/)) {
+        nodeService.update(
+            nodeService.getSelection().filter(node => node.type === 'FRAME').map((node: any) => {
+                node.width = parseInt(RegExp.$1);
+                return node;
+            }),
+        );
+    }
 }
 </script>
 <template>
@@ -66,6 +74,24 @@ function handler(e) {
                     {id: 'new-page', label: '页面&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P'},
                     {id: 'new-frame', label: '画框&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F'},
                     {id: 'new-text', label: '文本&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T'},
+                ]"
+                :key="data.id"
+                :value="data.id"
+                :label="data.label"
+                :has-check="false"
+            />
+        </Menu>
+        <Menu size="xs" value="2" :class="$style.menu" @on-change="handler">
+            <template #activator>
+                <Button class="min-w-40 mx-1" :styles="buttonMenu" size="xs">图层</Button>
+            </template>
+            <MenuOption
+                v-for="data of [
+                    {id: 'screen-360', label: '断点&nbsp;&nbsp;360'},
+                    {id: 'screen-480', label: '断点&nbsp;&nbsp;480'},
+                    {id: 'screen-640', label: '断点&nbsp;&nbsp;640'},
+                    {id: 'screen-960', label: '断点&nbsp;&nbsp;960'},
+                    {id: 'screen-1280', label: '断点&nbsp;&nbsp;1280'},
                 ]"
                 :key="data.id"
                 :value="data.id"

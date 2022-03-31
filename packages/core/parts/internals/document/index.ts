@@ -7,6 +7,7 @@ import FrameNode from './sence/frame-node';
 
 export type { FrameNodeOptions} from './sence/frame-node';
 export type { TextNodeOptions } from './sence/text-node';
+export type { ComponentNodeOptions } from './sence/component-node';
 
 export { DocumentNode, PageNode };
 

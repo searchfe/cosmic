@@ -43,6 +43,7 @@ export enum ToolState {
     Frame,
     Text,
     Hand,
+    Component,
 }
 
 
