@@ -16,7 +16,7 @@
                     </template>
                 </Popover>
             </div>
-            <div :class="[hovering]" class="menu">
+            <!-- <div :class="[hovering]" class="menu">
                 <Menu
                     size="sm"
                     value="2"
@@ -29,6 +29,39 @@
                     </template>
                     <MenuOption v-for="data of opeSelect" :key="data.value" :value="data.value" :label="data.label" :has-check="false" />
                 </Menu>
+            </div> -->
+            <div :class="[hovering]" class="menu">
+                <Menu
+                    size="sm"
+                    value="2"
+                >
+                    <template #activator>
+                        <section v-if="slots.iconRight" :class="[styles['header-icon'], size]">
+                            <slot name="iconRight" />
+                        </section>
+                    </template>
+                    <template #menu>
+                        <Option 
+                            v-for="data of opeSelect" 
+                            :key="data.value"
+                            size="md" 
+                            v-bind="data"
+                            :value="data.value" 
+                            :label="data.label" 
+                            @on-change="menuChangeHandler"
+                        >
+                            <template #right>
+                                {{ data.num }}
+                            </template>
+                        </Option>
+                    </template>
+                    <template #footer>
+                        <div :class="[styles['prefab-menu-footer']]">
+                            <span>规范调用</span>
+                            <span>200</span>
+                        </div>
+                    </template>
+                </Menu>
             </div>
         </div>
         <div v-show="hovering" :class="[styles['prefab-tootip'], styles['prefab-card-title']]">{{ props.yzdata.title }}</div>
@@ -36,7 +69,7 @@
 </template>
 <script setup lang="ts">
 import { ref, useSlots } from 'vue';
-import { Menu, MenuOption, Popover } from 'cosmic-vue';
+import { Menu, Option, Popover } from 'cosmic-vue';
 import styles from './prefab.module.css';
 
 interface Yzdata {
@@ -71,8 +104,9 @@ const menuChangeHandler = () => {
     console.log(11);
 };
 const opeSelect = ref([{
-    label: '高亮显示     7',
+    label: '高亮显示',
     value: 1,
+    num: 7,
 },{
     label: '重命名',
     value: 2,
