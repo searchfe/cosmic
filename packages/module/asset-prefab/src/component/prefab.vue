@@ -16,20 +16,6 @@
                     </template>
                 </Popover>
             </div>
-            <!-- <div :class="[hovering]" class="menu">
-                <Menu
-                    size="sm"
-                    value="2"
-                    @on-change="menuChangeHandler"
-                >
-                    <template #activator>
-                        <section v-if="slots.iconRight" :class="[styles['header-icon'], size]">
-                            <slot name="iconRight" />
-                        </section>
-                    </template>
-                    <MenuOption v-for="data of opeSelect" :key="data.value" :value="data.value" :label="data.label" :has-check="false" />
-                </Menu>
-            </div> -->
             <div :class="[hovering]" class="menu">
                 <Menu
                     size="sm"
