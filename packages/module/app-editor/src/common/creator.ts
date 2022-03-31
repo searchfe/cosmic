@@ -16,9 +16,10 @@ export default {
         let editingChild: SceneNode | undefined;
         toolService.state().subscribe((state: service.ToolState) => {
             if (
-                state === service.ToolState.Frame
+                state === service.ToolState.Frame ||
+                state === service.ToolState.Text
             ) {
-                editState = service.ToolState.Frame;
+                editState = state;
             } else {
                 editState = undefined;
             }
@@ -37,10 +38,9 @@ export default {
         });
         el.addEventListener('mousemove', (event: MouseEvent) => {
             if (editState && editingChild) {
-                const width = Math.max(event.offsetX - startX, 10);
-                const height = Math.max(event.offsetY - startY, 10);
-                editingChild.remove();
-                appendChild(originX, originY, width, height);
+                editingChild.width = Math.max(event.offsetX - startX, 10);
+                editingChild.height = Math.max(event.offsetY - startY, 10);
+                nodeService.update([editingChild]);
             }
         });
         el.addEventListener('mouseup', () => {
@@ -55,6 +55,14 @@ export default {
         function appendChild(x: number, y: number, width = 10, height = 10) {
             switch(editState) {
                 case service.ToolState.Frame:
+                    editingChild = nodeService.addFrame(targetNode, {
+                        x,
+                        y,
+                        width,
+                        height,
+                    });
+                break;
+                case service.ToolState.Text:
                     editingChild = nodeService.addFrame(targetNode, {
                         x,
                         y,

@@ -12,6 +12,7 @@ const page = ref();
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 nodeService.currentPage.subscribe(pageNode => {
+    console.log('update pageNode', pageNode);
     page.value = pageNode;
 });
 

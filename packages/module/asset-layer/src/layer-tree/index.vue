@@ -20,6 +20,7 @@ nodeService.selection.subscribe(nodes => {
 });
 
 function changeSelection(event: TreeNodeEvent){
+    // console.log(event.id, treedata.value);
     nodeService.setSelection([event.id]);
 }
 

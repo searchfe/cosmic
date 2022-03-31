@@ -8,6 +8,7 @@ export default class NodeService {
     public document: Subject<DocumentNode>;
     public selection: Subject<Array<PageNode | SceneNode>>;
     public currentPage: Subject<PageNode>;
+    public renderNodes: Subject<[SceneNode[], string]>;
 
     private _document: DocumentNode;
     private _selection: Array<PageNode | SceneNode> = [];
@@ -17,6 +18,7 @@ export default class NodeService {
         this._document.id = id();
         this.document = new BehaviorSubject(this._document);
         this.selection = new Subject();
+        this.renderNodes = new Subject();
         this.addPage();
     }
     setSelection(ids: string[]) {
@@ -85,6 +87,9 @@ export default class NodeService {
                 this.currentPage = new BehaviorSubject(this._currentPage);
             }
         }
+    }
+    update(nodes: SceneNode[]) {
+        this.renderNodes.next([nodes, new Date().getTime().toString()]);
     }
 }
 
