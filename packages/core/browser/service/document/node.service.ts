@@ -1,7 +1,8 @@
 import { type Observable, Subject, BehaviorSubject, of } from '@cosmic/core/rxjs';
 import { injectable } from '@cosmic/core/inversify';
 
-import { type SceneNode, type FrameNodeOptions, type TextNodeOptions, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
+
+import { type SceneNode, type FrameNodeOptions, type TextNodeOptions, type ComponentNodeOptions, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeService {
@@ -34,9 +35,6 @@ export default class NodeService {
             this.updateCurrentPage(findParentPage(this._selection[0]));
         }
         this.selection.next(this._selection);
-    }
-    getSelection() {
-        return this._selection || [];
     }
     addPage() {
         const page = new PageNode();
@@ -73,6 +71,18 @@ export default class NodeService {
         return textNode;
     }
 
+    addComponent(target: PageNode | FrameNode | GroupNode, options?: ComponentNodeOptions) {
+        // const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
+        // if (!page) return;
+        const comp = new ComponentNode(options);
+        comp.id = id();
+        comp.name = `按钮 ${increaseId(this._document, comp.type)}`;
+        comp.parent = target;
+        target.appendChild(comp);
+        this.updateDocument();
+        this.setSelection([comp.id]);
+        return comp;
+    }
     deleteSelection() {
         let shouldChangePage = false;
         this._selection.forEach(node => {

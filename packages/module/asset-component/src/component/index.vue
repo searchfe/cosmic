@@ -13,13 +13,20 @@ componentService.components.subscribe(next => {
 const toolService = inject<service.ToolService>(service.TOKENS.Tool);
 
 function addBtn() {
+    pos.value.x = 0;
+    pos.value.y = 0;
     toolService.set(service.ToolState.Component);
 }
 function move(event: MouseEvent){
     if (exampleShow.value && example.value) {
         pos.value.x = event.clientX - example.value.getBoundingClientRect().width / 2;
         pos.value.y = event.clientY - example.value.getBoundingClientRect().height /2;
-        console.log(pos.value);
+    }
+}
+function up(){
+    if (exampleShow.value && example.value) {
+        exampleShow.value = false;
+        toolService.cancel(service.ToolState.Component);
     }
 }
 
@@ -34,6 +41,7 @@ toolService.state().subscribe(state => {
 });
 onMounted(() => {
     document.addEventListener('mousemove', move);
+    document.addEventListener('mouseup', up);
 });
 </script>
 <template>
