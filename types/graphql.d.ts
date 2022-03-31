@@ -1,3 +1,4 @@
+
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -6,7 +7,7 @@
 
 /* tslint:disable */
 /* eslint-disable */
-namespace gql {
+namespace gql{
 export interface QueryProjectDTO {
     id?: Nullable<string>;
     name?: Nullable<string>;
@@ -88,6 +89,7 @@ export interface QueryDraftDTO {
     name?: Nullable<string>;
     team?: Nullable<string>;
     project?: Nullable<string>;
+    data?: Nullable<JSON>;
     id?: Nullable<string>;
 }
 
@@ -181,12 +183,12 @@ export interface CreateColorDTO {
 export interface CreateFontDTO {
     name: string;
     team: string;
-    style: string;
-    variant: string;
-    weight: string;
-    size: string;
-    lineHeight: string;
-    family: string;
+    style?: Nullable<string>;
+    variant?: Nullable<string>;
+    weight?: Nullable<string>;
+    size?: Nullable<string>;
+    lineHeight?: Nullable<string>;
+    family?: Nullable<string>;
 }
 
 export interface CreateShadowDTO {
@@ -258,6 +260,7 @@ export interface CreateDraftDTO {
     name: string;
     team: string;
     project: string;
+    data: JSON;
 }
 
 export interface User {
@@ -420,6 +423,7 @@ export interface Draft {
     name: string;
     team: string;
     project: string;
+    data: JSON;
 }
 
 export interface IQuery {
@@ -505,7 +509,6 @@ export interface IMutation {
     updateComponent(data: CreateComponentDTO): boolean | Promise<boolean>;
     deleteComponent(id: string): boolean | Promise<boolean>;
     deleteComponentByTeamAndName(data: QueryComponentDTO): number | Promise<number>;
-    updateComponentByTeamAndName(data: CreateComponentDTO): boolean | Promise<boolean>;
     createDraft(data: CreateDraftDTO): Draft | Promise<Draft>;
     createUniqueDraft(filter: QueryDraftDTO, data: CreateDraftDTO): Draft | Promise<Draft>;
     updateDraft(data: CreateDraftDTO): boolean | Promise<boolean>;
@@ -523,5 +526,6 @@ export interface ISubscription {
     onDraftCreate(): Draft | Promise<Draft>;
 }
 
+export type JSON = any;
 type Nullable<T> = T | null;
 }

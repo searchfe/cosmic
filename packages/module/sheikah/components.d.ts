@@ -27,7 +27,6 @@ declare module 'vue' {
     ICosmicShadow: typeof import('~icons/cosmic/shadow')['default']
     ICosmicSun: typeof import('~icons/cosmic/sun')['default']
     ICosmicText: typeof import('~icons/cosmic/text')['default']
-    ICosmicWidthAuto: typeof import('~icons/cosmic/width-auto')['default']
   }
 }
 
