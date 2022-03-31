@@ -37,6 +37,7 @@ function onSave() {
                 name: newDraftName.value,
                 project,
                 team,
+                data:'{}',
             },
         }).then(res => {
             if (res.data) {
