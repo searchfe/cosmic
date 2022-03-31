@@ -1,23 +1,26 @@
 <script lang="ts" setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, reactive} from 'vue';
+import Color from 'color';
 const props = withDefaults(defineProps<{
-    theme?: 'light' | 'dark',
-    color?: string,
-    opacity?: string,
-    
+    colorStyle: any,
+    theme?: string,
 }>(),  {
     theme: 'light',
-    color: '#000000',
-    opacity: '100%',
+    colorStyle: () => ({}),
 });
+
+const reactivStyle = reactive(props.colorStyle);
 
 const emits = defineEmits(['onChange']);
 
+const c = new Color.rgb(props.colorStyle.color.r, props.colorStyle.color.g, props.colorStyle.color.b).hex();
+
 const rg = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/;
 
-const color = ref(props.color);
 
-const opacity = ref(props.opacity);
+const color = ref(c);
+
+const opacity = ref(1);
 
 const theme = ref(props.theme);
 
@@ -29,6 +32,7 @@ const colorBurHandler = () => {
     let value = color.value || '';
     if (!value.startsWith('#')) value = `#${value}`;
     rg.test(value) ? color.value = value : color.value = '#000000';
+    reactivStyle.color = new Color(value).object();
     changeEvent();
 };
 

@@ -6,13 +6,14 @@ const props = withDefaults(defineProps<{
     standard: Record<string, string> | null,
     active: boolean,
     classes?: string,
-    canEdit: boolean,
+    canEdit?: boolean,
 }>(), {
     active: false,
     standard: () => ({}),
     classes: '',
     canEdit: false,
 });
+
 const emits = defineEmits(['click', 'hover', 'change']);
 
 function changeHandler({value}: {value: string}) {
@@ -34,7 +35,10 @@ function changeHandler({value}: {value: string}) {
         <div
             :class="[$style.show, props.active ? $style.border : '']"
         >
-            <slot name="prefix">
+            <slot
+                name="prefix" 
+                :standard="standard"
+            >
                 <i-cosmic-text />
             </slot>
         </div>

@@ -6,7 +6,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     ICosmicDark: typeof import('~icons/cosmic/dark')['default']
     ICosmicGridOutline: typeof import('~icons/cosmic/grid-outline')['default']
-    ICosmicLink: typeof import('~icons/cosmic/link')['default']
+    ICosmicLock: typeof import('~icons/cosmic/lock')['default']
     ICosmicMore: typeof import('~icons/cosmic/more')['default']
     ICosmicPlus: typeof import('~icons/cosmic/plus')['default']
     ICosmicQuestion: typeof import('~icons/cosmic/question')['default']

@@ -146,7 +146,7 @@ watchEffect(() => {
 
 function onItemClick(id: string) {
     if (id) {
-        router.push({ name: 'atom:detail', query: { id } });
+        router.push({ name: 'atom:detail', query: { id, type: currentType.value } });
     }
 }
 

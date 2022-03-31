@@ -1,4 +1,4 @@
-import { reactive, ref, watch, computed, nextTick, toRaw } from 'vue';
+import { reactive, ref, watch, computed, nextTick, toRaw, watch } from 'vue';
 import { inject } from '@cosmic/core/parts';
 import type { BaseStyle } from '@cosmic/core/parts';
 import type { interfaces } from '@cosmic/core/inversify';
@@ -6,6 +6,8 @@ import type { BaseService, NodeService } from '../service';
 import { TOKENS } from '../service';
 
 export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.TextStyle) {
+
+    let stopWatch = null;
 
     const baseService = inject(token) as BaseService;
 
@@ -17,7 +19,14 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     const isStandard = computed(() => reset.value && !baseService.isLocalStyle(styleId.value));
 
-    const standard = computed(() => reset.value && baseService.get(styleId.value));
+    const standard = computed(() => {
+        if (stopWatch) {
+            stopWatch();
+        }
+        const style = reset.value && reactive(baseService.get(styleId.value));
+        stopWatch = watch(style, changeStyle);
+        return style;
+    });
 
     const standardList = computed(() => reset.value && baseService.getServiceStyles());
 
@@ -30,6 +39,10 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
     const standardTarget = ref<HtmlElement | null >(null);
 
     let detailEdit = null;
+
+    function changeStyle() {
+        console.log(122112);
+    }
 
     function cancelStandardModal() {
         isShowStandardModal.value = false;
@@ -80,6 +93,7 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
     }
 
     function getDetailEdit() {
+        console.log(1);
         return detailEdit;
     }
 

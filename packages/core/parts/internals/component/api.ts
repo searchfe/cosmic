@@ -1,6 +1,6 @@
 import * as urql from '@urql/vue';
 
-const { useQuery, useMutation } = urql;
+const { createRequest } = urql;
 
 export type QueryComponentResult = Pick<
     gql.Component,
@@ -56,21 +56,28 @@ variants {
     desc
 }`;
 
-export function useTeamComponents<T extends gql.QueryComponentDTO>(component: T) {
-    return useQuery<QueryComponentResult[]>({
-        query: `
-            query ($query: QueryComponentDTO) {
-                components(query: $query) { ${queryFields} }
-            }
-        `,
-        variables: { component },
-    });
+export function createFetchTeamComponentsRequest(query: gql.QueryComponentDTO) {
+    return createRequest<{ components: QueryComponentResult[] }>(`
+        query ($query: QueryComponentDTO) {
+            components(query: $query) { ${queryFields} }
+        }
+    `, query);
 }
 
-export function useCreateComponent<T extends gql.CreateComponentDTO>() {
-    return useMutation<QueryComponentResult, { data: T }>(`
-        mutation ($data: CreateComponentDTO!) {
-            createComponent(data: $data) { ${queryFields} }
-        }
-    `);
-}
+export const createComponentQuery = `
+    mutation ($data: CreateComponentDTO!) {
+        createComponent(data: $data) { ${queryFields} }
+    }
+`;
+
+export const deleteComponentQuery = `
+    mutation ($data: QueryComponentDTO!) {
+        deleteComponentByTeamAndName(data: $data)
+    }
+`;
+
+export const updateComponentQuery = `
+    mutation ($data: CreateComponentDTO!) {
+        updateComponentByTeamAndName(data: $data)
+    }
+`;

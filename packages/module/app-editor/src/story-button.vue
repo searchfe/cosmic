@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { Button } from 'cosmic-vue';
 import { buttonLight, buttonSolid, buttonDashed, buttonText, buttonLink} from 'cosmic-ui';
+import ThemePicker from './theme-picker.vue';
 </script>
 <template>
-    <div>
+    <div class="board-test relative min-w-500">
+        <theme-picker />
         <div class="font-bold text-lg">Button List</div>
         <div>Size - xs / sm / md / lg</div>
         <div class="button-group">
@@ -101,7 +103,7 @@ import { buttonLight, buttonSolid, buttonDashed, buttonText, buttonLink} from 'c
         </div>
     </div>
 </template>
-<style>
+<style scoped>
 .button-group {
     display: flex;
     flex-direction: row;
@@ -111,5 +113,9 @@ import { buttonLight, buttonSolid, buttonDashed, buttonText, buttonLink} from 'c
 }
 .button-group > div {
     margin-right: 1.0rem;
+}
+.board-test {
+    background-color: var(--color-light);
+    color: var(--color-dark);
 }
 </style>

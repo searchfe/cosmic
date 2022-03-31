@@ -1,8 +1,9 @@
+import ChildrenMixin from './children-mixin';
 import PluginDataMixinx from './plugin-data-mixin';
 
 export default class BaseNodeMixin extends PluginDataMixinx implements Internal.PluginDataMixin{
     id: string;
-    readonly parent: (Internal.BaseNode & Internal.ChildrenMixin) | null;
+    parent: (Internal.BaseNode & ChildrenMixin) | null;
     name: string; // Note: setting this also sets `autoRename` to false on TextNodes
     readonly removed: boolean = false;
     toString() {
@@ -10,6 +11,9 @@ export default class BaseNodeMixin extends PluginDataMixinx implements Internal.
         return '';
     }
     remove() {
+        if(this.parent?.children) {
+            this.parent.children = this.parent.children.filter(child => child.id !== (this.id));
+        }
         // TODO
     }
   

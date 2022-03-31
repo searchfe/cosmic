@@ -1,13 +1,15 @@
 <script lang="ts" setup>
-import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty } from '@cosmic/core/browser';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service } from '@cosmic/core/browser';
 import RadiusContent from './radius-content.vue';
-import { Standard } from '../data';
 
 const {
         isShowStandardModal,
         isShowDetailModal,
-        isSelected,
-        selected,
+        isStandard,
+        standard,
+        standardList,
+
+
         detailTarget,
         standardTarget,
 
@@ -16,55 +18,57 @@ const {
         selectStandard,
         openDetaileModal,
         openStandardModal,
-        unSelectStandard,
-    } = usePropterty();
+        unRef,
+        getDetailEdit,
+        saveDetail,
+    } = usePropterty(service.TOKENS.RadiusStyle);
 
 </script>
 
 <template>
     <div>
-        <div v-if="!isSelected">
-            <MTitle title="边角">
+        <div v-if="!isStandard">
+            <m-title title="边角">
                 <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
-            </MTitle>
-            <RadiusContent />
+            </m-title>
+            <radius-content :radius-style="standard" />
         </div>
         <template v-else>
-            <MStandard :standard="selected" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
+            <m-standard :standard="standard" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-around"
                     >
-                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container, selected)" />
-                        <i-cosmic-lock @click.stop="unSelectStandard" />
+                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container, standard)" />
+                        <i-cosmic-lock @click.stop="unRef" />
                     </div>
                 </template>
-            </MStandard>
+            </m-standard>
         </template>
 
-        <MStandardModal
+        <m-standard-modal
             v-if="isShowStandardModal"
             title="文字规范"
-            :standard-list="Standard"
+            :standard-list="standardList"
             :target="standardTarget"
             @cancel="cancelStandardModal"
             @select="(event) => selectStandard(event.data)"
-            @show-detail="openDetaileModal"
+            @show-detail="(event) => openDetaileModal(event.target, event.data)"
         />
-        <MDetailModal
+        <m-detail-modal
             v-if="isShowDetailModal"
             title="文字规范"
             :target="detailTarget"
-            :standard="selected"
+            :standard="getDetailEdit()"
             @cancel="cancelDetailModal"
-            @ok="cancelDetailModal"
+            @ok="saveDetail"
         >
             <div :class="$style['detail-content']">
                 <div :class="$style['glyph-content']">
-                    <RadiusContent />
+                    <radius-content :radius-style="getDetailEdit()" />
                 </div>
             </div>
-        </MDetailModal>
+        </m-detail-modal>
     </div>
 </template>
 

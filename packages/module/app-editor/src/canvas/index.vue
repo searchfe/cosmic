@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { service } from '@cosmic/core/browser';
+import { inject } from '@cosmic/core/parts';
 import { ref, onMounted } from 'vue';
 import WidgetGuides from 'vue-guides';
 import { Gesturer } from './gesturer';
@@ -12,26 +14,43 @@ const guideVertical = ref();
 const gesturer = new Gesturer({
     content, wrapper,
     scrollX: guideHorizontal,
-    scrollY: guideVertical});
+    scrollY: guideVertical,
+});
 
+const toolService = inject<service.ToolService>(service.TOKENS.Tool);
+
+toolService.state().subscribe(state => {
+    if (state !== service.ToolState.Hand) {
+        gesturer.disableDrag();
+    }
+    switch(state) {
+        case service.ToolState.Hand:
+            gesturer.enableDrag();
+            break;
+        case service.ToolState.Frame:
+            wrapper.value.style.cursor = 'crosshair';
+            break;
+        default:
+            wrapper.value.style.cursor = 'default';
+    }
+
+});
 
 const box = ref();
 onMounted(() => {
     gesturer.resize();
     window.addEventListener('resize', () => { gesturer.resize(); });
-    gesturer.moveToCenter();
+    gesturer.moveTo(100, 100);
 });
 function onChange(e: any) {
     console.log(e);
 }
 </script>
 <template>
-    <!-- <div ref="gesturer" :class="$style.canvas" :style="{cursor: 'grabbing'}">
-        <div ref="content" class="ease-in-out cursor-default inline-block">
-            <div class="w-32 h-32" :style="{ background: 'red' }" />
+    <div ref="wrapper" class="relative w-full h-full overflow-hidden">
+        <div ref="content" class="inline-block overflow-visable w-0 h-0">
+            <slot />
         </div>
-    </div>-->
-    <div ref="wrapper" class="relative w-full h-full overflow-hidden canvas">
         <div ref="box" class="box" @click="() => gesturer.moveToStart()" />
         <div class="ruler horizontal">
             <widget-guides
@@ -66,22 +85,13 @@ function onChange(e: any) {
                 @change-guides="onChange"
             />
         </div>
-
-        <div ref="content" class="container inline-block">
-            <slot />
-        </div>
     </div>
 </template>
 <style scoped>
-.canvas {
-    background-color: var(--color-gray-100);
-}
-
 .ruler {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 20;
 }
 .ruler.horizontal {
   left: 0px;
@@ -101,8 +111,10 @@ function onChange(e: any) {
     height: 25px;
     background: #FCFCFC;
     box-sizing: border-box;
-    z-index: 21;
-    cursor:crosshair;
+    cursor: crosshair;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 .box:before,
 .box:after {
@@ -119,10 +131,6 @@ function onChange(e: any) {
     height: 1px;
     width: 100%;
     top: 100%;
-}
-
-.container {
-    background: var(--color-white);
 }
 
 </style>

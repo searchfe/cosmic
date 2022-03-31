@@ -9,10 +9,9 @@ importers:
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
       '@vueuse/gesture': ^2.0.0-beta.1
-      color: ~4.2.1
       cosmic-icon: 0.0.7
-      cosmic-ui-alpha: ^0.0.33
-      cosmic-vue: ^0.0.48
+      cosmic-ui-alpha: 0.0.36
+      cosmic-vue: 0.0.51
       cross-env: 7.0.3
       csstype: ^2.6
       dotenv: ~16.0.0
@@ -46,9 +45,8 @@ importers:
       vue-tsc: 0.32.1
     dependencies:
       '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.29
-      color: 4.2.1
-      cosmic-ui-alpha: 0.0.33
-      cosmic-vue: 0.0.48
+      cosmic-ui-alpha: 0.0.36
+      cosmic-vue: 0.0.51
       electron-updater: 4.6.5
       reflect-metadata: 0.1.13
       resolve: 1.22.0
@@ -1633,12 +1631,12 @@ packages:
       - webpack
     dev: true
 
-  /cosmic-ui-alpha/0.0.33:
-    resolution: {integrity: sha512-cQGkzAW7jrxUiccKxOczMzmFK8bkOdXmsaCgUDHYA8KN4mRLG/2levIkpx5ZvMFlz5oDIkEeBy6xAEvI2Ot0NA==}
+  /cosmic-ui-alpha/0.0.36:
+    resolution: {integrity: sha512-y98FLkjPak4hTLOKa9/9LCf03+euzunO0e9yQnW3ZNeJbeQSnfDo6ypkfqn3BBGlMqo/O1X9T4AlRy01+6XADg==}
     dev: false
 
-  /cosmic-vue/0.0.48:
-    resolution: {integrity: sha512-3gGvSKdGmXxsNVVeRflaVViBKQFTV4XvMhti17Tx8KYNldocBtoNKMu1I2qMRNj0G6tE0qBpQat7nIExjX3kTQ==}
+  /cosmic-vue/0.0.51:
+    resolution: {integrity: sha512-QpvTgu2po49A5ZtvoUAIM3wHLRZ45aSmiqL4xjc5Gsd8f6pDV0C5uuW/0QQLNjR9S0VQ1NMqJZItuPTbB4wICw==}
     dependencies:
       '@babel/types': 7.17.0
       lodash.kebabcase: 4.1.1
