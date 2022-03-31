@@ -10,6 +10,7 @@ export { TOKENS } from './token';
 export * from './gql.service';
 export type { RouterServiceAPI } from './router/index.service';
 export type { default as KeyboardService } from './interactivity/keyboard.service';
+export { type default as ToolService, ToolState } from './interactivity/tool.service';
 export type { default as NodeService } from './document/node.service';
 export type { default as ComponentService } from './document/component.service';
 export * from './styles';

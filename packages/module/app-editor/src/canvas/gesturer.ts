@@ -48,19 +48,23 @@ export class Gesturer {
         if (!this.content.value) return;
         if (this.wrapper.value && option.cursor) this.wrapper.value.style.cursor = option.cursor;
         if (option.x !== undefined && option.y !== undefined) {
-            this.moveTo(this.x + option.x, this.y + option.y);
+            this.moveTo(this.x + option.x, this.y + option.y, true);
             if (option.end) {
                 this.x = this.x + option.x;
                 this.y = this.y + option.y;
             }
         }
     }
-    moveTo(x: number, y: number) {
+    moveTo(x: number, y: number, delta = false) {
         this.content.value.style.transform = `translate(${x + 25}px, ${y+25}px)`;
         this.scrollX.value.scroll(x * -1);
         this.scrollX.value.scrollGuides(y * -1);
         this.scrollY.value.scroll(y * -1);
         this.scrollY.value.scrollGuides(x * -1);
+        if (!delta) {
+            this.x = x;
+            this.y = y;
+        }
     }
     moveToCenter() {
         const node: HTMLElement = this.content.value;
