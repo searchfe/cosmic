@@ -28,6 +28,14 @@ export function create(fields: string[] = []) {
     );
 }
 
+export function update() {
+    return useMutation<{ updateFont: Partial<gql.Font> }, { data: gql.QueryFontDTO }>(
+        `mutation ($data: QueryFontDTO!) {
+            updateFont(data: $data)
+        }`,
+    );
+}
+
 export function createUnique(fields: string[] = []) {
     return useMutation<
         { createUniqueFont: Partial<gql.Font> },

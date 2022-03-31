@@ -5,6 +5,7 @@ import Region from '../../common/component/region.vue';
 import AtomCard from '../component/card/atom.vue';
 import AtomFilter from '../component/filter.vue';
 import ColorDialog from '../component/dialog/atom/color.vue';
+import FontDialog from '../component/dialog/atom/font.vue';
 
 import { query as queryBorder } from '../api/border';
 import { query as queryColor } from '../api/color';
@@ -23,6 +24,15 @@ import type { AtomType } from '../types';
 interface AtomData extends Record<string, any> {
     id?: string;
 }
+
+const dialogMap = {
+    color: ColorDialog,
+    font: FontDialog,
+    border: ColorDialog,
+    shadow: ColorDialog,
+    corner: ColorDialog,
+    opacity: ColorDialog,
+};
 
 const { useRouter } = vueRouter;
 
@@ -64,7 +74,7 @@ const {
     data: fontData,
     fetching: fontFetching,
     executeQuery: refreshFont,
-} = queryFont({}, ['id', 'team', 'style', 'variant', 'weight', 'size', 'lineHeight', 'family', 'name']);
+} = queryFont({}, ['id', 'team', 'weight', 'size', 'lineHeight', 'family', 'name']);
 
 const refreshers: Record<AtomType, (opts?: any) => urql.UseQueryResponse<unknown, unknown>> = {
     color: refreshColor,
@@ -214,7 +224,7 @@ function refresh() {
         </div>
         <template #bottom>
             <div class="flex justify-end">
-                <color-dialog :atom-type="currentType" @success="refresh" />
+                <component :is="dialogMap[currentType]" @success="refresh" />
             </div>
         </template>
     </Region>

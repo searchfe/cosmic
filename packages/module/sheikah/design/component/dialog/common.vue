@@ -53,9 +53,12 @@ function onUpdateName(data: {value: string}) {
             @update:visible="onUpdateVisible"
         >
             <template #title>
-                {{ title }}
+                <div :class="$style.region">
+                    {{ title }}
+                </div>
             </template>
-            <div class="my-12 flex justify-between items-center">
+            <div :class="$style.line" />
+            <div class="my-12 flex justify-between items-center" :class="[$style['has-line'], $style.region]">
                 <div :class="$style['title-label']">
                     名称
                 </div>
@@ -64,6 +67,7 @@ function onUpdateName(data: {value: string}) {
             <div class="py-6 mb-20">
                 <slot />
             </div>
+            <div :class="$style.line" />
             <template #actions>
                 <Button
                     size="sm"
@@ -94,7 +98,7 @@ function onUpdateName(data: {value: string}) {
     position: absolute;
     left: -234px;
     top: 36px;
-    padding: 13px 17px;
+    padding: 13px 0;
     color: #fff;
     border-radius: 8px;
     background-color: var(--color-gray-50);
@@ -128,5 +132,14 @@ function onUpdateName(data: {value: string}) {
     flex: none;
     height: 24px;
     line-height: 22px;
+}
+.line {
+    margin: 12px 0;
+    height: 1px;
+    width: 100%;
+    background: rgba(255, 255, 255, .1);
+}
+.region {
+    margin: 0 17px;
 }
 </style>

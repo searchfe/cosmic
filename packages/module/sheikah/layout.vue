@@ -6,8 +6,6 @@ import TeamMenu from './team/component/team-menu.vue';
 const { RouterView, useRoute } = router;
 
 const route = useRoute();
-
-
 </script>
 
 <template>
