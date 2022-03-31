@@ -42,6 +42,7 @@ const opacityBurHandler = () => {
     let value = number;
     if (value > 100 || value < 0) value = 100;
     opacity.value = `${value}%`;
+    reactivStyle.opacity = number / 100;
     changeEvent();
 };
 

@@ -40,7 +40,7 @@ const realStyle = reactive(props.textStyle);
                 <div class="w-80">
                     <Select
                         size="sm"
-                        :value="realStyle.fontSize"
+                        :value="realStyle.fontSize + ''"
                         allow-input
                         :class="$style['margin-left']"
                         @on-change="(event) => realStyle.fontSize = event.value"

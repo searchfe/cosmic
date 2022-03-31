@@ -1,7 +1,7 @@
 import { injectable } from '@cosmic/core/inversify';
 import { Subject } from '@cosmic/core/rxjs';
 @injectable()
-export class BaseService<T extends {id: string, clone: () => T}, P> {
+export class BaseService<T extends {id: string, clone: () => T}, P > {
 
     public subject: Subject<P>;
 

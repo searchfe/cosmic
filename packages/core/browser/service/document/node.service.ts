@@ -1,7 +1,7 @@
 import { type Observable, Subject, BehaviorSubject, of } from '@cosmic/core/rxjs';
 import { injectable } from '@cosmic/core/inversify';
 
-import { type SceneNode, type FrameNodeOptions, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
+import { type SceneNode, type FrameNodeOptions, type TextNodeOptions, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeService {
@@ -58,6 +58,19 @@ export default class NodeService {
         this.setSelection([frame.id]);
         return frame;
     }
+
+    addText(target: PageNode | FrameNode | GroupNode, option: TextNodeOptions) {
+        const textNode = new TextNode(option);
+        textNode.id = id();
+        textNode.name = `文本 ${increaseId(this._document, textNode.type)}`;
+        textNode.fills = [new SolidPaint({r: 0, g: 0, b: 0})];
+        textNode.parent = target;
+        target.appendChild(textNode);
+        this.updateDocument();
+        this.setSelection([textNode.id]);
+        return textNode;
+    }
+
     deleteSelection() {
         let shouldChangePage = false;
         this._selection.forEach(node => {
@@ -90,6 +103,10 @@ export default class NodeService {
     }
     update(nodes: SceneNode[]) {
         this.renderNodes.next([nodes, new Date().getTime().toString()]);
+    }
+
+    getSelection(): Array<PageNode | SceneNode> {
+        return this._selection;
     }
 }
 

@@ -6,6 +6,7 @@ import GroupNode from './sence/group-node';
 import FrameNode from './sence/frame-node';
 
 export type { FrameNodeOptions} from './sence/frame-node';
+export type { TextNodeOptions } from './sence/text-node';
 
 export { DocumentNode, PageNode };
 

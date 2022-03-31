@@ -63,7 +63,7 @@ export default {
                     });
                 break;
                 case service.ToolState.Text:
-                    editingChild = nodeService.addFrame(targetNode, {
+                    editingChild = nodeService.addText(targetNode, {
                         x,
                         y,
                         width,
