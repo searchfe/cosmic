@@ -19,17 +19,12 @@ function visit(args: any) {
     const ins = new Cls(args);
     if (children && children.length) {
         children.forEach(child => {
-            ins.appendChild(visit(child));
+            const c = visit(child);
+            c.parent = ins;
+            ins.appendChild(c);
         });
     }
     ins.backgrounds = backgrounds || [];
-    // if (backgrounds && backgrounds.length) {
-    //     ins.backgrounds = backgrounds.map(bg => {
-    //         const { type: bgType, data } = bg;
-    //         const BgCls = new CLS_MAP[bgType](data.color || {});
-    //         return BgCls;
-    //     });
-    // }
     return ins;
 }
 
@@ -51,6 +46,7 @@ export default class DraftService {
             project: '62449f2aa3551f6c5bccbd0c',
         };
         // this.subject = new Subject();
+        this.open();
     }
 
     async save() {
@@ -64,12 +60,11 @@ export default class DraftService {
         } else {
             const updatedOne = await this.update(this.draft);
         }
-
         localStorage.setItem('draft', this.draft.id);
     }
 
     async open() {
-        const draft = await this.queryOne(localStorage.getItem('draft') as string);
+        const draft = await this.queryOne(localStorage.getItem('draft') as string || '624769f6d7f16a32306ece47');
         const data = JSON.parse(draft.data);
         console.log('open', data);
         const doc = data.document;

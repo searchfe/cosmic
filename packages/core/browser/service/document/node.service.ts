@@ -14,12 +14,19 @@ export default class NodeService {
     private _document: DocumentNode;
     private _selection: Array<PageNode | SceneNode> = [];
     private _currentPage: PageNode;
+
     constructor() {
         this._document = new DocumentNode();
         this._document.id = id();
         this.document = new BehaviorSubject(this._document);
         this.selection = new Subject();
         this.renderNodes = new Subject();
+        this.addPage();
+    }
+    new() {
+        const document = new DocumentNode();
+        document.id = id();
+        this.load(document);
         this.addPage();
     }
     setSelection(ids: string[]) {

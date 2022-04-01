@@ -14,7 +14,7 @@ export default function render(node: HTMLElement) {
             template : `
             <div class="wise-demo" data-pmd="wise">
             <div class="c-container" style="box-sizing:initial;">
-            <cc-scroll 
+            <cc-scroll
             list="{{list}}">
             <cc-scroll-item
                 s-for="item, index in list"
@@ -32,10 +32,10 @@ export default function render(node: HTMLElement) {
         </div>
         </div>
             `,
-        
+
             components : {
-                'cc-scroll': Scroll.Scroll,
-                'cc-scroll-item': ScrollItem.ScrollItem,
+                'cc-scroll': Scroll.default,
+                'cc-scroll-item': ScrollItem.default,
                 'cc-image': Image.Image,
             },
             initData:function() {
