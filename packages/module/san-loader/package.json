@@ -1,0 +1,12 @@
+{
+    "name": "@cosmic-module/san-loader",
+    "version": "0.0.1",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "scripts": {
+        "build": "vite build",
+        "clean": "rimraf dist"
+    },
+    "dependencies": {
+    }
+}

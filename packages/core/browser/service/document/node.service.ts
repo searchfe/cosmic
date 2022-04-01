@@ -76,7 +76,7 @@ export default class NodeService {
         // if (!page) return;
         const comp = new ComponentNode(options);
         comp.id = id();
-        comp.name = `按钮 ${increaseId(this._document, comp.type)}`;
+        comp.name = `组件 ${comp.cname} ${increaseId(this._document, comp.type)}`;
         comp.parent = target;
         target.appendChild(comp);
         this.updateDocument();

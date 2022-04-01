@@ -1,6 +1,7 @@
 import { createApp, ref, type App as VueApp } from 'vue';
 
 import { MComponent } from '@cosmic-module/core';
+import { SanComponent } from '@cosmic-module/san-loader';
 import { createContainer, TOKENS, type RouterServiceAPI } from './service/index';
 import App from './app.vue';
 
@@ -21,6 +22,7 @@ function bootstrap(option: BootstrapOption) {
 
     // eslint-disable-next-line vue/component-definition-name-casing
     app.component('m-component', MComponent);
+    app.component('SComponent', SanComponent);
 
     // ioc container
     const container = createContainer({ defaultScope: 'Singleton' });
@@ -51,3 +53,4 @@ export { MColor, MTitle, MWidget, MStandardModal, MStandard, MDetailModal, MClol
 
 export * from './use';
 export * as service from './service/index';
+export * as esl from './esl.js';

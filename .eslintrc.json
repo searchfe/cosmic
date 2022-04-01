@@ -23,7 +23,9 @@
         "packages/preload/exposedInMainWorld.d.ts",
         "node_modules/**",
         "**/dist/**",
-        "**/components.d.ts"
+        "**/components.d.ts",
+        "**/esl.js",
+        "**/san-loader/**"
     ],
     "rules": {
         "@typescript-eslint/no-namespace": "off",

@@ -1,4 +1,4 @@
-const { readdirSync, statSync } = require('fs-extra');
+const { readdirSync, statSync, copySync } = require('fs-extra');
 const { resolve, join } = require('path');
 const { existsSync } = require('fs');
 const { execSync } = require('child_process');
@@ -13,4 +13,7 @@ list.map(dir => resolve(ROOT, dir)).filter(dir => {
         encoding: 'utf-8',
     });
     console.log(output.toString());
+    if(existsSync(`${dir}/assets`)) {
+        copySync(`${dir}/assets`, `${dir}/dist`);
+    }
 });
