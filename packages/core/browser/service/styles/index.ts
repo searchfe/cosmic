@@ -1,3 +1,3 @@
 export * from './base.service';
-export * from './text-style.service';
-export * from './fill-style.service';
+export {default as TextStyleSevice} from './text-style.service';
+export {default as FillStyleService } from './fill-style.service';

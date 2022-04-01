@@ -13,7 +13,24 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     const nodeService = inject<NodeService>(TOKENS.Node);
 
-    const styleId = ref('1');
+    const textNode = nodeService.getSelection().find(item => item.type === 'TEXT') as any;
+
+    // nodeService.selection.subscribe(selections => {
+    //     const textNode = selections.find(item => item.type === 'TEXT') as any;
+    //     if (textNode && baseService.type === 'TEXT') {
+    //         if (baseService.type === 'TEXT') {
+    //             const textStyleId = textNode.getRangeTextStyleId();
+    //             const { id: textId } = resetStyle(textStyleId);
+    //             styleId.value = textId;
+    //             if (textStyleId !== textId) {
+    //                 changeStyle();
+    //                 textNode.setRangeTextStyleId(0, 0, textId);
+    //             }
+    //         }
+            
+    //     }
+    // });
+    const styleId = ref(textNode && baseService.type === 'TEXT' ? textNode.getRangeTextStyleId() : '1');
 
     const isStandard = ref(false);
 
@@ -31,13 +48,13 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     let detailEdit = null;
 
-    baseService.subject?.subscribe(subject => {
-        switch (subject.type) {
-            case 'R':
-                standardList.value = subject.data;
-                resetStyle(styleId.value);
-        } 
-    });
+    // baseService.subject?.subscribe(subject => {
+    //     switch (subject.type) {
+    //         case 'R':
+    //             standardList.value = subject.data;
+    //             resetStyle(styleId.value);
+    //     } 
+    // });
 
     watchEffect(() =>  {
         standard.value = resetStyle(styleId.value);
@@ -52,22 +69,25 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
             styleId.value = style.id;
         }
         isStandard.value = !baseService.isLocalStyle(styleId.value);
-        console.log(style);
+        
         const reactivStyle = reactive(style);
-        stopWatch = watch([reactivStyle], changeStyle);
+        // stopWatch = watch([reactivStyle], changeStyle);
         return reactivStyle;
     }
 
+    watchEffect(() =>  {
+        standard.value = reactive(baseService.get(styleId.value));
+    })
 
-    function changeStyle(newValue, oldValue) {
+
+    function changeStyle() {
         // TODO
         const textNode = nodeService.getSelection().filter(item => item.type === 'TEXT');
         const style = baseService.get(styleId.value);
         textNode.forEach(i => {
             const item = i as unknown as any;
-            const style = newValue[0];
             if (style.fontSize && item.fontSize) {
-                item.fontSize = Number(newValue[0].fontSize);
+                item.fontSize = Number(style.fontSize);
             }
             if (style.color && item.fills) {
                 item.fills = [{...style}];

@@ -30,9 +30,10 @@ export class BaseService<T extends {id: string, clone: () => T}, P > {
         // 当前style为空的时候创建默认
         if (!style) {
             style = this.create() as T;
+            style.id = styleId;
             this.addLocalStyle(style);
         }
-        return style;
+        return style || {};
     }
 
     public delete(styleId: string) {
@@ -49,6 +50,7 @@ export class BaseService<T extends {id: string, clone: () => T}, P > {
     }
 
     public addLocalStyle(style: T):T {
+        if (!style) return style;
         this.localStyles.set(style.id, style);
         return style;
     }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, computed, toRaw } from 'vue';
 import MTitle from '../title/title.vue';
 import MColor from './color.vue';
 import MStandard from '../standard/standard.vue';
@@ -7,13 +7,24 @@ import MStandardModal from '../modal/standard-modal.vue';
 import MDetailModal from '../modal/detail-modal.vue';
 import { usePropterty } from '../../use/use-property';
 import { service } from '@cosmic/core/browser';
+import { inject, TextNode } from '@cosmic/core/parts';
+import func from 'vue-temp/vue-editor-bridge';
+import { includes } from 'lodash';
+
+const props = withDefaults(defineProps<{
+    type?: string | string[],
+    showTitle?: boolean
+}>(), {
+    type: 'TEXT',
+    showTitle: true
+})
+
+
 
 const content = ref(null);
 
 
 const {
-    isStandard,
-    standard,
     standardList,
     isShowStandardModal,
     isShowDetailModal,
@@ -29,15 +40,60 @@ const {
     unRef,
 } = usePropterty(service.TOKENS.FillStyle);
 
+const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillStyle);
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+
+let node = nodeService.getSelection().find(find) as any;
+
+const styleId = node ? ref(getTextStyle(node).id) : ref('');
+
+function find({type}) {
+    if (props.type instanceof String) {
+        return type === props.type
+    }
+    if (Array.isArray(props.type)) {
+        return props.type.includes(type);
+    }
+} 
+
+function getTextStyle(node: TextNode) {
+    if (!node) return;
+    const fillStyle = fillStyleService.get(node.getRangeFillStyleId() ?? Date.now() + '');
+    if (node.getRangeFillStyleId() !== fillStyle.id) {
+        node.setRangeFillStyleId(0, 0, fillStyle.id);
+    }
+    return fillStyle;
+}
+
+
+nodeService.selection.subscribe((nodes) => {    
+    const selectNode = nodes.find(item => item.type === props.type);
+    if (!node) return;
+    getTextStyle(selectNode);
+    styleId.value = selectNode.getRangeFillStyleId();
+});
+
+const fillStyle = computed(() => fillStyleService.get(styleId.value)) 
+
+const isLocalStyle = computed(() =>  styleId.value === '' || fillStyleService.isLocalStyle(styleId.value));
+
+function onchange() {
+    const node = nodeService.getSelection().find(item => item.type === props.type) as TextNode;
+    const style = fillStyleService.get(node.getRangeFillStyleId());
+    node.setRangeFills(0, 0, [toRaw(style)]);
+    nodeService.update([node]);
+}
+
+
 </script>
 
 <template>
     <div class="w-full">
         <div ref="content">
             <div
-                v-if="!isStandard" 
+                v-if="isLocalStyle" 
             >
-                <m-title title="颜色">
+                <m-title v-if="showTitle" title="颜色">
                     <div
                         class="flex justify-between items-center w-30"
                     >
@@ -46,13 +102,14 @@ const {
                     </div>
                 </m-title>
                 <m-color
-                    :color-style="standard"
+                    @on-change="onchange"
+                    :color-style="fillStyle"
                 />
             </div>
             <m-standard
                 v-else
                 classes="-v-bg-inapparent"
-                :standard="standard"
+                :standard="fillStyle"
                 :can-edit="false"
                 @click="(event) => openStandardModal(event.event.currentTarget)"
             >
