@@ -29,6 +29,10 @@ export class WorkbenchBarService {
             id: 'blueprint',
             text: 'Blueprint',
             order: 30,
+        }, {
+            id: 'preview',
+            text: '预览',
+            order: 40,
         }];
         this.source = new BehaviorSubject(this.configs);
     }

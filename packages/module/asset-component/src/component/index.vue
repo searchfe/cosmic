@@ -27,6 +27,9 @@ function addBtn(name: string) {
             case 'image':
                 example.value = exampleImage.value;
                 break;
+            case 'scroll':
+                example.value = exampleScroll.value;
+                break;
         }
         pos.value.x = - 999;
         pos.value.y = -999;
@@ -49,6 +52,7 @@ const example = ref<HTMLElement>();
 const exampleButton = ref<HTMLElement>();
 const exampleAladin = ref<HTMLElement>();
 const exampleImage = ref<HTMLElement>();
+const exampleScroll = ref<HTMLElement>();
 const exampleShow = ref();
 const pos = ref({ x: -999, y: -999 });
 
@@ -115,7 +119,19 @@ onMounted(() => {
             <s-component class name="image" />
         </div>
         <div class="m-16">横滑</div>
-        <div class="m-16">
+        <div class="m-16" @mousedown.stop="() => addBtn('scroll')">
+            <s-component class name="scroll" />
+        </div>
+        <div
+            ref="exampleScroll"
+            :class="$style.example"
+            :style="{
+                display: exampleShow ==='scroll' ? 'block' : 'none',
+                top: pos.y + 'px',
+                left: pos.x + 'px',
+                width: '360px',
+            }"
+        >
             <s-component class name="scroll" />
         </div>
     </div>

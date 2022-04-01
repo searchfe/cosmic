@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { type ComponentNode } from '@cosmic/core/parts';
 import { onMounted, ref } from 'vue';
-import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 import { Button } from 'cosmic-vue';
@@ -42,11 +41,24 @@ nodeService.selection.subscribe(nodes => {
         }"
     >
         <div class="relative">
-            <Button v-if="node.cname === 'button'">按钮</Button>
-            <s-component v-else-if="node.cname === 'image'" class="w-full h-ull" name="image" />
-            <s-component v-else-if="node.cname === 'aladin'" class="w-full h-ull" name="aladin" />
-            <s-component v-else-if="node.cname === 'scroll'" class="w-full h-ull" name="scroll" />
+            <Button v-if="node.cname === 'button'">
+                按钮
+            </Button>
+            <s-component
+                v-else-if="node.cname === 'image'"
+                class="w-full h-ull"
+                name="image"
+            />
+            <s-component
+                v-else-if="node.cname === 'aladin'"
+                class="w-full h-ull"
+                name="aladin"
+            />
+            <s-component
+                v-else-if="node.cname === 'scroll'"
+                class="w-full h-ull"
+                name="scroll"
+            />
         </div>
-        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

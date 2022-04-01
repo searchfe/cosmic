@@ -30,6 +30,9 @@ function handler(e) {
         case 'open':
             draftService.open();
             break;
+        case 'new':
+            nodeService.new();
+            break;
     }
     if (e?.value?.match(/screen-([\d]+)/)) {
         nodeService.update(
@@ -42,6 +45,14 @@ function handler(e) {
 }
 const appendMenu = ref();
 keyboardService.keydown('D').subscribe((event) => {
+    if (event.target !== document.body) return;
+    nodeService.deleteSelection();
+});
+keyboardService.keydown('DELETE').subscribe((event) => {
+    if (event.target !== document.body) return;
+    nodeService.deleteSelection();
+});
+keyboardService.keydown('BACKSPACE').subscribe((event) => {
     if (event.target !== document.body) return;
     nodeService.deleteSelection();
 });

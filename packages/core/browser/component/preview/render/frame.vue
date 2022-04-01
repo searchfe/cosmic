@@ -1,16 +1,14 @@
 <script lang="ts" setup>
-import { type ComponentNode } from '@cosmic/core/parts';
+import { type FrameNode, util } from '@cosmic/core/parts';
 import { onMounted, ref } from 'vue';
-import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
-import { Button } from 'cosmic-vue';
 
-interface ComponentProps {
-    node: ComponentNode,
+interface FrameProps {
+    node: FrameNode,
 }
 
-const props = withDefaults(defineProps<ComponentProps>(), {
+const props = withDefaults(defineProps<FrameProps>(), {
 
 });
 onMounted(() => {
@@ -31,22 +29,18 @@ nodeService.selection.subscribe(nodes => {
 </script>
 <template>
     <div
-        class="component-render"
+        class="frame-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
             top: node.y + 'px',
             left: node.x + 'px',
             width: node.width + 'px',
             height: node.height + 'px',
-            // background: util.toBackgroundStyle(node?.backgrounds[0]),
+            background: util.toBackgroundStyle(node?.backgrounds[0]),
         }"
     >
         <div class="relative">
-            <Button v-if="node.cname === 'button'">按钮</Button>
-            <s-component v-else-if="node.cname === 'image'" class="w-full h-ull" name="image" />
-            <s-component v-else-if="node.cname === 'aladin'" class="w-full h-ull" name="aladin" />
-            <s-component v-else-if="node.cname === 'scroll'" class="w-full h-ull" name="scroll" />
+            <children-render :children="node.children" />
         </div>
-        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

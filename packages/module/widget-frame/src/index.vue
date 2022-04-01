@@ -10,7 +10,9 @@ const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 const node = nodeService.getSelection()[0];
 
-const nodeId = ref(node.id);
+const _node = ref();
+
+const nodeId = ref(node?.id);
 
 const x = ref(node?.x ?? 0);
 const y = ref(node?.y ?? 0);
@@ -19,6 +21,7 @@ const height = ref(node?.height ?? 0);
 
 nodeService.selection.subscribe(nodes => {
     const node = nodes[0];
+    _node.value = nodes[0];
     x.value = node?.x ?? 0;
     y.value = node?.y ?? 0;
     width.value = node?.width ?? 0;
@@ -26,11 +29,11 @@ nodeService.selection.subscribe(nodes => {
     nodeId.value = node?.id ?? '';
 
 });
- 
+
 const fillStyle = computed(() => {
-    const node = nodeService.getSelection().find(item => item.id === nodeId.value);
-    if (!node || !node.backgrounds) return {color: {r: 0, g: 0, b: 0}, opacity: 0};
-    return node.backgrounds[0];
+    // const node = nodeService.getSelection().find(item => item.id === nodeId.value);
+    if (!_node.value || !_node.value.backgrounds || _node.value.backgrounds.length === 0) return {color: {r: 0, g: 0, b: 0}, opacity: 0};
+    return _node.value.backgrounds[0];
 });
 
 
@@ -154,6 +157,6 @@ function change(event) {
 
 .icon {
     font-size: 1rem;
-} 
- 
+}
+
  </style>

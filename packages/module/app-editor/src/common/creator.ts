@@ -112,6 +112,10 @@ export default {
                         width=222;
                         height=148;
                         break;
+                    case 'scroll':
+                        width=360;
+                        height=125;
+                        break;
                 }
                 nodeService.addComponent(targetNode, {
                     x: originX - width/2,
