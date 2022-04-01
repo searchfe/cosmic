@@ -24,7 +24,7 @@
         "**/*.ts",
         "**/*.tsx",
         "**/*.d.ts"
-, "packages/core/browser/esl.js"    ],
+    ],
     "exclude": [
         "**/*.spec.ts",
         "**/*.test.ts",
