@@ -28,7 +28,7 @@ watchEffect(() => {
         projects.value = data.value?.projects;
     }
     if (project && team && draftData.value && !draftFetching.value) {
-        drafts.value = draftData.value?.drafts;
+        drafts.value = (draftData.value?.drafts || []).filter(d => d.project === project);
     }
     if (project && projectData.value?.project && !projectFetching.value) {
         currentProject.value = projectData.value.project;

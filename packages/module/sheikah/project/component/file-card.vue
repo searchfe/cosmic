@@ -21,7 +21,7 @@ withDefaults(defineProps<ProjectProps>(), {
     <Card :class="$style['card-container']">
         <div class="flex flex-col" :class="$style['card-content']">
             <div class="w-full flex items-center justify-center overflow-hidden" :class="$style['card-preview']">
-                <img class="w-full h-full" src="https://fe-dev.bj.bcebos.com/3%E5%80%8D%20%E8%AE%BE%E8%AE%A1%E7%A8%BF%E7%BC%A9%E5%92%AF%E5%9B%BE1%20.png" alt="稿件预览图">
+                <img class="w-full h-full" src="https://fe-dev.bj.bcebos.com/0b45b7cab385c97703048aa0b.png" alt="稿件预览图">
             </div>
             <div :class="$style['card-content-info']">
                 <div class="h-16 text-md">
