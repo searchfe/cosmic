@@ -61,8 +61,8 @@ export default {
                     if (rect.y < event.clientY && event.clientY < rect.y + rect.height) {
                         const style = window.getComputedStyle(root);
                         const matrix = new DOMMatrixReadOnly(style.transform);
-                        originX = event.clientX - rect.x - matrix.m41 - 30;
-                        originY = event.clientY - rect.y - matrix.m42 - 16;
+                        originX = event.clientX - rect.x - matrix.m41;
+                        originY = event.clientY - rect.y - matrix.m42;
                         return;
                     }
                 }
@@ -101,12 +101,24 @@ export default {
         }
         function addComponent() {
             targetNode = (el as any).__c_target || targetNode;
+            let width = 60, height = 32;
             if (originX !== -9999 && originY !== -9999) {
+                switch(toolService.data.name) {
+                    case 'aladin':
+                        width=360;
+                        height=200;
+                        break;
+                    case 'image':
+                        width=222;
+                        height=148;
+                        break;
+                }
                 nodeService.addComponent(targetNode, {
-                    x: originX,
-                    y: originY,
-                    width: 60,
-                    height: 32,
+                    x: originX - width/2,
+                    y: originY - height/2,
+                    width,
+                    height,
+                    cname: toolService.data.name,
                 });
             }
             editState = undefined;

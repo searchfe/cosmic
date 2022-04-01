@@ -43,7 +43,9 @@ nodeService.selection.subscribe(nodes => {
         }"
     >
         <div class="relative">
-            <Button>按钮</Button>
+            <Button v-if="node.cname === 'button'">按钮</Button>
+            <s-component v-else-if="node.cname === 'image'" class="w-full h-ull" name="image" />
+            <s-component v-else-if="node.cname === 'aladin'" class="w-full h-ull" name="aladin" />
         </div>
         <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>

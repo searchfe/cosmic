@@ -90,6 +90,7 @@ const config = {
                 '@cosmic/core/inversify',
                 '@cosmic/core/rxjs',
                 '@cosmic-module/core',
+                '@cosmic-module/san-loader',
                 ...builtinModules.flatMap(p => [p, `node:${p}`]),
             ],
         },

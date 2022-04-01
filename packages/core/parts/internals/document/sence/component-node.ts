@@ -9,6 +9,7 @@ export default class ComponentNode extends Mixin(
     VariantMixin,
 ) implements Internal.ComponentNode {
     readonly type = 'COMPONENT';
+    cname: string;
     constructor(option?: ComponentNodeOptions) {
         super();
         option = option || {};
@@ -16,6 +17,7 @@ export default class ComponentNode extends Mixin(
         this.y = option.y || 0;
         this.width = option.width || 0;
         this.height = option.height || 0;
+        this.cname = option.cname || '';
     }
     clone() {
         // TODO
@@ -32,4 +34,5 @@ export interface ComponentNodeOptions {
     y?: number,
     width?: number;
     height?: number;
+    cname?: string;
 }

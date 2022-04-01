@@ -8,10 +8,14 @@ import KeyboardService from './keyboard.service';
 export default class ToolService {
     private _states: ToolState[]  = [];
     private subject: Subject<ToolState>;
+    public  data : {[index: string]: string} = {};
     constructor(@inject(TOKENS.Keyboard) private keyboardService: KeyboardService) {
         this.subject = new Subject();
         keyboardService.keydown('Space').subscribe(() => this.set(ToolState.Hand));
         keyboardService.keyup('Space').subscribe(() => this.cancel(ToolState.Hand));
+    }
+    getState() {
+        return this._states.length ? this._states[this._states.length - 1] : ToolState.Null;
     }
     state() {
         return this.subject;
