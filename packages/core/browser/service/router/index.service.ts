@@ -4,7 +4,7 @@ import type { Router, RouteLocationRaw, NavigationFailure, RouteLocationNormaliz
 
 
 type RouteChangeResult = Promise<NavigationFailure | void | undefined>;
-export interface RouterServiceAPI {
+export interface RouterService {
     getRouterConfig(): Router;
     push(to: RouteLocationRaw): RouteChangeResult;
     replace(to: RouteLocationRaw): RouteChangeResult;
@@ -16,7 +16,7 @@ export interface RouterServiceAPI {
 // control all initial logic inside the module
 let instance:symbol;
 
-export class RouterService implements RouterServiceAPI {
+export class RouterService implements RouterService {
 
     private constructor(private router: Router, token: symbol) {
         if (!token) {

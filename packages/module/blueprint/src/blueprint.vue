@@ -7,7 +7,7 @@ import Panel from './components/panel.vue';
 
 const { useMutation } = urql;
 
-const routerService = inject<service.RouterServiceAPI>(service.TOKENS.Router);
+const routerService = inject<service.RouterService>(service.TOKENS.Router);
 const componentService = inject<service.ComponentService>(service.TOKENS.Component);
 
 const { executeMutation: createComponent } = useMutation<

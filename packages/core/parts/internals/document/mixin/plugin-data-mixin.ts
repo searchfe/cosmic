@@ -16,10 +16,14 @@ export default class PluginDataMixinx implements Internal.PluginDataMixin {
         return '';
     }
     setSharedPluginData(namespace: string, key: string, value: string) {
-        // TODO 
+        // TODO
     }
     getSharedPluginDataKeys(namespace: string) {
         // TODO
         return [];
+    }
+
+    serialize() {
+        throw new Error('class for true node should implement serialize function');
     }
 }
