@@ -68,7 +68,7 @@ const inputRef = ref();
 
 watchEffect(() => {
     inputModel.value = props.value.toString() || '0';
-})
+});
 
 const uniqueId = computed(
     () => {

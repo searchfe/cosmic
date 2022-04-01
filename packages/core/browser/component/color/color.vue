@@ -18,7 +18,7 @@ const rg = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/;
 
 const color = ref(c);
 
-const opacity = ref(1);
+const opacity = ref(Number(props.colorStyle.opacity) * 100 + '%');
 
 const theme = ref(props.theme);
 
@@ -41,6 +41,7 @@ const opacityBurHandler = (colorStyle) => {
     if (value > 100 || value < 0) value = 100;
     opacity.value = `${value}%`;
     colorStyle.opacity = number / 100;
+    console.log(colorStyle.opacity);
     changeEvent();
 };
 
@@ -57,8 +58,8 @@ const themeClickHandler = () => {
 watch(() => props.colorStyle, (newValue) => {
     const c = newValue.color && Color.rgb(newValue.color.r, newValue.color.g, newValue.color.b).hex();
     color.value = c;
-    opacity.value = newValue.opacity
-})
+    opacity.value = newValue.opacity;
+});
 
 </script>
 
