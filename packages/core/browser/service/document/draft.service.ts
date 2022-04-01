@@ -1,21 +1,77 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { draftDAO } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
-import { Subject } from '@cosmic/core/rxjs';
+// import { Subject } from '@cosmic/core/rxjs';
+import { TOKENS } from '../token';
+import { util } from '@cosmic/core/parts';
+import { DocumentNode } from '@cosmic/core/parts';
 
-interface SubjectSourceType {
-    type: 'C' | 'U' | 'D';
-    data: Partial<gql.Draft>[];
+// interface SubjectSourceType {
+//     type: 'C' | 'U' | 'D';
+//     data: Partial<gql.Draft>[];
+// }
+const { CLS_MAP } = util;
+
+function visit(args: any) {
+    const { data, type } = args;
+    const Cls = CLS_MAP[type];
+    const { data: selfData, children, backgrounds } = data;
+    const ins = new Cls(selfData);
+    if (children && children.length) {
+        children.forEach(child => {
+            ins.appendChild(visit(child));
+        });
+    }
+    if (backgrounds && backgrounds.length) {
+        ins.backgrounds = backgrounds.map(bg => {
+            const { type: bgType, data } = bg;
+            const BgCls = new CLS_MAP[bgType];
+            return BgCls;
+        });
+    }
+    return ins;
 }
 
 @injectable()
 export default class DraftService {
     private draftDAO: ReturnType<typeof draftDAO>;
-    private subject: Subject<SubjectSourceType>;
+    private draft: Partial<gql.Draft>;
+    // private subject: Subject<SubjectSourceType>;
 
-    constructor(@inject(service.TOKENS.GqlClient) private client: service.GqlClient) {
-        this.draftDAO = draftDAO(client);
-        this.subject = new Subject();
+    constructor(
+        @inject(TOKENS.GqlClient) private client: service.GqlClient,
+        @inject(TOKENS.Node) private currentNode: service.NodeService,
+    ) {
+        this.draftDAO = draftDAO(this.client);
+        this.draft = {
+            name: 'Foo',
+            data: '{}',
+            team: '6166bd9cc13b026875181927',
+            project: '62449f2aa3551f6c5bccbd0c',
+        };
+        // this.subject = new Subject();
+    }
+
+    async save() {
+        const obj = this.currentNode.serialize();
+        // console.log('---serialize obj: ', obj)
+        this.draft.data  = JSON.stringify(obj);
+        if (!this.draft.id) {
+            const newOne = await this.create(this.draft);
+            this.draft.id = newOne.id;
+        } else {
+            const updatedOne = await this.update(this.draft);
+        }
+        localStorage.setItem('draft', this.draft.id);
+    }
+
+    async open() {
+        const draft = await this.queryOne(localStorage.getItem('draft') as string);
+        const data = JSON.parse(draft.data);
+        const doc = data.document;
+        const node = visit(doc) as DocumentNode;
+        // console.log('deserialized node: ', node);
+        this.currentNode.deserialize(node);
     }
 
     async query(query: gql.QueryDraftDTO) {
@@ -23,34 +79,40 @@ export default class DraftService {
         return result.data?.drafts;
     }
 
+    async queryOne(id: string) {
+        const result = await this.draftDAO.queryOne(id, ['id', 'data']);
+        return result.data?.getDraft;
+    }
+
     async create(data: gql.CreateDraftDTO) {
         const result = await this.draftDAO.create(data, ['id', 'data', 'project', 'name', 'team']);
-        const newData = result.data?.createDraft;
-        if (newData && newData.id) {
-            this.subject.next({
-                type: 'C',
-                data: [newData],
-            });
-        }
+        return result.data?.createDraft;
+        // const newData = result.data?.createDraft;
+        // if (newData && newData.id) {
+        //     this.subject.next({
+        //         type: 'C',
+        //         data: [newData],
+        //     });
+        // }
     }
 
     async update(data: gql.QueryDraftDTO) {
         const result = await this.draftDAO.update(data);
-        if (result.data) {
-            this.subject.next({
-                type: 'U',
-                data: [data as SubjectSourceType],
-            });
-        }
+        // if (result.data) {
+        //     this.subject.next({
+        //         type: 'U',
+        //         data: [data as SubjectSourceType],
+        //     });
+        // }
     }
 
     async delete(id: string) {
         const result = await this.draftDAO.delete(id);
-        if (result.data) {
-            this.subject.next({
-                type: 'D',
-                data: [{ id }],
-            });
-        }
+        // if (result.data) {
+        //     this.subject.next({
+        //         type: 'D',
+        //         data: [{ id }],
+        //     });
+        // }
     }
 }

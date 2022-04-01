@@ -358,6 +358,7 @@ interface SolidPaint {
   readonly visible?: boolean
   readonly opacity?: number
   readonly blendMode?: BlendMode
+  serialize(): { type: string, data: any };
 }
 
 interface GradientPaint {
@@ -367,7 +368,8 @@ interface GradientPaint {
 
   readonly visible?: boolean
   readonly opacity?: number
-  readonly blendMode?: BlendMode
+  readonly blendMode?: BlendMode;
+  serialize(): { type: string, data: any };
 }
 
 interface ImagePaint {
@@ -382,6 +384,7 @@ interface ImagePaint {
   readonly visible?: boolean
   readonly opacity?: number
   readonly blendMode?: BlendMode
+  serialize(): { type: string, data: any };
 }
 
 type Paint = SolidPaint | GradientPaint | ImagePaint
@@ -679,7 +682,8 @@ interface PluginDataMixin {
   // be a name related to your plugin. Other plugins will be able to read this data.
   getSharedPluginData(namespace: string, key: string): string
   setSharedPluginData(namespace: string, key: string, value: string): void
-  getSharedPluginDataKeys(namespace: string): string[]
+  getSharedPluginDataKeys(namespace: string): string[];
+  serialize(): { type: string, data: any };
 }
 
 interface SceneNodeMixin {

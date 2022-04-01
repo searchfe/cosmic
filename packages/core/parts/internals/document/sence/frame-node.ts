@@ -1,5 +1,7 @@
 import { Mixin } from 'ts-mixer';
 import DefaultFrameMixin from '../mixin/default-frame-mixin';
+import { pick } from 'lodash';
+import { serializable } from '../../../util/serializable';
 
 export interface FrameNodeOptions {
     x?: number,
@@ -8,6 +10,7 @@ export interface FrameNodeOptions {
     height?: number;
 }
 
+@serializable('FRAME')
 export default class FrameNode extends Mixin(DefaultFrameMixin) implements Internal.FrameNode {
     readonly type = 'FRAME';
     // width: number;
@@ -35,5 +38,16 @@ export default class FrameNode extends Mixin(DefaultFrameMixin) implements Inter
 
     getRangeFillStyleId(start: number, end: number): string {
         return this.fillStyleId as string;
+    }
+    serialize() {
+        const plainObj = pick(this, ['x', 'y', 'width', 'height']);
+        plainObj.children = this.children.map(child => ({
+            type: child.type,
+            data: child.serialize(),
+        }));
+        return {
+            data: plainObj,
+            type: this.type,
+        };
     }
 }

@@ -6,6 +6,7 @@ import buttonMenu from './menu-button.module.css';
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 const toolService = inject<service.ToolService>(service.TOKENS.Tool);
+const draftService = inject<service.DraftService>(service.TOKENS.Draft);
 
 function handler(e) {
     switch(e.value) {
@@ -20,6 +21,12 @@ function handler(e) {
             break;
         case 'del':
             nodeService.deleteSelection();
+            break;
+        case 'save':
+            draftService.save();
+            break;
+        case 'open':
+            draftService.open();
             break;
     }
     if (e?.value?.match(/screen-([\d]+)/)) {

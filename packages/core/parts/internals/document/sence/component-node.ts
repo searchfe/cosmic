@@ -2,7 +2,11 @@ import { Mixin } from 'ts-mixer';
 import DefaultFrameMixin from '../mixin/default-frame-mixin';
 import PublishableMixin from '../mixin/publishable-mixin';
 import VariantMixin from '../mixin/variant-mixin';
+import { pick } from 'lodash';
+import { serializable } from '../../../util/serializable';
 
+
+@serializable('COMPONENT')
 export default class ComponentNode extends Mixin(
     DefaultFrameMixin,
     PublishableMixin,
@@ -26,6 +30,14 @@ export default class ComponentNode extends Mixin(
     createInstance() {
         // TODO
         return '' as any;
+    }
+
+    serialize() {
+        return {
+            data: pick(this, ['x', 'y', 'width', 'height', 'cname']),
+            backgrounds: (this.backgrounds || []).map(bg => bg.serialize()),
+            type: this.type,
+        };
     }
 }
 

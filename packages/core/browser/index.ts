@@ -2,7 +2,7 @@ import { createApp, ref, type App as VueApp } from 'vue';
 
 import { MComponent } from '@cosmic-module/core';
 import { SanComponent } from '@cosmic-module/san-loader';
-import { createContainer, TOKENS, type RouterServiceAPI } from './service/index';
+import { createContainer, TOKENS, type RouterService } from './service/index';
 import App from './app.vue';
 
 import type { BootstrapOption } from '@cosmic/core/parts';
@@ -28,7 +28,7 @@ function bootstrap(option: BootstrapOption) {
     const container = createContainer({ defaultScope: 'Singleton' });
 
 
-    const routerPlugin = container.get<RouterServiceAPI>(TOKENS.Router);
+    const routerPlugin = container.get<RouterService>(TOKENS.Router);
     app.use(routerPlugin.getRouterConfig());
     const urql = container.get<GqlClient>(TOKENS.GqlClient);
 

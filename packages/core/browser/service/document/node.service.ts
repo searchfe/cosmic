@@ -120,6 +120,17 @@ export default class NodeService {
     getSelection(): Array<PageNode | SceneNode> {
         return this._selection;
     }
+
+    serialize() {
+        const result = {
+            document: this._document.serialize(),
+        };
+        return result;
+    }
+
+    deserialize(doc: DocumentNode) {
+        this._document = doc;
+    }
 }
 
 function id() {

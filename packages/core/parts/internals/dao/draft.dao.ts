@@ -5,6 +5,17 @@ type DraftFields = (keyof gql.Draft)[];
 
 export default function draftDAO(client: Client) {
     return {
+        queryOne(id: string, fields: DraftFields = ['id']) {
+            return client.query<{ getDraft: Partial<gql.Draft> }>(
+                `query ($id: String!) {
+                    getDraft(id: $id) {
+                        id,
+                        ${fields.join(',')}
+                    }
+                }`,
+                { id },
+            ).toPromise();
+        },
         query(query: gql.QueryDraftDTO, fields: DraftFields = ['id']) {
             return client.query<{ drafts: Partial<gql.Draft>[] }>(
                 `query ($fields: [String!], $query: QueryDraftDTO!) {
