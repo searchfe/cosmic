@@ -13,6 +13,7 @@ export default class ToolService {
         this.subject = new Subject();
         keyboardService.keydown('Space').subscribe(() => this.set(ToolState.Hand));
         keyboardService.keyup('Space').subscribe(() => this.cancel(ToolState.Hand));
+        this.initShortcutKey();
     }
     getState() {
         return this._states.length ? this._states[this._states.length - 1] : ToolState.Null;
@@ -39,6 +40,16 @@ export default class ToolService {
             }
             this.resotre();
         }
+    }
+    initShortcutKey() {
+        this.keyboardService.keydown('F').subscribe((event: KeyboardEvent) => {
+            if (event.target !== document.body) return;
+            if(this.getState() === ToolState.Null) this.set(ToolState.Frame);
+        });
+        this.keyboardService.keydown('T').subscribe((event: KeyboardEvent) => {
+            if (event.target !== document.body) return;
+            if(this.getState() === ToolState.Null) this.set(ToolState.Text);
+        });
     }
 }
 

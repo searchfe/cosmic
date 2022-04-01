@@ -15,12 +15,12 @@ export default class KeyboardService {
     }
     public keyup(code: string) {
         return this.subject.pipe(
-            filter(event => event.type === 'keyup' && (event.key === code || event.code ===code)),
+            filter(event => event.type === 'keyup' && (event.key.toUpperCase() === code || event.code.toUpperCase() ===code)),
         );
     }
     public keydown(code: string) {
         return this.subject.pipe(
-            filter(event => event.type === 'keydown' && (event.key === code || event.code ===code)),
+            filter(event => event.type === 'keydown' && (event.key.toUpperCase() === code || event.code.toUpperCase() === code)),
         );
     }
 }
