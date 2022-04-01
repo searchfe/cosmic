@@ -30,14 +30,21 @@ withDefaults(defineProps<Props>(), {
                     {{ extra }}
                 </div>
             </div>
-            <div :class="$style['card-preview']" class="w-full pb-12 px-12">
-                <img
-                    v-for="img in imgs"
-                    :key="img"
-                    :src="img"
-                    class="w-full h-full"
-                    alt=""
-                >
+            <div :class="$style['card-preview']" class="w-full px-12">
+                <div v-for="img, idx in imgs" :key="img" :class="$style['img-container']">
+                    <img
+                        class="w-full h-full overflow-hidden"
+                        :style="{
+                            borderTopLeftRadius: idx === 0 ? '7px' : '',
+                            borderTopRightRadius: idx === 3 ? '7px' : '',
+                            borderBottomLeftRadius: idx === 0 ? '7px' : '',
+                            borderBottomRightRadius: idx === 3 ? '7px' : '',
+                        }"
+                        :src="img"
+                        :class="$style.img"
+                        alt=""
+                    >
+                </div>
             </div>
         </div>
     </Card>
@@ -85,9 +92,24 @@ withDefaults(defineProps<Props>(), {
 }
 .card-preview {
     position: absolute;
+    box-sizing: border-box;
     height: 23.7%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 12px;
+}
+.img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-size: 100%;
+}
+.img-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: 53.45%;
 }
 </style>

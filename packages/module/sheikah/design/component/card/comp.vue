@@ -47,6 +47,7 @@ withDefaults(defineProps<CompCardOption>(), {
     height: 70%;
     width: 100%;
     background: #e5e5e5;
+    overflow: hidden;
 }
 .info {
     position: absolute;
@@ -60,7 +61,7 @@ withDefaults(defineProps<CompCardOption>(), {
 }
 
 .img-preview {
-    transform: scale(.7);
+    transform: scale(.27);
     border-radius: 8px;
 }
 </style>
