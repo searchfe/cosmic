@@ -9,9 +9,11 @@ withDefaults(defineProps<{ name: string }>(), {
     <Card style="border: 1px solid rgba(151, 151, 151, .1);">
         <div :class="$style.card">
             <div :class="$style['card-content']" class="w-full h-full">
-                <div :class="$style.preview" class="w-full" />
-                <div :class="$style.info" class="w-full text-lg flex items-center pl-20">
-                    {{ name }}
+                <div :class="$style.preview" class="w-full">
+                    <img class="w-full h-full" src="https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png" alt="">
+                </div>
+                <div :class="$style.info" class="w-full flex items-center pl-20 text-md">
+                    按钮
                 </div>
             </div>
         </div>

@@ -20,8 +20,8 @@ withDefaults(defineProps<ProjectProps>(), {
 <template>
     <Card :class="$style['card-container']">
         <div class="flex flex-col" :class="$style['card-content']">
-            <div class="w-full flex items-center justify-center" :class="$style['card-preview']">
-                稿件预览图
+            <div class="w-full flex items-center justify-center overflow-hidden" :class="$style['card-preview']">
+                <img class="w-full h-full" src="https://fe-dev.bj.bcebos.com/0b45b7cab385c97703048aa0b.png" alt="稿件预览图">
             </div>
             <div :class="$style['card-content-info']">
                 <div class="h-16 text-md">

@@ -2,15 +2,18 @@
 import { ref } from 'vue';
 import { Input, Dialog, Button, Space } from 'cosmic-vue';
 import { router as vueRouter } from '@cosmic/core/browser';
-import CompCard from '../component/card/comp.vue';
 import CompFilter from '../component/filter.vue';
 import Region from '../../common/component/region.vue';
 import { service } from '@cosmic/core/browser';
-import { inject, type QueryComponentResult, createFetchTeamComponentsRequest, deleteComponentQuery } from '@cosmic/core/parts';
+import CompCard from '../component/card/comp-refs.vue';
+
+import { inject, type QueryComponentResult, createFetchTeamComponentsRequest } from '@cosmic/core/parts';
+// import { inject, type QueryComponentResult, createFetchTeamComponentsRequest, deleteComponentQuery } from '@cosmic/core/parts';
 import { urql } from '@cosmic/core/browser';
 
 const { useRoute } = vueRouter;
-const { useQuery, useMutation } = urql;
+// const { useQuery, useMutation } = urql;
+const { useQuery } = urql;
 
 const routerService = inject<service.RouterServiceAPI>(service.TOKENS.Router);
 const componentService = inject<service.ComponentService>(service.TOKENS.Component);
@@ -26,10 +29,10 @@ fetchTeamComponents().then(({ data }) => data.value!.components).then(data => {
     componentService.components.next(data);
 });
 
-const { executeMutation: deleteComponentMutation } = useMutation<
-    { deleteComponentByTeamAndName: number },
-    { data: gql.QueryComponentDTO }
->(deleteComponentQuery);
+// const { executeMutation: deleteComponentMutation } = useMutation<
+//     { deleteComponentByTeamAndName: number },
+//     { data: gql.QueryComponentDTO }
+// >(deleteComponentQuery);
 
 componentService.components.subscribe(next => {
     componentsRef.value = next;
@@ -58,16 +61,16 @@ function addComponent() {
     createComponentDialogIsOpenRef.value = false;
 }
 
-function deleteComponent(name: string) {
-    deleteComponentMutation({ data: { team, name } }).then(({ data }) => {
-        const cnt = data?.deleteComponentByTeamAndName;
-        if (cnt === 1) {
-            fetchTeamComponents().then(({ data }) => data.value!.components).then(data => {
-                componentService.components.next(data);
-            });
-        }
-    });
-}
+// function deleteComponent(name: string) {
+//     deleteComponentMutation({ data: { team, name } }).then(({ data }) => {
+//         const cnt = data?.deleteComponentByTeamAndName;
+//         if (cnt === 1) {
+//             fetchTeamComponents().then(({ data }) => data.value!.components).then(data => {
+//                 componentService.components.next(data);
+//             });
+//         }
+//     });
+// }
 </script>
 <template>
     <Region title="组件">
@@ -129,11 +132,11 @@ function deleteComponent(name: string) {
     <Region inverse>
         <div :class="$style['card-list']">
             <section v-for="i, index of componentsRef" :key="index" :class="['relative', $style.card]">
-                <comp-card :title="i.displayName" :meta="[i.name, i.desc]" img="https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png" @click="onClickComp(i)" />
-                <i-cosmic-close
+                <comp-card :class="$style['comp-card']" :title="i.displayName" :meta="[i.name, i.desc]" img="https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png" @click="onClickComp(i)" />
+                <!-- <i-cosmic-close
                     :class="['absolute', $style['card-delete']]"
                     @click="deleteComponent(i.name)"
-                />
+                /> -->
             </section>
         </div>
     </Region>
@@ -168,6 +171,8 @@ function deleteComponent(name: string) {
 }
 .card:not(:hover) .card-delete {
     display: none;
+    width: 240px;
+    height: 230px;
 }
 .card-delete {
     top: 1.2rem;
@@ -186,7 +191,7 @@ function deleteComponent(name: string) {
     border-radius: 4px;
     background: #f5f5f5;
 }
-@media (min-width: 960px) {
+/* @media (min-width: 960px) {
     .card-list {
         grid-template-columns: 1fr 1fr;
     }
@@ -200,7 +205,7 @@ function deleteComponent(name: string) {
     .card-list {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
-}
+} */
 
 .filter {
     overflow-x: scroll;
@@ -211,5 +216,9 @@ function deleteComponent(name: string) {
 
 .dialog {
     box-shadow: 1px 4px 6px #0000001a;
+}
+.comp-card {
+    width: 240px;
+    height: 230px;
 }
 </style>
