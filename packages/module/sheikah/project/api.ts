@@ -3,7 +3,20 @@ import { urql } from '@cosmic/core/browser';
 
 const { useQuery, useMutation } = urql;
 
-export function useDrafts(query: gql.QueryDraftDTO, fields: string[] = ['id', 'name', 'team', 'project']) {
+export function queryOne(id: string, fields: string[] = []) {
+    return useQuery<{ project: Partial<gql.Project> }, gql.QueryProjectDTO>({
+        query: `query ($id: String!) {
+            project(id: $id) {
+                id,
+                ${fields.join(',')}
+            }
+        }`,
+        variables: { id },
+        requestPolicy: 'cache-and-network',
+    });
+}
+
+export function useDrafts(query: gql.QueryDraftDTO, fields: string[] = ['name', 'team', 'project']) {
     return useQuery<{ drafts: Partial<gql.Draft>[] }, gql.QueryDraftDTO>({
         query: `query ($fields: [String!], $query: QueryDraftDTO) {
             drafts(fields: $fields, query: $query) {

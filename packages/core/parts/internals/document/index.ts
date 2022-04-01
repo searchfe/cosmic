@@ -7,6 +7,7 @@ import FrameNode from './sence/frame-node';
 
 export type { FrameNodeOptions} from './sence/frame-node';
 export type { TextNodeOptions } from './sence/text-node';
+export type { ComponentNodeOptions } from './sence/component-node';
 
 export { DocumentNode, PageNode };
 
@@ -44,6 +45,7 @@ export { hasMixin } from 'ts-mixer';
 export { default as ChildrenMixin } from './mixin/children-mixin';
 export { default as SceneNodeMixin } from './mixin/scene-node-mixin';
 export { default as ContainerMixin } from './mixin/container-mixin';
+export { default as BaseNodeMixin } from './mixin/base-node-mixin';
 
 export * from './style/text-style';
 export * from './style/fill-style';

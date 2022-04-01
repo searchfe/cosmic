@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import { type FrameNode, util } from '@cosmic/core/parts';
+import { type ComponentNode } from '@cosmic/core/parts';
 import { onMounted, ref } from 'vue';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
+import { Button } from 'cosmic-vue';
 
-interface FrameProps {
-    node: FrameNode,
+interface ComponentProps {
+    node: ComponentNode,
 }
 
-const props = withDefaults(defineProps<FrameProps>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
 
 });
 onMounted(() => {
@@ -31,18 +32,18 @@ nodeService.selection.subscribe(nodes => {
 <template>
     <div
         v-creator="{target: node}"
-        class="frame-render"
+        class="component-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
             top: node.y + 'px',
             left: node.x + 'px',
             width: node.width + 'px',
             height: node.height + 'px',
-            background: util.toBackgroundStyle(node?.backgrounds[0]),
+            // background: util.toBackgroundStyle(node?.backgrounds[0]),
         }"
     >
         <div class="relative">
-            <children-render :children="node.children" />
+            <Button>按钮</Button>
         </div>
         <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>

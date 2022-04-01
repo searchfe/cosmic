@@ -17,7 +17,6 @@
     const router = useRouter();
 
     const props = withDefaults(defineProps<Props>(), {
-        avatar: 'https://fe-dev.bj.bcebos.com/%E5%8D%A1%E7%89%87%E5%9B%BE%E6%A0%8740*40.png',
         info: '协作 30',
         name: '项目名称',
         users: () => [
@@ -64,11 +63,9 @@
         :class="$style.card"
         @click.stop="projectClickHandler"
     >
-        <img
-            :class="$style['card-img-container']"
-            :src="avatar"
-            alt="projcet avatar"
-        >
+        <div :class="$style['card-img']">
+            {{ (name || 'P')[0] }}
+        </div>
         <div :class="$style['card-name']">
             {{ name }}
         </div>
@@ -104,7 +101,7 @@
     height: 0;
     font-size: 12px;
 }
-.card-img-container {
+.card-img {
     position: absolute;
     overflow: hidden;
     box-sizing: border-box;
@@ -112,7 +109,15 @@
     width: 40px;
     top: 12px;
     left: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 4px;
+    overflow: hidden;
+    background: url(https://fe-dev.bj.bcebos.com/%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF%E5%9B%BE.png);
+    background-size: 100%;
+    color: #fff;
+    font-size: 20px;
 }
 .card-name {
     position: absolute;

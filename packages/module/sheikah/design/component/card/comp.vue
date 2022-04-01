@@ -8,7 +8,7 @@ interface CompCardOption {
 }
 withDefaults(defineProps<CompCardOption>(), {
     id: '',
-    img: 'https://fe-dev.bj.bcebos.com/Button.png',
+    img: 'https://fe-dev.bj.bcebos.com/%E9%A2%84%E5%88%B6%E5%88%97%E8%A1%A8%20%20%E4%B8%BB%E6%8C%89%E9%92%AE-%E9%9D%A2%E5%BA%95%203%E5%80%8D.png',
     name: '2n 按钮',
 });
 </script>
@@ -17,7 +17,7 @@ withDefaults(defineProps<CompCardOption>(), {
     <Card>
         <div class="flex flex-col overflow-hidden" :class="$style.card">
             <div :class="$style.preview" class="flex items-center justify-center">
-                <img :class="$style['img-preview']" :src="img" alt="预置预览">
+                <img class="w-full h-full" :src="img" alt="预置预览">
             </div>
             <div :class="$style.info" class="flex flex-col justify-around">
                 <div class="text-lg">
@@ -46,7 +46,7 @@ withDefaults(defineProps<CompCardOption>(), {
     position: absolute;
     height: 70%;
     width: 100%;
-    background: #e5e5e5;
+    overflow: hidden;
 }
 .info {
     position: absolute;
@@ -57,10 +57,5 @@ withDefaults(defineProps<CompCardOption>(), {
 }
 .ref {
     color: #636363;
-}
-
-.img-preview {
-    transform: scale(.7);
-    border-radius: 8px;
 }
 </style>

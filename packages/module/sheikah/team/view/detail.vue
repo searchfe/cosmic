@@ -13,16 +13,16 @@ const { useRouter, useRoute } = vueRouter;
 const router = useRouter();
 const { query = {} } = useRoute();
 
-const { team, project } = query as { team: string; project: string };
+const { team } = query as { team: string; };
 
 const projects = ref<gql.Project[]>([]);
 
-const { data, fetching, executeQuery: refreshProjects } = useProjects({ team, parent: project});
+const { data, fetching, executeQuery: refreshProjects } = useProjects({ team, parent: null });
 
 const { executeMutation: deleteProject } = useDeleteProject();
 
 watchEffect(() => {
-    if (data.value && !fetching.value) {
+    if (team && data.value && !fetching.value) {
         projects.value = data.value?.projects;
     }
 });
@@ -31,7 +31,7 @@ function onClickDesignCard(cardType: string) {
     if (cardType) {
         router.push({
             path: `/${cardType}/list`,
-            query: { project: query.project },
+            query: { team: query.team },
         });
     }
 }
@@ -63,6 +63,12 @@ const teamAssetsData = [
         ...tempItem,
         title: '组件',
         type: 'component',
+        imgs: [
+            'https://fe-dev.bj.bcebos.com/dash%20%E9%A2%84%E5%88%B6%E7%BC%A9%E5%92%AF%E5%9B%BE1.png',
+            'https://fe-dev.bj.bcebos.com/dash%20%E9%A2%84%E5%88%B6%E7%BC%A9%E5%92%AF%E5%9B%BE2.png',
+            'https://fe-dev.bj.bcebos.com/dash%20%E9%A2%84%E5%88%B6%E7%BC%A9%E5%92%AF%E5%9B%BE3.png',
+            'https://fe-dev.bj.bcebos.com/dash%20%E9%A2%84%E5%88%B6%E7%BC%A9%E5%92%AF%E5%9B%BE4.png',
+        ],
     },
 ];
 </script>

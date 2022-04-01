@@ -68,6 +68,9 @@ const sizeOptions = [{
 }, {
     label: '20',
     value: '20px',
+}, {
+    label: '30',
+    value: '30px',
 }];
 
 const weightOptions = [{
@@ -94,8 +97,16 @@ const decrationOptions = [{
 
 const emits = defineEmits(['success']);
 
-function onChangeFont(arg: { value: string }) {
+function onChangeFamily(arg: { value: string }) {
     data.value.family = arg.value;
+}
+
+function onChangeSize(arg: { value: string }) {
+    data.value.size = arg.value;
+}
+
+function onChangeWeight(arg: { value: string }) {
+    data.value.weight = arg.value;
 }
 
 function onOK(args: { team: string }) {
@@ -143,7 +154,7 @@ function onOK(args: { team: string }) {
         @ok="onOK"
     >
         <div style="padding: 0 10px">
-            <Select :value="data.family" @on-change="onChangeFont">
+            <Select :value="data.family" @on-change="onChangeFamily">
                 <select-option
                     v-for="item in familOptions"
                     :key="item.value"
@@ -155,7 +166,7 @@ function onOK(args: { team: string }) {
         <div :class="$style['font-setup']">
             <div class="flex items-center">
                 <i-cosmic-font class="text-sm" style="flex: none" />
-                <Select :value="data.size" @on-change="onChangeFont">
+                <Select :value="data.size" @on-change="onChangeSize">
                     <select-option
                         v-for="item in sizeOptions"
                         :key="item.value"
@@ -165,7 +176,7 @@ function onOK(args: { team: string }) {
                 </Select>
             </div>
             <div>
-                <Select :value="data.weight" @on-change="onChangeFont">
+                <Select :value="data.weight" @on-change="onChangeWeight">
                     <select-option
                         v-for="item in weightOptions"
                         :key="item.value"
