@@ -12,7 +12,7 @@ withDefaults(defineProps<ProjectProps>(), {
     id: '',
     img: 'https://fe-dev.bj.bcebos.com/file-card.png',
     name: '',
-    desc: '编辑于 昨天',
+    desc: '编辑于 今天',
 });
 
 </script>
