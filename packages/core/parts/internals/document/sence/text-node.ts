@@ -10,6 +10,7 @@ export interface TextNodeOptions {
     width?: number;
     height?: number;
     name?: string;
+    id?: string;
 }
 export default class TextNode
     extends Mixin(
@@ -27,6 +28,8 @@ export default class TextNode
         this.width = option.width || 0;
         this.height = option.height || 0;
         this.fontSize = 12;
+        this.name = option.name || '';
+        this.id = option.id || '';
     }
     clone() {
         return this as any;

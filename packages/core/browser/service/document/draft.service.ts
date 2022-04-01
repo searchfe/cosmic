@@ -13,22 +13,23 @@ import { DocumentNode } from '@cosmic/core/parts';
 const { CLS_MAP } = util;
 
 function visit(args: any) {
-    const { data, type } = args;
-    const Cls = CLS_MAP[type];
-    const { data: selfData, children, backgrounds } = data;
-    const ins = new Cls(selfData);
+    // const { data, } = args;
+    const Cls = CLS_MAP[args.type];
+    const { children, backgrounds } = args;
+    const ins = new Cls(args);
     if (children && children.length) {
         children.forEach(child => {
             ins.appendChild(visit(child));
         });
     }
-    if (backgrounds && backgrounds.length) {
-        ins.backgrounds = backgrounds.map(bg => {
-            const { type: bgType, data } = bg;
-            const BgCls = new CLS_MAP[bgType];
-            return BgCls;
-        });
-    }
+    ins.backgrounds = backgrounds || [];
+    // if (backgrounds && backgrounds.length) {
+    //     ins.backgrounds = backgrounds.map(bg => {
+    //         const { type: bgType, data } = bg;
+    //         const BgCls = new CLS_MAP[bgType](data.color || {});
+    //         return BgCls;
+    //     });
+    // }
     return ins;
 }
 
@@ -54,6 +55,7 @@ export default class DraftService {
 
     async save() {
         const obj = this.currentNode.serialize();
+        console.log('save', obj);
         // console.log('---serialize obj: ', obj)
         this.draft.data  = JSON.stringify(obj);
         if (!this.draft.id) {
@@ -62,16 +64,18 @@ export default class DraftService {
         } else {
             const updatedOne = await this.update(this.draft);
         }
+
         localStorage.setItem('draft', this.draft.id);
     }
 
     async open() {
         const draft = await this.queryOne(localStorage.getItem('draft') as string);
         const data = JSON.parse(draft.data);
+        console.log('open', data);
         const doc = data.document;
         const node = visit(doc) as DocumentNode;
         // console.log('deserialized node: ', node);
-        this.currentNode.deserialize(node);
+        this.currentNode.load(node);
     }
 
     async query(query: gql.QueryDraftDTO) {

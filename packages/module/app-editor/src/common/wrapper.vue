@@ -19,9 +19,8 @@ withDefaults(defineProps<WrapperProps>(), {
 </script>
 <template>
     <div v-if="!hidden" class="absolute w-full h-full flex flex-col-reverse items-center" :class="styles.root">
-        <div :class="styles.info">{{ info }}</div>   
+        <div :class="styles.info">{{ info }}</div>
     </div>
-    <!-- <div v-else class="absolute w-full h-full" style="top:0;background-color: transparent;" @mousedown.stop="select" /> -->
 </template>
 <style>
 </style>
