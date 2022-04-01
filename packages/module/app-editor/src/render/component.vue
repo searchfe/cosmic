@@ -45,6 +45,6 @@ nodeService.selection.subscribe(nodes => {
         <div class="relative">
             <Button>按钮</Button>
         </div>
-        <wrapper :hidden="!selected" :info="node.width + '×' + node.height" />
+        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

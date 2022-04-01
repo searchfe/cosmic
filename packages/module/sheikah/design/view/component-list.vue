@@ -129,7 +129,7 @@ function deleteComponent(name: string) {
     <Region inverse>
         <div :class="$style['card-list']">
             <section v-for="i, index of componentsRef" :key="index" :class="['relative', $style.card]">
-                <comp-card :title="i.displayName" :meta="[i.name, i.desc]" img="https://fe-dev.bj.bcebos.com/solid-button.png" @click="onClickComp(i)" />
+                <comp-card :title="i.displayName" :meta="[i.name, i.desc]" img="https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png" @click="onClickComp(i)" />
                 <i-cosmic-close
                     :class="['absolute', $style['card-delete']]"
                     @click="deleteComponent(i.name)"

@@ -23,7 +23,7 @@ withDefaults(defineProps<PropRegion>(), {
 </script>
 
 <template>
-    <div class="text-2xl padding-2xl" :class="{ [$style.info]: true, [$style.inverse]: inverse }">
+    <div class="text-2xl padding-2xl relative" :class="{ [$style.info]: true, [$style.inverse]: inverse }">
         <div
             class="flex justify-between items-center"
             :class="{[$style['inverse-title']]: inverse, 'mb-20': hasDefault }"
@@ -37,6 +37,9 @@ withDefaults(defineProps<PropRegion>(), {
         </div>
         <div :class="{ 'mt-20': hasBottom }">
             <slot name="bottom" />
+        </div>
+        <div class="absolute" :class="$style['rb-actions']">
+            <slot name="rb-actions" />
         </div>
     </div>
 </template>
@@ -55,5 +58,9 @@ withDefaults(defineProps<PropRegion>(), {
 .inverse-title {
     padding-left: 4px;
     padding-right: 4px;
+}
+.rb-actions {
+    right: 24px;
+    bottom: 24px;
 }
 </style>

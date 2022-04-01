@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onBeforeMount, getCurrentInstance } from 'vue';
 import { routify } from './routes';
-import SheikahLayout from './layout.vue';
+import SheikahLayout from './layout/layout.vue';
 
 // register router
 onBeforeMount(() => {

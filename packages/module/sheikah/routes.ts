@@ -6,6 +6,7 @@ import AtomDetail from './design/view/atom-detail.vue';
 import ComponentList from './design/view/component-list.vue';
 import PrefabList from './design/view/prefab-list.vue';
 import PrefabDetail from './design/view/prefab-detail.vue';
+import Left from './layout/left.vue';
 
 const { createRouter, createMemoryHistory } = router;
 
@@ -13,37 +14,58 @@ const routes = [
     {
         name: 'team:detail',
         path: '/team',
-        component: TeamDetail,
+        components: {
+            default: TeamDetail,
+            Left,
+        },
     },
     {
         name: 'project:detail',
         path: '/project',
-        component: ProjectDetail,
+        components: {
+            default: ProjectDetail,
+            Left,
+        },
     },
     {
         name: 'atom:list',
         path: '/atom/list',
-        component: AtomList,
+        components: {
+            default: AtomList,
+            Left,
+        },
     },
     {
         name: 'atom:detail',
         path: '/atom',
-        component: AtomDetail,
+        components: {
+            default: AtomDetail,
+            Left,
+        },
     },
     {
         name: 'component:list',
         path: '/component/list',
-        component: ComponentList,
+        components: {
+            default: ComponentList,
+            Left,
+        },
     },
     {
         name: 'prefab:list',
         path: '/prefab/list',
-        component: PrefabList,
+        components: {
+            default: PrefabList,
+            Left,
+        },
     },
     {
         name: 'prefab:detail',
         path: '/prefab',
-        component: PrefabDetail,
+        components: {
+            default: PrefabDetail,
+            Left,
+        },
     },
     {
         path: '/',
