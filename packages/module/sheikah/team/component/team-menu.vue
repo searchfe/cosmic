@@ -28,7 +28,9 @@ const selectedTeam = ref<string>(query.team as string || '');
 const { data: teamData, fetching: teamFetching } = useAllTeams();
 const { data: projectData, fetching: projectFetching } = useProjects({});
 
-let newProject: gql.CreateProjectDTO;
+let newProject = ref<Partial<gql.CreateProjectDTO>>({
+    name: '',
+});
 const openDialog = ref(false);
 
 async function changeSelectedTeam(arg: string | { keys: string[] }) {
@@ -57,17 +59,16 @@ watchEffect(() => {
 const defautlAvatar = 'https://fe-dev.bj.bcebos.com/%E4%BE%A7%E8%BE%B9%E6%A0%8F%E5%9B%BE%E6%A0%8714*14.png';
 
 function onAddProject(data: gql.CreateProjectDTO) {
-    newProject = data;
+    if (!data.name) {
+        data.name = '';
+    }
+    newProject.value = data;
     openDialog.value = true;
 }
 
-function onChangeNewProjectName(e: { value: string }) {
-    newProject.name = e.value;
-}
-
 function saveProject() {
-    if (newProject && newProject.name) {
-        createProject({ project: newProject }).finally(() => {
+    if (newProject.value && newProject.value.name) {
+        createProject({ project: newProject.value }).finally(() => {
             openDialog.value = false;
         });
     }
@@ -77,6 +78,7 @@ function saveProject() {
 <template>
     <collapse
         accordion
+        :nullable="false"
         :active-key="selectedTeam"
         @change="changeSelectedTeam"
     >
@@ -95,7 +97,7 @@ function saveProject() {
     </collapse>
     <Dialog v-model:visible="openDialog" title="创建项目" :show-close-icon="false" @ok="saveProject">
         <div class="my-20">
-            <Input placeholder="请输入项目名称" @on-input="onChangeNewProjectName" />
+            <Input v-model:value="newProject.name" placeholder="请输入项目名称" />
         </div>
     </Dialog>
 </template>

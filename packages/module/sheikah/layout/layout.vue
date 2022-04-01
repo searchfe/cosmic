@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { Layout, Content, Sider } from 'cosmic-vue';
 import { router } from '@cosmic/core/browser';
-import TeamMenu from './team/component/team-menu.vue';
 
 const { RouterView, useRoute } = router;
 
@@ -11,8 +10,8 @@ const route = useRoute();
 <template>
     <Layout class="main">
         <Sider :class="$style.sider">
-            <div :class="$style['sider-content']">
-                <team-menu />
+            <div :class="$style['sider-content']" class="px-14">
+                <router-view name="Left" />
             </div>
         </Sider>
         <Content :class="$style.content">

@@ -13,16 +13,16 @@ const { useRouter, useRoute } = vueRouter;
 const router = useRouter();
 const { query = {} } = useRoute();
 
-const { team, project } = query as { team: string; project: string };
+const { team } = query as { team: string; };
 
 const projects = ref<gql.Project[]>([]);
 
-const { data, fetching, executeQuery: refreshProjects } = useProjects({ team, parent: project});
+const { data, fetching, executeQuery: refreshProjects } = useProjects({ team, parent: null });
 
 const { executeMutation: deleteProject } = useDeleteProject();
 
 watchEffect(() => {
-    if (data.value && !fetching.value) {
+    if (team && data.value && !fetching.value) {
         projects.value = data.value?.projects;
     }
 });
@@ -31,7 +31,7 @@ function onClickDesignCard(cardType: string) {
     if (cardType) {
         router.push({
             path: `/${cardType}/list`,
-            query: { project: query.project },
+            query: { team: query.team },
         });
     }
 }
