@@ -4,14 +4,21 @@ import { type SceneNode } from '../index';
 import { serializable, CLS_MAP } from '../../../util/serializable';
 
 
+interface Option {
+    id?: string,
+    name?: string,
+}
+
 type NodeType = Internal.NodeType;
 
 @serializable('DOCUMENT')
 export default class DocumentNode extends BaseNodeMixin implements Internal.DocumentNode {
 
-    constructor() {
+    constructor(option?: Option) {
         super();
         this.children = [];
+        this.id = option?.id || '';
+        this.name = option?.name || '';
     }
 
     readonly type = 'DOCUMENT';
@@ -63,9 +70,9 @@ export default class DocumentNode extends BaseNodeMixin implements Internal.Docu
     serialize() {
         const result = {
             type: this.type,
-            data: {
-                children: this.children.map(child => child.serialize()),
-            },
+            id: this.id,
+            name: this.name,
+            children: this.children.map(child => child.serialize()),
         };
         return result;
     }

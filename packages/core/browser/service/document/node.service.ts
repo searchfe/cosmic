@@ -128,8 +128,13 @@ export default class NodeService {
         return result;
     }
 
-    deserialize(doc: DocumentNode) {
+    load(doc: DocumentNode) {
         this._document = doc;
+        this._currentPage = doc.children[0] || undefined;
+        this._selection = [];
+        this.updateDocument();
+        this.updateCurrentPage();
+        this.setSelection([]);
     }
 }
 

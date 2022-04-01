@@ -22,6 +22,9 @@ export default class ComponentNode extends Mixin(
         this.width = option.width || 0;
         this.height = option.height || 0;
         this.cname = option.cname || '';
+        this.id = option.id || '';
+        this.name = option.name || '';
+        this.backgrounds = [];
     }
     clone() {
         // TODO
@@ -34,14 +37,23 @@ export default class ComponentNode extends Mixin(
 
     serialize() {
         return {
-            data: pick(this, ['x', 'y', 'width', 'height', 'cname']),
-            backgrounds: (this.backgrounds || []).map(bg => bg.serialize()),
+            id: this.id,
+            name: this.name,
+            cname: this.cname,
+            backgrounds: this.backgrounds.map(bg => bg),
+            children: this.children.map(child => child.serialize()),
             type: this.type,
+            x: this.x,
+            y: this.y,
+            width: this.width,
+            height: this.height,
         };
     }
 }
 
 export interface ComponentNodeOptions {
+    id?: string,
+    name?: string,
     x?: number,
     y?: number,
     width?: number;

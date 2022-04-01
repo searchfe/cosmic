@@ -5,6 +5,11 @@ import ExportMixin from '../mixin/export-mixin';
 import { Paint } from '../property';
 import { serializable } from '../../../util/serializable';
 
+interface Option {
+    id?: string,
+    name?: string,
+}
+
 
 @serializable('PAGE')
 export default class PageNode
@@ -13,6 +18,12 @@ export default class PageNode
     clone() {
         // TODO
         return new PageNode();
+    }
+    constructor(option?: Option) {
+        super();
+        this.children = [];
+        this.id = option?.id || '';
+        this.name = option?.name || '';
     }
 
     guides = [];
@@ -28,10 +39,10 @@ export default class PageNode
     serialize() {
         return {
             type: this.type,
-            data: {
-                backgrounds: this.backgrounds.map(bg => bg.serialize()),
-                children: this.children.map(child => child.serialize()),
-            },
+            id: this.id,
+            name: this.name,
+            backgrounds: this.backgrounds.map(bg => bg),
+            children: this.children.map(child => child.serialize()),
         };
     }
 }

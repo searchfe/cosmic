@@ -8,6 +8,8 @@ export interface FrameNodeOptions {
     y?: number,
     width?: number;
     height?: number;
+    id?: string;
+    name?: string;
 }
 
 @serializable('FRAME')
@@ -22,6 +24,8 @@ export default class FrameNode extends Mixin(DefaultFrameMixin) implements Inter
         this.y = option.y || 0;
         this.width = option.width || 0;
         this.height = option.height || 0;
+        this.id = option.id || '';
+        this.name = option.name || '';
     }
     clone() {
         // TODO
@@ -40,14 +44,23 @@ export default class FrameNode extends Mixin(DefaultFrameMixin) implements Inter
         return this.fillStyleId as string;
     }
     serialize() {
-        const plainObj = pick(this, ['x', 'y', 'width', 'height']);
-        plainObj.children = this.children.map(child => ({
-            type: child.type,
-            data: child.serialize(),
-        }));
+        // const plainObj = pick(this, ['x', 'y', 'width', 'height']);
+        // plainObj.children = this.children.map(child => ({
+        //     type: child.type,
+        //     ...child.serialize(),
+        // }));
+        // plainObj.backgrounds = this.backgrounds.map(bg => bg.serialize());
         return {
-            data: plainObj,
+            id: this.id,
+            x: this.x,
+            y: this.y,
+            width: this.width,
+            height: this.height,
+            children: this.children.map(child => child.serialize()),
+            backgrounds: (this.backgrounds || []).map(bg => bg),
+            name: this.name,
             type: this.type,
+
         };
     }
 }
