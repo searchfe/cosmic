@@ -29,7 +29,7 @@ nodeService.selection.subscribe(nodes => {
 <template>
     <div
         v-creator="{target: node}"
-        class="frame-render"
+        class="text-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
             top: node.y + 'px',
@@ -41,6 +41,6 @@ nodeService.selection.subscribe(nodes => {
         }"
     >
         {{ node?.name }}
-        <wrapper :hidden="!selected" :info="node.width + '×' + node.height" />
+        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

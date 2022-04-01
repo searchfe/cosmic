@@ -44,6 +44,6 @@ nodeService.selection.subscribe(nodes => {
         <div class="relative">
             <children-render :children="node.children" />
         </div>
-        <wrapper :hidden="!selected" :info="node.width + '×' + node.height" />
+        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>
