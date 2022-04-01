@@ -16,8 +16,8 @@ const props = withDefaults(defineProps<{
     showTitle?: boolean
 }>(), {
     type: 'TEXT',
-    showTitle: true
-})
+    showTitle: true,
+});
 
 
 
@@ -45,11 +45,11 @@ const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 let node = nodeService.getSelection().find(find) as any;
 
-const styleId = node ? ref(getTextStyle(node).id) : ref('');
+const styleId = node ? ref(getTextStyle(node)?.id) : ref('');
 
 function find({type}) {
-    if (props.type instanceof String) {
-        return type === props.type
+    if (typeof props.type === 'string') {
+        return type === props.type;
     }
     if (Array.isArray(props.type)) {
         return props.type.includes(type);
@@ -68,18 +68,19 @@ function getTextStyle(node: TextNode) {
 
 nodeService.selection.subscribe((nodes) => {    
     const selectNode = nodes.find(item => item.type === props.type);
-    if (!node) return;
+    if (!selectNode) return;
     getTextStyle(selectNode);
     styleId.value = selectNode.getRangeFillStyleId();
 });
 
-const fillStyle = computed(() => fillStyleService.get(styleId.value)) 
+const fillStyle = computed(() => fillStyleService.get(styleId.value));
 
 const isLocalStyle = computed(() =>  styleId.value === '' || fillStyleService.isLocalStyle(styleId.value));
 
 function onchange() {
     const node = nodeService.getSelection().find(item => item.type === props.type) as TextNode;
     const style = fillStyleService.get(node.getRangeFillStyleId());
+    console.log(style);
     node.setRangeFills(0, 0, [toRaw(style)]);
     nodeService.update([node]);
 }
@@ -93,7 +94,10 @@ function onchange() {
             <div
                 v-if="isLocalStyle" 
             >
-                <m-title v-if="showTitle" title="颜色">
+                <m-title
+                    v-if="showTitle"
+                    title="颜色"
+                >
                     <div
                         class="flex justify-between items-center w-30"
                     >
@@ -102,8 +106,8 @@ function onchange() {
                     </div>
                 </m-title>
                 <m-color
-                    @on-change="onchange"
                     :color-style="fillStyle"
+                    @on-change="onchange"
                 />
             </div>
             <m-standard

@@ -11,7 +11,6 @@ const {
         isShowDetailModal,
         detailTarget,
         standardTarget,
-        standardList,
 
         getDetailEdit,
         cancelStandardModal,
@@ -31,31 +30,30 @@ let textNode = nodeService.getSelection().find(item => item.type === 'TEXT') as 
 
 const styleId = ref(getTextStyle(textNode).id);
 
-// const isStandard = !textStyleSevice.isLocalStyle(styleId.value);
+const textStyle = computed(() => textStyleSevice.get(styleId.value));
+
+const isStandard = computed(() => !textStyleSevice.isLocalStyle(styleId.value));
+
+const styleList = computed(() => {
+    styleId.value;
+    return textStyleSevice.getServiceStyles();
+});
+
+nodeService.selection.subscribe((nodes) => {    
+    const selectNode = nodes.find(item => item.type === 'TEXT');
+    if (!selectNode) return;
+    getTextStyle(selectNode);
+    styleId.value = selectNode.getRangeTextStyleId();
+});
 
 function getTextStyle(node: TextNode) {
+    if (!node) return {};
     const textStyle = textStyleSevice.get(node.getRangeTextStyleId() ?? Date.now() + '');
     if (node.getRangeTextStyleId() !== textStyle.id) {
         node.setRangeTextStyleId(0, 0, textStyle.id);
     }
     return textStyle;
 }
-
-nodeService.selection.subscribe((nodes) => {    
-    const selectNode = nodes.find(item => item.type === 'TEXT');
-    getTextStyle(selectNode);
-    styleId.value = selectNode.getRangeTextStyleId();
-    console.log(styleId.value);
-});
-
-// watch([textStyle], () => {
-//     textNode.setRangeFontSize(0, 0, textStyle.fontSize);
-//     nodeService.update([textNode]);
-// })
-
-const textStyle = computed(() => textStyleSevice.get(styleId.value)) 
-
-const isStandard = computed(() => !textStyleSevice.isLocalStyle(styleId.value));
 
 function textChange() {
     const node = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
@@ -72,7 +70,7 @@ function textChange() {
             <MTitle title="字形">
                 <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
-            <glyph-content @change="textChange" :text-style="textStyle" />
+            <glyph-content :text-style="textStyle" @change="textChange" />
         </div>
         <template v-else>
             <m-standard :standard="textStyle" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
@@ -89,9 +87,9 @@ function textChange() {
         <m-standard-modal
             v-if="isShowStandardModal"
             title="文字规范"
-            :standard-list="standardList"
+            :standard-list="styleList"
             :target="standardTarget"
-            @add="saveStyle"
+            @add="() => saveStyle(styleId)"
             @cancel="cancelStandardModal"
             @select="(event) => selectStandard(event.data)"
             @show-detail="(event) => openDetaileModal(event.target, event.data)"

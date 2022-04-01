@@ -21,7 +21,6 @@
     ],
     "ignorePatterns": [
         "packages/preload/exposedInMainWorld.d.ts",
-        "**/widget/glyph-content.vue",
         "node_modules/**",
         "**/dist/**",
         "**/components.d.ts"

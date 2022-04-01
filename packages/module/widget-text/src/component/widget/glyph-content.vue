@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { watch } from 'vue';
+import { toRaw, watch } from 'vue';
 import { Select, SelectOption, Row, Col, Input, RadioGroup, RadioButton } from 'cosmic-vue';
 import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
 import type { TextStyle } from '@cosmic/core/parts';
@@ -12,18 +12,18 @@ const props = withDefaults(defineProps<{
     textStyle: () => ({} as unknown as TextStyle),
 });
 
-const emits = defineEmits('change')
+let originalStyle = toRaw(props.textStyle);
 
+const emits = defineEmits('change');
 
-function text(textStyle, event) {
-    textStyle.fontSize = event.value;
-    console.log(textStyle);
+function changeStyle(textStyle, field, event) {
+    originalStyle[field] = event.value;
     emits('change');
 }
 
-watch(() => props.textStyle, (newV) => {
-    console.log(newV)
-})
+watch(() => props.textStyle, (newValue) => {
+    originalStyle = toRaw(newValue);
+});
 
 </script>
 
@@ -34,7 +34,7 @@ watch(() => props.textStyle, (newV) => {
             <Select
                 size="sm"
                 :value="textStyle.fontName.fontFamily"
-                @on-change="(event) => textStyle.fontName.fontFamily = event.value"
+                @on-change="(event) => changeStyle(originalStyle.fontName, 'fontFamily', event)"
             >
                 <SelectOption
                     v-for="data of GlyphData"
@@ -52,7 +52,7 @@ watch(() => props.textStyle, (newV) => {
                         :value="textStyle.fontSize + ''"
                         allow-input
                         :class="$style['margin-left']"
-                        @on-change="(event) => text(textStyle, event)"
+                        @on-change="(event) => changeStyle(originalStyle, 'fontSize', event)"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="$style.icon" />
@@ -103,7 +103,7 @@ watch(() => props.textStyle, (newV) => {
                     <Input
                         size="sm"
                         :value="textStyle.lineHeight.value"
-                        @on-change="(event) => textStyle.lineHeight.value = event.value"
+                        @on-change="(event) => changeStyle(originalStyle.lineHeight, 'value', event)"
                     >
                         <template #prefix>
                             <i-cosmic-line-height :class="[$style.icon]" />
@@ -118,7 +118,7 @@ watch(() => props.textStyle, (newV) => {
                         :value="textStyle.letterSpacing.value"
                         allow-input
                         :class="$style['margin-left']"
-                        @on-change="(event) => textStyle.letterSpacing.value = event.value"
+                        @on-change="(event) => changeStyle(originalStyle.letterSpacing, 'value', event)"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="[$style.icon]" />
@@ -144,7 +144,7 @@ watch(() => props.textStyle, (newV) => {
                         size="sm"
                         :value="textStyle.paragraphSpacing"
                         allow-input
-                        @on-change="(event) => textStyle.paragraphSpacing = event.value"
+                        @on-change="(event) => changeStyle(originalStyle, 'paragraphSpacing', event)"
                     >
                         <template #prefix>
                             <i-cosmic-vertical-height :class="[$style.icon]" />

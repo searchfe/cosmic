@@ -6,14 +6,19 @@ export default function FontDao(client: Client) {
 
     return { 
         query(query: gql.QueryFontDTO) {
-            return client.query< {fonts: gql.Font[]}>(
-                `query ($fields: [String!], $query: QueryFontDTO) {
+            return client.query< {fonts: Partial<gql.Font>[]}>(
+                `query ($fields: [String!], $query: QueryFontDTO!) {
                     fonts(fields: $fields, query: $query) {
                         id,
-                        ${fontField.join(',')}
+                        name,
+                        team,
+                        weight,
+                        size,
+                        lineHeight,
+                        family
                     }
                 }`,
-                { query },
+                {query},
             ).toPromise();
         },
         create(data: Partial<gql.CreateFontDTO>, fields = ['id']) {

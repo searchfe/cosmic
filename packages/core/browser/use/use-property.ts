@@ -7,29 +7,12 @@ import { TOKENS } from '../service';
 
 export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.TextStyle) {
 
-    let stopWatch: WatchStopHandle | null = null;
-
     const baseService = inject(token) as unknown as BaseService;
 
     const nodeService = inject<NodeService>(TOKENS.Node);
 
     const textNode = nodeService.getSelection().find(item => item.type === 'TEXT') as any;
 
-    // nodeService.selection.subscribe(selections => {
-    //     const textNode = selections.find(item => item.type === 'TEXT') as any;
-    //     if (textNode && baseService.type === 'TEXT') {
-    //         if (baseService.type === 'TEXT') {
-    //             const textStyleId = textNode.getRangeTextStyleId();
-    //             const { id: textId } = resetStyle(textStyleId);
-    //             styleId.value = textId;
-    //             if (textStyleId !== textId) {
-    //                 changeStyle();
-    //                 textNode.setRangeTextStyleId(0, 0, textId);
-    //             }
-    //         }
-            
-    //     }
-    // });
     const styleId = ref(textNode && baseService.type === 'TEXT' ? textNode.getRangeTextStyleId() : '1');
 
     const isStandard = ref(false);
@@ -48,22 +31,11 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     let detailEdit = null;
 
-    // baseService.subject?.subscribe(subject => {
-    //     switch (subject.type) {
-    //         case 'R':
-    //             standardList.value = subject.data;
-    //             resetStyle(styleId.value);
-    //     } 
-    // });
-
     watchEffect(() =>  {
         standard.value = resetStyle(styleId.value);
     });
 
     function resetStyle(id: string) {
-        if (stopWatch) {
-            stopWatch();
-        }
         const style = baseService.get(id) as unknown as any;
         if (styleId.value !== style.id) {
             styleId.value = style.id;
@@ -77,8 +49,7 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     watchEffect(() =>  {
         standard.value = reactive(baseService.get(styleId.value));
-    })
-
+    });
 
     function changeStyle() {
         // TODO
@@ -146,8 +117,8 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         standardList.value = baseService.getLocalStyles();
     }
 
-    async function saveStyle() {
-        baseService.saveStyle(styleId.value);
+    async function saveStyle(styleId: string) {
+        baseService.saveStyle(styleId);
     }
 
     function getDetailEdit() {
