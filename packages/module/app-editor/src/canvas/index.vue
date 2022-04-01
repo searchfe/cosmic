@@ -28,6 +28,7 @@ toolService.state().subscribe(state => {
             gesturer.enableDrag();
             break;
         case service.ToolState.Frame:
+        case service.ToolState.Text:
             wrapper.value.style.cursor = 'crosshair';
             break;
         default:

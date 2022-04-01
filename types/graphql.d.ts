@@ -7,7 +7,7 @@
 
 /* tslint:disable */
 /* eslint-disable */
-namespace gql{
+namespace gql {
 export interface QueryProjectDTO {
     id?: Nullable<string>;
     name?: Nullable<string>;
@@ -83,6 +83,14 @@ export interface QueryOpacityDTO {
 export interface QueryComponentDTO {
     team?: Nullable<string>;
     name?: Nullable<string>;
+}
+
+export interface QueryPrefabDTO {
+    name?: Nullable<string>;
+    team?: Nullable<string>;
+    component?: Nullable<string>;
+    atoms?: Nullable<string[]>;
+    id?: Nullable<string>;
 }
 
 export interface QueryDraftDTO {
@@ -256,6 +264,13 @@ export interface CreateVariant {
     desc: string;
 }
 
+export interface CreatePrefabDTO {
+    name: string;
+    team: string;
+    component: string;
+    atoms: string[];
+}
+
 export interface CreateDraftDTO {
     name: string;
     team: string;
@@ -418,6 +433,14 @@ export interface Component {
     variants: Variant[];
 }
 
+export interface Prefab {
+    id: string;
+    name: string;
+    team: string;
+    component: string;
+    atoms: string[];
+}
+
 export interface Draft {
     id: string;
     name: string;
@@ -452,6 +475,8 @@ export interface IQuery {
     opacitys(fields?: Nullable<string[]>, query?: Nullable<QueryOpacityDTO>): Opacity[] | Promise<Opacity[]>;
     getComponent(fields?: Nullable<string[]>, id: string): Nullable<Component> | Promise<Nullable<Component>>;
     components(fields?: Nullable<string[]>, query?: Nullable<QueryComponentDTO>): Component[] | Promise<Component[]>;
+    getPrefab(fields?: Nullable<string[]>, id: string): Nullable<Prefab> | Promise<Nullable<Prefab>>;
+    prefabs(fields?: Nullable<string[]>, query?: Nullable<QueryPrefabDTO>): Prefab[] | Promise<Prefab[]>;
     getDraft(fields?: Nullable<string[]>, id: string): Nullable<Draft> | Promise<Nullable<Draft>>;
     drafts(fields?: Nullable<string[]>, query?: Nullable<QueryDraftDTO>): Draft[] | Promise<Draft[]>;
 }
@@ -509,6 +534,11 @@ export interface IMutation {
     updateComponent(data: CreateComponentDTO): boolean | Promise<boolean>;
     deleteComponent(id: string): boolean | Promise<boolean>;
     deleteComponentByTeamAndName(data: QueryComponentDTO): number | Promise<number>;
+    updateComponentByTeamAndName(data: CreateComponentDTO): boolean | Promise<boolean>;
+    createPrefab(data: CreatePrefabDTO): Prefab | Promise<Prefab>;
+    createUniquePrefab(filter: QueryPrefabDTO, data: CreatePrefabDTO): Prefab | Promise<Prefab>;
+    updatePrefab(data: QueryPrefabDTO): boolean | Promise<boolean>;
+    deletePrefab(id: string): boolean | Promise<boolean>;
     createDraft(data: CreateDraftDTO): Draft | Promise<Draft>;
     createUniqueDraft(filter: QueryDraftDTO, data: CreateDraftDTO): Draft | Promise<Draft>;
     updateDraft(data: CreateDraftDTO): boolean | Promise<boolean>;
@@ -523,6 +553,7 @@ export interface ISubscription {
     onCornerCreate(): Corner | Promise<Corner>;
     onOpacityCreate(): Opacity | Promise<Opacity>;
     onComponentCreate(): Component | Promise<Component>;
+    onPrefabCreate(): Prefab | Promise<Prefab>;
     onDraftCreate(): Draft | Promise<Draft>;
 }
 

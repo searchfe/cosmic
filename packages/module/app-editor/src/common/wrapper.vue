@@ -16,7 +16,7 @@ withDefaults(defineProps<WrapperProps>(), {
 </script>
 <template>
     <div v-if="!hidden" class="relative w-full h-full flex flex-col-reverse items-center" :class="styles.root">
-        <div :class="styles.info">{{ info }}</div>
+        <div :class="styles.info">{{ info }}</div>   
     </div>
 </template>
 <style>

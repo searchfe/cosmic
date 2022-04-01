@@ -34,7 +34,7 @@ const designTree = [{
         },
         {
             id: 'prefab',
-            label: '预制',
+            label: '预置',
         },
     ],
 }];

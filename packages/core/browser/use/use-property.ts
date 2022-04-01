@@ -1,4 +1,4 @@
-import { reactive, ref, watch, computed, nextTick, toRaw, watch, watchEffect, toRefs } from 'vue';
+import { reactive, ref, watch, computed, nextTick, toRaw, watch, watchEffect, toRefs, type WatchStopHandle } from 'vue';
 import { inject } from '@cosmic/core/parts';
 import type { BaseStyle } from '@cosmic/core/parts';
 import type { interfaces } from '@cosmic/core/inversify';
@@ -7,11 +7,11 @@ import { TOKENS } from '../service';
 
 export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.TextStyle) {
 
-    let stopWatch = null;
+    let stopWatch: WatchStopHandle | null = null;
 
-    const baseService = inject(token) as BaseService;
+    const baseService = inject(token) as unknown as BaseService;
 
-    const nodeService = inject(TOKENS.Node) as NodeService;
+    const nodeService = inject<NodeService>(TOKENS.Node);
 
     const styleId = ref('1');
 
@@ -25,9 +25,9 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     const isShowDetailModal = ref(false);
 
-    const detailTarget = ref<HtmlElement | null | undefined>(null);
+    const detailTarget = ref<HTMLElement | null>(null);
 
-    const standardTarget = ref<HtmlElement | null >(null);
+    const standardTarget = ref<HTMLElement | null >(null);
 
     let detailEdit = null;
 
@@ -35,7 +35,7 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         switch (subject.type) {
             case 'R':
                 standardList.value = subject.data;
-                resetStyle();
+                resetStyle(styleId.value);
         } 
     });
 
@@ -47,20 +47,36 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         if (stopWatch) {
             stopWatch();
         }
-        const style = baseService.get(id);
+        const style = baseService.get(id) as unknown as any;
         if (styleId.value !== style.id) {
             styleId.value = style.id;
         }
         isStandard.value = !baseService.isLocalStyle(styleId.value);
+        console.log(style);
         const reactivStyle = reactive(style);
         stopWatch = watch([reactivStyle], changeStyle);
         return reactivStyle;
     }
 
-    
 
-    function changeStyle() {
+    function changeStyle(newValue, oldValue) {
         // TODO
+        const textNode = nodeService.getSelection().filter(item => item.type === 'TEXT');
+        const style = baseService.get(styleId.value);
+        textNode.forEach(i => {
+            const item = i as unknown as any;
+            const style = newValue[0];
+            if (style.fontSize && item.fontSize) {
+                item.fontSize = Number(newValue[0].fontSize);
+            }
+            if (style.color && item.fills) {
+                item.fills = [{...style}];
+            }
+            if (style.color && item.backgrounds) {
+                item.backgrounds = [{...style}];
+            }
+        });
+        nodeService.update(textNode as any[]);
     }
 
     function cancelStandardModal() {
@@ -76,7 +92,7 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         await baseService.updateStyle(detailEdit);
     }
 
-    async function openDetaileModal(target: HtmlElement, standard) {
+    async function openDetaileModal(target: HTMLElement, standard) {
         isShowDetailModal.value = false;
         await nextTick();
         detailEdit = (toRaw(standard) || baseService.get(styleId.value)).clone();
@@ -84,7 +100,7 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         isShowDetailModal.value = true;
     }
 
-    function openStandardModal(target: HtmlElement) {
+    function openStandardModal(target: HTMLElement) {
         standardTarget.value = target;
         isShowStandardModal.value = true;
     }

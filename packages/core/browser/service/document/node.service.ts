@@ -1,7 +1,8 @@
 import { type Observable, Subject, BehaviorSubject, of } from '@cosmic/core/rxjs';
 import { injectable } from '@cosmic/core/inversify';
 
-import { type SceneNode, type FrameNodeOptions, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
+
+import { type SceneNode, type FrameNodeOptions, type TextNodeOptions, type ComponentNodeOptions, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeService {
@@ -52,11 +53,35 @@ export default class NodeService {
         frame.name = `画框 ${increaseId(this._document, frame.type)}`;
         frame.parent = target;
         frame.backgrounds = [new SolidPaint({r: 255, g: 255, b: 255})];
-
         target.appendChild(frame);
         this.updateDocument();
         this.setSelection([frame.id]);
         return frame;
+    }
+
+    addText(target: PageNode | FrameNode | GroupNode, option: TextNodeOptions) {
+        const textNode = new TextNode(option);
+        textNode.id = id();
+        textNode.name = `文本 ${increaseId(this._document, textNode.type)}`;
+        textNode.fills = [new SolidPaint({r: 0, g: 0, b: 0})];
+        textNode.parent = target;
+        target.appendChild(textNode);
+        this.updateDocument();
+        this.setSelection([textNode.id]);
+        return textNode;
+    }
+
+    addComponent(target: PageNode | FrameNode | GroupNode, options?: ComponentNodeOptions) {
+        // const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
+        // if (!page) return;
+        const comp = new ComponentNode(options);
+        comp.id = id();
+        comp.name = `按钮 ${increaseId(this._document, comp.type)}`;
+        comp.parent = target;
+        target.appendChild(comp);
+        this.updateDocument();
+        this.setSelection([comp.id]);
+        return comp;
     }
     deleteSelection() {
         let shouldChangePage = false;
@@ -90,6 +115,10 @@ export default class NodeService {
     }
     update(nodes: SceneNode[]) {
         this.renderNodes.next([nodes, new Date().getTime().toString()]);
+    }
+
+    getSelection(): Array<PageNode | SceneNode> {
+        return this._selection;
     }
 }
 
