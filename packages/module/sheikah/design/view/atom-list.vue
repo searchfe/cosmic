@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue';
+import { Input } from 'cosmic-vue';
 import { router as vueRouter } from '@cosmic/core/browser';
 import Region from '../../common/component/region.vue';
 import AtomCard from '../component/card/atom.vue';
@@ -223,6 +224,9 @@ function refresh() {
             </atom-filter>
         </div>
         <template #bottom>
+            <Input placeholder="查询" class="w-200" style="border: 1px solid rgba(31, 31, 31, .1)" />
+        </template>
+        <template #rb-actions>
             <div class="flex justify-end">
                 <component :is="dialogMap[currentType]" @success="refresh" />
             </div>

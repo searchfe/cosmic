@@ -73,9 +73,11 @@ function onClickComp(id?: string) {
         <template #bottom>
             <div class="flex justify-between items-center">
                 <Input placeholder="组件查询" :class="$style.input" />
-                <div :class="$style.add" class="flex justify-center items-center">
-                    <i-cosmic-plus class="text-md" />
-                </div>
+            </div>
+        </template>
+        <template #rb-actions>
+            <div :class="$style.add" class="flex justify-center items-center">
+                <i-cosmic-plus class="text-md" />
             </div>
         </template>
     </Region>

@@ -55,7 +55,7 @@ withDefaults(defineProps<AtomCardOption>(), {
             class="flex items-center"
         >
             <div :class="$style['atom-link-icon']">
-                <i-cosmic-lock style="font-size: 12px" />
+                <i-cosmic-comp class="text-sm" />
             </div>
             <span :class="$style['atom-link-num']">{{ refCount }}</span>
         </div>

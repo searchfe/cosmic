@@ -1,32 +1,37 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue';
-import { Dialog, Input } from 'cosmic-vue';
+import { Dialog, Input, Button } from 'cosmic-vue';
+import { buttonSolid } from 'cosmic-ui';
 import { router as vueRouter } from '@cosmic/core/browser';
 import Region from '../../common/component/region.vue';
 import FileCard from '../component/file-card.vue';
 import DirCard from '../component/dir-card.vue';
-import { useProjects, useDrafts, useCreateDraft } from '../api';
+import { useProjects, useDrafts, useCreateDraft, queryOne } from '../api';
 
 const { useRoute } = vueRouter;
 
 const { project, team } = useRoute().query as { project: string, team: string };
 
+const { data: projectData, fetching: projectFetching } = queryOne(project, ['name']);
 const { data, fetching } = useProjects({ parent: project });
 const { data: draftData, fetching: draftFetching, executeQuery: refreshDrafts } = useDrafts({ project, team });
 const { executeMutation: createDraft } = useCreateDraft();
 
-
+const currentProject = ref<Partial<gql.Project>>({});
 const projects = ref<Partial<gql.Project>[]>([]);
 const drafts = ref<Partial<gql.Draft>[]>([]);
 const showDialog = ref(false);
 const newDraftName = ref('');
 
 watchEffect(() => {
-    if (data.value && !fetching.value) {
+    if (project && data.value && !fetching.value) {
         projects.value = data.value?.projects;
     }
-    if (draftData.value && !draftFetching.value) {
+    if (project && team && draftData.value && !draftFetching.value) {
         drafts.value = draftData.value?.drafts;
+    }
+    if (project && projectData.value?.project && !projectFetching.value) {
+        currentProject.value = projectData.value.project;
     }
 });
 
@@ -50,8 +55,16 @@ function onSave() {
 </script>
 
 <template>
-    <Region title="搜索通用组件" desc="修改时间">
+    <Region :title="currentProject.name || '项目名称'">
         <template #bottom>
+            <Button class="w-120" :styles="buttonSolid">
+                修改时间
+                <template #subfix>
+                    <i-cosmic-arrow-down class="ml-12 text-sm" />
+                </template>
+            </Button>
+        </template>
+        <template #rb-actions>
             <div class="flex justify-end">
                 <div :class="$style.add" class="flex justify-center items-center" @click="showDialog = true">
                     <i-cosmic-plus class="text-md" />

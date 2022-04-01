@@ -34,7 +34,7 @@ async function onClickCard() {
                     {{ name }}
                 </div>
                 <div style="flex: none;">
-                    20个
+                    3个
                 </div>
             </div>
             <div :class="$style['card-preview']">
