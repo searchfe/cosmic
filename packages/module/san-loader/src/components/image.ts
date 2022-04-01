@@ -1,5 +1,7 @@
+import { esl } from '@cosmic/core/browser';
+
 export default function render(node: HTMLElement) {
-    (window.require as any)([
+    esl.require([
         '@baidu/cosmic-ui-search',
         'san',
         '@baidu/search-components/Image/Image_d1a8900c',

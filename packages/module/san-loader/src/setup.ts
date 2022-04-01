@@ -1,11 +1,12 @@
 const url = import.meta.url;
 const moduleBasePath = url.split(/\/packages\/(module|site)\//)[0].replace(/^http:\/\/[^/]+/, '');
-const assetPath = moduleBasePath + '/packages/module/san-loader/assets/';
-
-export function fetch() {
-    addStyleToHead(assetPath + 'style.css');
-    addStyleToHead(assetPath + 'utilities.css');
-    (window.require as any).config({
+const assetPath = moduleBasePath + '/packages/module/san-loader/';
+import { esl } from '@cosmic/core/browser';
+export default function() {
+    (window as any).define = esl.define;
+    window.require = esl.require;
+    (window as any).esl = esl.esl;
+    esl.require.config({
         bundles:
         {
             '@baidu/search-components/core_9e241ddd': [
@@ -23,17 +24,9 @@ export function fetch() {
             ],
         },
         paths: {
-            'san': `${assetPath}/san`,
-            '@baidu/search-components/core_9e241ddd': `${assetPath}/core_9e241ddd`,
-            '@baidu/cosmic-ui-search': `${assetPath}/index_730ac3d1`,
+            'san': `${assetPath}dist/san`,
+            '@baidu/search-components/core_9e241ddd': `${assetPath}dist/core_9e241ddd`,
+            '@baidu/cosmic-ui-search': `${assetPath}dist/index_730ac3d1`,
         },
     });
-}
-
-export function addStyleToHead(linkSrc: string) {
-    const dom = document.createElement('link');
-    dom.rel = 'stylesheet';
-    dom.href = linkSrc;
-    document.head.append(dom);
-}
-fetch();
+};

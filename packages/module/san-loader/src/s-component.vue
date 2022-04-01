@@ -1,7 +1,7 @@
 <script lang="ts">
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import render from './components/render';
-import './module-util';
+import setupRuntime from './setup';
 
 
 </script>
@@ -15,9 +15,11 @@ import './module-util';
 
     const root = ref();
 
-
+    onBeforeMount(() => {
+        setupRuntime();
+    });
     onMounted(() => {
-         render(root.value, props.name);
+        render(root.value, props.name);
     });
 </script>
 <template>
