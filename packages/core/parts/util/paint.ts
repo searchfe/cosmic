@@ -5,5 +5,6 @@ export function toBackgroundStyle(paint: Paint) {
 }
 
 function toBackgroundStyleFromSolid(paint: SolidPaint) {
+    console.log(`rgba(${paint.color.r}, ${paint.color.g}, ${paint.color.b}, ${paint.opacity})`)
     return `rgba(${paint.color.r}, ${paint.color.g}, ${paint.color.b}, ${paint.opacity})`;
 }

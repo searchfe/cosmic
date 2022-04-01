@@ -2,36 +2,35 @@ import { injectable } from '@cosmic/core/inversify';
 import { BaseService } from './base.service';
 import { FillStyle } from '@cosmic/core/parts';
 import Color from 'color';
+interface SubjectSourceType {
+    type: 'C' | 'U' | 'D' | 'R';
+    data?: Partial<FillStyle>[];
+}
 
 @injectable()
-export default class FillStyleService extends BaseService<FillStyle> {
+export default class FillStyleService extends BaseService<FillStyle, SubjectSourceType> {
     constructor() {
         super();
-        this.setType('fill');
-        [1, 2, 3, 4, 5].map(item => this.transformToLocal({day: 'rgba(50,50,25,1)', name: item + '', id: item + ''})).forEach(item =>  {
-            this.addLocalStyle(item);
-        });
-
-        [7,8,9,10].map(item => this.transformToLocal({day: 'rgba(50,50,25,1)', name: item + '', id: item + ''})).forEach(item =>  {
-            this.addServiceStyle(item);
-        });
+        this.setType('SOLID');
     }
 
     create() {
-        const fillStyle = {
-            color: {r: 0, g: 0, b: 0, a: 1},
-            opacity: 1,
-        };
+        const style = this.transformToLocal({
+            id: Date.now() + '',
+            name: '默认名称',
+            team: '',
+            day: 'rgba(0, 0, 0, 0)'
+        });
+        return style;
     }
 
-    transformToLocal(servicerColor: gql.Color) {
+    transformToLocal(servicerColor: Partial<gql.Color>) {
         const{day, name, id} = servicerColor;
         const color = new Color(day).object();
-        const fillStyle = new FillStyle();
+        const fillStyle = new FillStyle(id as string);
         fillStyle.opacity = 1;
-        fillStyle.color = color;
-        fillStyle.name = name;
-        fillStyle.id = id;
+        fillStyle.color = color as any;
+        fillStyle.name = name as any;
         return fillStyle;
     }
 

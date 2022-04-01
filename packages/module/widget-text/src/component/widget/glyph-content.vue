@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { watch } from 'vue';
 import { Select, SelectOption, Row, Col, Input, RadioGroup, RadioButton } from 'cosmic-vue';
 import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
 import type { TextStyle } from '@cosmic/core/parts';
@@ -12,20 +12,29 @@ const props = withDefaults(defineProps<{
     textStyle: () => ({} as unknown as TextStyle),
 });
 
+const emits = defineEmits('change')
 
-const realStyle = reactive(props.textStyle);
 
+function text(textStyle, event) {
+    textStyle.fontSize = event.value;
+    console.log(textStyle);
+    emits('change');
+}
+
+watch(() => props.textStyle, (newV) => {
+    console.log(newV)
+})
 
 </script>
 
 
 <template>
-    <div>
+    <div v-if="textStyle.fontName">
         <div :class="$style.row">
             <Select
                 size="sm"
-                :value="realStyle.fontName.fontFamily"
-                @on-change="(event) => realStyle.fontName.fontFamily = event.value"
+                :value="textStyle.fontName.fontFamily"
+                @on-change="(event) => textStyle.fontName.fontFamily = event.value"
             >
                 <SelectOption
                     v-for="data of GlyphData"
@@ -40,10 +49,10 @@ const realStyle = reactive(props.textStyle);
                 <div class="w-80">
                     <Select
                         size="sm"
-                        :value="realStyle.fontSize + ''"
+                        :value="textStyle.fontSize + ''"
                         allow-input
                         :class="$style['margin-left']"
-                        @on-change="(event) => realStyle.fontSize = event.value"
+                        @on-change="(event) => text(textStyle, event)"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="$style.icon" />
@@ -93,8 +102,8 @@ const realStyle = reactive(props.textStyle);
                 <div :class="[$style['glyph-item']]" class="w-80">
                     <Input
                         size="sm"
-                        :value="realStyle.lineHeight.value"
-                        @on-change="(event) => realStyle.lineHeight.value = event.value"
+                        :value="textStyle.lineHeight.value"
+                        @on-change="(event) => textStyle.lineHeight.value = event.value"
                     >
                         <template #prefix>
                             <i-cosmic-line-height :class="[$style.icon]" />
@@ -106,10 +115,10 @@ const realStyle = reactive(props.textStyle);
                 <div :class="[$style['glyph-item']]" class="w-80">
                     <Select
                         size="sm"
-                        :value="realStyle.letterSpacing.value"
+                        :value="textStyle.letterSpacing.value"
                         allow-input
                         :class="$style['margin-left']"
-                        @on-change="(event) => realStyle.letterSpacing.value = event.value"
+                        @on-change="(event) => textStyle.letterSpacing.value = event.value"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="[$style.icon]" />
@@ -133,9 +142,9 @@ const realStyle = reactive(props.textStyle);
                 <div class="w-80">
                     <Select
                         size="sm"
-                        :value="realStyle.paragraphSpacing"
+                        :value="textStyle.paragraphSpacing"
                         allow-input
-                        @on-change="(event) => realStyle.paragraphSpacing = event.value"
+                        @on-change="(event) => textStyle.paragraphSpacing = event.value"
                     >
                         <template #prefix>
                             <i-cosmic-vertical-height :class="[$style.icon]" />
@@ -156,7 +165,7 @@ const realStyle = reactive(props.textStyle);
                 </div>
             </Col>
         </Row>
-        <Row v-if="props.showlayout" :class="$style.row">
+        <Row v-if="showlayout" :class="$style.row">
             <Col :span="16">
                 <div :class="$style['radio-left']">
                     <RadioGroup value="1">

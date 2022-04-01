@@ -12,6 +12,8 @@ function change(opt: any) {
             <TabPane class="mx-2" label="交互" value="1" />
         </Tabs>
         <div :hidden="activeIdx != '0'">
+            <m-component src="@cosmic-module/widget-frame" />
+            <div class="border-bottom" />
             <m-component src="@cosmic-module/widget-text" />
             <div class="border-bottom" />
             <m-component src="@cosmic-module/widget-border" />

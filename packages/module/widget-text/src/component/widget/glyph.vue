@@ -1,14 +1,12 @@
  <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service} from '@cosmic/core/browser';
 import GlyphContent from './glyph-content.vue';
+import { inject, TextNode } from '@cosmic/core/parts';
 
 const containerRef = ref(null);
 
 const {
-        isStandard,
-        standard,
-
         isShowStandardModal,
         isShowDetailModal,
         detailTarget,
@@ -26,6 +24,46 @@ const {
         saveStyle,
     } = usePropterty(service.TOKENS.TextStyle);
 
+const textStyleSevice = inject<service.TextStyleSevice>(service.TOKENS.TextStyle);
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+
+let textNode = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
+
+const styleId = ref(getTextStyle(textNode).id);
+
+// const isStandard = !textStyleSevice.isLocalStyle(styleId.value);
+
+function getTextStyle(node: TextNode) {
+    const textStyle = textStyleSevice.get(node.getRangeTextStyleId() ?? Date.now() + '');
+    if (node.getRangeTextStyleId() !== textStyle.id) {
+        node.setRangeTextStyleId(0, 0, textStyle.id);
+    }
+    return textStyle;
+}
+
+nodeService.selection.subscribe((nodes) => {    
+    const selectNode = nodes.find(item => item.type === 'TEXT');
+    getTextStyle(selectNode);
+    styleId.value = selectNode.getRangeTextStyleId();
+    console.log(styleId.value);
+});
+
+// watch([textStyle], () => {
+//     textNode.setRangeFontSize(0, 0, textStyle.fontSize);
+//     nodeService.update([textNode]);
+// })
+
+const textStyle = computed(() => textStyleSevice.get(styleId.value)) 
+
+const isStandard = computed(() => !textStyleSevice.isLocalStyle(styleId.value));
+
+function textChange() {
+    const node = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
+    const style = textStyleSevice.get(node.getRangeTextStyleId());
+    node.setRangeFontSize(0, 0, style.fontSize);
+    nodeService.update([node]);
+}
+
  </script>
 
 <template>
@@ -34,10 +72,10 @@ const {
             <MTitle title="字形">
                 <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
-            <glyph-content :text-style="standard" />
+            <glyph-content @change="textChange" :text-style="textStyle" />
         </div>
         <template v-else>
-            <m-standard :standard="standard" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
+            <m-standard :standard="textStyle" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-around"

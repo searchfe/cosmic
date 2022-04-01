@@ -13,4 +13,5 @@ export type { default as KeyboardService } from './interactivity/keyboard.servic
 export { type default as ToolService, ToolState } from './interactivity/tool.service';
 export type { default as NodeService } from './document/node.service';
 export type { default as ComponentService } from './document/component.service';
+export { TextStyleSevice, FillStyleService } from './styles';
 export * from './styles';

@@ -48,7 +48,6 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
 
     public async saveStyle(id: string) {
         const style = this.transformToService(this.get(id)!);
-        console.log(style);
         const creatOption = await this.fontDaoService.create(style);
         await this.queryList();
         this.subject.next({type: 'C', data: []});

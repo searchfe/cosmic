@@ -24,4 +24,16 @@ export default class FrameNode extends Mixin(DefaultFrameMixin) implements Inter
         // TODO
         return new FrameNode();
     }
+
+    setRangeFills(start: number, end: number, value: Internal.Paint[]) {
+        this.fills = [...value];
+    }
+
+    setRangeFillStyleId(start: number, end: number, value: string): void {
+        this.fillStyleId = value;
+    }
+
+    getRangeFillStyleId(start: number, end: number): string {
+        return this.fillStyleId as string;
+    }
 }

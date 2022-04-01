@@ -1,16 +1,16 @@
 import { default as  BaseStyle } from './base-style';
 
-export class FillStyle extends BaseStyle implements Internal.SolidPaint {
-    private type: 'SOLID';
+export class FillStyle extends BaseStyle {
     color: Internal.RGBA;
     opacity: number;
 
-    constructor() {
-        super();
-        this.type = 'SOLID';
+    constructor(id: string) {
+        super(id, 'SOLID' as any);
     }
 
     clone(): FillStyle {
-        return this;
+        const fill = JSON.parse(JSON.stringify(this));
+        fill.clone = this.clone;
+        return fill;
     }
 }
