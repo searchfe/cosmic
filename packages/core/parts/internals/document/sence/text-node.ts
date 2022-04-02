@@ -74,7 +74,7 @@ export default class TextNode
     }
 
     serialize() {
-        const obj = pick(this, ['x', 'y', 'width', 'height', 'fontSize']);
+        const obj = pick(this, ['x', 'y', 'width', 'height', 'fontSize', 'id', 'name']);
         obj.type = this.type;
         obj.fills = (this.fills || []).map(fill => fill);
         return obj;
