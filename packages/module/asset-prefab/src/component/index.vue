@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { Cascader, Row, Col, Popover, Card, Input } from 'cosmic-vue';
+import { Cascader, Row, Col, Popover, Card, Input, Button } from 'cosmic-vue';
 import { ref } from 'vue';
 import Prefab from './prefab.vue';
 import styles from './prefab.module.css';
+import { button, buttonLight, buttonSolid, buttonDashed, buttonText, buttonLink} from 'cosmic-ui';
 
 const yuzhiList = {
     localYz: [{
@@ -59,6 +60,18 @@ function fn(selectValue) {
     console.log('select....', selectValue);
 }
 const value = ref('');
+function change(event: MouseEvent) {
+    let target = event.target as HTMLElement;
+    if (target.tagName.toLowerCase() === 'span') {
+        target = target.parentElement as any;
+    }
+
+    const doms = document.querySelectorAll('.component-render[timestamp] .cos-btn');
+    doms.forEach(dom => {
+        dom.className = target.className + 'w-80';
+    });
+    // document.querySelector();
+}
 </script>
 <template>
     <div>
@@ -88,6 +101,16 @@ const value = ref('');
                         <i-cosmic-more :class="props.class" />
                     </template>
                 </prefab>
+            </div>
+            <div class="flex">
+                <Button class="w-80" :styles="button" @mousedown.stop="change">Primary</Button>
+                <Button class="w-80" :styles="buttonLight" @mousedown.stop="change">Light</Button>
+                <Button class="w-80" :styles="buttonSolid" @mousedown.stop="change">Solid</Button>
+            </div>
+            <div class="flex">
+                <Button class="w-80" :styles="buttonDashed" @mousedown.stop="change">Dash</Button>
+                <Button class="w-80" :styles="buttonText" @mousedown.stop="change">Text</Button>
+                <Button class="w-80" :styles="buttonLink" @mousedown.stop="change">Link</Button>
             </div>
             <div>
                 <div :class="[styles['prefab-title']]" class="font-bold text-sm mt-16">
