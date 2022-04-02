@@ -69,7 +69,7 @@ export default class DraftService {
         if (!draftId) {
             const drafts = await this.query({});
             if (drafts && drafts.length) {
-                draft = drafts.sort((a, b) => Number(b.updatedAt) - Number(a.updatedAt))[0];
+                draft = drafts.sort((a, b) => Number(b.updatedAt) - Number(a.updatedAt))[0].data;
             }
         } else {
             const d = await this.queryOne(draftId);
@@ -77,7 +77,7 @@ export default class DraftService {
                 draft = d.data;
             }
         }
-        const data = JSON.parse(draft.data);
+        const data = JSON.parse(draft);
         console.log('open', data);
         const doc = data.document;
         const node = visit(doc) as DocumentNode;
