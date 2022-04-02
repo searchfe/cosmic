@@ -22,7 +22,7 @@ watchEffect(() => {
         prefab.value = prefabData.value.getPrefab;
     }
     if (colorsData.value && !colorFetching.value) {
-        atoms.value = (colorsData.value.colors || []).slice(0, 2);
+        atoms.value = (colorsData.value.colors || []).slice(0, 1);
     }
 });
 
@@ -56,7 +56,7 @@ const menuData = [{
     <Region title="组件变体" class="mt-20">
         <div :class="$style.preview" class="w-fll">
             <div :class="$style['preview-mask']" />
-            <img src="https://fe-dev.bj.bcebos.com/Button.png" alt="预置变体" :class="$style.img">
+            <img src="https://fe-dev.bj.bcebos.com/%E9%A2%84%E5%88%B6%E8%AF%A6%E6%83%85%E9%A1%B5%20%E4%B8%BB%E6%8C%89%E9%92%AE-%E9%9D%A2%E5%BA%95%203%E5%80%8D.png" alt="预置变体" :class="$style.img">
         </div>
         <div class="text-2xl my-20">
             预置构成
@@ -107,6 +107,6 @@ const menuData = [{
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.4);
 }
 </style>

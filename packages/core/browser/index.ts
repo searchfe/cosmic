@@ -1,8 +1,11 @@
 import { createApp, ref, type App as VueApp } from 'vue';
 
 import { MComponent } from '@cosmic-module/core';
-import { createContainer, TOKENS, type RouterServiceAPI } from './service/index';
+import { SanComponent } from '@cosmic-module/san-loader';
+import { createContainer, TOKENS, type RouterService } from './service/index';
 import App from './app.vue';
+import Preview from './component/preview/preview.vue';
+import ChildrenRender from './component/preview/render/children.vue';
 
 import type { BootstrapOption } from '@cosmic/core/parts';
 
@@ -17,16 +20,17 @@ import MStandard from './component/standard/standard.vue';
 
 
 function bootstrap(option: BootstrapOption) {
-    const app = createApp(App);
-
+    const app = createApp((location.search || '').indexOf('preview=1') == -1? App: Preview);
     // eslint-disable-next-line vue/component-definition-name-casing
     app.component('m-component', MComponent);
+    app.component('SComponent', SanComponent);
+    app.component('ChildrenRender', ChildrenRender);
 
     // ioc container
     const container = createContainer({ defaultScope: 'Singleton' });
 
 
-    const routerPlugin = container.get<RouterServiceAPI>(TOKENS.Router);
+    const routerPlugin = container.get<RouterService>(TOKENS.Router);
     app.use(routerPlugin.getRouterConfig());
     const urql = container.get<GqlClient>(TOKENS.GqlClient);
 
@@ -51,3 +55,4 @@ export { MColor, MTitle, MWidget, MStandardModal, MStandard, MDetailModal, MClol
 
 export * from './use';
 export * as service from './service/index';
+export * as esl from './esl.js';

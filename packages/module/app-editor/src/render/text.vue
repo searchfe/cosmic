@@ -37,7 +37,8 @@ nodeService.selection.subscribe(nodes => {
             width: node.width + 'px',
             height: node.height + 'px',
             fontSize: node.fontSize + 'px',
-            color: util.toBackgroundStyle(node?.fills[0]),
+            background: util.toBackgroundStyle(node?.backgrounds?.[0]),
+            color: util.toBackgroundStyle(node?.fills?.[0]),
         }"
     >
         {{ node?.name }}

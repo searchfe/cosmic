@@ -12,18 +12,36 @@ componentService.components.subscribe(next => {
 
 const toolService = inject<service.ToolService>(service.TOKENS.Tool);
 
-function addBtn() {
-    pos.value.x = 0;
-    pos.value.y = 0;
-    toolService.set(service.ToolState.Component);
+function addBtn(name: string) {
+        pos.value.x = 0;
+        pos.value.y = 0;
+        toolService.data.name = name;
+        toolService.set(service.ToolState.Component);
+        switch(name) {
+            case 'button':
+                example.value = exampleButton.value;
+                break;
+            case 'aladin':
+                example.value = exampleAladin.value;
+                break;
+            case 'image':
+                example.value = exampleImage.value;
+                break;
+            case 'scroll':
+                example.value = exampleScroll.value;
+                break;
+        }
+        pos.value.x = - 999;
+        pos.value.y = -999;
+
 }
-function move(event: MouseEvent){
+function move(event: MouseEvent) {
     if (exampleShow.value && example.value) {
         pos.value.x = event.clientX - example.value.getBoundingClientRect().width / 2;
-        pos.value.y = event.clientY - example.value.getBoundingClientRect().height /2;
+        pos.value.y = event.clientY - example.value.getBoundingClientRect().height / 2;
     }
 }
-function up(){
+function up() {
     if (exampleShow.value && example.value) {
         exampleShow.value = false;
         toolService.cancel(service.ToolState.Component);
@@ -31,12 +49,16 @@ function up(){
 }
 
 const example = ref<HTMLElement>();
-const exampleShow = ref(false);
-const pos = ref({x: 0, y: 0});
+const exampleButton = ref<HTMLElement>();
+const exampleAladin = ref<HTMLElement>();
+const exampleImage = ref<HTMLElement>();
+const exampleScroll = ref<HTMLElement>();
+const exampleShow = ref();
+const pos = ref({ x: -999, y: -999 });
 
 toolService.state().subscribe(state => {
     if (state === service.ToolState.Component) {
-        exampleShow.value = true;
+        exampleShow.value = toolService.data?.name;
     }
 });
 onMounted(() => {
@@ -45,19 +67,72 @@ onMounted(() => {
 });
 </script>
 <template>
-    <div class="flex">
+    <div :class="$style.comp">
+        <div class="m-16 text-md">基础组件</div>
         <div class="m-16">
-            <Button @mousedown="addBtn">按钮</Button>
+            <Button @mousedown.stop="() => addBtn('button')">按钮</Button>
             <div
-                ref="example"
-                :class="$style.example" :style="{
-                    display: exampleShow ? 'block' : 'none',
+                ref="exampleButton"
+                :class="$style.example"
+                :style="{
+                    display: exampleShow ==='button' ? 'block' : 'none',
                     top: pos.y + 'px',
                     left: pos.x + 'px',
                 }"
             >
-                <Button> 按钮 </Button>
+                <Button>按钮</Button>
             </div>
+        </div>
+        <div class="m-16 text-md">业务组件</div>
+        <div class="m-16">阿拉丁整卡</div>
+        <div class="m-16" @mousedown.stop="() => addBtn('aladin')">
+            <s-component class name="aladin" />
+        </div>
+        <div
+            ref="exampleAladin"
+            :class="$style.example"
+            :style="{
+                display: exampleShow ==='aladin' ? 'block' : 'none',
+                top: pos.y + 'px',
+                left: pos.x + 'px',
+                width: '360px',
+                height: '200px',
+            }"
+        >
+            <s-component class name="aladin" />
+        </div>
+
+        <div class="m-16">图片</div>
+        <div class="m-16" @mousedown.stop="() => addBtn('image')">
+            <s-component class name="image" />
+        </div>
+        <div
+            ref="exampleImage"
+            :class="$style.example"
+            :style="{
+                display: exampleShow ==='image' ? 'block' : 'none',
+                top: pos.y + 'px',
+                left: pos.x + 'px',
+                width: '222px',
+            }"
+        >
+            <s-component class name="image" />
+        </div>
+        <div class="m-16">横滑</div>
+        <div class="m-16" @mousedown.stop="() => addBtn('scroll')">
+            <s-component class name="scroll" />
+        </div>
+        <div
+            ref="exampleScroll"
+            :class="$style.example"
+            :style="{
+                display: exampleShow ==='scroll' ? 'block' : 'none',
+                top: pos.y + 'px',
+                left: pos.x + 'px',
+                width: '360px',
+            }"
+        >
+            <s-component class name="scroll" />
         </div>
     </div>
 </template>
@@ -67,5 +142,11 @@ onMounted(() => {
     top: 0;
     left: 0;
     z-index: 100;
+}
+.comp {
+    font-size: 1.2rem;
+    user-select: none;
+    overflow-y: scroll;
+    height: 100%;
 }
 </style>

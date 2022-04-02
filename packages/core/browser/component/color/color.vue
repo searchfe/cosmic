@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ref, defineEmits, reactive} from 'vue';
 import Color from 'color';
+import { ref, defineEmits, reactive, computed, watch} from 'vue';
 const props = withDefaults(defineProps<{
     colorStyle: any,
     theme?: string,
@@ -9,40 +9,39 @@ const props = withDefaults(defineProps<{
     colorStyle: () => ({}),
 });
 
-const reactivStyle = reactive(props.colorStyle);
-
 const emits = defineEmits(['onChange']);
 
-const c = Color.rgb(props.colorStyle.color.r, props.colorStyle.color.g, props.colorStyle.color.b).hex();
+const c = props.colorStyle.color && Color.rgb(props.colorStyle.color.r, props.colorStyle.color.g, props.colorStyle.color.b).hex();
 
 const rg = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/;
 
 
 const color = ref(c);
 
-const opacity = ref(1);
+const opacity = ref(Number(props.colorStyle.opacity) * 100 + '%');
 
 const theme = ref(props.theme);
 
 const changeEvent = () => {
-    emits('onChange', {color: color.value, opacity: opacity.value, theme: theme.value});
+    emits('onChange', {color: color.value, opacity: opacity.value, theme: theme.value, colorObj: new Color(color.value)});
 };
 
-const colorBurHandler = () => {
+const colorBurHandler = (colorStyle) => {
     let value = color.value || '';
     if (!value.startsWith('#')) value = `#${value}`;
     rg.test(value) ? color.value = value : color.value = '#000000';
-    reactivStyle.color = new Color(value).object();
+    colorStyle.color = new Color(value).object();
     changeEvent();
 };
 
-const opacityBurHandler = () => {
+const opacityBurHandler = (colorStyle) => {
     let number = Number(opacity.value || 100);
     if (Object.is(NaN, number)) number = 100;
     let value = number;
     if (value > 100 || value < 0) value = 100;
     opacity.value = `${value}%`;
-    reactivStyle.opacity = number / 100;
+    colorStyle.opacity = number / 100;
+    console.log(colorStyle.opacity);
     changeEvent();
 };
 
@@ -55,6 +54,12 @@ const themeClickHandler = () => {
     theme.value = theme.value === 'light' ? 'dark' : 'light';
     changeEvent();
 };
+
+watch(() => props.colorStyle, (newValue) => {
+    const c = newValue.color && Color.rgb(newValue.color.r, newValue.color.g, newValue.color.b).hex();
+    color.value = c;
+    opacity.value = newValue.opacity;
+});
 
 </script>
 
@@ -83,7 +88,7 @@ const themeClickHandler = () => {
                 :class="[$style.input]"
                 :size="10"
                 @focus="focusHandler"
-                @blur="colorBurHandler"
+                @blur="() => colorBurHandler(colorStyle)"
             >
         </div>
         <div :class="$style.divider" />
@@ -93,7 +98,7 @@ const themeClickHandler = () => {
                 :class="[$style.input]"
                 :size="5"
                 @focus="focusHandler"
-                @blur="opacityBurHandler"
+                @blur="() => opacityBurHandler(colorStyle)"
             >
         </div>
     </div>

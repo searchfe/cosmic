@@ -2,10 +2,13 @@
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 import { Button, Menu, MenuOption } from 'cosmic-vue';
+import { ref } from 'vue';
 import buttonMenu from './menu-button.module.css';
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 const toolService = inject<service.ToolService>(service.TOKENS.Tool);
+const draftService = inject<service.DraftService>(service.TOKENS.Draft);
+const keyboardService = inject<service.KeyboardService>(service.TOKENS.Keyboard);
 
 function handler(e) {
     switch(e.value) {
@@ -21,6 +24,15 @@ function handler(e) {
         case 'del':
             nodeService.deleteSelection();
             break;
+        case 'save':
+            draftService.save();
+            break;
+        case 'open':
+            draftService.open();
+            break;
+        case 'new':
+            nodeService.new();
+            break;
     }
     if (e?.value?.match(/screen-([\d]+)/)) {
         nodeService.update(
@@ -31,6 +43,23 @@ function handler(e) {
         );
     }
 }
+const appendMenu = ref();
+keyboardService.keydown('D').subscribe((event) => {
+    if (event.target !== document.body) return;
+    nodeService.deleteSelection();
+});
+keyboardService.keydown('DELETE').subscribe((event) => {
+    if (event.target !== document.body) return;
+    nodeService.deleteSelection();
+});
+keyboardService.keydown('BACKSPACE').subscribe((event) => {
+    if (event.target !== document.body) return;
+    nodeService.deleteSelection();
+});
+keyboardService.keydown('A').subscribe((event) => {
+    if (event.target !== document.body) return;
+    appendMenu.value.$el.click();
+});
 </script>
 <template>
     <div class="flex justify-start ml-6">
@@ -67,7 +96,7 @@ function handler(e) {
         </Menu>
         <Menu size="xs" value="2" :class="$style.menu" @on-change="handler">
             <template #activator>
-                <Button class="min-w-40 mx-1" :styles="buttonMenu" size="xs">置入</Button>
+                <Button ref="appendMenu" class="min-w-40 mx-1" :styles="buttonMenu" size="xs">置入</Button>
             </template>
             <MenuOption
                 v-for="data of [

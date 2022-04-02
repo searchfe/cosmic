@@ -14,12 +14,19 @@ export default class NodeService {
     private _document: DocumentNode;
     private _selection: Array<PageNode | SceneNode> = [];
     private _currentPage: PageNode;
+
     constructor() {
         this._document = new DocumentNode();
         this._document.id = id();
         this.document = new BehaviorSubject(this._document);
         this.selection = new Subject();
         this.renderNodes = new Subject();
+        this.addPage();
+    }
+    new() {
+        const document = new DocumentNode();
+        document.id = id();
+        this.load(document);
         this.addPage();
     }
     setSelection(ids: string[]) {
@@ -76,7 +83,7 @@ export default class NodeService {
         // if (!page) return;
         const comp = new ComponentNode(options);
         comp.id = id();
-        comp.name = `按钮 ${increaseId(this._document, comp.type)}`;
+        comp.name = `组件 ${comp.cname} ${increaseId(this._document, comp.type)}`;
         comp.parent = target;
         target.appendChild(comp);
         this.updateDocument();
@@ -119,6 +126,22 @@ export default class NodeService {
 
     getSelection(): Array<PageNode | SceneNode> {
         return this._selection;
+    }
+
+    serialize() {
+        const result = {
+            document: this._document.serialize(),
+        };
+        return result;
+    }
+
+    load(doc: DocumentNode) {
+        this._document = doc;
+        this._currentPage = doc.children[0] || undefined;
+        this._selection = [];
+        this.updateDocument();
+        this.updateCurrentPage();
+        this.setSelection([]);
     }
 }
 

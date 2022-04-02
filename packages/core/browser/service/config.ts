@@ -1,7 +1,7 @@
 import { Container, type interfaces  }  from '@cosmic/core/inversify';
 import { TOKENS } from './token';
 import { create as createGqlClient, type GqlClient } from './gql.service';
-import { RouterService, type RouterServiceAPI } from './router/index.service';
+import { RouterService } from './router/index.service';
 import NodeService from './document/node.service';
 import ComponentService from './document/component.service';
 import TextStyleService from './styles/text-style.service';
@@ -11,6 +11,7 @@ import RadiusStyleService from './styles/radius-style.service';
 import EffectStyleService from './styles/effect-style.service';
 import StrokeStyleService from './styles/stroke-style.service';
 import ToolService from './interactivity/tool.service';
+import DraftService from './document/draft.service';
 
 import FontDaoService from './dao/font.dao.service';
 
@@ -24,11 +25,12 @@ export function load(options: interfaces.ContainerOptions) {
     // urql: gql client
     container.bind<GqlClient>(TOKENS.GqlClient).toConstantValue(createGqlClient());
     // router
-    container.bind<RouterServiceAPI>(TOKENS.Router).toConstantValue(RouterService.create());
+    container.bind<RouterService>(TOKENS.Router).toConstantValue(RouterService.create());
     container.bind<KeyboardService>(TOKENS.Keyboard).to(KeyboardService);
     container.bind<ToolService>(TOKENS.Tool).to(ToolService);
 
     container.bind<NodeService>(TOKENS.Node).to(NodeService);
+    container.bind<DraftService>(TOKENS.Draft).to(DraftService);
 
 
     container.bind<TextStyleService>(TOKENS.TextStyle).to(TextStyleService);
@@ -39,6 +41,6 @@ export function load(options: interfaces.ContainerOptions) {
     container.bind<ComponentService>(TOKENS.Component).to(ComponentService);
 
     container.bind<FontDaoService>(TOKENS.FontDao).to(FontDaoService);
-    
+
     return container;
 }

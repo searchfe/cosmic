@@ -7,13 +7,13 @@ import { TOKENS } from '../service';
 
 export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.TextStyle) {
 
-    let stopWatch: WatchStopHandle | null = null;
-
     const baseService = inject(token) as unknown as BaseService;
 
     const nodeService = inject<NodeService>(TOKENS.Node);
 
-    const styleId = ref('1');
+    const textNode = nodeService.getSelection().find(item => item.type === 'TEXT') as any;
+
+    const styleId = ref(textNode && baseService.type === 'TEXT' ? textNode.getRangeTextStyleId() : '1');
 
     const isStandard = ref(false);
 
@@ -31,43 +31,34 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     let detailEdit = null;
 
-    baseService.subject?.subscribe(subject => {
-        switch (subject.type) {
-            case 'R':
-                standardList.value = subject.data;
-                resetStyle(styleId.value);
-        } 
-    });
-
     watchEffect(() =>  {
         standard.value = resetStyle(styleId.value);
     });
 
     function resetStyle(id: string) {
-        if (stopWatch) {
-            stopWatch();
-        }
         const style = baseService.get(id) as unknown as any;
         if (styleId.value !== style.id) {
             styleId.value = style.id;
         }
         isStandard.value = !baseService.isLocalStyle(styleId.value);
-        console.log(style);
+        
         const reactivStyle = reactive(style);
-        stopWatch = watch([reactivStyle], changeStyle);
+        // stopWatch = watch([reactivStyle], changeStyle);
         return reactivStyle;
     }
 
+    watchEffect(() =>  {
+        standard.value = reactive(baseService.get(styleId.value));
+    });
 
-    function changeStyle(newValue, oldValue) {
+    function changeStyle() {
         // TODO
         const textNode = nodeService.getSelection().filter(item => item.type === 'TEXT');
         const style = baseService.get(styleId.value);
         textNode.forEach(i => {
             const item = i as unknown as any;
-            const style = newValue[0];
             if (style.fontSize && item.fontSize) {
-                item.fontSize = Number(newValue[0].fontSize);
+                item.fontSize = Number(style.fontSize);
             }
             if (style.color && item.fills) {
                 item.fills = [{...style}];
@@ -126,8 +117,8 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
         standardList.value = baseService.getLocalStyles();
     }
 
-    async function saveStyle() {
-        baseService.saveStyle(styleId.value);
+    async function saveStyle(styleId: string) {
+        baseService.saveStyle(styleId);
     }
 
     function getDetailEdit() {

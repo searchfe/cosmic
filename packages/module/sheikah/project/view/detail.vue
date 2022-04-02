@@ -28,7 +28,7 @@ watchEffect(() => {
         projects.value = data.value?.projects;
     }
     if (project && team && draftData.value && !draftFetching.value) {
-        drafts.value = draftData.value?.drafts;
+        drafts.value = (draftData.value?.drafts || []).filter(d => d.project === project);
     }
     if (project && projectData.value?.project && !projectFetching.value) {
         currentProject.value = projectData.value.project;
@@ -67,7 +67,7 @@ function onSave() {
         <template #rb-actions>
             <div class="flex justify-end">
                 <div :class="$style.dir">
-                    <img src="https://fe-dev.bj.bcebos.com/%E6%96%87%E4%BB%B6%E5%A4%B9icon%20png.png" alt="dir">
+                    <img class="w-full h-full" src="https://fe-dev.bj.bcebos.com/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9%203%E5%80%8D%20.png" alt="dir">
                 </div>
                 <div :class="$style.add" class="flex justify-center items-center" @click="showDialog = true">
                     <i-cosmic-plus class="text-md" />
@@ -122,17 +122,9 @@ function onSave() {
     }
 }
 .dir {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin-right: 12px;
     width: 35px;
     height: 35px;
-    background: #f5f5f5;
-}
-.dir img {
-    width: 75%;
-    height: 75%;
 }
 </style>
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { toRaw, watch } from 'vue';
 import { Select, SelectOption, Row, Col, Input, RadioGroup, RadioButton } from 'cosmic-vue';
 import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
 import type { TextStyle } from '@cosmic/core/parts';
@@ -12,20 +12,29 @@ const props = withDefaults(defineProps<{
     textStyle: () => ({} as unknown as TextStyle),
 });
 
+let originalStyle = toRaw(props.textStyle);
 
-const realStyle = reactive(props.textStyle);
+const emits = defineEmits('change');
 
+function changeStyle(textStyle, field, event) {
+    originalStyle[field] = event.value;
+    emits('change');
+}
+
+watch(() => props.textStyle, (newValue) => {
+    originalStyle = toRaw(newValue);
+});
 
 </script>
 
 
 <template>
-    <div>
+    <div v-if="textStyle.fontName">
         <div :class="$style.row">
             <Select
                 size="sm"
-                :value="realStyle.fontName.fontFamily"
-                @on-change="(event) => realStyle.fontName.fontFamily = event.value"
+                :value="textStyle.fontName.fontFamily"
+                @on-change="(event) => changeStyle(originalStyle.fontName, 'fontFamily', event)"
             >
                 <SelectOption
                     v-for="data of GlyphData"
@@ -40,10 +49,10 @@ const realStyle = reactive(props.textStyle);
                 <div class="w-80">
                     <Select
                         size="sm"
-                        :value="realStyle.fontSize + ''"
+                        :value="textStyle.fontSize + ''"
                         allow-input
                         :class="$style['margin-left']"
-                        @on-change="(event) => realStyle.fontSize = event.value"
+                        @on-change="(event) => changeStyle(originalStyle, 'fontSize', event)"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="$style.icon" />
@@ -93,8 +102,8 @@ const realStyle = reactive(props.textStyle);
                 <div :class="[$style['glyph-item']]" class="w-80">
                     <Input
                         size="sm"
-                        :value="realStyle.lineHeight.value"
-                        @on-change="(event) => realStyle.lineHeight.value = event.value"
+                        :value="textStyle.lineHeight.value"
+                        @on-change="(event) => changeStyle(originalStyle.lineHeight, 'value', event)"
                     >
                         <template #prefix>
                             <i-cosmic-line-height :class="[$style.icon]" />
@@ -106,10 +115,10 @@ const realStyle = reactive(props.textStyle);
                 <div :class="[$style['glyph-item']]" class="w-80">
                     <Select
                         size="sm"
-                        :value="realStyle.letterSpacing.value"
+                        :value="textStyle.letterSpacing.value"
                         allow-input
                         :class="$style['margin-left']"
-                        @on-change="(event) => realStyle.letterSpacing.value = event.value"
+                        @on-change="(event) => changeStyle(originalStyle.letterSpacing, 'value', event)"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="[$style.icon]" />
@@ -133,9 +142,9 @@ const realStyle = reactive(props.textStyle);
                 <div class="w-80">
                     <Select
                         size="sm"
-                        :value="realStyle.paragraphSpacing"
+                        :value="textStyle.paragraphSpacing"
                         allow-input
-                        @on-change="(event) => realStyle.paragraphSpacing = event.value"
+                        @on-change="(event) => changeStyle(originalStyle, 'paragraphSpacing', event)"
                     >
                         <template #prefix>
                             <i-cosmic-vertical-height :class="[$style.icon]" />
@@ -156,7 +165,7 @@ const realStyle = reactive(props.textStyle);
                 </div>
             </Col>
         </Row>
-        <Row v-if="props.showlayout" :class="$style.row">
+        <Row v-if="showlayout" :class="$style.row">
             <Col :span="16">
                 <div :class="$style['radio-left']">
                     <RadioGroup value="1">

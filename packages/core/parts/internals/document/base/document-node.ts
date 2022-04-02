@@ -1,19 +1,30 @@
 import BaseNodeMixin from '../mixin/base-node-mixin';
-import type PageNode from './page-node';
+import PageNode from './page-node';
 import { type SceneNode } from '../index';
+import { serializable, CLS_MAP } from '../../../util/serializable';
+
+
+interface Option {
+    id?: string,
+    name?: string,
+}
+
 type NodeType = Internal.NodeType;
 
+@serializable('DOCUMENT')
 export default class DocumentNode extends BaseNodeMixin implements Internal.DocumentNode {
-    
-    constructor() {
+
+    constructor(option?: Option) {
         super();
         this.children = [];
+        this.id = option?.id || '';
+        this.name = option?.name || '';
     }
 
     readonly type = 'DOCUMENT';
 
     readonly children: Array<PageNode> = [];
-  
+
     appendChild(child: PageNode) {
         this.children.push(child);
         child.parent = this as any;
@@ -29,7 +40,7 @@ export default class DocumentNode extends BaseNodeMixin implements Internal.Docu
     findChild(callback: (node: PageNode) => boolean){
         return this.children.filter(callback)[0];
     }
-  
+
     findAll(callback?: (node: PageNode | SceneNode) => boolean) {
         const all: Array<PageNode | SceneNode> = [];
         this.children.map(node => {
@@ -44,15 +55,25 @@ export default class DocumentNode extends BaseNodeMixin implements Internal.Docu
         })[0];
         return all;
     }
-  
+
     findOne(callback: (node: PageNode | SceneNode) => boolean) {
         // TODO
         return this.findAll(callback)[0];
     }
-  
+
     findAllWithCriteria<T extends NodeType[]>(criteria: { types: T }) {
         return this.findAll(node => {
             return criteria.types.indexOf(node.type) > -1;
         });
+    }
+
+    serialize() {
+        const result = {
+            type: this.type,
+            id: this.id,
+            name: this.name,
+            children: this.children.map(child => child.serialize()),
+        };
+        return result;
     }
 }

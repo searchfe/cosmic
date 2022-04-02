@@ -10,6 +10,7 @@ export interface TextNodeOptions {
     width?: number;
     height?: number;
     name?: string;
+    id?: string;
 }
 export default class TextNode
     extends Mixin(
@@ -27,6 +28,8 @@ export default class TextNode
         this.width = option.width || 0;
         this.height = option.height || 0;
         this.fontSize = 12;
+        this.name = option.name || '';
+        this.id = option.id || '';
     }
     clone() {
         return this as any;
@@ -47,15 +50,23 @@ export default class TextNode
         this.fontName = value;
     }
 
-    setRangeFills(start: number, end: number, value: Internal.Paint[]) {
-        this.fills = [...value];
-    }
-
     setRangeTextStyleId(start: number, end: number, styleId: string) {
         this.textStyleId = styleId;
     }
 
+    getRangeTextStyleId(start: number, end: number):string {
+        return this.textStyleId as string;
+    }
+
+    setRangeFills(start: number, end: number, value: Internal.Paint[]) {
+        this.fills = [...value];
+    }
+
     setRangeFillStyleId(start: number, end: number, value: string): void {
         this.fillStyleId = value;
+    }
+
+    getRangeFillStyleId(start: number, end: number): string {
+        return this.fillStyleId as string;
     }
 }
