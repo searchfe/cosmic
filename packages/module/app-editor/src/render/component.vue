@@ -35,14 +35,9 @@ nodeService.selection.subscribe(nodes => {
         :style="{
             position: 'absolute', // 需要根据模式切换
             top: node.y + 'px',
-            left: node.cname === 'button' && node.x > 400 ? '': node.x + 'px',
-            right: node.cname === 'button' && node.x > 400 ? (480 - node.x || 0) + 'px': '',
-            width: (node.cname === 'aladin'? '100%' : (
-                node.cname === 'scroll'? '95%' : node.width + 'px'
-            )),
+            left: node.x + 'px',
+            width: node.width + 'px',
             height: node.height + 'px',
-            overflow: node.cname === 'aladin' ? 'hidden' : '',
-            // background: util.toBackgroundStyle(node?.backgrounds[0]),
         }"
     >
         <div class="relative">
