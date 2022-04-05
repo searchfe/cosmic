@@ -30,6 +30,10 @@ nodeService.selection.subscribe(nodes => {
 
 });
 
+const isHideColor = computed(() => {
+    return _node.value && !_node.value.backgrounds;
+});
+
 const fillStyle = computed(() => {
     // const node = nodeService.getSelection().find(item => item.id === nodeId.value);
     if (!_node.value || !_node.value.backgrounds || _node.value.backgrounds.length === 0) return {color: {r: 0, g: 0, b: 0}, opacity: 0};
@@ -142,6 +146,7 @@ function change(event) {
                 </Col>
             </Row>
             <m-color
+                v-if="!isHideColor"
                 :color-style="fillStyle"
                 @on-change="change"
             />
