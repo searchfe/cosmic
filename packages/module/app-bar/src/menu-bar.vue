@@ -136,20 +136,12 @@ keyboardService.keydown('A').subscribe((event) => {
 </template>
 <style module>
 .menu ul, .menu li{
-    background: var(--color-gray-200);
-    color: var(--color-dark);
     font-size: 1.2rem;
 }
 .menu ul{
     min-width: 8rem !important;
 }
-.menu li {
-    padding-left: 1rem !important;
-}
-.menu li:hover{
-    background: var(--color-gray-300);
-}
-.menu li:active, .menu li:global(.active){
-    background: var(--color-gray-400);
+.menu li > div{
+    padding-left: 1.1rem !important;
 }
 </style>

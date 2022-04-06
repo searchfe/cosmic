@@ -34,7 +34,7 @@
     },
     {
       "matchSourceUrlPrefixes": [
-        "https://github.com/design-to-release/cosmic/"
+        "https://github.com/searchfe/cosmic/"
       ],
       "groupName": "Vite monorepo packages",
       "automerge": false
