@@ -1,7 +1,4 @@
-import { urql } from '@cosmic/core/browser';
-
-
-const { useQuery, useMutation } = urql;
+import { useQuery, useMutation } from '@cosmic/core/urql';
 
 
 export function query(query: gql.QueryFontDTO, fields: string[] = []) {

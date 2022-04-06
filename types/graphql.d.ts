@@ -341,6 +341,7 @@ export interface Color {
     id: string;
     name: string;
     team: string;
+    updatedAt: string;
     day: string;
     night: string;
     dark: string;
@@ -350,6 +351,7 @@ export interface Font {
     id: string;
     name: string;
     team: string;
+    updatedAt: string;
     style: string;
     variant: string;
     weight: string;
@@ -362,6 +364,7 @@ export interface Shadow {
     id: string;
     name: string;
     team: string;
+    updatedAt: string;
     type?: Nullable<string>;
     offsetX?: Nullable<string>;
     offsetY?: Nullable<string>;
@@ -379,6 +382,7 @@ export interface Border {
     id: string;
     name: string;
     team: string;
+    updatedAt: string;
     top: BorderItem;
     right: BorderItem;
     bottom: BorderItem;
@@ -389,6 +393,7 @@ export interface Corner {
     id: string;
     name: string;
     team: string;
+    updatedAt: string;
     tl: string[];
     tr: string[];
     bl: string[];
@@ -399,6 +404,7 @@ export interface Opacity {
     id: string;
     name: string;
     team: string;
+    updatedAt: string;
     opacity: number;
 }
 
@@ -426,6 +432,7 @@ export interface Component {
     id: string;
     name: string;
     team: string;
+    updatedAt: string;
     displayName: string;
     desc: string;
     keyNodes: KeyNode[];
@@ -437,6 +444,7 @@ export interface Prefab {
     id: string;
     name: string;
     team: string;
+    updatedAt: string;
     component: string;
     atoms: string[];
 }
@@ -445,6 +453,7 @@ export interface Draft {
     id: string;
     name: string;
     team: string;
+    updatedAt: string;
     project: string;
     data: JSON;
 }

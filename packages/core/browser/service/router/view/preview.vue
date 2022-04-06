@@ -1,6 +1,12 @@
 <script lang="ts" setup>import { computed } from 'vue';
-import vueQr from 'vue-qr/src/packages/vue-qr.vue';
-const host = computed(() => location.host);
+import { ref } from 'vue';
+import QRCode from 'qrcode';
+const href = import.meta.env.VITE_PREVIEW_SERVER  + '?preview=1&page=0&frame=0';
+const qrurl = ref();
+QRCode.toDataURL(href).then((url: string) => {
+    qrurl.value = url;
+});
+
 </script>
 <template>
     <div class="flex justify-center items-center w-full h-full flex-col">
@@ -10,10 +16,10 @@ const host = computed(() => location.host);
             height="700"
         />
         <div class="mt-20">
-            <vue-qr :text="host + '?preview=1&page=0&frame=0'" />
+            <img :src="qrurl">
         </div>
-        <div class="mt-20 text-md">
-            <a src="?preview=1&page=0&frame=0">{{ host }}?preview=1&page=0&frame=0</a>
+        <div class="mt-20 text-md select-text">
+            <a src="href">{{ href }}</a>
         </div>
     </div>
 </template>

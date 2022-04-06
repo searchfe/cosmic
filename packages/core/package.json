@@ -18,6 +18,10 @@
             "import": "./dist/es/rxjs.mjs",
             "require": "./dist/cjs/rxjs.cjs"
         },
+        "./urql": {
+            "import": "./dist/es/urql.mjs",
+            "require": "./dist/cjs/urql.cjs"
+        },
         "./browser.css": {
             "import": "./dist/es/browser.css",
             "require": "./dist/cjs/browser.css"

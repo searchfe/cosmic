@@ -1,9 +1,7 @@
-import { urql } from '@cosmic/core/browser';
+import { useMutation, useQuery } from '@cosmic/core/urql';
 
-const { useMutation, useQuery } = urql;
 
 type PrefabFields = (keyof gql.Prefab)[];
-
 
 export function queryOne(id: string, fields: PrefabFields = ['id', 'name', 'team', 'component', 'atoms']) {
     return useQuery<{ getPrefab: Partial<gql.Prefab> }, gql.QueryPrefabDTO>({

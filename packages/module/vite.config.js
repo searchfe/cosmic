@@ -79,6 +79,7 @@ export function genConfig(PACKAGE_ROOT) {
           '@cosmic/core/parts',
           '@cosmic/core/inversify',
           '@cosmic/core/rxjs',
+          '@cosmic/core/urql',
           ...listOfModule().map(m => `@cosmic-module/${m}`),
           ...builtinModules.flatMap(p => [p, `node:${p}`]),
         ],

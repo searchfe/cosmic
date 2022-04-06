@@ -38,7 +38,6 @@ nodeService.selection.subscribe(nodes => {
             left: node.x + 'px',
             width: node.width + 'px',
             height: node.height + 'px',
-            // background: util.toBackgroundStyle(node?.backgrounds[0]),
         }"
     >
         <div class="relative">

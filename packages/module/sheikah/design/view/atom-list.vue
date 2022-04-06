@@ -15,7 +15,7 @@ import { query as queryOpacity } from '../api/opacity';
 import { query as queryCorner } from '../api/corner';
 import { query as queryFont } from '../api/font';
 
-import type { urql } from '@cosmic/core/browser';
+import type { UseQueryResponse } from '@cosmic/core/urql';
 import type { AtomType } from '../types';
 
 
@@ -77,7 +77,7 @@ const {
     executeQuery: refreshFont,
 } = queryFont({}, ['id', 'team', 'weight', 'size', 'lineHeight', 'family', 'name']);
 
-const refreshers: Record<AtomType, (opts?: any) => urql.UseQueryResponse<unknown, unknown>> = {
+const refreshers: Record<AtomType, (opts?: any) => UseQueryResponse<unknown, unknown>> = {
     color: refreshColor,
     shadow: refreshShadow,
     border: refreshBorder,
