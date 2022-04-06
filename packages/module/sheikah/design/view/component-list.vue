@@ -9,13 +9,12 @@ import CompCard from '../component/card/comp-refs.vue';
 
 import { inject, type QueryComponentResult, createFetchTeamComponentsRequest } from '@cosmic/core/parts';
 // import { inject, type QueryComponentResult, createFetchTeamComponentsRequest, deleteComponentQuery } from '@cosmic/core/parts';
-import { urql } from '@cosmic/core/browser';
+import { useQuery } from '@cosmic/core/urql';
 
 const { useRoute } = vueRouter;
 // const { useQuery, useMutation } = urql;
-const { useQuery } = urql;
 
-const routerService = inject<service.RouterServiceAPI>(service.TOKENS.Router);
+const routerService = inject<service.RouterService>(service.TOKENS.Router);
 const componentService = inject<service.ComponentService>(service.TOKENS.Component);
 const route = useRoute();
 const team = route.query.team as string;

@@ -1,7 +1,5 @@
-import { urql } from '@cosmic/core/browser';
+import { useQuery, useMutation } from '@cosmic/core/urql';
 
-
-const { useQuery, useMutation  } = urql;
 
 export function queryOne(id: string, fields: string[] = ['id', 'name', 'day', 'night', 'dark']) {
     return useQuery<{ getColor: Partial<gql.Color> }, gql.QueryColorDTO>({

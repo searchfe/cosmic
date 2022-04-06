@@ -1,7 +1,5 @@
-import { urql } from '@cosmic/core/browser';
+import { useQuery } from '@cosmic/core/urql';
 
-
-const { useQuery } = urql;
 
 export function useAllTeams() {
     return useQuery<{ teams: gql.Team[] }>({

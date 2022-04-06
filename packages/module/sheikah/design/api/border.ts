@@ -1,7 +1,5 @@
-import { urql } from '@cosmic/core/browser';
+import { useQuery, useMutation } from '@cosmic/core/urql';
 
-
-const { useQuery, useMutation } = urql;
 
 export function query(query: gql.QueryBorderDTO) {
     return useQuery<{ borders: Partial<gql.Border>[] }, gql.QueryBorderDTO>({
