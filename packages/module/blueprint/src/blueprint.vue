@@ -2,10 +2,10 @@
 import { ref, watchEffect } from 'vue';
 import { Space, Input, Button } from 'cosmic-vue';
 import { inject, createComponentQuery, KeyNode, Property, Variant, type QueryComponentResult, updateComponentQuery } from '@cosmic/core/parts';
-import { service, urql } from '@cosmic/core/browser';
+import { service } from '@cosmic/core/browser';
 import Panel from './components/panel.vue';
+import { useMutation } from '@cosmic/core/urql';
 
-const { useMutation } = urql;
 
 const routerService = inject<service.RouterService>(service.TOKENS.Router);
 const componentService = inject<service.ComponentService>(service.TOKENS.Component);
