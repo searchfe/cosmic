@@ -54,3 +54,4 @@ export * from './style/effect-style';
 export * from './style/stroke-style';
 
 export * from './property';
+export * from './serialize';

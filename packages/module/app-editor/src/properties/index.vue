@@ -20,7 +20,6 @@ nodeService.selection.subscribe((nodes) => {
     if(nodes.some(node => node.type === 'TEXT')) {
         arr.push('@cosmic-module/widget-text');
     }
-    console.log(nodes, arr);
     properties.value = arr;
 });
 

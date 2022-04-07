@@ -38,6 +38,7 @@ importers:
       typescript: 4.5.5
       unplugin-icons: ^0.13.2
       unplugin-vue-components: ^0.17.21
+      uuid: ^8.3.2
       vite: 2.7.13
       vite-dts: ^1.0.4
       vite-plugin-import-maps: ^0.1.2
@@ -54,6 +55,7 @@ importers:
       resolve: 1.22.0
       rxjs: 7.5.5
       ts-mixer: 6.0.1
+      uuid: 8.3.2
       vue: 3.2.29
     devDependencies:
       '@typescript-eslint/eslint-plugin': 5.10.1_9bad3f0b1ac4f26537bddef47278c136
@@ -4750,6 +4752,11 @@ packages:
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
     dev: true
+
+  /uuid/8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+    dev: false
 
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}

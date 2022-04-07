@@ -3,7 +3,7 @@ import BaseNodeMixin from '../mixin/base-node-mixin';
 import ChildrenMixin from '../mixin/children-mixin';
 import ExportMixin from '../mixin/export-mixin';
 import { Paint } from '../property';
-import { serializable } from '../../../util/serializable';
+import { serializable } from '../serialize';
 
 interface Option {
     id?: string,
@@ -11,7 +11,7 @@ interface Option {
 }
 
 
-@serializable('PAGE')
+@serializable()
 export default class PageNode
     extends Mixin(BaseNodeMixin, ChildrenMixin, ExportMixin) implements Internal.PageNode {
     readonly type = 'PAGE';
@@ -22,7 +22,6 @@ export default class PageNode
     constructor(option?: Option) {
         super();
         this.children = [];
-        this.id = option?.id || '';
         this.name = option?.name || '';
     }
 
@@ -36,13 +35,13 @@ export default class PageNode
 
     readonly prototypeStartNode = null;
 
-    serialize() {
+    _serialize() {
         return {
             type: this.type,
             id: this.id,
             name: this.name,
             backgrounds: this.backgrounds.map(bg => bg),
-            children: this.children.map(child => child.serialize()),
+            // children: this.children.map(child => child.serialize()),
         };
     }
 }
