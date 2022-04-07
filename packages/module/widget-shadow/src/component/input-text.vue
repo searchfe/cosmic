@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {ref, computed} from 'vue';
+import {ref, computed, watchEffect} from 'vue';
 
 const PERCENT_PATT = /(^(-|[1-9])([0-9])*%$)|(^0%$)/;
 
@@ -65,6 +65,10 @@ const className = ref(props.class || '');
 const inputModel = ref(props.value.toString() || '0');
 const showArraw = ref(ISMATH);
 const inputRef = ref();
+
+watchEffect(() => {
+    inputModel.value = props.value.toString() || '0';
+});
 
 const uniqueId = computed(
     () => {
@@ -165,7 +169,7 @@ function arrowFn({isUp, event}: { isUp: boolean, event: KeyboardEvent | PointerE
 </script>
 
 <template>
-    <div :class="[$style['input-text'], 'w-100 h-26 -v-border-inapparent -v-bg-inapparent']">
+    <div :class="[$style['input-text'], 'h-26 -v-border-inapparent -v-bg-inapparent']">
         <label :for="uniqueId">
             <div :class="[$style['icon'], 'flex items-center justify-center']">
                 <slot name="prefix" />
@@ -226,7 +230,6 @@ function arrowFn({isUp, event}: { isUp: boolean, event: KeyboardEvent | PointerE
     border: none;
     outline: none;
     border-radius: var(--rounded-md);
-    text-align: center;
     font-size: var(--font-sm);
     color: var(--color-dark);
     background-color: transparent;
@@ -236,7 +239,7 @@ function arrowFn({isUp, event}: { isUp: boolean, event: KeyboardEvent | PointerE
 .down {
     position: absolute;
     right: .6rem;
-    font-size: 1rem;
+    font-size: .8rem;
     color: var(--hsl-gray-200);
 }
 
