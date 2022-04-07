@@ -22,8 +22,4 @@ export default class PluginDataMixinx implements Internal.PluginDataMixin {
         // TODO
         return [];
     }
-
-    serialize() {
-        throw new Error('class for true node should implement serialize function');
-    }
 }

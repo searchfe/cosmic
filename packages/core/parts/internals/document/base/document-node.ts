@@ -1,7 +1,7 @@
 import BaseNodeMixin from '../mixin/base-node-mixin';
+import { serializable } from '../serialize';
 import PageNode from './page-node';
 import { type SceneNode } from '../index';
-import { serializable, CLS_MAP } from '../../../util/serializable';
 
 
 interface Option {
@@ -11,19 +11,18 @@ interface Option {
 
 type NodeType = Internal.NodeType;
 
-@serializable('DOCUMENT')
+@serializable()
 export default class DocumentNode extends BaseNodeMixin implements Internal.DocumentNode {
 
     constructor(option?: Option) {
         super();
         this.children = [];
-        this.id = option?.id || '';
         this.name = option?.name || '';
     }
 
     readonly type = 'DOCUMENT';
 
-    readonly children: Array<PageNode> = [];
+    children: Array<PageNode> = [];
 
     appendChild(child: PageNode) {
         this.children.push(child);
@@ -67,12 +66,12 @@ export default class DocumentNode extends BaseNodeMixin implements Internal.Docu
         });
     }
 
-    serialize() {
+    _serialize() {
         const result = {
             type: this.type,
             id: this.id,
             name: this.name,
-            children: this.children.map(child => child.serialize()),
+            // children: this.children.map(child => child.serialize()),
         };
         return result;
     }

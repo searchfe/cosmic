@@ -64,25 +64,26 @@ export default class DraftService {
     }
 
     async open() {
-        let draft: Partial<gql.Draft>;
-        const draftId: string = localStorage.getItem('draft');
-        if (!draftId) {
-            const drafts = await this.query({});
-            if (drafts && drafts.length) {
-                draft = drafts.sort((a, b) => Number(b.updatedAt) - Number(a.updatedAt))[0].data;
-            }
-        } else {
-            const d = await this.queryOne(draftId);
-            if (d?.data) {
-                draft = d.data;
-            }
-        }
-        const data = JSON.parse(draft);
-        console.log('open', data);
-        const doc = data.document;
-        const node = visit(doc) as DocumentNode;
-        // console.log('deserialized node: ', node);
-        this.currentNode.load(node);
+        return;
+        // let draft: Partial<gql.Draft>;
+        // const draftId: string = localStorage.getItem('draft');
+        // if (!draftId) {
+        //     const drafts = await this.query({});
+        //     if (drafts && drafts.length) {
+        //         draft = drafts.sort((a, b) => Number(b.updatedAt) - Number(a.updatedAt))[0].data;
+        //     }
+        // } else {
+        //     const d = await this.queryOne(draftId);
+        //     if (d?.data) {
+        //         draft = d.data;
+        //     }
+        // }
+        // const data = JSON.parse(draft);
+        // console.log('open', data);
+        // const doc = data.document;
+        // const node = visit(doc) as DocumentNode;
+        // // console.log('deserialized node: ', node);
+        // this.currentNode.load(node);
     }
 
     async query(query: gql.QueryDraftDTO) {

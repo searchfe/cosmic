@@ -1,5 +1,6 @@
 import { type Observable, Subject, BehaviorSubject, of } from '@cosmic/core/rxjs';
 import { injectable } from '@cosmic/core/inversify';
+import { serialize } from '@cosmic/core/parts';
 
 
 import { type SceneNode, type FrameNodeOptions, type TextNodeOptions, type ComponentNodeOptions, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
@@ -17,7 +18,6 @@ export default class NodeService {
 
     constructor() {
         this._document = new DocumentNode();
-        this._document.id = id();
         this.document = new BehaviorSubject(this._document);
         this.selection = new Subject();
         this.renderNodes = new Subject();
@@ -25,7 +25,6 @@ export default class NodeService {
     }
     new() {
         const document = new DocumentNode();
-        document.id = id();
         this.load(document);
         this.addPage();
     }
@@ -46,7 +45,6 @@ export default class NodeService {
     addPage() {
         const page = new PageNode();
         page.name = `页面 ${increaseId(this._document, page.type)}`;
-        page.id = id();
         page.backgrounds = [new SolidPaint({r: 244, g: 244, b: 244})];
         this._document.appendChild(page);
         this.updateDocument();
@@ -56,7 +54,6 @@ export default class NodeService {
         // const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
         // if (!page) return;
         const frame = new FrameNode(options);
-        frame.id = id();
         frame.name = `画框 ${increaseId(this._document, frame.type)}`;
         frame.parent = target;
         frame.backgrounds = [new SolidPaint({r: 255, g: 255, b: 255})];
@@ -68,7 +65,6 @@ export default class NodeService {
 
     addText(target: PageNode | FrameNode | GroupNode, option: TextNodeOptions) {
         const textNode = new TextNode(option);
-        textNode.id = id();
         textNode.name = `文本 ${increaseId(this._document, textNode.type)}`;
         textNode.fills = [new SolidPaint({r: 0, g: 0, b: 0})];
         textNode.parent = target;
@@ -82,7 +78,6 @@ export default class NodeService {
         // const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
         // if (!page) return;
         const comp = new ComponentNode(options);
-        comp.id = id();
         comp.name = `组件 ${comp.cname} ${increaseId(this._document, comp.type)}`;
         comp.parent = target;
         target.appendChild(comp);
@@ -130,7 +125,7 @@ export default class NodeService {
 
     serialize() {
         const result = {
-            document: this._document.serialize(),
+            // document: this._document.serialize(),
         };
         return result;
     }
@@ -143,10 +138,6 @@ export default class NodeService {
         this.updateCurrentPage();
         this.setSelection([]);
     }
-}
-
-function id() {
-    return new Date().getTime().toString();
 }
 
 function increaseId(document: DocumentNode | PageNode, type: string) {
