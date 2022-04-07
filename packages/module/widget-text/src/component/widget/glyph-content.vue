@@ -165,7 +165,7 @@ watch(() => props.textStyle, (newValue) => {
                 </div>
             </Col>
         </Row>
-        <Row v-if="showlayout" :class="$style.row">
+        <Row :class="$style.row">
             <Col :span="16">
                 <div :class="$style['radio-left']">
                     <RadioGroup value="1">
@@ -208,7 +208,7 @@ watch(() => props.textStyle, (newValue) => {
 
  <style module>
  .row {
-    composes: mb-10 from global;
+    composes: mb-8 from global;
  }
 
  

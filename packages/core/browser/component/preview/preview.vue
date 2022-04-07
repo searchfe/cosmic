@@ -72,7 +72,7 @@ body {
 :root {
     height: 100%;
     --border-style: solid;
-    --border-color: var(--color-gray-200);
+    --border-color: var(--color-gray-100);
 }
 .border-left {
     border-left: var(--border) var(--border-style) var(--border-color);
