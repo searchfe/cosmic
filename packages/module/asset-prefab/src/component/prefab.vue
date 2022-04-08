@@ -27,7 +27,7 @@
                         </section>
                     </template>
                     <template #menu>
-                        <Option 
+                        <MenuOption 
                             v-for="data of opeSelect" 
                             :key="data.value"
                             size="md" 
@@ -39,7 +39,7 @@
                             <template #right>
                                 {{ data.num }}
                             </template>
-                        </Option>
+                        </MenuOption>
                     </template>
                     <template #footer>
                         <div :class="[styles['prefab-menu-footer']]">
@@ -55,7 +55,7 @@
 </template>
 <script setup lang="ts">
 import { ref, useSlots } from 'vue';
-import { Menu, Option, Popover } from 'cosmic-vue';
+import { Menu, MenuOption, Popover } from 'cosmic-vue';
 import styles from './prefab.module.css';
 
 interface Yzdata {

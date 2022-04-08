@@ -88,6 +88,6 @@ const changeHandler = () => {
     font-size: var(--font-s)
 }
 .row {
-    composes: -v-my lg from global;
+    composes: mb-8 from global;
 }
 </style>

@@ -2,8 +2,7 @@ import { Mixin } from 'ts-mixer';
 import ConstraintMixin from '../mixin/constraint-mixin';
 import DefaultShapeMixin from '../mixin/default-shape-mixin';
 import TextSublayerNode from './text-sublayer-node';
-import { pick } from 'lodash';
-import { serializable } from '../../../util/serializable';
+import { serializable } from '../serialize';
 
 
 export interface TextNodeOptions {
@@ -14,7 +13,7 @@ export interface TextNodeOptions {
     name?: string;
     id?: string;
 }
-@serializable('TEXT')
+@serializable()
 export default class TextNode
     extends Mixin(
         ConstraintMixin,
@@ -32,7 +31,6 @@ export default class TextNode
         this.height = option.height || 0;
         this.fontSize = 12;
         this.name = option.name || '';
-        this.id = option.id || '';
     }
     clone() {
         return this as any;
@@ -71,12 +69,5 @@ export default class TextNode
 
     getRangeFillStyleId(start: number, end: number): string {
         return this.fillStyleId as string;
-    }
-
-    serialize() {
-        const obj = pick(this, ['x', 'y', 'width', 'height', 'fontSize', 'id', 'name']);
-        obj.type = this.type;
-        obj.fills = (this.fills || []).map(fill => fill);
-        return obj;
     }
 }

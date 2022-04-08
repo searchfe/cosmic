@@ -61,7 +61,7 @@ const config = {
   },
   publish: {
     provider: 'github',
-    owner: 'design-to-release',
+    owner: 'searchfe',
     repo: 'cosmic'
   },
   extraMetadata: {

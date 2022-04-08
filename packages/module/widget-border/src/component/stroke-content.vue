@@ -110,7 +110,7 @@ const strokeStyle = reactive(props.strokeStyle);
     font-size: var(--font-md)
 }
 .row {
-    composes: -v-my lg from global;
+    composes: mb-8 from global;
 }
 
 </style>

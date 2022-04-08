@@ -2,11 +2,10 @@ import { Mixin } from 'ts-mixer';
 import DefaultFrameMixin from '../mixin/default-frame-mixin';
 import PublishableMixin from '../mixin/publishable-mixin';
 import VariantMixin from '../mixin/variant-mixin';
-import { pick } from 'lodash';
-import { serializable } from '../../../util/serializable';
+import { serializable } from '../serialize';
 
 
-@serializable('COMPONENT')
+@serializable()
 export default class ComponentNode extends Mixin(
     DefaultFrameMixin,
     PublishableMixin,
@@ -22,7 +21,6 @@ export default class ComponentNode extends Mixin(
         this.width = option.width || 0;
         this.height = option.height || 0;
         this.cname = option.cname || '';
-        this.id = option.id || '';
         this.name = option.name || '';
         this.backgrounds = [];
     }
@@ -33,21 +31,6 @@ export default class ComponentNode extends Mixin(
     createInstance() {
         // TODO
         return '' as any;
-    }
-
-    serialize() {
-        return {
-            id: this.id,
-            name: this.name,
-            cname: this.cname,
-            backgrounds: this.backgrounds.map(bg => bg),
-            children: this.children.map(child => child.serialize()),
-            type: this.type,
-            x: this.x,
-            y: this.y,
-            width: this.width,
-            height: this.height,
-        };
     }
 }
 

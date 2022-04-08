@@ -78,9 +78,13 @@ watch(() => props.colorStyle, (newValue) => {
                 v-else
             />
         </div>
-        <div :class="$style['color-value']">
+        <div
+            :class="$style['color-value']"
+            class="items-center"
+        >
             <div 
                 :class="$style['show-color']"
+                class="w-12 h-12"
                 :style="{backgroundColor: color, opacity: opacity}"
             />
             <input
@@ -148,7 +152,6 @@ watch(() => props.colorStyle, (newValue) => {
 }
 
 .show-color {
-    width: 17px;
     flex:  0 1 auto;
     margin-right: 4px;
     border-radius: 4px;

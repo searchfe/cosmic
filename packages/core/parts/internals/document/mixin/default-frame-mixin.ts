@@ -6,5 +6,4 @@ import ReactionMixin from './reaction-mixin';
 export default class DefaultFrameMixin
     extends Mixin(BaseFrameMixin, FramePrototypingMixin, ReactionMixin)
     implements Internal.DefaultFrameMixin {
-
 }
