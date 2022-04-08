@@ -1,9 +1,8 @@
 import { type Observable, Subject, BehaviorSubject, of } from '@cosmic/core/rxjs';
 import { injectable } from '@cosmic/core/inversify';
-import { serialize } from '@cosmic/core/parts';
 
 
-import { type SceneNode, type FrameNodeOptions, type TextNodeOptions, type ComponentNodeOptions, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
+import { type SceneNode, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeService {
@@ -29,18 +28,20 @@ export default class NodeService {
         this.addPage();
     }
     setSelection(ids: string[]) {
-        if (ids.length === 0) {
-            // do sth
-            this._selection = [];
-        } else if (ids.length === 1) {
-            this._selection = [this._document.findOne(node => node.id == ids[0])];
-        } else {
-            this._selection = this._document.findAll(node => ids.indexOf(node.id) > -1);
-        }
-        if (this._selection.length) {
-            this.updateCurrentPage(findParentPage(this._selection[0]));
-        }
-        this.selection.next(this._selection);
+        requestAnimationFrame(() => {
+            if (ids.length === 0) {
+                // do sth
+                this._selection = [];
+            } else if (ids.length === 1) {
+                this._selection = [this._document.findOne(node => node.id == ids[0])];
+            } else {
+                this._selection = this._document.findAll(node => ids.indexOf(node.id) > -1);
+            }
+            if (this._selection.length) {
+                this.updateCurrentPage(findParentPage(this._selection[0]));
+            }
+            this.selection.next(this._selection);
+        });
     }
     addPage() {
         const page = new PageNode();
@@ -50,10 +51,10 @@ export default class NodeService {
         this.updateDocument();
         this.setSelection([page.id]);
     }
-    addFrame(target: PageNode | FrameNode | GroupNode, options?: FrameNodeOptions) {
+    addFrame(target: PageNode | FrameNode | GroupNode) {
         // const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
         // if (!page) return;
-        const frame = new FrameNode(options);
+        const frame = new FrameNode();
         frame.name = `画框 ${increaseId(this._document, frame.type)}`;
         frame.parent = target;
         frame.backgrounds = [new SolidPaint({r: 255, g: 255, b: 255})];
@@ -63,8 +64,8 @@ export default class NodeService {
         return frame;
     }
 
-    addText(target: PageNode | FrameNode | GroupNode, option: TextNodeOptions) {
-        const textNode = new TextNode(option);
+    addText(target: PageNode | FrameNode | GroupNode) {
+        const textNode = new TextNode();
         textNode.name = `文本 ${increaseId(this._document, textNode.type)}`;
         textNode.fills = [new SolidPaint({r: 0, g: 0, b: 0})];
         textNode.parent = target;
@@ -74,10 +75,10 @@ export default class NodeService {
         return textNode;
     }
 
-    addComponent(target: PageNode | FrameNode | GroupNode, options?: ComponentNodeOptions) {
+    addComponent(target: PageNode | FrameNode | GroupNode) {
         // const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
         // if (!page) return;
-        const comp = new ComponentNode(options);
+        const comp = new ComponentNode();
         comp.name = `组件 ${comp.cname} ${increaseId(this._document, comp.type)}`;
         comp.parent = target;
         target.appendChild(comp);
@@ -102,32 +103,35 @@ export default class NodeService {
         }
     }
     updateDocument() {
-        this.document.next(this._document);
-        if (this._currentPage) this.currentPage.next(this._currentPage);
+        requestAnimationFrame(() => {
+            this.document.next(this._document);
+            if (this._currentPage) this.currentPage.next(this._currentPage);
+        });
+
     }
     updateCurrentPage(page?: PageNode) {
         if (page && page.id !== this._currentPage?.id) {
             this._currentPage = page;
             if (this.currentPage) {
-                this.currentPage.next(this._currentPage);
+                requestAnimationFrame(() => {
+                    this.currentPage.next(this._currentPage);
+                });
             } else {
                 this.currentPage = new BehaviorSubject(this._currentPage);
             }
         }
     }
     update(nodes: SceneNode[]) {
-        this.renderNodes.next([nodes, new Date().getTime().toString()]);
+        requestAnimationFrame(() => {
+            this.renderNodes.next([nodes, new Date().getTime().toString()]);
+        });
     }
 
     getSelection(): Array<PageNode | SceneNode> {
         return this._selection;
     }
-
-    serialize() {
-        const result = {
-            // document: this._document.serialize(),
-        };
-        return result;
+    getDocument() {
+        return this._document;
     }
 
     load(doc: DocumentNode) {

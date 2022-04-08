@@ -5,14 +5,6 @@ import TextSublayerNode from './text-sublayer-node';
 import { serializable } from '../serialize';
 
 
-export interface TextNodeOptions {
-    x?: number,
-    y?: number,
-    width?: number;
-    height?: number;
-    name?: string;
-    id?: string;
-}
 @serializable()
 export default class TextNode
     extends Mixin(
@@ -22,16 +14,7 @@ export default class TextNode
     )
     implements Internal.TextNode{
     readonly type = 'TEXT';
-    constructor(option?: TextNodeOptions) {
-        super();
-        option = option || {};
-        this.x = option.x || 0;
-        this.y = option.y || 0;
-        this.width = option.width || 0;
-        this.height = option.height || 0;
-        this.fontSize = 12;
-        this.name = option.name || '';
-    }
+
     clone() {
         return this as any;
     }

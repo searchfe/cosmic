@@ -82,20 +82,18 @@ export default {
             targetNode = (el as any).__c_target || targetNode;
             switch(editState) {
                 case service.ToolState.Frame:
-                    editingChild = nodeService.addFrame(targetNode, {
-                        x,
-                        y,
-                        width,
-                        height,
-                    });
+                    editingChild = nodeService.addFrame(targetNode);
+                    editingChild.x = x;
+                    editingChild.y = y;
+                    editingChild.width = width;
+                    editingChild.height = height;
                 break;
                 case service.ToolState.Text:
-                    editingChild = nodeService.addText(targetNode, {
-                        x,
-                        y,
-                        width,
-                        height,
-                    });
+                    editingChild = nodeService.addText(targetNode);
+                    editingChild.x = x;
+                    editingChild.y = y;
+                    editingChild.width = width;
+                    editingChild.height = height;
                 break;
             }
         }
@@ -117,13 +115,12 @@ export default {
                         height=125;
                         break;
                 }
-                nodeService.addComponent(targetNode, {
-                    x: originX - width/2,
-                    y: originY - height/2,
-                    width,
-                    height,
-                    cname: toolService.data.name,
-                });
+                const node = nodeService.addComponent(targetNode);
+                node.x = originX - width/2;
+                node.y = originY - height/2;
+                node.width = width;
+                node.height = height;
+                node.cname = toolService.data.name;
             }
             editState = undefined;
         }

@@ -5,12 +5,6 @@ import ExportMixin from '../mixin/export-mixin';
 import { Paint } from '../property';
 import { serializable } from '../serialize';
 
-interface Option {
-    id?: string,
-    name?: string,
-}
-
-
 @serializable()
 export default class PageNode
     extends Mixin(BaseNodeMixin, ChildrenMixin, ExportMixin) implements Internal.PageNode {
@@ -18,11 +12,6 @@ export default class PageNode
     clone() {
         // TODO
         return new PageNode();
-    }
-    constructor(option?: Option) {
-        super();
-        this.children = [];
-        this.name = option?.name || '';
     }
 
     guides = [];
