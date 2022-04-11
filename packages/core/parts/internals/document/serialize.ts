@@ -1,3 +1,6 @@
+import { SceneNode } from '.';
+import DocumentNode from './base/document-node';
+import PageNode from './base/page-node';
 import BaseNodeMixin from './mixin/base-node-mixin';
 
 interface NodeRef {
@@ -43,7 +46,7 @@ export function serialize(object: BaseNodeMixin) {
         if (Array.isArray(value)) {
             const rs = value.map(v => {
                 return transfer(v);
-            }).filter(v => v !== undefined) as Array<string | boolean| NodeRef>;
+            }).filter(v => v !== undefined) as Array<string | number | boolean| NodeRef>;
             return rs;
         }
         if (value.type && CLS_MAP[value.type] && value.id){
@@ -60,4 +63,58 @@ export function serialize(object: BaseNodeMixin) {
         root: serializeNode(object).ref,
         refs,
     };
+}
+
+
+export function deserialize(data: {
+    root: string;
+    refs: Refs;
+}) {
+    const refMap : {
+        [index: string]: DocumentNode | PageNode | SceneNode
+    } = {};
+    // const document =  new
+    function create(ref: string) {
+        if(refMap[ref]) return refMap[ref];
+        const nodeData = data.refs[ref];
+        if(nodeData === undefined) {
+            throw new Error(`Ref Error ${data.refs}`);
+        }
+        if(CLS_MAP[nodeData.type] === undefined) {
+            throw new Error(`Ref Type Error ${data.refs}`);
+        }
+        const node = new CLS_MAP[nodeData.type]();
+        refMap[ref] = node;
+        Object.keys(nodeData).forEach(key => {
+            node[key] = generate(nodeData[key]);
+        });
+        return node;
+    }
+    
+    function generate(
+            value:
+            string | number | boolean| NodeRef |
+            (string | number | boolean| NodeRef)[] |
+            undefined,
+    ) {
+        if (value === undefined) return;
+        if (typeof value === 'string') return value;
+        if (typeof value === 'boolean') return value;
+        if (typeof value === 'number') return value;
+        if (Array.isArray(value)) {
+            const rs = value.map(v => {
+                return generate(v);
+            }).filter(v => v !== undefined) as Array<string | number | boolean| BaseNodeMixin>;
+            return rs;
+        }
+        if (typeof value === 'object') {
+            if (value.ref) {
+                return create(value.ref);
+            }
+            return value;
+        }
+        console.warn('Cant deserialize', value);
+        return undefined;
+    }
+    return create(data.root);
 }
