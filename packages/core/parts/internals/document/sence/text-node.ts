@@ -6,14 +6,6 @@ import { serializable } from '../serialize';
 import { registerRuntimeCompiler } from 'vue';
 
 
-export interface TextNodeOptions {
-    x?: number,
-    y?: number,
-    width?: number;
-    height?: number;
-    name?: string;
-    id?: string;
-}
 @serializable()
 export default class TextNode
     extends Mixin(

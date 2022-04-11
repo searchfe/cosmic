@@ -95,8 +95,8 @@ onMounted(() => {
                 display: exampleShow ==='aladin' ? 'block' : 'none',
                 top: pos.y + 'px',
                 left: pos.x + 'px',
-                width: '360px',
-                height: '200px',
+                width: '480px',
+                height: '400px',
             }"
         >
             <s-component class name="aladin" />
@@ -129,7 +129,7 @@ onMounted(() => {
                 display: exampleShow ==='scroll' ? 'block' : 'none',
                 top: pos.y + 'px',
                 left: pos.x + 'px',
-                width: '360px',
+                width: '240px',
             }"
         >
             <s-component class name="scroll" />

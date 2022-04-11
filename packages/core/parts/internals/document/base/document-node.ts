@@ -3,22 +3,10 @@ import { serializable } from '../serialize';
 import PageNode from './page-node';
 import { type SceneNode } from '../index';
 
-
-interface Option {
-    id?: string,
-    name?: string,
-}
-
 type NodeType = Internal.NodeType;
 
 @serializable()
 export default class DocumentNode extends BaseNodeMixin implements Internal.DocumentNode {
-
-    constructor(option?: Option) {
-        super();
-        this.children = [];
-        this.name = option?.name || '';
-    }
 
     readonly type = 'DOCUMENT';
 

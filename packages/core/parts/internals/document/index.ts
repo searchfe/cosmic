@@ -6,10 +6,6 @@ import GroupNode from './sence/group-node';
 import FrameNode from './sence/frame-node';
 import { from } from 'rxjs';
 
-export type { FrameNodeOptions} from './sence/frame-node';
-export type { TextNodeOptions } from './sence/text-node';
-export type { ComponentNodeOptions } from './sence/component-node';
-
 export { DocumentNode, PageNode };
 
 export { FrameNode , GroupNode, ComponentNode, TextNode};
