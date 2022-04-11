@@ -35,7 +35,7 @@ nodeService.selection.subscribe((nodes) => {
     getTextStyle(selectNode);
     getFillStyle(selectNode);
     styleId.value = selectNode.getRangeTextStyleId();
-    fillStyleId.value.id = selectNode.getRangeFillStyleId();
+    fillStyleId.value = selectNode.getRangeFillStyleId();
 });
 
 function getTextStyle(node: TextNode) {
