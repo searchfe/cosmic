@@ -13,17 +13,17 @@ export default function render(node: HTMLElement) {
             <div class="{{styles.normal}}">
                 <c-image
                     src="{{src}}"
-                    class="sc-image-rounded-lg sc-image-3\/2" />
+                    class="sc-image-rounded-lg sc-image" />
                 </div>
             `,
-        
+
             components : {
                 'c-image': Image.Image,
             },
             initData:function() {
                 return {
                     styles,
-                    src: 'https://selfpage-gips.cdn.bcebos.com/480c625d7464e79788e4ae2b0583a819.jpeg',
+                    src: 'https://t9.baidu.com/it/u=3878485677,3723546526&fm=167&app=3000&f=PNG&fmt=auto&size=f200_200',
                     srcRround: 'https://img1.baidu.com/it/u=2176920157,774277257&fm=253&app=138&size=b931,260&n=0&f=JPEG&fmt=auto&maxorilen2heic=2000000',
                     rounded: {
                         size: 'lg',

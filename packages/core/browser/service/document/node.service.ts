@@ -79,7 +79,7 @@ export default class NodeService {
         // const page = this._selection.filter(node => node.type === 'PAGE').at(0) as PageNode;
         // if (!page) return;
         const comp = new ComponentNode();
-        comp.name = `组件 ${comp.cname} ${increaseId(this._document, comp.type)}`;
+        comp.name = `组件 ${increaseId(this._document, comp.type)}`;
         comp.parent = target;
         target.appendChild(comp);
         this.updateDocument();
