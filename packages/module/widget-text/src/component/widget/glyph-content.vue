@@ -17,7 +17,7 @@ let originalStyle = toRaw(props.textStyle);
 const emits = defineEmits('change');
 
 function changeStyle(textStyle, field, event) {
-    originalStyle[field] = event.value;
+    textStyle[field] = event.value;
     emits('change');
 }
 
@@ -33,8 +33,8 @@ watch(() => props.textStyle, (newValue) => {
         <div :class="$style.row">
             <Select
                 size="sm"
-                :value="textStyle.fontName.fontFamily"
-                @on-change="(event) => changeStyle(originalStyle.fontName, 'fontFamily', event)"
+                :value="textStyle.fontName.family"
+                @on-change="(event) => changeStyle(originalStyle.fontName, 'family', event)"
             >
                 <SelectOption
                     v-for="data of GlyphData"
@@ -70,7 +70,8 @@ watch(() => props.textStyle, (newValue) => {
                 <div class="w-80">
                     <Select
                         size="sm"
-                        value="400"
+                        :value="textStyle.fontName.style"
+                        @on-change="(event) => changeStyle(originalStyle.fontName, 'style', event)"
                     >
                         <SelectOption
                             v-for="data of FontWeight"
@@ -85,7 +86,8 @@ watch(() => props.textStyle, (newValue) => {
                 <div class="w-80">
                     <Select
                         size="sm"
-                        value="12"
+                        :value="textStyle.textDecoration"
+                        @on-change="event => changeStyle(originalStyle, 'textDecoration', event)"
                     >
                         <SelectOption
                             v-for="data of FontType"

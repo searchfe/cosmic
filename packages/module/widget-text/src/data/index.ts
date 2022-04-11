@@ -64,15 +64,15 @@ export const FontSize = [
 
 export const FontType = [
     {
-        value: 'auto',
+        value: 'NONE',
         label: '无修饰',
     },
     {
-        value: 'underline',
+        value: 'UNDERLINE',
         label: '下划线',
     },
     {
-        value: 'line-through',
+        value: 'STRIKETHROUGH',
         label: '删除线',
     },
 ];

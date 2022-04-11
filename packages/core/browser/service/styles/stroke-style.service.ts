@@ -1,61 +1,44 @@
 import { injectable } from '@cosmic/core/inversify';
 import { BaseService } from './base.service';
 import { StrokeStyle } from '@cosmic/core/parts';
-import Color from 'color';
+
+const DEFAULT_STYLES = {
+    id: '',
+    name: '默认名称',
+    team: '',
+    updatedAt: '',
+    top: {weight: '1', style: 'solid'},
+};
+interface SubjectSourceType {
+    type: 'C' | 'U' | 'D' | 'R';
+    data?: Partial<StrokeStyle>[];
+}
+
 
 @injectable()
-export default class StrokeStyleService extends BaseService<StrokeStyle> {
+export default class StrokeStyleService extends BaseService<StrokeStyle, SubjectSourceType> {
     constructor() {
         super();
-        this.setType('fill');
-        [1, 2, 3, 4, 5].map(item => this.transformToLocal({
-            strokeWeight: 10, 
-            strokeAlign: 'CENTER', 
-            dashPattern: 10,
-            solidPattern: 10,
-            name: item + '', 
-            id: item + '',
-        })).forEach(item =>  {
-            this.addLocalStyle(item);
-        });
-
-        [7,8,9,10].map(item => this.transformToLocal({
-            strokeWeight: 10, 
-            strokeAlign: 'CENTER', 
-            dashPattern: 10,
-            solidPattern: 10,
-            name: item + '', 
-            id: item + '',
-        })).forEach(item =>  {
-            this.addServiceStyle(item);
-        });
+        this.setType('stroke');
     }
 
-    create() {
-        const fillStyle = {
-            color: {r: 0, g: 0, b: 0, a: 1},
-            opacity: 1,
-        };
+    create(stroke = DEFAULT_STYLES) {
+        const style = this.transformToLocal(stroke);
+        return style;
     }
 
-    transformToLocal(servicerColor: gql.Color) {
-        const{strokeWeight, strokeAlign, dashPattern, solidPattern, name, id} = servicerColor;
-        const strokeStyle = new StrokeStyle();
-        strokeStyle.strokeWeight = strokeWeight;
-        strokeStyle.strokeAlign = strokeAlign;
-        strokeStyle.dashPattern = dashPattern;
-        strokeStyle.solidPattern = solidPattern;
-        strokeStyle.name = name;
-        strokeStyle.id = id;
+    transformToLocal(servicerColor: Partial<gql.Border>) {
+        const{id = Date.now() + '', name, team, updatedAt, top = {weight: '10', style: 'solid'}} = servicerColor;
+        const strokeStyle = new StrokeStyle(id);
+        strokeStyle.strokeWeight = top.weight;
+        strokeStyle.strokeAlign = 'CENTER';
+        strokeStyle.dashPattern = top.style === 'dash' ? [1, 1] : [0,0],
+        strokeStyle.name = name as string;
         return strokeStyle;
     }
 
-    transformToServer(fillStyle: FillStyle) {
-        const { name, color } = fillStyle;
-        return { 
-            name,
-            day: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
-        };
+    transformToServer(stroke: StrokeStyle) {
+        return stroke;
     }
  
 }

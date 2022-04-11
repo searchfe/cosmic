@@ -1,16 +1,24 @@
 <script lang="ts" setup>
-import { reactive } from 'vue';
 import { Row, Col, Input, Select, SelectOption, RadioGroup, RadioButton } from 'cosmic-vue';
 import type { StrokeStyle } from '@cosmic/core/parts';
 import { Border } from '../data';
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
     strokeStyle: StrokeStyle
 }>(), {
     strokeStyle: () => ({} as unknown as StrokeStyle),
 });
 
-const strokeStyle = reactive(props.strokeStyle);
+const emits = defineEmits(['change']);
 
+function changeStyle(strokeStyle, field: string, event) {
+    strokeStyle[field] = event.value;
+    emits('change');
+}
+
+function changeDash(strokeStyle, index, event) {
+    strokeStyle.dashPattern[index] = event.value;
+    emits('change');
+}
 
 </script>
 
@@ -25,7 +33,7 @@ const strokeStyle = reactive(props.strokeStyle);
                     <Input
                         size="sm"
                         :value="strokeStyle.strokeWeight"
-                        @on-input="(event) => strokeStyle.strokeWeight = event.value"
+                        @on-input="(event) => changeStyle(strokeStyle, 'strokeWeight', event)"
                     >
                         <template #prefix>
                             <i-cosmic-text-even />
@@ -41,7 +49,7 @@ const strokeStyle = reactive(props.strokeStyle);
                     <Select
                         size="sm"
                         :value="strokeStyle.strokeAlign"
-                        @on-change="(event) => strokeStyle.strokeAlign = event.value"
+                        @on-change="(event) => changeStyle(strokeStyle, 'strokeAlign', event)"
                     >
                         <SelectOption
                             v-for="data of Border"
@@ -61,8 +69,8 @@ const strokeStyle = reactive(props.strokeStyle);
                 <div class="w-70">
                     <Input
                         size="sm"
-                        :value="strokeStyle.dashPattern"
-                        @on-input="(event) => strokeStyle.dashPattern = event.value"
+                        :value="strokeStyle.dashPattern[0]"
+                        @on-input="(event) => changeDash(strokeStyle, 0, event)"
                     >
                         <template #prefix>
                             <i-cosmic-border />
@@ -77,8 +85,8 @@ const strokeStyle = reactive(props.strokeStyle);
                 <div class="w-70">
                     <Input
                         size="sm"
-                        :value="strokeStyle.solidPattern"
-                        @on-input="(event) => strokeStyle.solidPattern = event.value"
+                        :value="strokeStyle.dashPattern[1]"
+                        @on-input="(event) => changeDash(strokeStyle, 1, event)"
                     >
                         <template #prefix>
                             <i-cosmic-horizonal-width />

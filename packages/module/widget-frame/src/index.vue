@@ -2,8 +2,7 @@
 import {computed, ref, watchEffect} from 'vue';
 import { MTitle, MWidget, MColor, service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
-import { Row, Col } from 'cosmic-vue';
-import InputText from './input-text.vue';
+import { Row, Col, InputNumber } from 'cosmic-vue';
 
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
@@ -92,7 +91,7 @@ function change(event) {
             <Row :class="$style.row">
                 <Col :span="6">
                     <div :class="[$style['glyph-item']]" class="w-80">
-                        <input-text
+                        <input-number
                             size="sm"
                             :value="x"
                             @on-input="(event) => x = Number(event.value)"
@@ -100,12 +99,12 @@ function change(event) {
                             <template #prefix>
                                 <i-cosmic-x :class="[$style.icon]" />
                             </template>
-                        </input-text>
+                        </input-number>
                     </div>
                 </Col>
                 <Col :span="6">
                     <div :class="[$style['glyph-item']]" class="w-80">
-                        <input-text
+                        <input-number
                             size="sm"
                             :value="y"
                             @on-input="(event) => y = Number(event.value)"
@@ -113,14 +112,14 @@ function change(event) {
                             <template #prefix>
                                 <i-cosmic-y :class="[$style.icon]" />
                             </template>
-                        </input-text>
+                        </input-number>
                     </div>
                 </Col>
             </Row>
             <Row :class="$style.row">
                 <Col :span="6">
                     <div :class="[$style['glyph-item']]" class="w-80">
-                        <input-text
+                        <input-number
                             size="sm"
                             :value="width"
                             @on-input="(event) => width = Number(event.value)"
@@ -128,12 +127,12 @@ function change(event) {
                             <template #prefix>
                                 <i-cosmic-w :class="[$style.icon]" />
                             </template>
-                        </input-text>
+                        </input-number>
                     </div>
                 </Col>
                 <Col :span="6">
                     <div :class="[$style['glyph-item']]" class="w-80">
-                        <input-text
+                        <input-number
                             size="sm"
                             :value="height"
                             @on-input="(event) => height = Number(event.value)"
@@ -141,7 +140,7 @@ function change(event) {
                             <template #prefix>
                                 <i-cosmic-h :class="[$style.icon]" />
                             </template>
-                        </input-text>
+                        </input-number>
                     </div>
                 </Col>
             </Row>

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import {ref} from 'vue';
+import { ref, computed } from 'vue';
 import {MTitle, MClolorWidget, MStandard, MStandardModal, MDetailModal, usePropterty, service} from '@cosmic/core/browser';
+import { inject, TextNode, hasMixin, BlendMixin } from '@cosmic/core/parts';
 import InputList from './input-list.vue';
 
 
@@ -16,9 +17,6 @@ const container = ref(null);
 const {
     isShowStandardModal,
     isShowDetailModal,
-    isStandard,
-    standard,
-    standardList,
     detailTarget,
     standardTarget,
 
@@ -32,18 +30,82 @@ const {
     saveDetail,
 } = usePropterty(service.TOKENS.EffectStyle);
 
+const effectStyleSevice = inject<service.EffectStyleService>(service.TOKENS.EffectStyle);
+const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillStyle);
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+
+let effectNode = nodeService.getSelection().find(item => hasMixin(item, BlendMixin));
+
+const effectId = ref(getEffectStyle(effectNode).id);
+
+const effectStrokeStyleId = ref(getFillStyle(effectNode).id);
+
+const fillStyle = computed(() => fillStyleService.get(effectStrokeStyleId.value));
+
+const isLocalFillStyle = computed(() => fillStyleService.isLocalStyle(effectStrokeStyleId.value));
+
+
+const isLocalStyle = computed(() => effectStyleSevice.isLocalStyle(effectId.value));
+
+nodeService.selection.subscribe((nodes) => {    
+    const selectNode = nodes.find(item => hasMixin(item, MinimalStrokesMixin));
+    if (!selectNode) return;
+    getEffectStyle(selectNode);
+    getFillStyle(selectNode);
+    effectId.value = selectNode.strokeId;
+    effectStrokeStyleId.value = selectNode.strokeStyleId;
+});
+
+const effectStyle = computed(() => {
+    const effectStyle = effectStyleSevice.get(effectId.value);
+    return effectStyle ? effectStyle.effects[0] : {};
+});
+
+function getEffectStyle(node: BlendMixin) {
+    if (!node) return {};
+    const effectStyle = effectStyleSevice.get(node.effectStyleId || Date.now() + '');
+    if (node.effectStyleId !== effectStyle.id) {
+        node.effectStyleId = effectStyle.id;
+    }
+    return effectStyle;
+}
+
+function getFillStyle(node: TextNode) {
+    if (!node) return;
+    const fillStyle = fillStyleService.get(node.effectStrokeStyleId ?? Date.now() + '');
+    if (node.effectStrokeStyleId !== fillStyle.id) {
+        node.effectStrokeStyleId = fillStyle.id;
+    }
+    return fillStyle;
+}
+
+function effectChange() {
+    let effectNode = nodeService.getSelection().find(item => hasMixin(item, BlendMixin)) as BlendMixin;
+    const style = effectStyleSevice.get(effectId.value).effects[0];
+    effectNode.effects = [style];
+    nodeService.update([effectNode]);
+}
+
+function fillChage() {
+    console.log(1212);
+    const node = nodeService.getSelection().find(item => hasMixin(item, BlendMixin)) as any;
+    const style = fillStyleService.get(node.effectStrokeStyleId);
+    node.effectStrokes = [style];
+    nodeService.update([node]);
+}
+
 </script>
 
 <template>
     <div ref="container">
-        <div v-if="!isStandard">
+        <div v-if="isLocalStyle">
             <m-title aria-label="效果属性" title="效果">
                 <i-cosmic-grid-outline
                     class="-v-bg-inapparent"
                     @click.stop="(event) => openStandardModal(event.currentTarget)"
                 />
             </m-title>
-            <input-list :effect-style="standard" />
+            <input-list :effect-style="effectStyle" @change="effectChange" />
         </div>
         <template v-else>
             <MStandard
@@ -105,7 +167,12 @@ const {
         </m-detail-modal>
 
         <div aria-label="颜色" :class="[$style['padding-bottom']]">
-            <m-clolor-widget />
+            <m-clolor-widget 
+                :standard-list="Standard" 
+                :is-local-style="isLocalFillStyle"
+                :fill-style="fillStyle"
+                @change="fillChage" 
+            />
         </div>
     </div>
 </template>
