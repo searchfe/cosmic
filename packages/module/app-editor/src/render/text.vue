@@ -29,6 +29,7 @@ nodeService.selection.subscribe(nodes => {
 <template>
     <div
         v-creator="{target: node}"
+        v-stroke="{target: node}"
         class="text-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
@@ -37,6 +38,10 @@ nodeService.selection.subscribe(nodes => {
             width: node.width + 'px',
             height: node.height + 'px',
             fontSize: node.fontSize + 'px',
+            fontFamily: node.fontName?.family,
+            fontWeight: node.fontName?.style ?? '400',
+            textDecoration: node.textDecoration === 'STRIKETHROUGH' ? 'line-through' : node.textDecoration ?? 'none',
+            lineHeight: node.lineHeight?.value + 'px',
             background: util.toBackgroundStyle(node?.backgrounds?.[0]),
             color: util.toBackgroundStyle(node?.fills?.[0]),
         }"

@@ -4,6 +4,7 @@ import ComponentNode from './sence/component-node';
 import TextNode from './sence/text-node';
 import GroupNode from './sence/group-node';
 import FrameNode from './sence/frame-node';
+import { from } from 'rxjs';
 
 export { DocumentNode, PageNode };
 
@@ -42,6 +43,8 @@ export { default as ChildrenMixin } from './mixin/children-mixin';
 export { default as SceneNodeMixin } from './mixin/scene-node-mixin';
 export { default as ContainerMixin } from './mixin/container-mixin';
 export { default as BaseNodeMixin } from './mixin/base-node-mixin';
+export { default as MinimalStrokesMixin} from './mixin/minimal-strokes-mixin';
+export { default as BlendMixin } from './mixin/blend-mixin';
 
 export * from './style/text-style';
 export * from './style/fill-style';

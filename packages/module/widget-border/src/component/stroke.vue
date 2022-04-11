@@ -3,13 +3,17 @@ import { ref } from 'vue';
 import StrokeContent from './stroke-content.vue';
 import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service} from '@cosmic/core/browser';
 
+withDefaults(defineProps<{
+    isLocalStyle: boolean,
+    strokeStyle: object,
+    styleList: object[]
+}>(), {});
+
 const containerRef = ref(null);
 
-const {
-        isStandard,
-        standard,
-        standardList,
+const emits = defineEmits(['change']);
 
+const {
         isShowStandardModal,
         isShowDetailModal,
         detailTarget,
@@ -29,11 +33,11 @@ const {
 
 <template>
     <div ref="containerRef">
-        <div v-if="!isStandard">
+        <div v-if="isLocalStyle">
             <MTitle title="描边">
                 <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
-            <stroke-content :stroke-style="standard" />
+            <stroke-content :stroke-style="strokeStyle" @change="() => emits('change')" />
         </div>
         <template v-else>
             <m-standard :standard="standard" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
@@ -51,7 +55,7 @@ const {
         <m-standard-modal
             v-if="isShowStandardModal"
             title="文字规范"
-            :standard-list="standardList"
+            :standard-list="styleList"
             :target="standardTarget"
             @cancel="cancelStandardModal"
             @select="(event) => selectStandard(event.data)"

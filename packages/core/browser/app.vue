@@ -33,6 +33,12 @@ const { Content, Header } = Layout;
     box-sizing: border-box;
     user-select: none;
 }
+
+::-webkit-color-swatch-wrapper {
+	margin: 0;
+	padding: 0;
+}
+
 :root {
     font-size: 10px;
 }

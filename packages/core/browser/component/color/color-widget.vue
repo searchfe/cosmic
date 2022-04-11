@@ -13,13 +13,16 @@ import { includes } from 'lodash';
 
 const props = withDefaults(defineProps<{
     type?: string | string[],
-    showTitle?: boolean
+    showTitle?: boolean,
+    isLocalStyle: boolean,
+    fillStyle: object
 }>(), {
     type: 'TEXT',
     showTitle: true,
 });
 
-
+const emits = defineEmits(['change']);
+console.log(props.isLocalStyle);
 
 const content = ref(null);
 
@@ -40,50 +43,6 @@ const {
     unRef,
 } = usePropterty(service.TOKENS.FillStyle);
 
-const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillStyle);
-const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-
-let node = nodeService.getSelection().find(find) as any;
-
-const styleId = node ? ref(getTextStyle(node)?.id) : ref('');
-
-function find({type}) {
-    if (typeof props.type === 'string') {
-        return type === props.type;
-    }
-    if (Array.isArray(props.type)) {
-        return props.type.includes(type);
-    }
-} 
-
-function getTextStyle(node: TextNode) {
-    if (!node) return;
-    const fillStyle = fillStyleService.get(node.getRangeFillStyleId() ?? Date.now() + '');
-    if (node.getRangeFillStyleId() !== fillStyle.id) {
-        node.setRangeFillStyleId(0, 0, fillStyle.id);
-    }
-    return fillStyle;
-}
-
-
-nodeService.selection.subscribe((nodes) => {    
-    const selectNode = nodes.find(item => item.type === props.type);
-    if (!selectNode) return;
-    getTextStyle(selectNode);
-    styleId.value = selectNode.getRangeFillStyleId();
-});
-
-const fillStyle = computed(() => fillStyleService.get(styleId.value));
-
-const isLocalStyle = computed(() =>  styleId.value === '' || fillStyleService.isLocalStyle(styleId.value));
-
-function onchange() {
-    const node = nodeService.getSelection().find(item => item.type === props.type) as TextNode;
-    const style = fillStyleService.get(node.getRangeFillStyleId());
-    console.log(style);
-    node.setRangeFills(0, 0, [toRaw(style)]);
-    nodeService.update([node]);
-}
 
 
 </script>
@@ -107,7 +66,7 @@ function onchange() {
                 </m-title>
                 <m-color
                     :color-style="fillStyle"
-                    @on-change="onchange"
+                    @on-change="() => emits('change')"
                 />
             </div>
             <m-standard

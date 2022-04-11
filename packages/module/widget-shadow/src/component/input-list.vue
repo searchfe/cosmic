@@ -1,17 +1,20 @@
 <script lang="ts" setup>
-import {reactive} from 'vue';
 import InputText from './input-text.vue';
 import type { EffectStyle } from '@cosmic/core/parts';
 import { Row, Col } from 'cosmic-vue';
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
     effectStyle: EffectStyle,
 }>(), {
     effectStyle: () => ({}),
 });
 
+const emits = defineEmits(['change']);
 
-const effectStyle = reactive(props.effectStyle);
+function changeStyle(style, field: string, event) {
+    style[field] = event.value;
+    emits('change');
+}
 
 </script>
 
@@ -22,7 +25,7 @@ const effectStyle = reactive(props.effectStyle);
                 <InputText
                     :class="[$style['input']]"
                     :value="effectStyle.offset.x"
-                    @on-input="(data) => effectStyle.offset.x = data.value"
+                    @on-input="(data) => changeStyle(effectStyle.offset, 'x',data)"
                 >
                     <template #prefix>
                         <i-cosmic-x :class="[$style['icon']]" />
@@ -35,7 +38,7 @@ const effectStyle = reactive(props.effectStyle);
                 <InputText
                     :class="[$style['input']]"
                     :value="effectStyle.offset.y"
-                    @on-input="(data) => effectStyle.offset.y = data.value"
+                    @on-input="(data) => changeStyle(effectStyle.offset, 'y', data)"
                 >
                     <template #prefix>
                         <i-cosmic-y :class="[$style['icon']]" />
@@ -49,8 +52,8 @@ const effectStyle = reactive(props.effectStyle);
             <div class="w-80">
                 <InputText
                     :class="[$style['input']]"
-                    :value="effectStyle.blur"
-                    @on-input="(data) => effectStyle.blur = data.value"
+                    :value="effectStyle.radius"
+                    @on-input="(data) => changeStyle(effectStyle, 'radius', data)"
                 >
                     <template #prefix>
                         <i-cosmic-fuzzy :class="[$style['icon']]" />
@@ -63,7 +66,7 @@ const effectStyle = reactive(props.effectStyle);
                 <InputText
                     :class="[$style['input']]"
                     :value="effectStyle.spread"
-                    @on-input="(data) => effectStyle.spread = data.value"
+                    @on-input="(data) => changeStyle(effectStyle, 'spread', data)"
                 >
                     <template #prefix>
                         <i-cosmic-expand :class="[$style['icon']]" />
