@@ -12,7 +12,7 @@ export default class ComponentNode extends Mixin(
     VariantMixin,
 ) implements Internal.ComponentNode {
     readonly type = 'COMPONENT';
-    cname: string;
+    cname = '';
     clone() {
         // TODO
         return '' as any;
