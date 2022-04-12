@@ -33,6 +33,7 @@ export function serialize(object: BaseNodeMixin) {
         const rs: NodeData = {id: node.id, type: node.type}; 
         refs[node.id] = rs;
         Object.keys(node).forEach(key => {
+            if(key === 'parent' && node.type === 'DOCUMENT') return;
             (rs as any)[key] = transfer((node as any)[key]);
         });
         return {ref: node.id} as NodeRef;
@@ -50,7 +51,11 @@ export function serialize(object: BaseNodeMixin) {
             return rs;
         }
         if (value.type && CLS_MAP[value.type] && value.id){
-            return serializeNode(value);
+            if (value.id) {
+                return serializeNode(value);
+            } else {
+                return value;
+            }
         }
         if (typeof value === 'object') {
             return value;
@@ -94,7 +99,7 @@ export function deserialize(data: {
     function generate(
             value:
             string | number | boolean| NodeRef |
-            (string | number | boolean| NodeRef)[] |
+            (string | number | boolean| NodeRef)[] | BaseNodeMixin |
             undefined,
     ) {
         if (value === undefined) return;
@@ -108,9 +113,22 @@ export function deserialize(data: {
             return rs;
         }
         if (typeof value === 'object') {
-            if (value.ref) {
-                return create(value.ref);
+            // eslint-disable-next-line no-prototype-builtins
+            if ((value as NodeRef).ref) {
+                return create((value as NodeRef).ref);
+            } else if((value as BaseNodeMixin).type && CLS_MAP[(value as BaseNodeMixin).type] !== undefined) {
+                const node = new CLS_MAP[(value as BaseNodeMixin).type]();
+                Object.keys(value).forEach(key => {
+                    node[key] = generate((value as any)[key]);
+                });
+                return node;
             }
+            
+            // if (value.ref) {
+            //     return create(value.ref);
+            // } else if (value.type) {
+
+            // }
             return value;
         }
         console.warn('Cant deserialize', value);

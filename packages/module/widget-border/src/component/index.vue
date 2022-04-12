@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { MTitle, MWidget, MClolorWidget, service} from '@cosmic/core/browser';
-import { inject, TextNode, hasMixin, MinimalStrokesMixin } from '@cosmic/core/parts';
+import { inject, TextNode, hasMixin, MinimalStrokesMixin, BaseNodeMixin } from '@cosmic/core/parts';
 import Stroke from './stroke.vue';
 import { Standard } from '../data';
 
@@ -65,7 +65,9 @@ function styleChange() {
     const style = strokeStyleSevice.get(node.strokeId);
     node.strokeWeight = style.strokeWeight;
     node.dashPattern = style.dashPattern;
-    nodeService.update([node]);
+    if (hasMixin(node, BaseNodeMixin)) {
+        node.update();
+    }
 }
 
 function fillChage() {
@@ -73,7 +75,9 @@ function fillChage() {
     const style = fillStyleService.get(node.strokeStyleId);
     console.log(style);
     node.strokes = [style];
-    nodeService.update([node]);
+    if (hasMixin(node, BaseNodeMixin)) {
+        node.update();
+    }
 }
 
 </script>

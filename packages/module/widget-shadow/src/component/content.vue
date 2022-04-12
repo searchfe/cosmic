@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import {MTitle, MClolorWidget, MStandard, MStandardModal, MDetailModal, usePropterty, service} from '@cosmic/core/browser';
-import { inject, TextNode, hasMixin, BlendMixin } from '@cosmic/core/parts';
+import { inject, TextNode, hasMixin, BlendMixin, BaseNodeMixin } from '@cosmic/core/parts';
 import InputList from './input-list.vue';
 
 
@@ -83,7 +83,9 @@ function effectChange() {
     let effectNode = nodeService.getSelection().find(item => hasMixin(item, BlendMixin)) as BlendMixin;
     const style = effectStyleSevice.get(effectId.value).effects[0];
     effectNode.effects = [style];
-    nodeService.update([effectNode]);
+    if (hasMixin(effectNode, BaseNodeMixin)) {
+        effectNode.update();
+    }
 }
 
 function fillChage() {
@@ -91,7 +93,9 @@ function fillChage() {
     const node = nodeService.getSelection().find(item => hasMixin(item, BlendMixin)) as any;
     const style = fillStyleService.get(node.effectStrokeStyleId);
     node.effectStrokes = [style];
-    nodeService.update([node]);
+    if (hasMixin(node, BaseNodeMixin)) {
+        node.update();
+    }
 }
 
 </script>

@@ -6,6 +6,7 @@ type Node = DocumentNode | SceneNode | PageNode;
 export interface LayerTreeData extends TreeDataProps {
     children?: LayerTreeData[];
     type: Node['type'];
+    layerId?: string;
 }
 
 export function nodeToTree(node: Node) {
@@ -14,6 +15,7 @@ export function nodeToTree(node: Node) {
         node.children.forEach(n => {
             tree.push({
                 id: n.id,
+                layerId: n.id,
                 label: n.name,
                 children: nodeToTree(n),
                 type: n.type,
@@ -36,7 +38,7 @@ export function updateSelection(data: LayerTreeData[], selection: Node[]) {
 function changeData(arr: LayerTreeData[], id: string, key: any, value: string) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     arr.forEach((obj: any) => {
-        if(obj.id === id || id == '') {
+        if(obj.layerId === id || id == '') {
             obj[key] = value;
         }
         if(obj.children && obj.children.length) {

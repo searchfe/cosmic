@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type FrameNode, util } from '@cosmic/core/parts';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, getCurrentInstance } from 'vue';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
@@ -25,6 +25,11 @@ nodeService.selection.subscribe(nodes => {
     } else {
         selected.value = false;
     }
+});
+
+const instance = getCurrentInstance();
+nodeService.watch(props.node).subscribe(() => {
+    instance?.proxy?.$forceUpdate();
 });
 
 </script>

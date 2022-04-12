@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
 import  { type TextNode, util } from '@cosmic/core/parts';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
@@ -22,6 +22,10 @@ nodeService.selection.subscribe(nodes => {
     } else {
         selected.value = false;
     }
+});
+const instance = getCurrentInstance();
+nodeService.watch(props.node).subscribe(() => {
+    instance?.proxy?.$forceUpdate();
 });
 
 </script>
@@ -46,7 +50,7 @@ nodeService.selection.subscribe(nodes => {
             color: util.toBackgroundStyle(node?.fills?.[0]),
         }"
     >
-        {{ node?.name }}
+        北京2002年冬奥会专题
         <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

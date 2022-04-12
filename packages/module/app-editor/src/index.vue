@@ -13,8 +13,6 @@ const page = ref();
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 nodeService.currentPage.subscribe(pageNode => {
     page.value = pageNode;
-    
-
 });
 
 </script>
