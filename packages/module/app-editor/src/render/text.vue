@@ -50,7 +50,7 @@ nodeService.watch(props.node).subscribe(() => {
             color: util.toBackgroundStyle(node?.fills?.[0]),
         }"
     >
-        {{ node?.name }}
+        北京2002年冬奥会专题
         <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>
