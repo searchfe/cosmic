@@ -39,6 +39,6 @@ nodeService.selection.subscribe(nodes => {
             color: util.toBackgroundStyle(node?.fills?.[0]),
         }"
     >
-        北京2002年冬奥会专题
+        {{ node?.name }}
     </div>
 </template>

@@ -22,7 +22,6 @@ const isLocalStyle = computed(() => strokeStyleSevice.isLocalStyle(strokeId.valu
 const strokeStyle = computed(() => strokeStyleSevice.get(strokeId.value));
 
 const fillStyle = computed(() => {
-    console.log(1212212);
     return fillStyleService.get(strokeStyleId.value);
 });
 
@@ -33,7 +32,6 @@ nodeService.selection.subscribe((nodes) => {
     if (!selectNode) return;
     getStrokeStyle(selectNode);
     getFillStyle(selectNode);
-    console.log(selectNode);
     strokeId.value = selectNode.strokeId;
     strokeStyleId.value = selectNode.strokeStyleId;
 });
@@ -73,7 +71,6 @@ function styleChange() {
 function fillChage() {
     const node = nodeService.getSelection().find(item => hasMixin(item, MinimalStrokesMixin)) as MinimalStrokesMixin;
     const style = fillStyleService.get(node.strokeStyleId);
-    console.log(style);
     node.strokes = [style];
     if (hasMixin(node, BaseNodeMixin)) {
         node.update();
