@@ -126,6 +126,15 @@ export default class NodeService {
         };
         return this._watchList[node.id].subject;
     }
+    update() {
+        Object.keys(this._watchList).forEach(id => {
+            const item = this._watchList[id];
+            if (item.lastEditTime !== item.node.editTime) {
+                item.lastEditTime = item.node.editTime;
+                item.subject.next(item.node);
+            }
+        });
+    }
 
     updateDocument() {
         requestAnimationFrame(() => {
