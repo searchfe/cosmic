@@ -11,11 +11,11 @@ const draftService = inject<service.DraftService>(service.TOKENS.Draft);
 
 nodeService.document.subscribe(document => {
     const pageNode = document.children[0];
-    page.value = pageNode;
-    (page.value.children || []).forEach(node => {
+    (pageNode.children || []).forEach(node => {
         node.x = 0;
         node.y = 0;
     });
+    page.value = pageNode;
 });
 const sync = ref(true);
 

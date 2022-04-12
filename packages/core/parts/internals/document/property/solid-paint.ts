@@ -1,5 +1,4 @@
 import { serializable} from '../serialize';
-import { v4, v5} from 'uuid';
 
 @serializable()
 export default class SolidPaint implements Internal.SolidPaint {
@@ -8,9 +7,4 @@ export default class SolidPaint implements Internal.SolidPaint {
     visible?: boolean = true;
     opacity?: number = 1;
     blendMode?: Internal.BlendMode = 'NORMAL';
-    id: string;
-    constructor(color: Internal.RGB) {
-        this.id = v5('cosmic', v4());
-        this.color = color;
-    }
 }

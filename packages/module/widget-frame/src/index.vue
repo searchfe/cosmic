@@ -44,29 +44,28 @@ watchEffect(() => {
     const node = nodeService.getSelection()[0];
     if(!node) return;
     node.x = x.value;
-    console.log(node.x);
-    nodeService.update([node]);
+    node.update();
 });
 
 watchEffect(() => {
     const node = nodeService.getSelection()[0];
     if(!node) return;
     node.y = y.value;
-    nodeService.update([node]);
+    node.update();
 });
 
 watchEffect(() => {
     const node = nodeService.getSelection()[0];
     if(!node) return;
     node.width = width.value;
-    nodeService.update([node]);
+    node.update();
 });
 
 watchEffect(() => {
     const node = nodeService.getSelection()[0];
     if(!node) return;
     node.height = height.value;
-    nodeService.update([node]);
+    node.update();
 });
 
 function change(event) {
@@ -78,7 +77,7 @@ function change(event) {
         opacity: event.opacity,
         type: 'SOLID',
     }];
-    nodeService.update([node]);
+    if(node) node.update();
 }
 
 
