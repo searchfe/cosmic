@@ -1,6 +1,6 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { TOKENS } from '../token';
-import { GqlClient } from '../gql.service';
+import { GqlClient } from '../gql-client/index.service';
 import { FontDao } from '@cosmic/core/parts';
 
 

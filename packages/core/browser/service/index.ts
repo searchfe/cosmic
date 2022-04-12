@@ -7,7 +7,7 @@ export function createContainer(options: interfaces.ContainerOptions) {
 }
 
 export { TOKENS } from './token';
-export * from './gql.service';
+export * from './gql-client/index.service';
 export type { RouterService } from './router/index.service';
 export type { default as KeyboardService } from './interactivity/keyboard.service';
 export { type default as ToolService, ToolState } from './interactivity/tool.service';

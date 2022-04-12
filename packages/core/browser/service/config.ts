@@ -1,6 +1,6 @@
 import { Container, type interfaces  }  from '@cosmic/core/inversify';
 import { TOKENS } from './token';
-import { create as createGqlClient, type GqlClient } from './gql.service';
+import { create as createGqlClient, type GqlClient } from './gql-client/index.service';
 import { RouterService } from './router/index.service';
 import NodeService from './document/node.service';
 import ComponentService from './document/component.service';
