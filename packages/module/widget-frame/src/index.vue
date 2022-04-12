@@ -44,6 +44,7 @@ watchEffect(() => {
     const node = nodeService.getSelection()[0];
     if(!node) return;
     node.x = x.value;
+    console.log(node.x);
     nodeService.update([node]);
 });
 
