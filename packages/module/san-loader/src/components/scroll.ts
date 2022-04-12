@@ -19,14 +19,14 @@ export default function render(node: HTMLElement) {
             <cc-scroll-item
                 s-for="item, index in list"
                 col="4"
-                class="{{styles.item}} inline-block" >
+                style="color:white;"
+                class="{{styles.item}} inline-block w-300 mr-0 rounded text-sm" >
                 <cc-image
-                    src="{{imgSrc}}"
-                    class="sc-image-3\/2"
+                    src="{{item.src}}"
+                    style="padding-bottom:57%;"
                     mask-type="info"
                 ></cc-image>
-                <div>二级标题 {{ index }}</div>
-                <div class="c-color-gray-52">辅助功能 {{ index }}</div>
+                <div>{{ item.title }}</div>
             </cc-scroll-item>
         </cc-scroll>
         </div>
@@ -41,10 +41,24 @@ export default function render(node: HTMLElement) {
             initData:function() {
                 return {
                     styles,
-                    imgSrc: 'https://selfpage-gips.cdn.bcebos.com/480c625d7464e79788e4ae2b0583a819.jpeg',
-                    list: new Array(4).fill({
+                    imgSrc: 'https://t7.baidu.com/it/u=3781557575,1048360098&fm=167&app=3000&size=w931&q=83&n=0&f=JPEG&fmt=auto&maxorilen2heic=2000000',
+                    list: [{
                         col: 6,
-                    }),
+                        src: 'https://t7.baidu.com/it/u=3781557575,1048360098&fm=167&app=3000&size=w931&q=83&n=0&f=JPEG&fmt=auto&maxorilen2heic=2000000',
+                        title: '2022北京东奥会开幕式',
+                    },{
+                        col: 6,
+                        src: 'https://t8.baidu.com/it/u=1277324243,4062312162&fm=167&app=3000&size=w931&q=89&n=0&f=JPEG&fmt=auto&maxorilen2heic=2000000',
+                        title: '开幕式直播回放',
+                    },{
+                        col: 6,
+                        src: 'https://t8.baidu.com/it/u=642186073,398443614&fm=167&app=3000&size=w931&q=100&n=0&f=JPEG&fmt=auto&maxorilen2heic=2000000',
+                        title: '北京东残奥会表彰大会',
+                    }, {
+                        col: 6,
+                        src: 'https://t7.baidu.com/it/u=1312664492,2327618666&fm=167&app=3000&size=w931&q=100&n=0&f=JPEG&fmt=auto&maxorilen2heic=2000000',
+                        title: '中国队9金4银2铜收官',
+                    }],
                 };
             },
         });

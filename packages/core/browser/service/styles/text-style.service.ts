@@ -11,7 +11,7 @@ const DEFAULT_STYLES = {
     size: '12',
     id: Date.now() + '',
     family: 'PingFang SC',
-    style: '',
+    style: '400',
 };
 
 interface SubjectSourceType {
@@ -58,12 +58,13 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
     }
 
     public transformToLocal(fontStyle: Partial<gql.Font>): TextStyle {
-        const { id, name, size, family, style, lineHeight = '10'} = fontStyle;
+        const { id, name, size, family, style = '400', lineHeight = '10' } = fontStyle;
         const textStyle = new TextStyle(id!);
         textStyle.description = '默认描述';
         textStyle.name = name as string;
         textStyle.fontSize = Number(size);
-        textStyle.fontName = { fontFamily: family!, style: style! } as unknown as Internal.FontName;
+        textStyle.textDecoration = 'NONE';
+        textStyle.fontName = { family: family!, style: style } as unknown as Internal.FontName;
         textStyle.lineHeight = {value: Number(lineHeight), unit: 'PIXELS'};
         textStyle.letterSpacing = {value: Number(10), unit: 'PIXELS'};
         textStyle.paragraphSpacing = Number('1');

@@ -9,12 +9,13 @@ const page: Ref<PageNode> = ref<PageNode>() as any;
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 const draftService = inject<service.DraftService>(service.TOKENS.Draft);
 
-nodeService.currentPage.subscribe(pageNode => {
-    page.value = pageNode;
-    (page.value.children || []).forEach(node => {
+nodeService.document.subscribe(document => {
+    const pageNode = document.children[0];
+    (pageNode.children || []).forEach(node => {
         node.x = 0;
         node.y = 0;
     });
+    page.value = pageNode;
 });
 const sync = ref(true);
 

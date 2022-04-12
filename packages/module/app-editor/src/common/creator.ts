@@ -48,10 +48,8 @@ export default {
                 editingChild.height = Math.abs(height);
                 editingChild.x = width > 0 ? originX : originX + width;
                 editingChild.y = height > 0 ? originY : originY + height ;
-
-                // editingChild.width = Math.max(event.offsetX - startX, 10);
-                // editingChild.height = Math.max(event.offsetY - startY, 10);
-                nodeService.update([editingChild]);
+                editingChild.update();
+                nodeService.updateDocument();
             }
         });
         window.addEventListener('mousemove', (event: MouseEvent) => {
@@ -103,15 +101,15 @@ export default {
             if (originX !== -9999 && originY !== -9999) {
                 switch(toolService.data.name) {
                     case 'aladin':
-                        width=360;
-                        height=200;
+                        width=480;
+                        height=400;
                         break;
                     case 'image':
-                        width=222;
-                        height=148;
+                        width=40;
+                        height=40;
                         break;
                     case 'scroll':
-                        width=360;
+                        width=480;
                         height=125;
                         break;
                 }

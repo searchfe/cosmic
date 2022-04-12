@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
 import  { type TextNode, util } from '@cosmic/core/parts';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
@@ -23,12 +23,17 @@ nodeService.selection.subscribe(nodes => {
         selected.value = false;
     }
 });
+const instance = getCurrentInstance();
+nodeService.watch(props.node).subscribe(() => {
+    instance?.proxy?.$forceUpdate();
+});
 
 </script>
 
 <template>
     <div
         v-creator="{target: node}"
+        v-stroke="{target: node}"
         class="text-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
@@ -37,11 +42,15 @@ nodeService.selection.subscribe(nodes => {
             width: node.width + 'px',
             height: node.height + 'px',
             fontSize: node.fontSize + 'px',
+            fontFamily: node.fontName?.family,
+            fontWeight: node.fontName?.style ?? '400',
+            textDecoration: node.textDecoration === 'STRIKETHROUGH' ? 'line-through' : node.textDecoration ?? 'none',
+            lineHeight: node.lineHeight?.value + 'px',
             background: util.toBackgroundStyle(node?.backgrounds?.[0]),
             color: util.toBackgroundStyle(node?.fills?.[0]),
         }"
     >
-        {{ node?.name }}
+        北京2002年冬奥会专题
         <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

@@ -29,7 +29,12 @@ const changeEvent = () => {
 const colorBurHandler = (colorStyle) => {
     let value = color.value || '';
     if (!value.startsWith('#')) value = `#${value}`;
-    rg.test(value) ? color.value = value : color.value = '#000000';
+    try {
+        const colorObj = new Color(value);
+    } catch {
+        value = '#000000';
+    }
+    color.value = value;
     colorStyle.color = new Color(value).object();
     changeEvent();
 };
@@ -84,9 +89,16 @@ watch(() => props.colorStyle, (newValue) => {
         >
             <div 
                 :class="$style['show-color']"
-                class="w-12 h-12"
-                :style="{backgroundColor: color, opacity: opacity}"
-            />
+                class="w-14 h-14"
+            >
+                <input
+                    v-model="color"
+                    :class="$style['input-color']"
+                    class="w-12 h-12"
+                    type="color"
+                    @input="() => colorBurHandler(colorStyle)"
+                >
+            </div>
             <input
                 v-model="color"
                 :class="[$style.input]"
@@ -109,8 +121,9 @@ watch(() => props.colorStyle, (newValue) => {
 </template>
 
 <style module>
+
 .color {
-    composes: -v-px -v-h  sm from global;
+    composes: -v-px -v-h w-180 sm from global;
     display: flex;
     align-items: center;
     border: 1px solid rgba(0, 0, 0, 0);
@@ -121,6 +134,7 @@ watch(() => props.colorStyle, (newValue) => {
 .color > div {
     flex: 1;
 }
+
 
 .color:hover.color-border, .color:active.color-border {
     border: 1px solid var(--color-gray-200);
@@ -155,6 +169,23 @@ watch(() => props.colorStyle, (newValue) => {
     flex:  0 1 auto;
     margin-right: 4px;
     border-radius: 4px;
+    border: 1px solid var(--color-gray-200);
+}
+
+::-webkit-color-swatch-wrapper {
+    margin: 0;
+    padding: 0;
+}
+
+::-webkit-color-swatch {
+    margin: 0;
+    border: none
+}
+
+.input-color {
+    padding: 0;
+    border: 0;
+    outline: 0;
 }
 
 .opacity {

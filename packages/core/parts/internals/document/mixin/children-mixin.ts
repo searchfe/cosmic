@@ -8,9 +8,11 @@ export default class ChildrenMixin implements Internal.ChildrenMixin {
 
     appendChild(child: SceneNode) {
         this.children.push(child);
+        (child as any).parent = this;
     }
     insertChild(index: number, child: SceneNode) {
         this.children.splice(index, 0, child);
+        (child as any).parent = this;
     }
     findChildren(callback?: (node: SceneNode) => boolean){
         if (!callback) return this.children;

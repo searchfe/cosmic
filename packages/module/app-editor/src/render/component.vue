@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type ComponentNode } from '@cosmic/core/parts';
-import { onMounted, ref } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
@@ -13,9 +13,6 @@ interface ComponentProps {
 const props = withDefaults(defineProps<ComponentProps>(), {
 
 });
-onMounted(() => {
-    // console.log(props.node, props.node.height, props.node.x);
-});
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 const selected = ref(true);
@@ -27,6 +24,12 @@ nodeService.selection.subscribe(nodes => {
         selected.value = false;
     }
 });
+
+const instance = getCurrentInstance();
+nodeService.watch(props.node).subscribe(() => {
+    instance?.proxy?.$forceUpdate();
+});
+
 
 </script>
 <template>

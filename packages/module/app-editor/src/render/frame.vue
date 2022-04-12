@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type FrameNode, util } from '@cosmic/core/parts';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, getCurrentInstance } from 'vue';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
@@ -27,10 +27,17 @@ nodeService.selection.subscribe(nodes => {
     }
 });
 
+const instance = getCurrentInstance();
+nodeService.watch(props.node).subscribe(() => {
+    instance?.proxy?.$forceUpdate();
+});
+
 </script>
 <template>
     <div
         v-creator="{target: node}"
+        v-stroke="{target: node}"
+        v-effect="{target: node}"
         class="frame-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
