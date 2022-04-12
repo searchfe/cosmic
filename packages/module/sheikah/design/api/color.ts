@@ -1,61 +1,34 @@
 import { useQuery, useMutation } from '@cosmic/core/urql';
+import { colorQT } from '@cosmic/core/gql';
 
-
-export function queryOne(id: string, fields: string[] = ['id', 'name', 'day', 'night', 'dark']) {
+// TODO: if wantting server return other field list, design it as a parameter of those functions
+export function queryOne(id: string) {
     return useQuery<{ getColor: Partial<gql.Color> }, gql.QueryColorDTO>({
-        query: `query ($id: String!) {
-            getColor(id: $id) {
-                id,
-                ${fields.join(',')}
-            }
-        }`,
+        query: colorQT.queryOne(),
         variables: { id },
         requestPolicy: 'cache-and-network',
     });
 }
 
-export function query(query: gql.QueryColorDTO, fields: string[] = []) {
+export function query(query: gql.QueryColorDTO) {
     return useQuery<{ colors: Partial<gql.Color>[] }, gql.QueryColorDTO>({
-        query: `query ($fields: [String!], $query: QueryColorDTO) {
-            colors(fields: $fields, query: $query) {
-                id,
-                ${fields.join(',')}
-            }
-        }`,
+        query: colorQT.query(),
         variables: query,
         requestPolicy: 'cache-and-network',
     });
 }
 
-export function create(fields: string[] = []) {
-    return useMutation<{ createColor: Partial<gql.Color> }, { data: gql.CreateColorDTO }>(
-        `mutation ($data: CreateColorDTO!) {
-            createColor(data: $data) {
-                id,
-                ${fields.join(',')}
-            }
-        }`,
-    );
+export function create() {
+    return useMutation<{ createColor: Partial<gql.Color> }, { data: gql.CreateColorDTO }>(colorQT.create());
 }
 
 export function update() {
-    return useMutation<{ updateColor: Partial<gql.Color> }, { data: gql.QueryColorDTO }>(
-        `mutation ($data: QueryColorDTO!) {
-            updateColor(data: $data)
-        }`,
-    );
+    return useMutation<{ updateColor: Partial<gql.Color> }, { data: gql.QueryColorDTO }>(colorQT.update());
 }
 
-export function createUnique(fields: string[] = []) {
+export function createUnique() {
     return useMutation<
         { createUniqueColor: Partial<gql.Color> },
         { data: gql.CreateColorDTO, filter: gql.QueryColorDTO }
-    >(
-        `mutation ($data: CreateColorDTO!, $filter: QueryColorDTO!) {
-            createUniqueColor(data: $data, filter: $filter) {
-                id,
-                ${fields.join(',')}
-            }
-        }`,
-    );
+    >(colorQT.createUnique());
 }

@@ -68,6 +68,7 @@ const config = {
                 inversify: resolve(__dirname, './inversify.ts'),
                 rxjs: resolve(__dirname, './rxjs.ts'),
                 urql: resolve(__dirname, './urql.ts'),
+                gql: resolve(__dirname, './gql.ts'),
             },
             output: [
                 {
@@ -91,6 +92,7 @@ const config = {
                 '@cosmic/core/inversify',
                 '@cosmic/core/rxjs',
                 '@cosmic/core/urql',
+                '@cosmic/core/gql',
                 '@cosmic-module/core',
                 '@cosmic-module/san-loader',
                 ...builtinModules.flatMap(p => [p, `node:${p}`]),

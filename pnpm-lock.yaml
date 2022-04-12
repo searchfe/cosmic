@@ -99,6 +99,7 @@ importers:
       '@urql/vue': ~0.6.1
       axios: ~0.26.1
       color: ~4.2.1
+      graphql-tag: ^2.12.6
       graphql-ws: ~5.6.2
       inversify: ^6.0.1
       lodash: ~4.17.21
@@ -110,6 +111,7 @@ importers:
       '@urql/vue': 0.6.1_graphql@16.3.0+vue@3.2.29
       axios: 0.26.1
       color: 4.2.3
+      graphql-tag: 2.12.6_graphql@16.3.0
       graphql-ws: 5.6.4_graphql@16.3.0
       inversify: 6.0.1
       lodash: 4.17.21
@@ -2748,6 +2750,16 @@ packages:
   /graceful-readlink/1.0.1:
     resolution: {integrity: sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=}
     dev: true
+
+  /graphql-tag/2.12.6_graphql@16.3.0:
+    resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 16.3.0
+      tslib: 2.3.1
+    dev: false
 
   /graphql-ws/5.6.4_graphql@16.3.0:
     resolution: {integrity: sha512-5r8tAzznI1zeh7k12+3z07KkgXPckQbnC9h4kJ2TBDWG2wb26TJTbVHQOiAncDBgPbtXtc1A2BlttiRuPH2t/w==}

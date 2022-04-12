@@ -8,5 +8,6 @@ export function create() {
     return createClient({
         exchanges,
         url: import.meta.env.VITE_SERVER + '/api/graphql',
+        requestPolicy: 'cache-and-network',
     });
 }
