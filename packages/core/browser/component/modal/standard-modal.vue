@@ -30,6 +30,8 @@ onMounted(() => {
     setContainerTarget(container.value as unknown as HTMLElement);
 });
 
+const isEmpty = computed(() => !props.standardList || props.standardList.length === 0);
+
 const filterTitle = ref('2');
 
 const inputValue = ref(null);
@@ -71,8 +73,12 @@ function filterHandler(data: string) {
                         allow-input
                         :value="filterTitle"
                     >
-                        <SelectOption
+                        <select-option
                             label="标题"
+                            value="1"
+                        />
+                        <select-option
+                            label="属性"
                             value="2"
                         />
                     </Select>
@@ -87,6 +93,7 @@ function filterHandler(data: string) {
             </div>
         </slot>
         <div
+            v-if="!isEmpty"
             ref="content"
             :class="$style.content"
         >
@@ -118,6 +125,12 @@ function filterHandler(data: string) {
                 </template>
             </m-standard>
         </div>
+        <div 
+            v-else
+            :class="$style['empty-container']"
+        >
+            当前暂无原子，请添加原子
+        </div>
     </div>
 </template>
 
@@ -131,6 +144,7 @@ function filterHandler(data: string) {
     position: fixed;
     transform: translateX(-100%);
     user-select: none;
+    min-height: 16.5rem;
     width: 27rem;
 }
 .title {
@@ -155,6 +169,13 @@ function filterHandler(data: string) {
     max-height: 400px;
     border-radius: var(--rounded-md);
     overflow: auto;
+}
+
+.empty-container {
+    composes: -v-px md from global;
+    color: var(--color-gray-500);
+    padding: .4rem 0;
+    font-size: 1.4rem;
 }
 
 </style>

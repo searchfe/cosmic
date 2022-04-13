@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import InputText from './input-text.vue';
 import type { EffectStyle } from '@cosmic/core/parts';
-import { Row, Col } from 'cosmic-vue';
+import { Row, Col, InputNumber } from 'cosmic-vue';
 
 withDefaults(defineProps<{
     effectStyle: EffectStyle,
@@ -20,9 +19,9 @@ function changeStyle(style, field: string, event) {
 
 <template>
     <Row :class="$style.row">
-        <Col :span="6">
-            <div class="w-80">
-                <InputText
+        <Col :span="6" :class="$style.col">
+            <div>
+                <input-number
                     :class="[$style['input']]"
                     :value="effectStyle.offset.x"
                     @on-input="(data) => changeStyle(effectStyle.offset, 'x',data)"
@@ -30,12 +29,12 @@ function changeStyle(style, field: string, event) {
                     <template #prefix>
                         <i-cosmic-x :class="[$style['icon']]" />
                     </template>
-                </InputText>
+                </input-number>
             </div>
         </Col>
-        <Col :span="6">
-            <div class="w-80">
-                <InputText
+        <Col :span="6" :class="$style.col">
+            <div>
+                <input-number
                     :class="[$style['input']]"
                     :value="effectStyle.offset.y"
                     @on-input="(data) => changeStyle(effectStyle.offset, 'y', data)"
@@ -43,14 +42,14 @@ function changeStyle(style, field: string, event) {
                     <template #prefix>
                         <i-cosmic-y :class="[$style['icon']]" />
                     </template>
-                </InputText>
+                </input-number>
             </div>
         </Col>
     </Row>
     <Row :class="$style.row">
-        <Col :span="6">
-            <div class="w-80">
-                <InputText
+        <Col :span="6" :class="$style.col">
+            <div>
+                <input-number
                     :class="[$style['input']]"
                     :value="effectStyle.radius"
                     @on-input="(data) => changeStyle(effectStyle, 'radius', data)"
@@ -58,12 +57,12 @@ function changeStyle(style, field: string, event) {
                     <template #prefix>
                         <i-cosmic-fuzzy :class="[$style['icon']]" />
                     </template>
-                </InputText>
+                </input-number>
             </div>
         </Col>
-        <Col :span="6">
-            <div class="w-80">
-                <InputText
+        <Col :span="6" :class="$style.col">
+            <div>
+                <input-number
                     :class="[$style['input']]"
                     :value="effectStyle.spread"
                     @on-input="(data) => changeStyle(effectStyle, 'spread', data)"
@@ -71,17 +70,23 @@ function changeStyle(style, field: string, event) {
                     <template #prefix>
                         <i-cosmic-expand :class="[$style['icon']]" />
                     </template>
-                </InputText>
+                </input-number>
             </div>
         </Col>
     </Row>
 </template>
 
 <style module>
+
+.col {
+    margin-right: .8rem;
+}
+
  .row {
     composes: mb-10 from global;
  }
  
-.item {
+.icon {
+    font-size: .8rem;
 }
 </style>

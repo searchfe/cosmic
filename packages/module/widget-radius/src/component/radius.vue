@@ -29,7 +29,7 @@ const {
     <div>
         <div v-if="!isStandard">
             <m-title title="边角">
-                <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
+                <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </m-title>
             <radius-content :radius-style="standard" />
         </div>
@@ -77,6 +77,9 @@ const {
     max-height: 400px
 }
 
+.icon {
+    font-size: 1.2rem;
+}
 
 .glyph-content {
     border-top: solid 1px var(--color-gray-100);

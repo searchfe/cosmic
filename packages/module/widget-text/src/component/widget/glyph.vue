@@ -38,7 +38,7 @@ const {
     <div ref="containerRef">
         <div v-if="!isStandard">
             <MTitle title="字形">
-                <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
+                <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
             <glyph-content :text-style="textStyle" @change="() => emits('change')" />
         </div>
@@ -90,5 +90,9 @@ const {
 .glyph-content {
     border-top: solid 1px var(--color-gray-100);
     border-bottom: solid 1px var(--color-gray-100);
+}
+
+.icon {
+    font-size: 1.2rem;
 }
 </style>

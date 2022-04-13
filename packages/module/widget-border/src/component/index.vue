@@ -107,13 +107,13 @@ function fillChage() {
 
 <style module>
 .icon {
-    font-size: var(--font-md)
+    font-size: 1.4rem
 }
 .row {
     margin: var(--margin-md) 0;
 }
 
 .detail {
-    composes: -v-py sm from global;
+    margin-bottom: .8rem;
 }
 </style>

@@ -142,7 +142,16 @@ function change(event) {
  }
 
 .icon {
-    font-size: 1rem;
+    font-size: .8rem;
+}
+
+.lock-icon {
+    margin-left: .8rem;
+    /* background-color: red */
+}
+
+.col {
+    margin-right: .8rem
 }
 
  </style>
