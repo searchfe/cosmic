@@ -33,6 +33,7 @@ nodeService.selection.subscribe((nodes) => {
         </Tabs>
         <div :hidden="activeIdx != '0'">
             <m-component src="@cosmic-module/widget-frame" />
+            <m-component src="@cosmic-module/widget-break-point" />
             <template v-for="item of properties" :key="item">
                 <div class="border-bottom" />
                 <m-component :src="item" />
