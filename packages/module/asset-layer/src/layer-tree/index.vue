@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { Tree, TreeNodeState } from 'cosmic-vue';
+import { Tree, TreeNodeState, type TreeChangeEvent } from 'cosmic-vue';
 import { treeSecondary } from 'cosmic-ui';
 import { ref } from 'vue';
 import { service } from '@cosmic/core/browser';
-import { type DocumentNode, inject } from '@cosmic/core/parts';
+import { type PageNode, inject } from '@cosmic/core/parts';
 import { type LayerTreeData, nodeToTree, updateSelection } from './layer-tree';
 
 
@@ -11,14 +11,14 @@ const treedata = ref<LayerTreeData[]>([]);
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
-let doc: DocumentNode;
+let page: PageNode;
 
-nodeService.document.subscribe(document => {
-    nodeService.unwatch(doc);
-    doc = document;
-    treedata.value = nodeToTree(doc);
-    nodeService.watch(document).subscribe((updateDocument) => {
-        treedata.value = nodeToTree(updateDocument as DocumentNode);
+nodeService.currentPage.subscribe(newPage => {
+    nodeService.unwatch(page);
+    page = newPage;
+    treedata.value = nodeToTree(page);
+    nodeService.watch(page).subscribe((updatePage) => {
+        treedata.value = nodeToTree(updatePage as PageNode);
     });
 });
 
@@ -31,6 +31,16 @@ function changeSelection(event: any){
     nodeService.setSelection([event.nodeData.layerId]);
 }
 
+function changeLabel(event: TreeChangeEvent) {
+    if (page) {
+        const node = page.findOne(node => node.id === event.id);
+        if(node) {
+            node.name = event.label;
+            node.update();
+        }
+    }
+}
+
 </script>
 <template>
     <tree
@@ -39,6 +49,7 @@ function changeSelection(event: any){
         :data="treedata"
         :styles="treeSecondary"
         @click-node="changeSelection"
+        @change-label="changeLabel"
     >
         <template #arrow="slotProps">
             <span v-if="slotProps.state == TreeNodeState.open" class="inline-block w-10 pb-2">▾</span>
@@ -58,7 +69,7 @@ function changeSelection(event: any){
         </template>
     </tree>
 </template>
-<style>
+<style scoped>
     .customlized {
         --font-md : 1.2rem;
         --icon-md : 1.4rem;
