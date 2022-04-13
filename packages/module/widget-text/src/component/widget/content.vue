@@ -65,14 +65,14 @@ function textChange() {
     node.setRangeTextDecoration(0 , 0, style.textDecoration);
     node.setRangeLineHeight(0, 0, {...style.lineHeight});
     node.setParagraphSpacing(style.paragraphSpacing);
-    nodeService.update([node]);
+    node.update();
 }
 
 function fillChage() {
     const node = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
     const style = fillStyleService.get(node.getRangeFillStyleId());
     node.setRangeFills(0, 0, [toRaw(style)]);
-    nodeService.update([node]);
+    node.update();
 }
 
 </script>

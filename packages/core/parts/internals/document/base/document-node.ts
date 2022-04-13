@@ -18,6 +18,7 @@ export default class DocumentNode extends BaseNodeMixin implements Internal.Docu
     }
     insertChild(index: number, child: PageNode) {
         this.children.splice(index, 0, child);
+        this.update();
         // TODO
     }
     findChildren(callback?: (node: PageNode) => boolean){
@@ -26,6 +27,12 @@ export default class DocumentNode extends BaseNodeMixin implements Internal.Docu
     }
     findChild(callback: (node: PageNode) => boolean){
         return this.children.filter(callback)[0];
+    }
+    update(slient?: boolean): void {
+        if (this.parent && (this.parent as any).update) {
+            super.update();
+            (this.parent as any).update();
+        }
     }
 
     findAll(callback?: (node: PageNode | SceneNode) => boolean) {

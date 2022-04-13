@@ -4,7 +4,6 @@ import ComponentNode from './sence/component-node';
 import TextNode from './sence/text-node';
 import GroupNode from './sence/group-node';
 import FrameNode from './sence/frame-node';
-import { from } from 'rxjs';
 
 export { DocumentNode, PageNode };
 

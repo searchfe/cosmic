@@ -1,159 +1,134 @@
 <script lang="ts" setup>
-import {computed, ref, watchEffect} from 'vue';
+import {ref, type Ref} from 'vue';
 import { MTitle, MWidget, MColor, service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { inject, PageNode, hasMixin, ContainerMixin, type SceneNode, type Paint, SolidPaint } from '@cosmic/core/parts';
 import { Row, Col, InputNumber } from 'cosmic-vue';
 
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
-const node = nodeService.getSelection()[0];
+interface FramePorps {
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    isHideColor: boolean,
+    fillStyle: Paint;
+}
 
-const _node = ref();
+const data: Ref<FramePorps>  = ref({
+    x: 0, y: 0, width: 0, height: 0, isHideColor: false,
+    fillStyle: new SolidPaint(),
+});
 
-const nodeId = ref(node?.id);
 
-const x = ref(node?.x ?? 0);
-const y = ref(node?.y ?? 0);
-const width = ref(node?.width ?? 0);
-const height = ref(node?.height ?? 0);
-
+let node: SceneNode;
 nodeService.selection.subscribe(nodes => {
-    const node = nodes[0];
-    _node.value = nodes[0];
-    x.value = node?.x ?? 0;
-    y.value = node?.y ?? 0;
-    width.value = node?.width ?? 0;
-    height.value = node?.height ?? 0;
-    nodeId.value = node?.id ?? '';
-
-});
-
-const isHideColor = computed(() => {
-    return _node.value && !_node.value.backgrounds;
-});
-
-const fillStyle = computed(() => {
-    // const node = nodeService.getSelection().find(item => item.id === nodeId.value);
-    if (!_node.value || !_node.value.backgrounds || _node.value.backgrounds.length === 0) return {color: {r: 0, g: 0, b: 0}, opacity: 0};
-    return _node.value.backgrounds[0];
+    if(node instanceof PageNode) {
+        return;
+    }
+    nodeService.unwatch(node);
+    node = nodes[0] as SceneNode;
+    nodeService.watch(node).subscribe((n) => {
+        toData(n);
+    });
+    toData(node);
 });
 
 
-watchEffect(() => {
-    const node = nodeService.getSelection()[0];
-    if(!node) return;
-    node.x = x.value;
-    console.log(node.x);
-    nodeService.update([node]);
-});
+function toData(node: SceneNode) {
+    data.value.x = node.x;
+    data.value.y = node.y;
+    data.value.width = node.width;
+    data.value.height = node.height;
+    if (hasMixin(node, ContainerMixin) && node.backgrounds && node.backgrounds[0]) {
+        data.value.isHideColor = true;
+        data.value.fillStyle = node.backgrounds[0];
+    } else {
+        data.value.isHideColor = false;
+        data.value.fillStyle = new SolidPaint();
+    }
+}
 
-watchEffect(() => {
-    const node = nodeService.getSelection()[0];
-    if(!node) return;
-    node.y = y.value;
-    nodeService.update([node]);
-});
-
-watchEffect(() => {
-    const node = nodeService.getSelection()[0];
-    if(!node) return;
-    node.width = width.value;
-    nodeService.update([node]);
-});
-
-watchEffect(() => {
-    const node = nodeService.getSelection()[0];
-    if(!node) return;
-    node.height = height.value;
-    nodeService.update([node]);
-});
+function update(key: 'x' | 'y' | 'width' | 'height', value: any) {
+    node[key] = value;
+    node.update();
+}
 
 function change(event) {
-    const node = nodeService.getSelection().find(item => item.id === nodeId.value);
-    console.log(node);
     const [r, g, b] = event.colorObj.color;
     node.backgrounds = [{
         color: {r, g, b},
         opacity: event.opacity,
         type: 'SOLID',
     }];
-    nodeService.update([node]);
+    if(node) node.update();
 }
-
-
-
 </script>
 
 <template>
     <m-widget>
         <m-title title="布局" />
         <div class="mb-10">
-            <div class="flex justify-between items-center">
-                <div>
-                    <Row :class="$style.row">
-                        <Col :span="6" :class="$style.col">
-                            <div :class="[$style['glyph-item']]">
-                                <input-number
-                                    size="sm"
-                                    :value="x"
-                                    @on-input="(event) => x = Number(event.value)"
-                                >
-                                    <template #prefix>
-                                        <i-cosmic-x :class="[$style.icon]" />
-                                    </template>
-                                </input-number>
-                            </div>
-                        </Col>
-                        <Col :span="6">
-                            <div :class="[$style['glyph-item']]">
-                                <input-number
-                                    size="sm"
-                                    :value="y"
-                                    @on-input="(event) => y = Number(event.value)"
-                                >
-                                    <template #prefix>
-                                        <i-cosmic-y :class="[$style.icon]" />
-                                    </template>
-                                </input-number>
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row :class="$style.row">
-                        <Col :span="6" :class="$style.col">
-                            <div :class="[$style['glyph-item']]">
-                                <input-number
-                                    size="sm"
-                                    :value="width"
-                                    @on-input="(event) => width = Number(event.value)"
-                                >
-                                    <template #prefix>
-                                        <i-cosmic-w :class="[$style.icon]" />
-                                    </template>
-                                </input-number>
-                            </div>
-                        </Col>
-                        <Col :span="6">
-                            <div :class="[$style['glyph-item']]">
-                                <input-number
-                                    size="sm"
-                                    :value="height"
-                                    @on-input="(event) => height = Number(event.value)"
-                                >
-                                    <template #prefix>
-                                        <i-cosmic-h :class="[$style.icon]" />
-                                    </template>
-                                </input-number>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-                <div class="h-24 w-24" :class="$style['lock-icon']" />
-            </div>
-            
+            <Row :class="$style.row">
+                <Col :span="6">
+                    <div :class="[$style['glyph-item']]" class="w-80">
+                        <input-number
+                            size="sm"
+                            :value="data.x"
+                            @on-input="(event) => { update('x', Number(event.value))}"
+                        >
+                            <template #prefix>
+                                <i-cosmic-x :class="[$style.icon]" />
+                            </template>
+                        </input-number>
+                    </div>
+                </Col>
+                <Col :span="6">
+                    <div :class="[$style['glyph-item']]" class="w-80">
+                        <input-number
+                            size="sm"
+                            :value="data.y"
+                            @on-input="(event) => { update('y', Number(event.value))}"
+                        >
+                            <template #prefix>
+                                <i-cosmic-y :class="[$style.icon]" />
+                            </template>
+                        </input-number>
+                    </div>
+                </Col>
+            </Row>
+            <Row :class="$style.row">
+                <Col :span="6">
+                    <div :class="[$style['glyph-item']]" class="w-80">
+                        <input-number
+                            size="sm"
+                            :value="data.width"
+                            @on-input="(event) => { update('width', Number(event.value))}"
+                        >
+                            <template #prefix>
+                                <i-cosmic-w :class="[$style.icon]" />
+                            </template>
+                        </input-number>
+                    </div>
+                </Col>
+                <Col :span="6">
+                    <div :class="[$style['glyph-item']]" class="w-80">
+                        <input-number
+                            size="sm"
+                            :value="height"
+                            @on-input="(event) => { update('height', Number(event.value))}"
+                        >
+                            <template #prefix>
+                                <i-cosmic-h :class="[$style.icon]" />
+                            </template>
+                        </input-number>
+                    </div>
+                </Col>
+            </Row>
             <m-color
-                v-if="!isHideColor"
-                :color-style="fillStyle"
+                v-if="!data.isHideColor"
+                :color-style="data.fillStyle"
                 @on-change="change"
             />
         </div>

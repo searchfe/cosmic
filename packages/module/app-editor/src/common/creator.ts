@@ -48,10 +48,8 @@ export default {
                 editingChild.height = Math.abs(height);
                 editingChild.x = width > 0 ? originX : originX + width;
                 editingChild.y = height > 0 ? originY : originY + height ;
-
-                // editingChild.width = Math.max(event.offsetX - startX, 10);
-                // editingChild.height = Math.max(event.offsetY - startY, 10);
-                nodeService.update([editingChild]);
+                editingChild.update();
+                nodeService.updateDocument();
             }
         });
         window.addEventListener('mousemove', (event: MouseEvent) => {

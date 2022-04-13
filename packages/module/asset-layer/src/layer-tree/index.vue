@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { Tree, TreeNodeState, type TreeNodeEvent } from 'cosmic-vue';
+import { Tree, TreeNodeState } from 'cosmic-vue';
 import { treeSecondary } from 'cosmic-ui';
 import { ref } from 'vue';
 import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { type DocumentNode, inject } from '@cosmic/core/parts';
 import { type LayerTreeData, nodeToTree, updateSelection } from './layer-tree';
 
 
@@ -11,17 +11,24 @@ const treedata = ref<LayerTreeData[]>([]);
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
+let doc: DocumentNode;
+
 nodeService.document.subscribe(document => {
-    treedata.value = nodeToTree(document);
+    nodeService.unwatch(doc);
+    doc = document;
+    treedata.value = nodeToTree(doc);
+    nodeService.watch(document).subscribe((updateDocument) => {
+        treedata.value = nodeToTree(updateDocument as DocumentNode);
+    });
 });
 
 nodeService.selection.subscribe(nodes => {
     treedata.value = updateSelection(treedata.value, nodes);
 });
 
-function changeSelection(event: TreeNodeEvent){
+function changeSelection(event: any){
     // console.log(event.id, treedata.value);
-    nodeService.setSelection([event.id]);
+    nodeService.setSelection([event.nodeData.layerId]);
 }
 
 </script>
