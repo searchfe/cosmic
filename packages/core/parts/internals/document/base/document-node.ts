@@ -15,9 +15,11 @@ export default class DocumentNode extends BaseNodeMixin implements Internal.Docu
     appendChild(child: PageNode) {
         this.children.push(child);
         child.parent = this as any;
+        this.update();
     }
     insertChild(index: number, child: PageNode) {
         this.children.splice(index, 0, child);
+        child.parent = this as any;
         this.update();
         // TODO
     }
