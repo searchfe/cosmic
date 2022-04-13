@@ -89,62 +89,68 @@ function change(event) {
     <m-widget>
         <m-title title="布局" />
         <div class="mb-10">
-            <Row :class="$style.row">
-                <Col :span="6">
-                    <div :class="[$style['glyph-item']]" class="w-80">
-                        <input-number
-                            size="sm"
-                            :value="x"
-                            @on-input="(event) => x = Number(event.value)"
-                        >
-                            <template #prefix>
-                                <i-cosmic-x :class="[$style.icon]" />
-                            </template>
-                        </input-number>
-                    </div>
-                </Col>
-                <Col :span="6">
-                    <div :class="[$style['glyph-item']]" class="w-80">
-                        <input-number
-                            size="sm"
-                            :value="y"
-                            @on-input="(event) => y = Number(event.value)"
-                        >
-                            <template #prefix>
-                                <i-cosmic-y :class="[$style.icon]" />
-                            </template>
-                        </input-number>
-                    </div>
-                </Col>
-            </Row>
-            <Row :class="$style.row">
-                <Col :span="6">
-                    <div :class="[$style['glyph-item']]" class="w-80">
-                        <input-number
-                            size="sm"
-                            :value="width"
-                            @on-input="(event) => width = Number(event.value)"
-                        >
-                            <template #prefix>
-                                <i-cosmic-w :class="[$style.icon]" />
-                            </template>
-                        </input-number>
-                    </div>
-                </Col>
-                <Col :span="6">
-                    <div :class="[$style['glyph-item']]" class="w-80">
-                        <input-number
-                            size="sm"
-                            :value="height"
-                            @on-input="(event) => height = Number(event.value)"
-                        >
-                            <template #prefix>
-                                <i-cosmic-h :class="[$style.icon]" />
-                            </template>
-                        </input-number>
-                    </div>
-                </Col>
-            </Row>
+            <div class="flex justify-between items-center">
+                <div>
+                    <Row :class="$style.row">
+                        <Col :span="6" :class="$style.col">
+                            <div :class="[$style['glyph-item']]">
+                                <input-number
+                                    size="sm"
+                                    :value="x"
+                                    @on-input="(event) => x = Number(event.value)"
+                                >
+                                    <template #prefix>
+                                        <i-cosmic-x :class="[$style.icon]" />
+                                    </template>
+                                </input-number>
+                            </div>
+                        </Col>
+                        <Col :span="6">
+                            <div :class="[$style['glyph-item']]">
+                                <input-number
+                                    size="sm"
+                                    :value="y"
+                                    @on-input="(event) => y = Number(event.value)"
+                                >
+                                    <template #prefix>
+                                        <i-cosmic-y :class="[$style.icon]" />
+                                    </template>
+                                </input-number>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row :class="$style.row">
+                        <Col :span="6" :class="$style.col">
+                            <div :class="[$style['glyph-item']]">
+                                <input-number
+                                    size="sm"
+                                    :value="width"
+                                    @on-input="(event) => width = Number(event.value)"
+                                >
+                                    <template #prefix>
+                                        <i-cosmic-w :class="[$style.icon]" />
+                                    </template>
+                                </input-number>
+                            </div>
+                        </Col>
+                        <Col :span="6">
+                            <div :class="[$style['glyph-item']]">
+                                <input-number
+                                    size="sm"
+                                    :value="height"
+                                    @on-input="(event) => height = Number(event.value)"
+                                >
+                                    <template #prefix>
+                                        <i-cosmic-h :class="[$style.icon]" />
+                                    </template>
+                                </input-number>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+                <div class="h-24 w-24" :class="$style['lock-icon']" />
+            </div>
+            
             <m-color
                 v-if="!isHideColor"
                 :color-style="fillStyle"
@@ -161,7 +167,16 @@ function change(event) {
  }
 
 .icon {
-    font-size: 1rem;
+    font-size: .8rem;
+}
+
+.lock-icon {
+    margin-left: .8rem;
+    /* background-color: red */
+}
+
+.col {
+    margin-right: .8rem
 }
 
  </style>

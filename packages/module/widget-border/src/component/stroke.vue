@@ -35,7 +35,7 @@ const {
     <div ref="containerRef">
         <div v-if="isLocalStyle">
             <MTitle title="描边">
-                <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
+                <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
             <stroke-content :stroke-style="strokeStyle" @change="() => emits('change')" />
         </div>
@@ -83,6 +83,9 @@ const {
     max-height: 400px
 }
 
+.icon {
+    font-size: 1.4rem
+}
 
 .glyph-content {
     border-top: solid 1px var(--color-gray-100);

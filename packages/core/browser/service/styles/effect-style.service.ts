@@ -35,7 +35,7 @@ export default class EffectStyleService extends BaseService<EffectStyle, Subject
             offset: { x: offsetX, y: offsetY},
             radius: blur,
             spread: spread,
-        } as Internal.DropShadowEffect;
+        } as Internal.Effect;
         effectStyle.effects = [effect];
         return effectStyle;
     }

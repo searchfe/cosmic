@@ -12,6 +12,18 @@ export const Border = [
         value: 'OUTSIDE',
     },
 ];
+
+export const BorderStyle = [
+    {
+        label: '实线',
+        value: 'solid',
+    },
+    {
+        label: '虚线',
+        value: 'dashed',
+    },
+];
+
 export const Standard = [
     {
         title: '标题1',

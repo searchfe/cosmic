@@ -10,6 +10,8 @@ import { service } from '@cosmic/core/browser';
 import { inject, TextNode } from '@cosmic/core/parts';
 import func from 'vue-temp/vue-editor-bridge';
 import { includes } from 'lodash';
+import Common from '@cosmic-module/sheikah/design/component/dialog/common.vue';
+import Component from '@cosmic-module/widget-radius/src/component/index.vue';
 
 const props = withDefaults(defineProps<{
     type?: string | string[],
@@ -43,8 +45,6 @@ const {
     unRef,
 } = usePropterty(service.TOKENS.FillStyle);
 
-
-
 </script>
 
 <template>
@@ -58,10 +58,13 @@ const {
                     title="颜色"
                 >
                     <div
-                        class="flex justify-between items-center w-30"
+                        class="flex justify-between items-center"
                     >
-                        <i-cosmic-sun />
-                        <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
+                        <i-cosmic-sun :class="$style.icon" />
+                        <i-cosmic-grid-outline
+                            :class="$style.icon"
+                            @click.stop="(event) => openStandardModal(event.currentTarget)"
+                        />
                     </div>
                 </m-title>
                 <m-color
@@ -139,6 +142,14 @@ const {
 .color-content {
     composes: -v-py w-full md from global;
     max-height: 400px
+}
+
+.icon {
+    font-size: 1.2rem;
+}
+
+.icon:first-child {
+    margin-right: .8rem;
 }
 
 .demo {

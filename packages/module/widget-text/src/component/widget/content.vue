@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed, toRaw } from 'vue';
-import { inject, TextNode } from '@cosmic/core/parts';
+import { FillStyle, inject, TextNode, TextStyle } from '@cosmic/core/parts';
 import { MClolorWidget, service } from '@cosmic/core/browser';
 import Glyph from './glyph.vue';
 import { Standard } from '../../data';
@@ -30,27 +30,27 @@ const styleList = computed(() => {
 const fillStyle = computed(() => fillStyleService.get(fillStyleId.value));
 
 nodeService.selection.subscribe((nodes) => {    
-    const selectNode = nodes.find(item => item.type === 'TEXT');
+    const selectNode = nodes.find(item => item.type === 'TEXT') as TextNode;
     if (!selectNode) return;
     getTextStyle(selectNode);
     getFillStyle(selectNode);
-    styleId.value = selectNode.getRangeTextStyleId();
-    fillStyleId.value = selectNode.getRangeFillStyleId();
+    styleId.value = selectNode.getRangeTextStyleId(0,0);
+    fillStyleId.value = selectNode.getRangeFillStyleId(0,0);
 });
 
-function getTextStyle(node: TextNode) {
-    if (!node) return {};
-    const textStyle = textStyleSevice.get(node.getRangeTextStyleId() ?? Date.now() + '');
-    if (node.getRangeTextStyleId() !== textStyle.id) {
+function getTextStyle(node: TextNode): TextStyle {
+    if (!node) return {} as TextStyle;
+    const textStyle = textStyleSevice.get(node.getRangeTextStyleId(0,0) ?? Date.now() + '');
+    if (node.getRangeTextStyleId(0,0) !== textStyle.id) {
         node.setRangeTextStyleId(0, 0, textStyle.id);
     }
     return textStyle;
 }
 
-function getFillStyle(node: TextNode) {
-    if (!node) return;
-    const fillStyle = fillStyleService.get(node.getRangeFillStyleId() ?? Date.now() + '');
-    if (node.getRangeFillStyleId() !== fillStyle.id) {
+function getFillStyle(node: TextNode): FillStyle {
+    if (!node) return {} as FillStyle;
+    const fillStyle = fillStyleService.get(node.getRangeFillStyleId(0,0) ?? Date.now() + '');
+    if (node.getRangeFillStyleId(0,0) !== fillStyle.id) {
         node.setRangeFillStyleId(0, 0, fillStyle.id);
     }
     return fillStyle;

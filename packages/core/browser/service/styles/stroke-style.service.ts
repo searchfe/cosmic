@@ -32,6 +32,7 @@ export default class StrokeStyleService extends BaseService<StrokeStyle, Subject
         const strokeStyle = new StrokeStyle(id);
         strokeStyle.strokeWeight = top.weight;
         strokeStyle.strokeAlign = 'CENTER';
+        strokeStyle.style = 'solid';
         strokeStyle.dashPattern = top.style === 'dash' ? [1, 1] : [0,0],
         strokeStyle.name = name as string;
         return strokeStyle;

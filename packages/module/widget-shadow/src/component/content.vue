@@ -101,6 +101,7 @@ function fillChage() {
         <div v-if="isLocalStyle">
             <m-title aria-label="效果属性" title="效果">
                 <i-cosmic-grid-outline
+                    :class="$style.icon"
                     class="-v-bg-inapparent"
                     @click.stop="(event) => openStandardModal(event.currentTarget)"
                 />
@@ -180,6 +181,11 @@ function fillChage() {
 <style module>
 .detail-content {
     max-height: 400px
+}
+
+
+.icon {
+    font-size: 1.2rem;
 }
 
 .glyph-content {

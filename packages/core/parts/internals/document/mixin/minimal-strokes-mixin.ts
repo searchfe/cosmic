@@ -1,4 +1,4 @@
-export default class MinimalStrokesMixin implements Internal.MinimalStrokesMixin {
+export default class MinimalStrokesMixin implements Internal.MinimalStrokesMixin, Cosmic.Plugin.StrokesMixin {
     strokes: ReadonlyArray<Internal.Paint>;
     strokeStyleId: string;
     strokeWeight: number;
@@ -6,4 +6,5 @@ export default class MinimalStrokesMixin implements Internal.MinimalStrokesMixin
     strokeAlign: 'CENTER' | 'INSIDE' | 'OUTSIDE';
     dashPattern: ReadonlyArray<number>;
     strokeGeometry: Internal.VectorPaths;
+    strokeLineStyle: string;
 }

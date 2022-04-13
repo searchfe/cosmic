@@ -8,7 +8,6 @@ declare module 'vue' {
     ICosmicCircleend: typeof import('~icons/cosmic/circleend')['default']
     ICosmicEndpoint: typeof import('~icons/cosmic/endpoint')['default']
     ICosmicGridOutline: typeof import('~icons/cosmic/grid-outline')['default']
-    ICosmicHorizonalWidth: typeof import('~icons/cosmic/horizonal-width')['default']
     ICosmicInnerPoint: typeof import('~icons/cosmic/inner-point')['default']
     ICosmicLink: typeof import('~icons/cosmic/link')['default']
     ICosmicMinus: typeof import('~icons/cosmic/minus')['default']
