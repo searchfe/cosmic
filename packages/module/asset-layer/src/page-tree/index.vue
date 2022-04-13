@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { Tree, TreeNodeState } from 'cosmic-vue';
+import { Tree, type TreeChangeEvent } from 'cosmic-vue';
 import { treeSecondary } from 'cosmic-ui';
 import { ref } from 'vue';
 import { service } from '@cosmic/core/browser';
-import { type DocumentNode, inject } from '@cosmic/core/parts';
+import { type DocumentNode, type PageNode, inject } from '@cosmic/core/parts';
 import { type LayerTreeData, nodeToTree, updateSelection } from './page-tree';
 
 
@@ -11,63 +11,82 @@ const treedata = ref<LayerTreeData[]>([]);
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
+const isOpen = ref(true);
+
 let doc: DocumentNode;
+let selection: PageNode;
 
 nodeService.document.subscribe(document => {
     nodeService.unwatch(doc);
     doc = document;
     treedata.value = nodeToTree(doc);
-    nodeService.watch(document).subscribe((updateDocument) => {
-        treedata.value = nodeToTree(updateDocument as DocumentNode);
+    updateSelection(treedata.value, [selection]);
+    nodeService.watch(document).subscribe((updateDocument: DocumentNode) => {
+        if(updateDocument.children.length === 0) isOpen.value = false;
+        treedata.value = nodeToTree(updateDocument);
+        updateSelection(treedata.value, [selection]);
     });
 });
 
-nodeService.selection.subscribe(nodes => {
-    treedata.value = updateSelection(treedata.value, nodes);
+nodeService.currentPage.subscribe((page) => {
+    if (doc) {
+        selection = page;
+        treedata.value = updateSelection(treedata.value, [selection]);
+    }
 });
 
 function changeSelection(event: any){
-    // console.log(event.id, treedata.value);
-    nodeService.setSelection([event.nodeData.layerId]);
+    nodeService.setSelectionPage(event.nodeData.layerId);
 }
 
+
+function changeLabel(event: TreeChangeEvent) {
+    if (doc) {
+        const node = doc.findChild(node => node.id === event.id);
+        if(node) {
+            node.name = event.label;
+            node.update();
+        }
+    }
+}
 </script>
 <template>
-    <div class="px-10 py-8 h-40 border-bottom customlized">
-        页面
+    <div class="flex-grow-0 flex-shrink-0">
+        <div class="px-20 py-8 h-40 border-bottom flex items-center text-sm">
+            <span class="flex-grow-0 flex-shrink-0">页面</span>
+            <div
+                class="ml-12 flex-grow-0 flex-shrink-0 w-20 text-center pt-2"
+                @click="() => isOpen = !isOpen"
+            >
+                <i-cosmic-arrow-up v-if="isOpen" class="h-full" />
+                <i-cosmic-arrow-down v-else-if="!isOpen" class="mt-2" />
+            </div>
+            <div class="w-full text-right">
+                <i-cosmic-minus v-show="isOpen" class="mr-10" @click="() => {isOpen = true; nodeService.deletePage();}" />
+                <i-cosmic-plus @click="() => {isOpen = true; nodeService.addPage();}" />
+            </div>
+        </div>
+        <tree
+            v-show="isOpen"
+            editable
+            class="p-10 overflow-visible border-bottom"
+            :class="$style.customlized"
+            :data="treedata"
+            :styles="treeSecondary"
+            @click-node="changeSelection"
+            @change-label="changeLabel"
+        >
+            <template #label="slotProps">
+                {{ slotProps.nodeData.label }}
+            </template>
+            <!-- <template #subfix="slotProps">
+                <i-cosmic-eye-open v-if="slotProps.nodeData.type !== 'PAGE'" />
+            </template> -->
+        </tree>
     </div>
-    <tree
-        editable
-        class="p-10 customlized overflow-visible border-bottom"
-        :data="treedata"
-        :styles="treeSecondary"
-        @click-node="changeSelection"
-    >
-        <template #arrow="slotProps">
-            <span v-if="slotProps.state == TreeNodeState.open" class="inline-block w-10 pb-2">▾</span>
-            <span v-if="slotProps.state == TreeNodeState.close" class="inline-block w-10 pb-2">▸</span>
-        </template>
-        <template #prefix="slotProps">
-            <i-cosmic-board v-if="slotProps.nodeData.type === 'PAGE'" />
-            <i-cosmic-comp v-else-if="slotProps.nodeData.type === 'COMPONENT'" />
-            <i-cosmic-text v-else-if="slotProps.nodeData.type === 'TEXT'" />
-            <i-cosmic-square v-else />
-        </template>
-        <template #label="slotProps">
-            {{ slotProps.nodeData.label }}
-        </template>
-        <template #subfix="slotProps">
-            <i-cosmic-eye-open v-if="slotProps.nodeData.type !== 'PAGE'" />
-        </template>
-    </tree>
 </template>
-<style>
-    .customlized {
-        --font-md : 1.2rem;
-        --icon-md : 1.4rem;
-        --leading-md: 0;
-    }
-    .customlized input {
-        font-size: 1.2rem;
+<style module>
+    .customlized :global(.cos-tree-arrow) {
+        display: none;
     }
 </style>

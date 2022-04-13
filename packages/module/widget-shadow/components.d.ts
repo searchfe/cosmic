@@ -4,8 +4,6 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ICosmicArrowDown: typeof import('~icons/cosmic/arrow-down')['default']
-    ICosmicArrowUp: typeof import('~icons/cosmic/arrow-up')['default']
     ICosmicExpand: typeof import('~icons/cosmic/expand')['default']
     ICosmicFuzzy: typeof import('~icons/cosmic/fuzzy')['default']
     ICosmicGridOutline: typeof import('~icons/cosmic/grid-outline')['default']
