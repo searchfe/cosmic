@@ -66,7 +66,7 @@
     "dependencies": {
         "@vueuse/gesture": "^2.0.0-beta.1",
         "cosmic-ui-alpha": "^0.0.48",
-        "cosmic-vue": "0.0.63",
+        "cosmic-vue": "0.0.64",
         "electron-updater": "4.6.5",
         "qrcode": "^1.5.0",
         "reflect-metadata": "^0.1.13",
