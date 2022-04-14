@@ -5,7 +5,7 @@ import { TextStyle } from '@cosmic/core/parts';
 import { fontDao } from '@cosmic/core/parts';
 import { TOKENS } from '../token';
 import { Subject } from '@cosmic/core/rxjs';
-
+import { v4, v5 } from 'uuid';
 
 const DEFAULT_STYLES = {
     name: '默认名称',
@@ -18,7 +18,7 @@ const DEFAULT_STYLES = {
 
 interface SubjectSourceType {
     type: 'C' | 'U' | 'D' | 'R';
-    data?: Partial<TextStyle>[];
+    data?: Partial<TextStyle>[] | string;
 }
 
 /**
@@ -41,13 +41,27 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
         return style;
     }
 
+    public cloneById(styleId: string, isChangeId = true): TextStyle {
+        const style = this.get(styleId);
+        const fontStyle = new TextStyle(isChangeId ? v5('cosmic', v4()) : styleId);
+        const { description, name, fontSize, textDecoration, fontName, lineHeight, letterSpacing, paragraphSpacing } = style;
+        fontStyle.description = description;
+        fontStyle.name = name;
+        fontStyle.fontSize = fontSize;
+        fontStyle.textDecoration = textDecoration;
+        fontStyle.fontName = {...fontName};
+        fontStyle.lineHeight = {...lineHeight};
+        fontStyle.letterSpacing = {...letterSpacing};
+        fontStyle.paragraphSpacing = paragraphSpacing;
+        return fontStyle;
+    }
+
     public async queryList() {
-        const fonts = await this.fontDao.query({});
+        const { data } = await this.fontDao.query({});
+        const fonts = data?.fonts || [];
         this.serviceStyles.clear();
-        if (fonts.data) {
-            fonts.map(font => this.transformToLocal(font)).forEach(font => this.addServiceStyle(font));
-            this.subject.next({type: 'R', data: this.getServiceStyles()});
-        }
+        fonts.map(font => this.transformToLocal(font)).forEach(font => this.addServiceStyle(font));
+        this.subject.next({type: 'R', data: this.getServiceStyles()});
     }
 
     public async saveStyle(id: string) {
@@ -58,7 +72,12 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
     }
 
     public async updateStyle(style: TextStyle) {
-        const update = await this.fontDao.update(this.transformToService(style));
+        const serviceStyle = this.transformToService(style);
+        const {data} = await this.fontDao.update({...serviceStyle, id: style.id});
+        if (data?.updateFont) {
+            await this.queryList();
+            this.subject.next({type: 'U', data: style.id});
+        }
     }
 
     public transformToLocal(fontStyle: Partial<gql.Font>): TextStyle {

@@ -33,13 +33,10 @@ export default function fontDao(client: Client) {
             ).toPromise();
         },
 
-        update(data: Partial<gql.CreateFontDTO>, fields = ['id']) {
-            return client.mutation<{ createDraft: Partial<gql.CreateFontDTO> }>(
-                `mutation ($data: CreateFontDTO!) {
-                    updateFont(data: $data) {
-                        id,
-                        ${fields.join(',')}
-                    }
+        update(data: Partial<gql.QueryFontDTO>, fields = ['id']) {
+            return client.mutation<{ updateFont: boolean }>(
+                `mutation ($data: QueryFontDTO!) {
+                    updateFont(data: $data)
                 }`,
                 { data },
             ).toPromise();

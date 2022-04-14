@@ -15,6 +15,7 @@ export class BaseService<T extends {id: string, clone: () => T}, P > {
     constructor() {
         this.localStyles =  new Map<string, T>();
         this.serviceStyles = new Map<string, T>();
+        this.subject = new Subject<P>();
     }
 
     public create(): any {

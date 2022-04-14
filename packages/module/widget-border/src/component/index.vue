@@ -61,8 +61,9 @@ function getFillStyle(node: TextNode) {
 function styleChange() {
     const node = nodeService.getSelection().find(item => hasMixin(item, MinimalStrokesMixin)) as MinimalStrokesMixin;
     const style = strokeStyleSevice.get(node.strokeId);
-    node.strokeWeight = style.strokeWeight;
-    node.dashPattern = style.dashPattern;
+    console.log(1212);
+    node.strokeWeight = Number(style.strokeWeight);
+    node.strokeLineStyle = style.style;
     if (hasMixin(node, BaseNodeMixin)) {
         node.update();
     }
