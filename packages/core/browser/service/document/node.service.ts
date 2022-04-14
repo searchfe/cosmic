@@ -7,12 +7,12 @@ import { type SceneNode, FrameNode, DocumentNode, PageNode, ComponentNode, TextN
 @injectable()
 export default class NodeService {
     public document: Subject<DocumentNode>;
-    public selection: Subject<Array<PageNode | SceneNode>>;
+    public selection: Subject<Array<SceneNode>>;
     public currentPage: Subject<PageNode>;
     
     private _watchList: {[index: string]: {subject: Subject<BaseNodeMixin>, node: BaseNodeMixin, lastEditTime: number}} = {};
     private _document: DocumentNode;
-    private _selection: Array<PageNode | SceneNode> = [];
+    private _selection: Array<SceneNode> = [];
     private _currentPage: PageNode;
 
     constructor() {
@@ -44,9 +44,9 @@ export default class NodeService {
         if (ids.length === 0) {
             this._selection = [];
         } else if (ids.length === 1) {
-            this._selection = [this._document.findOne(node => node.id == ids[0])];
+            this._selection = [this._currentPage.findOne(node => node.id == ids[0])];
         } else {
-            this._selection = this._document.findAll(node => ids.indexOf(node.id) > -1);
+            this._selection = this._currentPage.findAll(node => ids.indexOf(node.id) > -1);
         }
         if(this._selection.length) {
             requestAnimationFrame(() => {
@@ -139,12 +139,14 @@ export default class NodeService {
         return this._watchList[node.id].subject;
     }
     update() {
-        Object.keys(this._watchList).forEach(id => {
-            const item = this._watchList[id];
-            if (item.lastEditTime !== item.node.editTime) {
-                item.lastEditTime = item.node.editTime;
-                item.subject.next(item.node);
-            }
+        requestAnimationFrame(() => {
+            Object.keys(this._watchList).forEach(id => {
+                const item = this._watchList[id];
+                if (item.lastEditTime !== item.node.editTime) {
+                    item.lastEditTime = item.node.editTime;
+                    item.subject.next(item.node);
+                }
+            });
         });
     }
 

@@ -3,7 +3,7 @@ import { Tree, TreeNodeState, type TreeChangeEvent } from 'cosmic-vue';
 import { treeSecondary } from 'cosmic-ui';
 import { ref } from 'vue';
 import { service } from '@cosmic/core/browser';
-import { type PageNode, inject } from '@cosmic/core/parts';
+import { type PageNode, inject, SceneNode, ChildrenMixin } from '@cosmic/core/parts';
 import { type LayerTreeData, nodeToTree, updateSelection } from './layer-tree';
 
 
@@ -12,6 +12,7 @@ const treedata = ref<LayerTreeData[]>([]);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 let page: PageNode;
+let selections: SceneNode[] = [];
 
 nodeService.currentPage.subscribe(newPage => {
     nodeService.unwatch(page);
@@ -23,6 +24,7 @@ nodeService.currentPage.subscribe(newPage => {
 });
 
 nodeService.selection.subscribe(nodes => {
+    selections = nodes as SceneNode[];
     treedata.value = updateSelection(treedata.value, nodes);
 });
 
@@ -40,16 +42,42 @@ function changeLabel(event: TreeChangeEvent) {
         }
     }
 }
-
+function moveTo(event: TreeChangeEvent) {
+    if (!selections?.length || !page) return;
+    const selection = selections[0];
+    const target = page.findOne((node:SceneNode) => node.id == event.id);
+    const index = target.parent?.children.findIndex(node => node.id === event.id);
+    if (target.parent && index) {
+        selection.remove();
+        target.parent.insertChild(index + 1, selection);
+        selection.update();
+    }
+    // const index = document.children.findIndex(node => node.id === event.id);
+    // document.insertChild(index + 1, selection);
+    // document.update();
+}
+function moveInto(event: TreeChangeEvent) {
+    if (!selections?.length || !page) return;
+    const selection = selections[0];
+    const target = page.findOne((node:SceneNode) => node.id == event.id) as ChildrenMixin;
+    if(target) {
+        selection.remove();
+        target.insertChild(0, selection);
+        selection.update();
+    }
+}
 </script>
 <template>
     <tree
         editable
-        class="m-10 customlized"
+        class="m-10"
+        :class="$style.customlized"
         :data="treedata"
         :styles="treeSecondary"
         @click-node="changeSelection"
         @change-label="changeLabel"
+        @move-to="moveTo"
+        @move-into="moveInto"
     >
         <template #arrow="slotProps">
             <span v-if="slotProps.state == TreeNodeState.open" class="inline-block w-10 pb-2">▾</span>
@@ -69,7 +97,7 @@ function changeLabel(event: TreeChangeEvent) {
         </template>
     </tree>
 </template>
-<style scoped>
+<style module>
     .customlized {
         --font-md : 1.2rem;
         --icon-md : 1.4rem;

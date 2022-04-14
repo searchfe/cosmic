@@ -19,6 +19,7 @@ export function nodeToTree(node: Node) {
                 label: n.name,
                 children: nodeToTree(n),
                 type: n.type,
+                isGroup: n.type === 'FRAME' ? '1' : undefined,
             });
         });
         return tree as LayerTreeData[];
