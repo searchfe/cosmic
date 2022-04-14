@@ -3,7 +3,6 @@ import { ref, watchEffect } from 'vue';
 import { FillStyle, inject, TextNode, TextStyle } from '@cosmic/core/parts';
 import { MClolorWidget, service } from '@cosmic/core/browser';
 import Glyph from './glyph.vue';
-import { Standard } from '../../data';
 
 
 const textStyleSevice = inject<service.TextStyleSevice>(service.TOKENS.TextStyle);
@@ -152,7 +151,6 @@ function unFillSelectStyle() {
 }
 
 function saveFillStyle() {
-    console.log(12323);
     fillStyleService.saveStyle(styleId.value);
 }
 
@@ -171,7 +169,6 @@ function saveFillStyle() {
             @un-select-style="unSelectStyle"
         />
         <m-clolor-widget 
-            :standard-list="Standard" 
             :is-local-style="isLocalFillStyle"
             :fill-style="fillStyle"
             :style-list="fillStyleList"

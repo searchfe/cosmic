@@ -57,31 +57,27 @@ function filterHandler(data: string) {
         ref="container"
         :class="$style.container"
         :style="positionStyle"
-        class="cos-mode-reverse"
+        class="cos-mode-reverse flex flex-col"
     >
         <slot name="title">
             <div :class="$style.title">
-                <MTitle :title="title">
+                <div
+                    :class="[$style.wrapper]"
+                    class="flex h-full justify-between items-center w-full"
+                >
+                    {{ title }}
                     <i-cosmic-plus @click.stop="emits('add')" />
-                </MTitle>
+                </div>
             </div>
         </slot>
+        <div :class="$style['bottom-border']" />
         <slot name="filter">
             <div :class="$style.filter">
-                <div>
-                    <Select
-                        allow-input
-                        :value="filterTitle"
-                    >
-                        <select-option
-                            label="标题"
-                            value="1"
-                        />
-                        <select-option
-                            label="属性"
-                            value="2"
-                        />
-                    </Select>
+                <div
+                    :class="$style['filter-title']"
+                    class="flex items-center"
+                >
+                    标题
                 </div>
                 <div>
                     <Input
@@ -92,6 +88,7 @@ function filterHandler(data: string) {
                 </div>
             </div>
         </slot>
+        <div :class="$style['bottom-border']" />
         <div
             v-if="!isEmpty"
             ref="content"
@@ -128,8 +125,9 @@ function filterHandler(data: string) {
         <div 
             v-else
             :class="$style['empty-container']"
+            class="flex items-center justify-center"
         >
-            当前暂无原子，请添加原子
+            当前暂无原子
         </div>
     </div>
 </template>
@@ -137,9 +135,10 @@ function filterHandler(data: string) {
 <style module>
 
 .container {
-    padding: .4rem 0;
-    background-color: var(--color-gray-50);
-    border-radius: var(--rounded-md);
+    padding: 1.2rem 0;
+    font-size: 1.2rem;
+    background-color: #25252B;
+    border-radius: calc(var(--rounded-md) * 2);
     color: var(--color-light);
     position: fixed;
     transform: translateX(-100%);
@@ -153,16 +152,23 @@ function filterHandler(data: string) {
 }
 
 .filter {
-    composes: flex m-10 from global;
-    border: solid 1px var(--color-gray-400);
+    composes: flex -v-px md my-4 from global;
 }
 
 .filter > div:first-child {
-    flex: 1
+    flex: 0 0 4rem
 }
 
 .filter > div:last-child {
     flex: 3
+}
+
+.filter-title {
+    color: var(--color-dark);
+}
+
+.bottom-border {
+    border-bottom: 1px solid #1C1C20;
 }
 
 .content {
@@ -175,7 +181,7 @@ function filterHandler(data: string) {
     composes: -v-px md from global;
     color: var(--color-gray-500);
     padding: .4rem 0;
-    font-size: 1.4rem;
+    flex: 1;
 }
 
 </style>

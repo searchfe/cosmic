@@ -5,22 +5,13 @@ import RadiusContent from './radius-content.vue';
 const {
         isShowStandardModal,
         isShowDetailModal,
-        isStandard,
-        standard,
-        standardList,
-
-
         detailTarget,
         standardTarget,
 
         cancelStandardModal,
         cancelDetailModal,
-        selectStandard,
         openDetaileModal,
         openStandardModal,
-        unRef,
-        getDetailEdit,
-        saveDetail,
     } = usePropterty(service.TOKENS.RadiusStyle);
 
 </script>

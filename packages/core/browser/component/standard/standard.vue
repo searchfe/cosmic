@@ -72,7 +72,7 @@ function changeHandler({value}: {value: string}) {
 <style module>
 .standard {
     font-size: 1.2rem;
-    composes: items-center from global;
+    composes: items-center -v-bg-inapparent from global;
     color: var(--color-dark);
     height: calc(var(--height-sm) * 3);
     border-radius: var(--rounded-md);
