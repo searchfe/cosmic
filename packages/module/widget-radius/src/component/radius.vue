@@ -5,22 +5,13 @@ import RadiusContent from './radius-content.vue';
 const {
         isShowStandardModal,
         isShowDetailModal,
-        isStandard,
-        standard,
-        standardList,
-
-
         detailTarget,
         standardTarget,
 
         cancelStandardModal,
         cancelDetailModal,
-        selectStandard,
         openDetaileModal,
         openStandardModal,
-        unRef,
-        getDetailEdit,
-        saveDetail,
     } = usePropterty(service.TOKENS.RadiusStyle);
 
 </script>
@@ -29,7 +20,7 @@ const {
     <div>
         <div v-if="!isStandard">
             <m-title title="边角">
-                <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
+                <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </m-title>
             <radius-content :radius-style="standard" />
         </div>
@@ -77,6 +68,9 @@ const {
     max-height: 400px
 }
 
+.icon {
+    font-size: 1.2rem;
+}
 
 .glyph-content {
     border-top: solid 1px var(--color-gray-100);

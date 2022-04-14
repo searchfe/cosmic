@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import { MTitle, MWidget, MClolorWidget, service} from '@cosmic/core/browser';
-import { inject, TextNode, hasMixin, MinimalStrokesMixin, BaseNodeMixin } from '@cosmic/core/parts';
+import { inject, FrameNode, hasMixin, MinimalStrokesMixin, BaseNodeMixin, TextNode, FillStyle } from '@cosmic/core/parts';
 import Stroke from './stroke.vue';
-import { Standard } from '../data';
 
 const isShowDetail = ref(false);
 
@@ -11,47 +10,64 @@ const strokeStyleSevice = inject<service.StrokeStyleService>(service.TOKENS.Stro
 const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillStyle);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
-let strokeNode = nodeService.getSelection().find(item => hasMixin(item, MinimalStrokesMixin));
+let strokeNode = nodeService.getSelection().find(item => hasMixin(item, MinimalStrokesMixin)) as TextNode | FrameNode;
 
 const strokeId = ref(getStrokeStyle(strokeNode).id);
 
-const strokeStyleId = ref(getFillStyle(strokeNode).id);
 
 const isLocalStyle = computed(() => strokeStyleSevice.isLocalStyle(strokeId.value));
 
 const strokeStyle = computed(() => strokeStyleSevice.get(strokeId.value));
 
-const fillStyle = computed(() => {
-    console.log(1212212);
-    return fillStyleService.get(strokeStyleId.value);
+const fillStyleId = ref(getFillStyle(strokeNode)?.id);
+
+const fillStyle = ref();
+
+const isLocalFillStyle = ref(false);
+
+const fillStyleList = ref(fillStyleService.getServiceStyles());
+
+watchEffect(() =>  {
+    const id = fillStyleId.value as string;
+    resetFillStyle(id);
+    isLocalFillStyle.value = fillStyleService.isLocalStyle(id);
 });
 
-const isLocalFillStyle = computed(() => fillStyleService.isLocalStyle(strokeStyleId.value));
-
 nodeService.selection.subscribe((nodes) => {    
-    const selectNode = nodes.find(item => hasMixin(item, MinimalStrokesMixin));
+    const selectNode = nodes.find(item => hasMixin(item, MinimalStrokesMixin)) as TextNode | FrameNode;
     if (!selectNode) return;
     getStrokeStyle(selectNode);
     getFillStyle(selectNode);
-    console.log(selectNode);
     strokeId.value = selectNode.strokeId;
-    strokeStyleId.value = selectNode.strokeStyleId;
+    fillStyleId.value = selectNode.strokeStyleId;
+});
+
+fillStyleService.subject.subscribe((source: any) => {
+    const  { type, data } = source;
+    fillStyleList.value = fillStyleService.getServiceStyles();
+    switch(type) {
+        case 'C':
+        case 'U':
+            selectFillStyle({id: data as string});
+            resetFillStyle(data as string);
+    }
+
 });
 
 const clickHandler = () => {
     isShowDetail.value = !isShowDetail.value;
 };
 
-function getStrokeStyle(node) {
-    if (!node) return {};
-    const strokeStyle = strokeStyleSevice.get(node.strokeId || Date.now() + '');
-    if (node.strokeId !== strokeStyle.id) {
-        node.strokeId = strokeStyle.id;
+function getStrokeStyle(node: TextNode | FrameNode) {
+    if (!node) return {} as TextNode | FrameNode;
+    const strokeStyle = strokeStyleSevice.get((node as any).strokeId || Date.now() + '');
+    if ((node as any).strokeId !== strokeStyle.id) {
+        (node as any).strokeId = strokeStyle.id;
     }
     return strokeStyle;
 }
 
-function getFillStyle(node: TextNode) {
+function getFillStyle(node: TextNode | FrameNode ) {
     if (!node) return;
     const fillStyle = fillStyleService.get(node.strokeStyleId ?? Date.now() + '');
     if (node.strokeStyleId !== fillStyle.id) {
@@ -63,8 +79,8 @@ function getFillStyle(node: TextNode) {
 function styleChange() {
     const node = nodeService.getSelection().find(item => hasMixin(item, MinimalStrokesMixin)) as MinimalStrokesMixin;
     const style = strokeStyleSevice.get(node.strokeId);
-    node.strokeWeight = style.strokeWeight;
-    node.dashPattern = style.dashPattern;
+    node.strokeWeight = Number(style.strokeWeight);
+    node.strokeLineStyle = style.style;
     if (hasMixin(node, BaseNodeMixin)) {
         node.update();
     }
@@ -73,19 +89,43 @@ function styleChange() {
 function fillChage() {
     const node = nodeService.getSelection().find(item => hasMixin(item, MinimalStrokesMixin)) as MinimalStrokesMixin;
     const style = fillStyleService.get(node.strokeStyleId);
-    console.log(style);
     node.strokes = [style];
     if (hasMixin(node, BaseNodeMixin)) {
         node.update();
     }
 }
 
+function resetFillStyle(id: string) {
+    fillStyle.value = fillStyleService.get(id);
+}
+
+function selectFillStyle(data: {id: string}) {
+    fillStyleId.value = data.id;
+    strokeNode.strokeStyleId = data.id;
+    fillChage();
+}
+
+function unFillSelectStyle() {
+    const cloneStyle = fillStyleService.cloneById(fillStyleId.value as string);
+    fillStyleService.addLocalStyle(cloneStyle);
+    selectFillStyle({id: cloneStyle.id});
+}
+
+function saveFillStyle() {
+    fillStyleService.saveStyle(fillStyleId.value as string);
+}
+
+function updateFillStyle(style: FillStyle) {
+    fillStyleService.updateStyle(style);
+}
+
+
 </script>
 
 <template>
     <div>
-        <MWidget>
-            <MTitle title="边框">
+        <m-widget>
+            <m-title title="边框">
                 <i-cosmic-plus
                     v-if="!isShowDetail"
                     @click="clickHandler"
@@ -94,29 +134,33 @@ function fillChage() {
                     v-else
                     @click="clickHandler"
                 />
-            </MTitle>
+            </m-title>
             <div v-if="isShowDetail" :class="$style.detail">
                 <Stroke :is-local-style="isLocalStyle" :stroke-style="strokeStyle" @change="styleChange" />
                 <m-clolor-widget 
-                    :standard-list="Standard" 
                     :is-local-style="isLocalFillStyle"
                     :fill-style="fillStyle"
-                    @change="fillChage" 
+                    :style-list="fillStyleList"
+                    @add-style="saveFillStyle"
+                    @change="fillChage"
+                    @select-style="selectFillStyle"
+                    @update-style="updateFillStyle"
+                    @un-select-style="unFillSelectStyle"
                 />
             </div>
-        </MWidget>
+        </m-widget>
     </div>
 </template>
 
 <style module>
 .icon {
-    font-size: var(--font-md)
+    font-size: 1.4rem
 }
 .row {
     margin: var(--margin-md) 0;
 }
 
 .detail {
-    composes: -v-py sm from global;
+    margin-bottom: .8rem;
 }
 </style>

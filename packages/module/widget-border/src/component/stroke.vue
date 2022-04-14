@@ -21,11 +21,8 @@ const {
 
         cancelStandardModal,
         cancelDetailModal,
-        selectStandard,
         openDetaileModal,
         openStandardModal,
-        unRef,
-        getDetailEdit,
     } = usePropterty(service.TOKENS.StrokeStyle);
 
 </script>
@@ -34,9 +31,9 @@ const {
 <template>
     <div ref="containerRef">
         <div v-if="isLocalStyle">
-            <MTitle title="描边">
-                <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
-            </MTitle>
+            <m-title title="描边">
+                <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
+            </m-title>
             <stroke-content :stroke-style="strokeStyle" @change="() => emits('change')" />
         </div>
         <template v-else>
@@ -83,6 +80,9 @@ const {
     max-height: 400px
 }
 
+.icon {
+    font-size: 1.4rem
+}
 
 .glyph-content {
     border-top: solid 1px var(--color-gray-100);

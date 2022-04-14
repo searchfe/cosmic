@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { ref, computed, toRaw } from 'vue';
-import { inject, TextNode } from '@cosmic/core/parts';
+import { ref, watchEffect } from 'vue';
+import { FillStyle, inject, TextNode, TextStyle } from '@cosmic/core/parts';
 import { MClolorWidget, service } from '@cosmic/core/browser';
 import Glyph from './glyph.vue';
-import { Standard } from '../../data';
 
 
 const textStyleSevice = inject<service.TextStyleSevice>(service.TOKENS.TextStyle);
@@ -16,41 +15,82 @@ const styleId = ref(getTextStyle(textNode).id);
 
 const fillStyleId = ref(getFillStyle(textNode)?.id);
 
-const textStyle = computed(() => textStyleSevice.get(styleId.value));
+const textStyle = ref();
 
-const isStandard = computed(() => !textStyleSevice.isLocalStyle(styleId.value));
+const isStandard = ref(false);
 
-const isLocalFillStyle = computed(() =>  styleId.value === '' || fillStyleService.isLocalStyle(fillStyleId.value));
+const isLocalFillStyle = ref(false);
 
-const styleList = computed(() => {
-    styleId.value;
-    return textStyleSevice.getServiceStyles();
+const styleList = ref(textStyleSevice.getServiceStyles());
+
+const fillStyle = ref();
+
+const fillStyleList = ref(fillStyleService.getServiceStyles());
+
+watchEffect(() => {
+    resetTextStyle(styleId.value);
+    isStandard.value  =  !textStyleSevice.isLocalStyle(styleId.value);
 });
 
-const fillStyle = computed(() => fillStyleService.get(fillStyleId.value));
+watchEffect(() =>  {
+    resetFillStyle(fillStyleId.value);
+    isLocalFillStyle.value = fillStyleService.isLocalStyle(fillStyleId.value);
+});
 
 nodeService.selection.subscribe((nodes) => {    
-    const selectNode = nodes.find(item => item.type === 'TEXT');
+    const selectNode = nodes.find(item => item.type === 'TEXT') as TextNode;
     if (!selectNode) return;
     getTextStyle(selectNode);
     getFillStyle(selectNode);
-    styleId.value = selectNode.getRangeTextStyleId();
-    fillStyleId.value = selectNode.getRangeFillStyleId();
+    styleId.value = selectNode.getRangeTextStyleId(0,0);
+    fillStyleId.value = selectNode.getRangeFillStyleId(0,0);
 });
 
-function getTextStyle(node: TextNode) {
-    if (!node) return {};
-    const textStyle = textStyleSevice.get(node.getRangeTextStyleId() ?? Date.now() + '');
-    if (node.getRangeTextStyleId() !== textStyle.id) {
+textStyleSevice.subject.subscribe((source: any) => {
+    const  { type, data } = source;
+    styleList.value = textStyleSevice.getServiceStyles();
+    switch(type) {
+        case 'C':
+        case 'U':
+            selectStyle({id: data as string});
+            resetTextStyle(data as string);
+    }
+
+});
+
+fillStyleService.subject.subscribe((source: any) => {
+    const  { type, data } = source;
+    fillStyleList.value = fillStyleService.getServiceStyles();
+    switch(type) {
+        case 'C':
+        case 'U':
+            selectFillStyle({id: data as string});
+            resetFillStyle(data as string);
+    }
+
+});
+
+function resetTextStyle(id: string) {
+    textStyle.value = textStyleSevice.get(id);
+}
+
+function resetFillStyle(id: string) {
+    fillStyle.value = fillStyleService.get(id);
+}
+
+function getTextStyle(node: TextNode): TextStyle {
+    if (!node) return {} as TextStyle;
+    const textStyle = textStyleSevice.get(node.getRangeTextStyleId(0,0) ?? Date.now() + '');
+    if (node.getRangeTextStyleId(0,0) !== textStyle.id) {
         node.setRangeTextStyleId(0, 0, textStyle.id);
     }
     return textStyle;
 }
 
-function getFillStyle(node: TextNode) {
-    if (!node) return;
-    const fillStyle = fillStyleService.get(node.getRangeFillStyleId() ?? Date.now() + '');
-    if (node.getRangeFillStyleId() !== fillStyle.id) {
+function getFillStyle(node: TextNode): FillStyle {
+    if (!node) return {} as FillStyle;
+    const fillStyle = fillStyleService.get(node.getRangeFillStyleId(0,0) ?? Date.now() + '');
+    if (node.getRangeFillStyleId(0,0) !== fillStyle.id) {
         node.setRangeFillStyleId(0, 0, fillStyle.id);
     }
     return fillStyle;
@@ -58,7 +98,7 @@ function getFillStyle(node: TextNode) {
 
 function textChange() {
     const node = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
-    const style = textStyleSevice.get(node.getRangeTextStyleId());
+    const style = textStyleSevice.get(node.getRangeTextStyleId(0,0));
     console.log(style.fontName);
     node.setRangeFontSize(0, 0, style.fontSize);
     node.setRangeFontName(0, 0, {family: style.fontName.family ?? '宋体', style: style.fontName.style ?? ''});
@@ -69,10 +109,49 @@ function textChange() {
 }
 
 function fillChage() {
-    const node = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
-    const style = fillStyleService.get(node.getRangeFillStyleId());
-    node.setRangeFills(0, 0, [toRaw(style)]);
-    node.update();
+    const style = fillStyleService.get(textNode.getRangeFillStyleId(0, 0));
+    textNode.setRangeFills(0, 0, [style as unknown as any]);
+    textNode.update();
+}
+
+function saveStyle() {
+    textStyleSevice.saveStyle(styleId.value);
+}
+
+function selectStyle(data: {id: string}) {
+    styleId.value = data.id;
+    textNode.setRangeTextStyleId(0, 0, data.id);
+    textChange();
+}
+
+function selectFillStyle(data: {id: string}) {
+    fillStyleId.value = data.id;
+    textNode.setRangeFillStyleId(0, 0, data.id);
+    fillChage();
+}   
+
+function unSelectStyle() {
+    const textStyle = textStyleSevice.cloneById(styleId.value);
+    textStyleSevice.addLocalStyle(textStyle);
+    selectStyle({id: textStyle.id});
+} 
+
+function updateStyle(style: TextStyle) {
+    textStyleSevice.updateStyle(style);
+}
+
+function updateFillStyle(style: FillStyle) {
+    fillStyleService.updateStyle(style);
+}
+
+function unFillSelectStyle() {
+    const cloneStyle = fillStyleService.cloneById(fillStyleId.value);
+    fillStyleService.addLocalStyle(cloneStyle);
+    selectFillStyle({id: cloneStyle.id});
+}
+
+function saveFillStyle() {
+    fillStyleService.saveStyle(styleId.value);
 }
 
 </script>
@@ -83,13 +162,21 @@ function fillChage() {
             :is-standard="isStandard"
             :text-style="textStyle"
             :style-list="styleList" 
-            @change="textChange"
+            @add-style="saveStyle"
+            @change="fillChage"
+            @select-style="selectStyle"
+            @update-style="updateStyle"
+            @un-select-style="unSelectStyle"
         />
         <m-clolor-widget 
-            :standard-list="Standard" 
             :is-local-style="isLocalFillStyle"
             :fill-style="fillStyle"
+            :style-list="fillStyleList"
+            @add-style="saveFillStyle"
             @change="fillChage"
+            @select-style="selectFillStyle"
+            @update-style="updateFillStyle"
+            @un-select-style="unFillSelectStyle"
         />
     </div>
 </template>

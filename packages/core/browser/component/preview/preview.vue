@@ -75,6 +75,19 @@ body {
     --border-style: solid;
     --border-color: var(--color-gray-100);
 }
+
+:root .cos-mode-reverse .-v-bg-inapparent
+    { background-color: transparent; }
+:root .cos-mode-reverse .-v-bg-inapparent.hover,
+:root .cos-mode-reverse .-v-bg-inapparent:hover
+    { background-color: rgba(255, 255, 255, .09); }
+:root .cos-mode-reverse .-v-bg-inapparent.active,
+:root .cos-mode-reverse .-v-bg-inapparent:active
+    { background-color: rgba(255, 255, 255, .09); }
+:root .cos-mode-reverse .-v-bg-inapparent.disabled,
+:root .cos-mode-reverse .-v-bg-inapparent:disabled
+    { background-color: transparent; }
+
 .border-left {
     border-left: var(--border) var(--border-style) var(--border-color);
 }

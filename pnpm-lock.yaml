@@ -10,8 +10,8 @@ importers:
       '@vue/test-utils': 2.0.0-rc.18
       '@vueuse/gesture': ^2.0.0-beta.1
       cosmic-icon: 0.0.7
-      cosmic-ui-alpha: 0.0.39
-      cosmic-vue: 0.0.59
+      cosmic-ui-alpha: 0.0.45
+      cosmic-vue: 0.0.60
       cross-env: 7.0.3
       csstype: ^2.6
       dotenv: ~16.0.0
@@ -47,8 +47,8 @@ importers:
       vue-tsc: 0.32.1
     dependencies:
       '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.29
-      cosmic-ui-alpha: 0.0.39
-      cosmic-vue: 0.0.59
+      cosmic-ui-alpha: 0.0.45
+      cosmic-vue: 0.0.60
       electron-updater: 4.6.5
       qrcode: 1.5.0
       reflect-metadata: 0.1.13
@@ -99,6 +99,7 @@ importers:
       '@urql/vue': ~0.6.1
       axios: ~0.26.1
       color: ~4.2.1
+      graphql-tag: ^2.12.6
       graphql-ws: ~5.6.2
       inversify: ^6.0.1
       lodash: ~4.17.21
@@ -110,6 +111,7 @@ importers:
       '@urql/vue': 0.6.1_graphql@16.3.0+vue@3.2.29
       axios: 0.26.1
       color: 4.2.3
+      graphql-tag: 2.12.6_graphql@16.3.0
       graphql-ws: 5.6.4_graphql@16.3.0
       inversify: 6.0.1
       lodash: 4.17.21
@@ -1639,12 +1641,12 @@ packages:
       - webpack
     dev: true
 
-  /cosmic-ui-alpha/0.0.39:
-    resolution: {integrity: sha512-enNa0eMwgbqk4mhvT1wOiZ0ADqgXHakl0Kg6Bm2A7DmWu0DM/+HrOofioBONeelqgilKVcDu8YjuN4pyQd9mQQ==}
+  /cosmic-ui-alpha/0.0.45:
+    resolution: {integrity: sha512-bDNv34WRblvkx/JVopCagHnfItqUS0DbnILJGwYFhVt0xHZ9YT8P9nUOdi1e0pD/pQ3OsrgfrHRaM02TyCwjVg==}
     dev: false
 
-  /cosmic-vue/0.0.59:
-    resolution: {integrity: sha512-V+0CTqvIed+VaynWQbCV+0lb9eZKVYsvEjWUymjEH8CR/gTxnj/zx7HWEDhtLVp+UH6hU3YSw1vc6MGs9j9YQQ==}
+  /cosmic-vue/0.0.60:
+    resolution: {integrity: sha512-fcQqbYx0rpFIyjQioJxt6IDBRr9ctRbc/IqBNGBtPy55Y0PNYj8NRdt2G0qCKm+pcdiXRXXSaZTsRibv6YZglg==}
     dependencies:
       '@babel/types': 7.17.0
       lodash.kebabcase: 4.1.1
@@ -2748,6 +2750,16 @@ packages:
   /graceful-readlink/1.0.1:
     resolution: {integrity: sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=}
     dev: true
+
+  /graphql-tag/2.12.6_graphql@16.3.0:
+    resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 16.3.0
+      tslib: 2.3.1
+    dev: false
 
   /graphql-ws/5.6.4_graphql@16.3.0:
     resolution: {integrity: sha512-5r8tAzznI1zeh7k12+3z07KkgXPckQbnC9h4kJ2TBDWG2wb26TJTbVHQOiAncDBgPbtXtc1A2BlttiRuPH2t/w==}

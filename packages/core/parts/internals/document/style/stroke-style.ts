@@ -6,7 +6,7 @@ export class StrokeStyle extends BaseStyle {
     strokeAlign: 'CENTER' | 'INSIDE' | 'OUTSIDE';
     dashPattern: Array<number>;
     strokeGap: Internal.StrokeCap;
-    
+    style: string;
 
     constructor(id: string) {
         super(id, 'STROKE');

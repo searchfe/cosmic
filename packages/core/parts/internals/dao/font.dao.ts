@@ -2,9 +2,9 @@ import { Client } from '@urql/core';
 
 const fontField = ['id', 'team', 'style', 'variant', 'weight', 'size', 'lineHeight', 'family', 'name'];
 
-export default function FontDao(client: Client) {
+export default function fontDao(client: Client) {
 
-    return { 
+    return {
         query(query: gql.QueryFontDTO) {
             return client.query< {fonts: Partial<gql.Font>[]}>(
                 `query ($fields: [String!], $query: QueryFontDTO!) {
@@ -33,13 +33,10 @@ export default function FontDao(client: Client) {
             ).toPromise();
         },
 
-        update(data: Partial<gql.CreateFontDTO>, fields = ['id']) {
-            return client.mutation<{ createDraft: Partial<gql.CreateFontDTO> }>(
-                `mutation ($data: CreateFontDTO!) {
-                    updateFont(data: $data) {
-                        id,
-                        ${fields.join(',')}
-                    }
+        update(data: Partial<gql.QueryFontDTO>, fields = ['id']) {
+            return client.mutation<{ updateFont: boolean }>(
+                `mutation ($data: QueryFontDTO!) {
+                    updateFont(data: $data)
                 }`,
                 { data },
             ).toPromise();

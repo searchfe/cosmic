@@ -81,6 +81,7 @@ watch(() => props.colorStyle, (newValue) => {
             />
             <i-cosmic-dark 
                 v-else
+                class=""
             />
         </div>
         <div

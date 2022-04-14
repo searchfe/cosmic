@@ -11,6 +11,6 @@ import WorkbenchBar from './workbench-bar.vue';
 </template>
 <style module>
 .root {
-    background-color: var(--color-gray-200);
+    background-color: var(--color-gray-50);
 }
 </style>

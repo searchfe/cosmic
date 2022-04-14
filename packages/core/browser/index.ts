@@ -6,17 +6,16 @@ import { createContainer, TOKENS, type RouterService } from './service/index';
 import App from './app.vue';
 import Preview from './component/preview/preview.vue';
 import ChildrenRender from './component/preview/render/children.vue';
-
-import type { BootstrapOption } from '@cosmic/core/parts';
-
 import MColor from './component/color/color.vue';
 import MClolorWidget from './component/color/color-widget.vue';
 import MTitle from './component/title/title.vue';
 import MWidget from './component/widget/widget.vue';
 import MStandardModal from './component/modal/standard-modal.vue';
 import MDetailModal from './component/modal/detail-modal.vue';
-import type { GqlClient } from './service/index';
 import MStandard from './component/standard/standard.vue';
+
+import type { BootstrapOption } from '@cosmic/core/parts';
+import type { GqlClient } from './service/index';
 
 
 function bootstrap(option: BootstrapOption) {

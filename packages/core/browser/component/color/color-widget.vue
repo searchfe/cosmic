@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, toRaw } from 'vue';
+import { ref, watchEffect, toRaw } from 'vue';
 import MTitle from '../title/title.vue';
 import MColor from './color.vue';
 import MStandard from '../standard/standard.vue';
@@ -7,28 +7,30 @@ import MStandardModal from '../modal/standard-modal.vue';
 import MDetailModal from '../modal/detail-modal.vue';
 import { usePropterty } from '../../use/use-property';
 import { service } from '@cosmic/core/browser';
-import { inject, TextNode } from '@cosmic/core/parts';
-import func from 'vue-temp/vue-editor-bridge';
-import { includes } from 'lodash';
+ import { inject } from '@cosmic/core/parts';
 
 const props = withDefaults(defineProps<{
     type?: string | string[],
     showTitle?: boolean,
     isLocalStyle: boolean,
-    fillStyle: object
+    fillStyle: object,
+    styleList: object[]
 }>(), {
     type: 'TEXT',
     showTitle: true,
 });
 
-const emits = defineEmits(['change']);
-console.log(props.isLocalStyle);
+const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillStyle);
+
+const emits = defineEmits(['change', 'selectStyle', 'updateStyle', 'unSelectStyle', 'addStyle']);
 
 const content = ref(null);
 
+let editId = '';
+
+const editStyle = ref();
 
 const {
-    standardList,
     isShowStandardModal,
     isShowDetailModal,
     detailTarget,
@@ -36,14 +38,36 @@ const {
 
     cancelStandardModal,
     cancelDetailModal,
-    selectStandard,
     openDetaileModal,
     openStandardModal,
-    getDetailEdit,
-    unRef,
 } = usePropterty(service.TOKENS.FillStyle);
 
+watchEffect(() => {
+    if (isShowDetailModal.value) {
+        const style = fillStyleService.cloneById(editId, false);
+        editStyle.value = style;
+    }
+});
 
+function selectStyle(event: {data: Record<string, string>}) {
+    cancelStandardModal(),
+    cancelDetailModal(),
+    emits('selectStyle', event.data);
+}
+
+function editStyleHandler(el: HTMLElement, id: string) {
+    editId = id;
+    openDetaileModal(el);
+}
+
+function updateStyle() {
+    cancelDetailModal();
+    emits('updateStyle', editStyle.value);
+}
+
+function unRef() {
+    emits('unSelectStyle');
+}
 
 </script>
 
@@ -58,10 +82,13 @@ const {
                     title="颜色"
                 >
                     <div
-                        class="flex justify-between items-center w-30"
+                        class="flex justify-between items-center"
                     >
-                        <i-cosmic-sun />
-                        <i-cosmic-grid-outline @click.stop="(event) => openStandardModal(event.currentTarget)" />
+                        <i-cosmic-sun :class="$style.icon" />
+                        <i-cosmic-grid-outline
+                            :class="$style.icon"
+                            @click.stop="(event) => openStandardModal(content)"
+                        />
                     </div>
                 </m-title>
                 <m-color
@@ -74,7 +101,7 @@ const {
                 classes="-v-bg-inapparent"
                 :standard="fillStyle"
                 :can-edit="false"
-                @click="(event) => openStandardModal(event.event.currentTarget)"
+                @click="(event) => editStyleHandler(content, fillStyle)"
             >
                 <!-- demo 样式 -->
                 <template #prefix="data">
@@ -82,16 +109,14 @@ const {
                         <div
                             :class="[$style['demo-item'], 'flex items-center align-center']"
                             :style="{backgroundColor: `rgba(${data.standard?.color?.r}, ${data.standard?.color?.g}, ${data.standard?.color?.b}, 1)`}"
-                        >
-                            <i-cosmic-question v-if="!standard?.color" />
-                        </div>
+                        />
                     </div>
                 </template>
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-between"
                     >
-                        <i-cosmic-more @click.stop="openDetaileModal(content, standard)" />
+                        <i-cosmic-more @click.stop="() => editStyleHandler(content, fillStyle.id)" />
                         <i-cosmic-lock @click.stop="unRef" />
                     </div>
                 </template>
@@ -102,11 +127,11 @@ const {
     <m-standard-modal
         v-if="isShowStandardModal"
         title="颜色"
-        :standard-list="standardList"
+        :standard-list="styleList"
         :target="standardTarget"
+        @add="() => emits('addStyle')"
         @cancel="cancelStandardModal"
-        @select="(event) => selectStandard(event.data)"
-        @show-detail="(event) => openDetaileModal(event.target, event.data)"
+        @select="selectStyle"
     >
         <!-- demo 样式 -->
         <template #prefix="data">
@@ -125,12 +150,12 @@ const {
         v-if="isShowDetailModal"
         title="颜色"
         :target="detailTarget"
-        :standard="getDetailEdit()"
+        :standard="editStyle"
         @cancel="cancelDetailModal"
-        @ok="cancelDetailModal"
+        @ok="updateStyle"
     >
         <div :class="$style['color-content']">
-            <m-color :color-style="getDetailEdit()" />
+            <m-color :color-style="editStyle" />
         </div>
     </m-detail-modal>
 </template>
@@ -139,6 +164,14 @@ const {
 .color-content {
     composes: -v-py w-full md from global;
     max-height: 400px
+}
+
+.icon {
+    font-size: 1.2rem;
+}
+
+.icon:first-child {
+    margin-right: .8rem;
 }
 
 .demo {
