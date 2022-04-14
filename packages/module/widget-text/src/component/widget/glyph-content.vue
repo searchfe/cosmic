@@ -105,7 +105,7 @@ watch(() => props.textStyle, (newValue) => {
                     <Input
                         size="sm"
                         :value="textStyle.lineHeight.value"
-                        @on-change="(event) => changeStyle(originalStyle.lineHeight, 'value', event)"
+                        @on-input="(event) => changeStyle(originalStyle.lineHeight, 'value', event)"
                     >
                         <template #prefix>
                             <i-cosmic-line-height :class="[$style.icon]" />

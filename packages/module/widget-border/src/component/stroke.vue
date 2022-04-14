@@ -17,15 +17,11 @@ const {
         isShowStandardModal,
         isShowDetailModal,
         detailTarget,
-        standardTarget,
 
         cancelStandardModal,
         cancelDetailModal,
-        selectStandard,
         openDetaileModal,
         openStandardModal,
-        unRef,
-        getDetailEdit,
     } = usePropterty(service.TOKENS.StrokeStyle);
 
 </script>
