@@ -1,9 +1,11 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { BaseService } from './base.service';
+import { service } from '@cosmic/core/browser';
 import { TextStyle } from '@cosmic/core/parts';
-import FontDaoService from '../dao/font.dao.service';
+import { fontDao } from '@cosmic/core/parts';
 import { TOKENS } from '../token';
 import { Subject } from '@cosmic/core/rxjs';
+
 
 const DEFAULT_STYLES = {
     name: '默认名称',
@@ -25,8 +27,10 @@ interface SubjectSourceType {
 
 @injectable()
 export default class TextService extends BaseService<TextStyle, SubjectSourceType> {
-    constructor(@inject<FontDaoService>(TOKENS.FontDao) private fontDaoService: FontDaoService) {
+    private fontDao: ReturnType<typeof fontDao>;
+    constructor(@inject(TOKENS.GqlClient) private client: service.GqlClient) {
         super();
+        this.fontDao = fontDao(this.client);
         this.setType('TEXT');
         this.subject = new Subject<SubjectSourceType>();
         this.queryList();
@@ -38,9 +42,9 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
     }
 
     public async queryList() {
-        const fonts = await this.fontDaoService.queryList();
+        const fonts = await this.fontDao.query({});
         this.serviceStyles.clear();
-        if (fonts) {
+        if (fonts.data) {
             fonts.map(font => this.transformToLocal(font)).forEach(font => this.addServiceStyle(font));
             this.subject.next({type: 'R', data: this.getServiceStyles()});
         }
@@ -48,13 +52,13 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
 
     public async saveStyle(id: string) {
         const style = this.transformToService(this.get(id)!);
-        const creatOption = await this.fontDaoService.create(style);
+        const creatOption = await this.fontDao.create(style);
         await this.queryList();
         this.subject.next({type: 'C', data: []});
     }
 
     public async updateStyle(style: TextStyle) {
-        const update = await this.fontDaoService.update(this.transformToService(style));
+        const update = await this.fontDao.update(this.transformToService(style));
     }
 
     public transformToLocal(fontStyle: Partial<gql.Font>): TextStyle {
@@ -74,8 +78,8 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
     public transformToService(target: Partial<TextStyle>): Partial<gql.Font> {
         const { name, fontSize, fontName, lineHeight, letterSpacing, paragraphSpacing } = target as TextStyle & { lineHeight: {value: number}};
         return {
-            name: name!, 
-            size: fontSize ? fontSize + '' : '', 
+            name: name!,
+            size: fontSize ? fontSize + '' : '',
             weight: '10',
             lineHeight: String(lineHeight?.value),
             family: fontName!.family! + '',
