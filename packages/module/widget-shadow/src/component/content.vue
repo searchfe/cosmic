@@ -1,68 +1,83 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import {MTitle, MClolorWidget, MStandard, MStandardModal, MDetailModal, usePropterty, service} from '@cosmic/core/browser';
-import { inject, TextNode, hasMixin, BlendMixin, BaseNodeMixin } from '@cosmic/core/parts';
-import InputList from './input-list.vue';
-
-
-defineProps({
-    insetTitle: {
-        type: String,
-        default: '',
-    },
-});
-
-const container = ref(null);
-
-const {
-    isShowStandardModal,
-    isShowDetailModal,
-    detailTarget,
-    standardTarget,
-
-    cancelStandardModal,
-    cancelDetailModal,
-    selectStandard,
-    openDetaileModal,
-    openStandardModal,
-    getDetailEdit,
-    unRef,
-    saveDetail,
-} = usePropterty(service.TOKENS.EffectStyle);
+import { ref, watchEffect } from 'vue';
+import MShadow from './shadow.vue';
+import { MClolorWidget } from '@cosmic/core/browser';
+import { service } from '@cosmic/core/browser';
+import type { EffectStyle, FillStyle } from '@cosmic/core/parts';
+import { inject, SceneNode, hasMixin, BlendMixin, BaseNodeMixin } from '@cosmic/core/parts';
 
 const effectStyleSevice = inject<service.EffectStyleService>(service.TOKENS.EffectStyle);
 const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillStyle);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
-let effectNode = nodeService.getSelection().find(item => hasMixin(item, BlendMixin));
+let effectNode = nodeService.getSelection().find(item => hasMixin(item, BlendMixin)) as BlendMixin;
 
-const effectId = ref(getEffectStyle(effectNode).id);
-
-const effectStrokeStyleId = ref(getFillStyle(effectNode).id);
-
-const fillStyle = computed(() => fillStyleService.get(effectStrokeStyleId.value));
-
-const isLocalFillStyle = computed(() => fillStyleService.isLocalStyle(effectStrokeStyleId.value));
+const effectId = ref(getEffectStyle(effectNode as BlendMixin).id);
 
 
-const isLocalStyle = computed(() => effectStyleSevice.isLocalStyle(effectId.value));
+const effectStyle = ref(effectStyleSevice.get(effectId.value));
+
+const effectList = ref(effectStyleSevice.getServiceStyles());
+
+const fillStyleId = ref(getFillStyle(effectNode as BlendMixin).id);
+
+const fillStyleList = ref(fillStyleService.getServiceStyles());
+
+const fillStyle =  ref(fillStyleService.get(fillStyleId.value));
+
+const isLocalFillStyle = ref(fillStyleService.isLocalStyle(fillStyleId.value));
+
+const isLocalStyle = ref(false);
 
 nodeService.selection.subscribe((nodes) => {    
-    const selectNode = nodes.find(item => hasMixin(item, MinimalStrokesMixin));
-    if (!selectNode) return;
-    getEffectStyle(selectNode);
-    getFillStyle(selectNode);
-    effectId.value = selectNode.strokeId;
-    effectStrokeStyleId.value = selectNode.strokeStyleId;
+    effectNode = nodes.find(item => hasMixin(item, BlendMixin)) as BlendMixin;
+    if (!effectNode) return;
+    getEffectStyle(effectNode as SceneNode);
+    getFillStyle(effectNode as SceneNode);
+    effectId.value = effectNode.effectStyleId;
+    fillStyleId.value = effectNode.effectStrokeStyleId;
 });
 
-const effectStyle = computed(() => {
-    const effectStyle = effectStyleSevice.get(effectId.value);
-    return effectStyle ? effectStyle.effects[0] : {};
+effectStyleSevice.subject.subscribe((source: any) => {
+    const  { type, data } = source;
+    effectList.value = effectStyleSevice.getServiceStyles();
+    switch(type) {
+        case 'C':
+        case 'U':
+            selectStyle({id: data as string});
+            effectChange();
+    }
+
 });
 
-function getEffectStyle(node: BlendMixin) {
-    if (!node) return {};
+fillStyleService.subject.subscribe((source: any) => {
+    const  { type, data } = source;
+    fillStyleList.value = fillStyleService.getServiceStyles();
+    switch(type) {
+        case 'C':
+        case 'U':
+            selectFillStyle({id: data as string});
+            resetFillStyle(data as string);
+    }
+
+});
+
+watchEffect(() =>  {
+    const id = effectId.value as string;
+    resetFillStyle(id);
+    isLocalStyle.value = effectStyleSevice.isLocalStyle(id);
+});
+
+watchEffect(() =>  {
+    const id = fillStyleId.value as string;
+    resetFillStyle(id);
+    isLocalFillStyle.value = fillStyleService.isLocalStyle(id);
+});
+
+
+
+function getEffectStyle(node: BlendMixin): EffectStyle {
+    if (!node) return {} as EffectStyle;
     const effectStyle = effectStyleSevice.get(node.effectStyleId || Date.now() + '');
     if (node.effectStyleId !== effectStyle.id) {
         node.effectStyleId = effectStyle.id;
@@ -70,8 +85,40 @@ function getEffectStyle(node: BlendMixin) {
     return effectStyle;
 }
 
-function getFillStyle(node: TextNode) {
-    if (!node) return;
+function selectStyle(data: {id: string}) {
+    effectId.value = data.id;
+    effectNode.effectStyleId = data.id; 
+    effectChange();
+}
+
+function updateStyle(style: EffectStyle) {
+    effectStyleSevice.updateStyle(style);
+}
+
+function unSelectStyle() {
+    const textStyle = effectStyleSevice.cloneById(effectId.value);
+    effectStyleSevice.addLocalStyle(textStyle);
+    selectStyle({id: textStyle.id});
+} 
+
+function saveStyle() {
+    effectStyleSevice.saveStyle(effectId.value);
+}
+
+function effectChange() {
+    console.log(211212);
+    const style = effectStyleSevice.get(effectId.value);
+    effectStyle.value = style;
+    effectNode.effects = [style.effects[0]];
+    if (hasMixin(effectNode, BaseNodeMixin)) {
+        effectNode.update();
+    }
+}
+
+
+
+function getFillStyle(node: BlendMixin): FillStyle {
+    if (!node) return {} as FillStyle;
     const fillStyle = fillStyleService.get(node.effectStrokeStyleId ?? Date.now() + '');
     if (node.effectStrokeStyleId !== fillStyle.id) {
         node.effectStrokeStyleId = fillStyle.id;
@@ -79,17 +126,7 @@ function getFillStyle(node: TextNode) {
     return fillStyle;
 }
 
-function effectChange() {
-    let effectNode = nodeService.getSelection().find(item => hasMixin(item, BlendMixin)) as BlendMixin;
-    const style = effectStyleSevice.get(effectId.value).effects[0];
-    effectNode.effects = [style];
-    if (hasMixin(effectNode, BaseNodeMixin)) {
-        effectNode.update();
-    }
-}
-
 function fillChage() {
-    console.log(1212);
     const node = nodeService.getSelection().find(item => hasMixin(item, BlendMixin)) as any;
     const style = fillStyleService.get(node.effectStrokeStyleId);
     node.effectStrokes = [style];
@@ -98,110 +135,55 @@ function fillChage() {
     }
 }
 
+
+function resetFillStyle(id: string) {
+    fillStyle.value = fillStyleService.get(id);
+}
+
+function selectFillStyle(data: {id: string}) {
+    fillStyleId.value = data.id;
+    effectNode.effectStrokeStyleId = data.id;
+    fillChage();
+}
+
+function unFillSelectStyle() {
+    const cloneStyle = fillStyleService.cloneById(fillStyleId.value as string);
+    fillStyleService.addLocalStyle(cloneStyle);
+    selectFillStyle({id: cloneStyle.id});
+}
+
+function saveFillStyle() {
+    fillStyleService.saveStyle(fillStyleId.value as string);
+}
+
+function updateFillStyle(style: FillStyle) {
+    fillStyleService.updateStyle(style);
+}
+
 </script>
 
 <template>
-    <div ref="container">
-        <div v-if="isLocalStyle">
-            <m-title aria-label="效果属性" title="效果">
-                <i-cosmic-grid-outline
-                    :class="$style.icon"
-                    class="-v-bg-inapparent"
-                    @click.stop="(event) => openStandardModal(event.currentTarget)"
-                />
-            </m-title>
-            <input-list :effect-style="effectStyle" @change="effectChange" />
-        </div>
-        <template v-else>
-            <MStandard
-                aria-label="选中效果"
-                classes="-v-bg-inapparent"
-                :class="[$style['border']]"
-                :standard="standard"
-                :can-edit="false"
-                @click="(event) => openStandardModal(event.event.currentTarget)"
-            >
-                <template #prefix>
-                    <div
-                        :class="[$style['demo'], 'w-20 h-20']"
-                        :style="selected?.style"
-                    />
-                </template>
-                <template #subfix>
-                    <div
-                        class="flex items-center w-40 justify-around"
-                    >
-                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container, selected)" />
-                        <i-cosmic-lock @click.stop="unRef" />
-                    </div>
-                </template>
-            </MStandard>
-        </template>
-
-        <m-standard-modal
-            v-if="isShowStandardModal"
-            aria-label="阴影规范"
-            :title="insetTitle + '规范'"
-            :standard-list="standardList"
-            :target="standardTarget"
-            @cancel="cancelStandardModal"
-            @select="(event) => selectStandard(event.data)"
-            @show-detail="(event) => openDetaileModal(event.target, event.data)"
-        >
-            <template #prefix="data">
-                <div
-                    :class="[$style['demo'], 'w-20 h-20']"
-                    :style="data?.standard?.style"
-                />
-            </template>
-        </m-standard-modal>
-        <m-detail-modal
-            v-if="isShowDetailModal"
-            aria-label="编辑阴影规范"
-            :title="'编辑' + insetTitle + '规范'"
-            :target="detailTarget"
-            :standard="getDetailEdit()"
-            @cancel="cancelDetailModal"
-            @ok="saveDetail"
-        >
-            <div :class="$style['detail-content']">
-                <div :class="$style['glyph-content']">
-                    <input-list :effect-style="getDetailEdit()" />
-                </div>
-            </div>
-        </m-detail-modal>
-
-        <div aria-label="颜色" :class="[$style['padding-bottom']]">
-            <m-clolor-widget 
-                :standard-list="Standard" 
-                :is-local-style="isLocalFillStyle"
-                :fill-style="fillStyle"
-                @change="fillChage" 
-            />
-        </div>
+    <div class="mb-10">
+        <m-shadow 
+            :is-local-style="isLocalStyle"
+            :shadow-style="effectStyle"
+            :style-list="effectList" 
+            inset-title="外阴影"
+            @add-style="saveStyle"
+            @change="selectStyle"
+            @select-style="selectStyle"
+            @update-style="updateStyle"
+            @un-select-style="unSelectStyle"
+        />
+        <m-clolor-widget 
+            :is-local-style="isLocalFillStyle"
+            :fill-style="fillStyle"
+            :style-list="fillStyleList"
+            @add-style="saveFillStyle"
+            @change="fillChage"
+            @select-style="selectFillStyle"
+            @update-style="updateFillStyle"
+            @un-select-style="unFillSelectStyle"
+        />
     </div>
 </template>
-
-<style module>
-.detail-content {
-    max-height: 400px
-}
-
-
-.icon {
-    font-size: 1.2rem;
-}
-
-.glyph-content {
-    border-top: solid 1px var(--color-gray-100);
-    border-bottom: solid 1px var(--color-gray-100);
-}
-
-.demo {
-    background-color: var(--color-white);
-}
-
-.padding-bottom {
-    padding-bottom: var(--padding-md);
-}
-</style>

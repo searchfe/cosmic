@@ -35,7 +35,6 @@ const editStyle = ref();
 watchEffect(() => {
     if (isShowDetailModal.value) {
         const style = strokeStyleSevice.cloneById(editId, false);
-        console.log(style);
         editStyle.value = style;
     }
 });
@@ -103,11 +102,7 @@ function updateStyle() {
             @cancel="cancelDetailModal"
             @ok="updateStyle"
         >
-            <div :class="$style['detail-content']">
-                <div :class="$style['glyph-content']">
-                    <stroke-content :stroke-style="editStyle" />
-                </div>
-            </div>
+            <stroke-content :stroke-style="editStyle" />
         </m-detail-modal>
     </div>
 </template>

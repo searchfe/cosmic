@@ -51,7 +51,7 @@ strokeStyleSevice.subject.subscribe(source => {
         case 'C':
         case 'U':
             selectStyle({id: data as string});
-            styleChange(data as string);
+            styleChange();
     }
 });
 
