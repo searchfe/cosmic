@@ -9,9 +9,9 @@ importers:
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
       '@vueuse/gesture': ^2.0.0-beta.1
-      cosmic-icon: 0.0.7
-      cosmic-ui-alpha: 0.0.45
-      cosmic-vue: 0.0.60
+      cosmic-icon: ^0.0.9
+      cosmic-ui-alpha: ^0.0.48
+      cosmic-vue: 0.0.63
       cross-env: 7.0.3
       csstype: ^2.6
       dotenv: ~16.0.0
@@ -47,8 +47,8 @@ importers:
       vue-tsc: 0.32.1
     dependencies:
       '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.29
-      cosmic-ui-alpha: 0.0.45
-      cosmic-vue: 0.0.60
+      cosmic-ui-alpha: 0.0.48
+      cosmic-vue: 0.0.63
       electron-updater: 4.6.5
       qrcode: 1.5.0
       reflect-metadata: 0.1.13
@@ -62,7 +62,7 @@ importers:
       '@typescript-eslint/parser': 5.19.0_eslint@8.7.0+typescript@4.5.5
       '@vitejs/plugin-vue': 2.1.0_vite@2.7.13+vue@3.2.29
       '@vue/test-utils': 2.0.0-rc.18_vue@3.2.29
-      cosmic-icon: 0.0.7_vite@2.7.13
+      cosmic-icon: 0.0.9_vite@2.7.13
       cross-env: 7.0.3
       csstype: 2.6.20
       dotenv: 16.0.0
@@ -1634,8 +1634,8 @@ packages:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: true
 
-  /cosmic-icon/0.0.7_vite@2.7.13:
-    resolution: {integrity: sha512-Cm6igiYLTBGgp9DLZaMtDZ4DQqIy7vXiTUGPsSM7yVUz/nc1tK2Iorrxtk34MBkYzfMMPvjdyUgbUrXqmh7z1A==}
+  /cosmic-icon/0.0.9_vite@2.7.13:
+    resolution: {integrity: sha512-AYu4ADxxrGNsl+xAhEckl6YA9gx2C6lN67w+dxg+Z7hhQXHufUa1jmkTxAIzVGpDvois7UnmpOUquA/zbPkZPQ==}
     dependencies:
       unplugin-icons: 0.13.4_vite@2.7.13
     transitivePeerDependencies:
@@ -1650,12 +1650,12 @@ packages:
       - webpack
     dev: true
 
-  /cosmic-ui-alpha/0.0.45:
-    resolution: {integrity: sha512-6LuRlJ9FxTIrPapRWbO4xfG9ST0GiVWg9+cGYud82BzHjNLhku5e2A9cvT0FF+0NYGrynxG4Vn5xA4RbjrHogw==}
+  /cosmic-ui-alpha/0.0.48:
+    resolution: {integrity: sha512-B7q7J+AVZSnrMEjsILssdE+AMBKLzJb9XnmPLQdpIsp0yvBj5dcM4oyU3WZxB6oZ4hr5WLA1sm1uno2qj82exQ==}
     dev: false
 
-  /cosmic-vue/0.0.60:
-    resolution: {integrity: sha512-fcQqbYx0rpFIyjQioJxt6IDBRr9ctRbc/IqBNGBtPy55Y0PNYj8NRdt2G0qCKm+pcdiXRXXSaZTsRibv6YZglg==}
+  /cosmic-vue/0.0.63:
+    resolution: {integrity: sha512-jYejuR+jxlVExYtk1HqAe+ufjelE/GL4npz91vFR+BexiWdu8k36mfVQF2DFn15Vix41V71YgYLKMiLrDBrj3w==}
     dependencies:
       '@babel/types': 7.17.0
       lodash.kebabcase: 4.1.1

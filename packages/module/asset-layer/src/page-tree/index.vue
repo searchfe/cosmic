@@ -6,7 +6,6 @@ import { service } from '@cosmic/core/browser';
 import { type DocumentNode, type PageNode, inject } from '@cosmic/core/parts';
 import { type LayerTreeData, nodeToTree, updateSelection } from './page-tree';
 
-
 const treedata = ref<LayerTreeData[]>([]);
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
@@ -20,10 +19,12 @@ nodeService.document.subscribe(document => {
     nodeService.unwatch(doc);
     doc = document;
     treedata.value = nodeToTree(doc);
-    updateSelection(treedata.value, [selection]);
-    nodeService.watch(document).subscribe((updateDocument: DocumentNode) => {
-        if(updateDocument.children.length === 0) isOpen.value = false;
-        treedata.value = nodeToTree(updateDocument);
+    if (selection) {
+        updateSelection(treedata.value, [selection]);
+    }
+    nodeService.watch(document).subscribe((updateDocument) => {
+        if((updateDocument as DocumentNode).children.length === 0) isOpen.value = false;
+        treedata.value = nodeToTree(updateDocument as DocumentNode);
         updateSelection(treedata.value, [selection]);
     });
 });
@@ -49,17 +50,26 @@ function changeLabel(event: TreeChangeEvent) {
         }
     }
 }
+
+function moveTo(event: TreeChangeEvent) {
+    if (!selection) return;
+    selection.remove();
+    const document = nodeService.getDocument();
+    const index = document.children.findIndex(node => node.id === event.id);
+    document.insertChild(index + 1, selection);
+    document.update();
+}
 </script>
 <template>
     <div class="flex-grow-0 flex-shrink-0">
         <div class="px-20 py-8 h-40 border-bottom flex items-center text-sm">
             <span class="flex-grow-0 flex-shrink-0">页面</span>
             <div
-                class="ml-12 flex-grow-0 flex-shrink-0 w-20 text-center pt-2"
+                class="ml-12 flex-grow-0 flex-shrink-0 w-20 text-center"
                 @click="() => isOpen = !isOpen"
             >
                 <i-cosmic-arrow-up v-if="isOpen" class="h-full" />
-                <i-cosmic-arrow-down v-else-if="!isOpen" class="mt-2" />
+                <i-cosmic-arrow-down v-else-if="!isOpen" />
             </div>
             <div class="w-full text-right">
                 <i-cosmic-minus v-show="isOpen" class="mr-10" @click="() => {isOpen = true; nodeService.deletePage();}" />
@@ -75,6 +85,7 @@ function changeLabel(event: TreeChangeEvent) {
             :styles="treeSecondary"
             @click-node="changeSelection"
             @change-label="changeLabel"
+            @move-to="moveTo"
         >
             <template #label="slotProps">
                 {{ slotProps.nodeData.label }}
@@ -88,5 +99,13 @@ function changeLabel(event: TreeChangeEvent) {
 <style module>
     .customlized :global(.cos-tree-arrow) {
         display: none;
+    }
+    .customlized {
+        --font-md : 1.2rem;
+        --icon-md : 1.4rem;
+        --leading-md: 0;
+    }
+    .customlized input {
+        font-size: 1.2rem;
     }
 </style>
