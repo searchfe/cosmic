@@ -74,7 +74,7 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
     public async updateStyle(style: TextStyle) {
         const serviceStyle = this.transformToService(style);
         const {data} = await this.fontDao.update({...serviceStyle, id: style.id});
-        if (data?.createDraft) {
+        if (data?.updateFont) {
             await this.queryList();
             this.subject.next({type: 'U', data: style.id});
         }

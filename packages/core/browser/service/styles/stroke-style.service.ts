@@ -3,6 +3,7 @@ import { BaseService } from './base.service';
 import { StrokeStyle, borderDao } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
 import { TOKENS } from '../token';
+import { v4, v5 } from 'uuid';
 
 const DEFAULT_STYLES = {
     id: '',
@@ -13,7 +14,7 @@ const DEFAULT_STYLES = {
 };
 interface SubjectSourceType {
     type: 'C' | 'U' | 'D' | 'R';
-    data?: Partial<StrokeStyle>[];
+    data?: Partial<StrokeStyle>[] | string;
 }
 
 
@@ -24,7 +25,6 @@ export default class StrokeStyleService extends BaseService<StrokeStyle, Subject
         super();
         this.setType('stroke');
         this.borderDao = borderDao(client);
-        console.log(1212121212);
         this.queryList();
     }
 
@@ -34,7 +34,15 @@ export default class StrokeStyleService extends BaseService<StrokeStyle, Subject
     }
 
     cloneById(id: string, isChangeId = true) {
-        const style = this.get(id);
+        const originalStyle = this.get(id);
+        const cloneStyle = new StrokeStyle(isChangeId ? v5('cosmic',v4()) : id);
+        const {strokeWeight, strokeAlign, style, dashPattern, name} = originalStyle;
+        cloneStyle.strokeWeight = strokeWeight;
+        cloneStyle.strokeAlign = strokeAlign;
+        cloneStyle.style = style;
+        cloneStyle.dashPattern = [...dashPattern];
+        cloneStyle.name = name;
+        return cloneStyle;
     }
 
     transformToLocal(servicerColor: Partial<gql.Border>) {
@@ -48,8 +56,32 @@ export default class StrokeStyleService extends BaseService<StrokeStyle, Subject
         return strokeStyle;
     }
 
-    transformToServer(stroke: StrokeStyle) {
-        return stroke;
+    transformToService(stroke: StrokeStyle): Partial<gql.Border>{
+        const { name, style, strokeWeight } = stroke;
+        return {
+            name,
+            top: {style, weight: strokeWeight},
+            bottom: {style, weight: strokeWeight},
+            left: {style, weight: strokeWeight},
+            right: {style, weight: strokeWeight},
+            team: '6166bd9cc13b026875181927',
+        };
+    }
+
+    public async saveStyle(id: string) {
+        const style = this.transformToService(this.get(id)!);
+        const creatOption = await this.borderDao.create(style);
+        await this.queryList();
+        this.subject.next({type: 'C', data: []});
+    }
+
+    public async updateStyle(style: StrokeStyle) {
+        const serviceStyle = this.transformToService(style);
+        const {data} = await this.borderDao.update({...serviceStyle, id: style.id});
+        if (data?.updateBorder) {
+            await this.queryList();
+            this.subject.next({type: 'U', data: style.id});
+        }
     }
 
     private async queryList() {

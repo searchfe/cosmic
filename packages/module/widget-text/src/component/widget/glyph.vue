@@ -47,7 +47,6 @@ function selectStyle(event: {data: Record<string, string>}) {
 
 function editStyleHandler(el: HTMLElement, id: string) {
     editId = id;
-    console.log(el);
     openDetaileModal(el);
 }
 
