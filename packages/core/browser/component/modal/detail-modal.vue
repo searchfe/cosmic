@@ -96,11 +96,11 @@ const styles = reactive(props.standard);
 
 <style module>
 .container {
-    padding: .4rem 0;
-    background-color: var(--color-gray-50);
-    border-radius: var(--rounded-md);
+    padding: 1.2rem 0;
+    border-radius: calc(var(--rounded-md) * 2);;
     color: var(--color-dark);
     position: fixed;
+    background-color: #25252B;
     transform: translateX(-100%);
     width: 27rem;
 }

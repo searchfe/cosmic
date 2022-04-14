@@ -17,6 +17,7 @@ const {
         isShowStandardModal,
         isShowDetailModal,
         detailTarget,
+        standardTarget,
 
         cancelStandardModal,
         cancelDetailModal,
@@ -30,9 +31,9 @@ const {
 <template>
     <div ref="containerRef">
         <div v-if="isLocalStyle">
-            <MTitle title="描边">
+            <m-title title="描边">
                 <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
-            </MTitle>
+            </m-title>
             <stroke-content :stroke-style="strokeStyle" @change="() => emits('change')" />
         </div>
         <template v-else>
