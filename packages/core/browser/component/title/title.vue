@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
     font-size: 1.2rem;
     font-weight: 500;
     padding: 0 0.8rem;
-    margin: 0.8rem 0;
+    margin: 0.4rem 0;
 }   
 
 .icon {

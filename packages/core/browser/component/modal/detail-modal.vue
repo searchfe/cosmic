@@ -68,7 +68,9 @@ const styles = reactive(props.standard);
                     </span>
                 </div>
             </div>
-            <slot />
+            <div>
+                <slot />
+            </div>
         </div>
 
         <footer
