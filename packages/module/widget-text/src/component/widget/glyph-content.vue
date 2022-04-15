@@ -207,7 +207,7 @@ watch(() => props.textStyle, (newValue) => {
  }
 
 .col {
-    margin-right: .8rem;
+    margin-right: .1rem;
 }
 
 .icon {
