@@ -18,6 +18,9 @@ const emits = defineEmits('change');
 
 function changeStyle(textStyle, field, event) {
     textStyle[field] = event.value;
+    if (field === 'fontSize') {
+        textStyle.lineHeight.value = event.value;
+    }
     emits('change');
 }
 

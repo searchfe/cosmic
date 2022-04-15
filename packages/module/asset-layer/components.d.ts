@@ -11,10 +11,8 @@ declare module 'vue' {
     ICosmicEyeOpen: typeof import('~icons/cosmic/eye-open')['default']
     ICosmicMinus: typeof import('~icons/cosmic/minus')['default']
     ICosmicPlus: typeof import('~icons/cosmic/plus')['default']
-    ICosmicSearch: typeof import('~icons/cosmic/search')['default']
     ICosmicSquare: typeof import('~icons/cosmic/square')['default']
     ICosmicText: typeof import('~icons/cosmic/text')['default']
-    ICosmicTrash: typeof import('~icons/cosmic/trash')['default']
   }
 }
 

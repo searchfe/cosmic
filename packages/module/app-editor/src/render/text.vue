@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, getCurrentInstance } from 'vue';
+import { ref, getCurrentInstance, onUnmounted } from 'vue';
 import  { type TextNode, util } from '@cosmic/core/parts';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
@@ -24,9 +24,13 @@ nodeService.selection.subscribe(nodes => {
     }
 });
 const instance = getCurrentInstance();
-nodeService.watch(props.node).subscribe(() => {
-    // console.log('update text', node);
+const subject = nodeService.watch(props.node);
+subject.subscribe(() => {
     instance?.proxy?.$forceUpdate();
+});
+
+onUnmounted(() => {
+    nodeService.unwatch(subject);
 });
 
 </script>
@@ -35,7 +39,6 @@ nodeService.watch(props.node).subscribe(() => {
     <div
         v-creator="{target: node}"
         v-stroke="{target: node}"
-        v-effect="{target: node, field: 'textShadow'}"
         class="text-render"
         :style="{
             position: 'absolute', // 需要根据模式切换

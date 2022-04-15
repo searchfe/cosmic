@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import  { type PageNode, util } from '@cosmic/core/parts';
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance, onUnmounted } from 'vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 
@@ -14,9 +14,14 @@ const props = withDefaults(defineProps<PageProps>(), {
 const instance = getCurrentInstance();
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-nodeService.watch(props.node).subscribe(() => {
+const subject = nodeService.watch(props.node);
+subject.subscribe(() => {
     instance?.proxy?.$forceUpdate();
 });
+onUnmounted(() => {
+    nodeService.unwatch(subject);
+});
+
 </script>
 <template>
     <div

@@ -3,8 +3,9 @@ import { Tree, TreeNodeState, type TreeChangeEvent } from 'cosmic-vue';
 import { treeSecondary } from 'cosmic-ui';
 import { ref } from 'vue';
 import { service } from '@cosmic/core/browser';
-import { type PageNode, inject, SceneNode, ChildrenMixin } from '@cosmic/core/parts';
+import { type PageNode, inject, SceneNode, ChildrenMixin, BaseNodeMixin } from '@cosmic/core/parts';
 import { type LayerTreeData, nodeToTree, updateSelection } from './layer-tree';
+import { type Subject } from '@cosmic/core/rxjs';
 
 
 const treedata = ref<LayerTreeData[]>([]);
@@ -13,13 +14,15 @@ const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 let page: PageNode;
 let selections: SceneNode[] = [];
+let subject: Subject<BaseNodeMixin>;
 
 nodeService.currentPage.subscribe(newPage => {
-    nodeService.unwatch(page);
+    nodeService.unwatch(subject);
     page = newPage;
     treedata.value = nodeToTree(page);
     updateSelection(treedata.value, selections);
-    nodeService.watch(page).subscribe((updatePage) => {
+    subject = nodeService.watch(page);
+    subject.subscribe((updatePage) => {
         treedata.value = nodeToTree(updatePage as PageNode);
         updateSelection(treedata.value, selections);
     });
