@@ -42,10 +42,10 @@ function toData(node: SceneNode) {
     data.value.width = node.width;
     data.value.height = node.height;
     if (hasMixin(node, ContainerMixin) && node.backgrounds && node.backgrounds[0]) {
-        data.value.isHideColor = true;
+        data.value.isHideColor = false;
         data.value.fillStyle = node.backgrounds[0];
     } else {
-        data.value.isHideColor = false;
+        data.value.isHideColor = true;
         data.value.fillStyle = new SolidPaint();
     }
 }

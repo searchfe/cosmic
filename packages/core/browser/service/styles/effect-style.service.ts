@@ -17,7 +17,7 @@ const DEFAULT_STYLES = {
 };
 interface SubjectSourceType {
     type: 'C' | 'U' | 'D' | 'R';
-    data?: Partial<EffectStyle>[];
+    data?: Partial<EffectStyle>[] | string;
 }
 
 @injectable()
@@ -77,8 +77,9 @@ export default class EffectStyleService extends BaseService<EffectStyle, Subject
     public async saveStyle(id: string) {
         const style = this.transformToService(this.get(id)!);
         const { data } = await this.shadowDao.create(style);
+        if (!data?.createShadow) return;
         await this.queryList();
-        this.subject.next({type: 'C', data: []});
+        this.subject.next({type: 'C', data: data?.createShadow.id as string} );
     }
 
     public async updateStyle(style: EffectStyle) {

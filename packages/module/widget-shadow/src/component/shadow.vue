@@ -78,7 +78,7 @@ function updateStyle() {
                     @click.stop="(event) => openStandardModal(event.currentTarget)"
                 />
             </m-title>
-            <input-list :effect-style="effectStyle" @change="() => emits('change')" />
+            <input-list :effect-style="effectStyle" @change="() => emits('change', shadowStyle)" />
         </div>
         <template v-else>
             <MStandard

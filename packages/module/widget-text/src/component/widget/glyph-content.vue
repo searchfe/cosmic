@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { toRaw, watch } from 'vue';
-import { Select, SelectOption, Row, Col, Input, RadioGroup, RadioButton } from 'cosmic-vue';
+import { Select, SelectOption, Row, Col, InputNumber, RadioGroup, RadioButton } from 'cosmic-vue';
 import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
 import type { TextStyle } from '@cosmic/core/parts';
 
@@ -102,15 +102,16 @@ watch(() => props.textStyle, (newValue) => {
         <Row :class="$style.row">
             <Col :span="4">
                 <div :class="[$style['glyph-item']]" class="w-80">
-                    <Input
+                    <input-number
                         size="sm"
+                        controls="false"
                         :value="textStyle.lineHeight.value"
                         @on-input="(event) => changeStyle(originalStyle.lineHeight, 'value', event)"
                     >
                         <template #prefix>
                             <i-cosmic-line-height :class="[$style.icon]" />
                         </template>
-                    </Input>
+                    </input-number>
                 </div>
             </Col>
             <Col :span="4">
