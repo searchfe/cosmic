@@ -18,8 +18,10 @@ nodeService.currentPage.subscribe(newPage => {
     nodeService.unwatch(page);
     page = newPage;
     treedata.value = nodeToTree(page);
+    updateSelection(treedata.value, selections);
     nodeService.watch(page).subscribe((updatePage) => {
         treedata.value = nodeToTree(updatePage as PageNode);
+        updateSelection(treedata.value, selections);
     });
 });
 
@@ -29,7 +31,6 @@ nodeService.selection.subscribe(nodes => {
 });
 
 function changeSelection(event: any){
-    // console.log(event.id, treedata.value);
     nodeService.setSelection([event.nodeData.layerId]);
 }
 
@@ -46,15 +47,12 @@ function moveTo(event: TreeChangeEvent) {
     if (!selections?.length || !page) return;
     const selection = selections[0];
     const target = page.findOne((node:SceneNode) => node.id == event.id);
-    const index = target.parent?.children.findIndex(node => node.id === event.id);
-    if (target.parent && index) {
-        selection.remove();
+    selection.remove();
+    const index = target.parent?.children.findIndex(node => node.id === event.id) || 0;
+    if (target.parent) {
         target.parent.insertChild(index + 1, selection);
         selection.update();
     }
-    // const index = document.children.findIndex(node => node.id === event.id);
-    // document.insertChild(index + 1, selection);
-    // document.update();
 }
 function moveInto(event: TreeChangeEvent) {
     if (!selections?.length || !page) return;
