@@ -110,6 +110,7 @@ function textChange() {
 
 function fillChage() {
     const style = fillStyleService.get(textNode.getRangeFillStyleId(0, 0));
+    console.log(fillStyleService.isRepeat(fillStyleId.value));
     isFillRepeat.value =  fillStyleService.isRepeat(fillStyleId.value);
     textNode.setRangeFills(0, 0, [style as unknown as any]);
     textNode.update();
