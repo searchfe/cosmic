@@ -34,7 +34,6 @@ export function usePropterty<T>(token: interfaces.ServiceIdentifier<T> = TOKENS.
 
     function openStandardModal(target: HTMLElement) {
         standardTarget.value = target;
-        console.log(target);
         isShowStandardModal.value = true;
     }
 

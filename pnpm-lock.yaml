@@ -10,7 +10,7 @@ importers:
       '@vue/test-utils': 2.0.0-rc.18
       '@vueuse/gesture': ^2.0.0-beta.1
       cosmic-icon: ^0.0.9
-      cosmic-ui-alpha: ^0.0.48
+      cosmic-ui-alpha: ^0.0.49
       cosmic-vue: 0.0.66
       cross-env: 7.0.3
       csstype: ^2.6
@@ -47,7 +47,7 @@ importers:
       vue-tsc: 0.32.1
     dependencies:
       '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.29
-      cosmic-ui-alpha: 0.0.48
+      cosmic-ui-alpha: 0.0.49
       cosmic-vue: 0.0.66
       electron-updater: 4.6.5
       qrcode: 1.5.0
@@ -1650,8 +1650,8 @@ packages:
       - webpack
     dev: true
 
-  /cosmic-ui-alpha/0.0.48:
-    resolution: {integrity: sha512-B7q7J+AVZSnrMEjsILssdE+AMBKLzJb9XnmPLQdpIsp0yvBj5dcM4oyU3WZxB6oZ4hr5WLA1sm1uno2qj82exQ==}
+  /cosmic-ui-alpha/0.0.49:
+    resolution: {integrity: sha512-2SdVlpWASQ+lu1/dJyWgFKB0f72+Cqkks10pHksjNcZg6XVq33L5mxNK/o9t773G0ILKOCdox8zebxtBnRw4UA==}
     dev: false
 
   /cosmic-vue/0.0.66:
