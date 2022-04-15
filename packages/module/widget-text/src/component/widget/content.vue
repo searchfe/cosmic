@@ -102,7 +102,6 @@ function getFillStyle(node: TextNode): FillStyle {
 function textChange() {
     const node = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
     const style = textStyleSevice.get(node.getRangeTextStyleId(0,0));
-    console.log(style.fontName);
     node.setRangeFontSize(0, 0, style.fontSize);
     node.setRangeFontName(0, 0, {family: style.fontName.family ?? '宋体', style: style.fontName.style ?? ''});
     node.setRangeTextDecoration(0 , 0, style.textDecoration);

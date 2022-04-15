@@ -10,7 +10,7 @@ export default class NodeService {
     public selection: Subject<Array<SceneNode>>;
     public currentPage: Subject<PageNode>;
     
-    private _watchList: {[index: string]: {subject: Subject<BaseNodeMixin>, node: BaseNodeMixin, lastEditTime: number}} = {};
+    private _watchList: {[index: string]: {subjects: Subject<BaseNodeMixin>[], node: BaseNodeMixin, lastEditTime: number, dirty: boolean}} = {};
     private _document: DocumentNode;
     private _selection: Array<SceneNode> = [];
     private _currentPage: PageNode;
@@ -79,8 +79,6 @@ export default class NodeService {
         target.appendChild(frame);
         frame.update();
         this.setSelection([frame.id]);
-        // console.log(target, frame);
-        // console.log('add frame', this._document);
         return frame;
     }
 
@@ -125,28 +123,43 @@ export default class NodeService {
         });
         this.setSelection([]);
     }
-    unwatch(node: BaseNodeMixin) {
-        if(node && node.id && this._watchList[node.id]) {
-            delete this._watchList[node.id];
-        } 
+    unwatch(subject: Subject<BaseNodeMixin>) {
+        if(!subject) return;
+        Object.keys(this._watchList).forEach(id => {
+            const item = this._watchList[id];
+            if(item.subjects.indexOf(subject) > -1) {
+                item.subjects = item.subjects.filter(s => s !== subject);
+            }
+        });
     }
     watch(node: BaseNodeMixin) {
         this._watchList[node.id] = this._watchList[node.id] || {
-            subject: new Subject<BaseNodeMixin>(),
+            subjects: [],
             node,
             lastEditTime: node.editTime || 0,
+            dirty: true,
         };
-        return this._watchList[node.id].subject;
+        const subject = new Subject<BaseNodeMixin>();
+        this._watchList[node.id].subjects.push(subject);
+        return subject;
     }
     update() {
+        Object.keys(this._watchList).forEach(id => {
+            const item = this._watchList[id];
+            if (item.lastEditTime !== item.node.editTime) {
+                item.dirty = true;
+                item.lastEditTime = item.node.editTime;
+            }
+        });
         requestAnimationFrame(() => {
             Object.keys(this._watchList).forEach(id => {
                 const item = this._watchList[id];
-                if (item.lastEditTime !== item.node.editTime) {
-                    item.lastEditTime = item.node.editTime;
-                    item.subject.next(item.node);
+                if (item.dirty) {
+                    item.dirty = false;
+                    item.subjects.forEach(subject => subject.next(item.node));
                 }
             });
+
         });
     }
 

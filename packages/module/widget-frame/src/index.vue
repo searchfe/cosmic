@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import {ref, type Ref} from 'vue';
 import { MTitle, MWidget, MColor, service } from '@cosmic/core/browser';
-import { inject, PageNode, hasMixin, ContainerMixin, type SceneNode, type Paint, SolidPaint } from '@cosmic/core/parts';
+import { inject, PageNode, hasMixin, ContainerMixin, type SceneNode, type Paint, SolidPaint, BaseNodeMixin } from '@cosmic/core/parts';
 import { Row, Col, InputNumber } from 'cosmic-vue';
+import { type Subject } from '@cosmic/core/rxjs';
 
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+let subject: Subject<BaseNodeMixin>;
 
 interface FramePorps {
     x: number,
@@ -27,10 +29,11 @@ nodeService.selection.subscribe(nodes => {
     if(node instanceof PageNode) {
         return;
     }
-    nodeService.unwatch(node);
+    nodeService.unwatch(subject);
     node = nodes[0] as SceneNode;
-    nodeService.watch(node).subscribe((n) => {
-        toData(n);
+    subject = nodeService.watch(node);
+    subject.subscribe((n) => {
+        toData(n as SceneNode);
     });
     toData(node);
 });
