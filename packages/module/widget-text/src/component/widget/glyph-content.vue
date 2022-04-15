@@ -44,7 +44,7 @@ function changeStyle(textStyle, field, event) {
             </Select>
         </div>
         <Row :class="$style.row">
-            <Col :span="4" :class="$style.col">
+            <Col :span="4" class="ml-8">
                 <Select
                     size="sm"
                     :value="textStyle.fontSize + ''"
@@ -63,7 +63,7 @@ function changeStyle(textStyle, field, event) {
                     />
                 </Select>
             </Col>
-            <Col :span="4" :class="$style.col">
+            <Col :span="4" class="ml-8">
                 <Select
                     size="sm"
                     :value="textStyle.fontName.style"
@@ -77,7 +77,7 @@ function changeStyle(textStyle, field, event) {
                     />
                 </Select>
             </Col>
-            <Col :span="4" :class="$style.col">
+            <Col :span="4">
                 <Select
                     size="sm"
                     :value="textStyle.textDecoration"
@@ -93,7 +93,7 @@ function changeStyle(textStyle, field, event) {
             </Col>
         </Row>
         <Row :class="$style.row">
-            <Col :span="4" :class="$style.col">
+            <Col :span="4" class="ml-8">
                 <div :class="[$style['glyph-item']]">
                     <input-number
                         size="sm"
@@ -107,7 +107,7 @@ function changeStyle(textStyle, field, event) {
                     </input-number>
                 </div>
             </Col>
-            <Col :span="4" :class="$style.col">
+            <Col :span="4" class="ml-8">
                 <div :class="[$style['glyph-item']]">
                     <Select
                         size="sm"
@@ -134,7 +134,7 @@ function changeStyle(textStyle, field, event) {
                     </Select>
                 </div>
             </Col>
-            <Col :span="4" :class="$style.col">
+            <Col :span="4">
                 <Select
                     size="sm"
                     :value="textStyle.paragraphSpacing"
@@ -205,9 +205,6 @@ function changeStyle(textStyle, field, event) {
     composes: mb-8 from global;
  }
 
-.col {
-    margin-right: .1rem;
-}
 
 .icon {
     font-size: .8rem;

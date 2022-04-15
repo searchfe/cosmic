@@ -117,12 +117,12 @@ function changeHandler({value}: {value: string}) {
 }
 
 .title {
-    composes: h-32 flex -v-px sm items-center from global;
+    composes: mb-8 flex -v-px sm items-center from global;
 }
 
 .description {
     composes: -v-px sm from global;
-    color: var(--color-gray-500);
+    color: var(--color-gray-300);
 }
 
 </style>
