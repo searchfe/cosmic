@@ -100,9 +100,8 @@ function changeHandler({value}: {value: string}) {
     height: 5rem;
     border-radius: var(--rounded-md);
     font-size: 26px;
-    background-color: var(--color-gray-300);
-    background-image: linear-gradient(45deg, var(--color-gray-100) 25%, transparent 25%, transparent 75%, var(--color-gray-100) 75%, var(--color-gray-100)),
-                    linear-gradient(45deg, var(--color-gray-100) 26%, transparent 26%, transparent 74%, var(--color-gray-100) 74%, var(--color-gray-100));
+    background-image: linear-gradient(45deg, var(--bg-hover-color) 25%, transparent 25%, transparent 75%, var(--bg-hover-color) 75%, var(--bg-hover-color)),
+                    linear-gradient(45deg, var(--bg-hover-color) 26%, transparent 26%, transparent 74%, var(--bg-hover-color) 74%, var(--bg-hover-color));
     background-size: 10px 10px;
     background-position: 0 0, 5px 5px;
     overflow: hidden;

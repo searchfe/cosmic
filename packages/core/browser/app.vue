@@ -41,7 +41,10 @@ const { Content, Header } = Layout;
 
 :root {
     font-size: 10px;
+    --border-style: solid;
+    --border-color: var(--color-gray-50);
 }
+
 body {
     margin: 0;
     height: 100%;
@@ -49,11 +52,7 @@ body {
     overflow: hidden;
     overscroll-behavior-x: none;
 }
-/** wait for add */
-:root {
-    --border-style: solid;
-    --border-color: var(--color-gray-50);
-}
+
 .border-left {
     border-left: var(--border) var(--border-style) var(--border-color);
 }
