@@ -34,6 +34,7 @@ nodeService.watch(props.node).subscribe(() => {
     <div
         v-creator="{target: node}"
         v-stroke="{target: node}"
+        v-effect="{target: node, field: 'textShadow'}"
         class="text-render"
         :style="{
             position: 'absolute', // 需要根据模式切换

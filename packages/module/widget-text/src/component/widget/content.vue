@@ -163,7 +163,7 @@ function saveFillStyle() {
             :text-style="textStyle"
             :style-list="styleList" 
             @add-style="saveStyle"
-            @change="fillChage"
+            @change="selectStyle"
             @select-style="selectStyle"
             @update-style="updateStyle"
             @un-select-style="unSelectStyle"

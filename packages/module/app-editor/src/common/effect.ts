@@ -12,6 +12,7 @@ export default {
 
 function changeStyle(el: HTMLElement, binding: any) {
     const node = toRaw(toRaw(binding.value).target) as BlendMixin & {effectStrokes: Array<any>};
+    const field = toRaw(toRaw(binding.value).field) || 'boxShadow';
     const { effects = [], effectStrokes = [] } = node;
     const effect = effects[0];
     if (!effect) {
@@ -19,9 +20,13 @@ function changeStyle(el: HTMLElement, binding: any) {
         return;
     }
     const [fill] = effectStrokes;
-    console.log(fill);
-    const color = util.toBackgroundStyle(fill as Paint);
+    const color = util.toBackgroundStyle(fill as Paint) || '#000000';
     const {offset, spread, radius} = effect as any;
-    el.style.boxShadow =  `${offset.x}px ${offset.y}px ${radius}px ${spread}px ${color}`;
-    
+    let shadow = '';
+    if (field === 'boxShadow') {
+        shadow = `${offset.x}px ${offset.y}px ${radius}px ${spread}px ${color}`;
+    } else {
+        shadow = `${offset.x}px ${offset.y}px ${radius}px ${color}`;
+    }
+    el.style[field] = shadow;
 }

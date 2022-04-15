@@ -169,7 +169,6 @@ watch(() => props.colorStyle, (newValue) => {
 .show-color {
     flex:  0 1 auto;
     margin-right: 4px;
-    border-radius: 4px;
     border: 1px solid var(--color-gray-200);
 }
 
