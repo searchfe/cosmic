@@ -64,6 +64,16 @@ export default class FillStyleService extends BaseService<FillStyle, SubjectSour
         };
     }
 
+    public isRepeat(styleId: string): boolean {
+        const localStyle = this.localStyles.get(styleId);
+        if (!localStyle) return false;
+        const serviceStyles = this.getServiceStyles();
+        return serviceStyles.some(item => {
+            const {opacity, color: {r, g, b}} = item;
+            return opacity === localStyle.opacity && r === localStyle.color.r && g === localStyle.color.g && b === localStyle.color.b;
+        });
+    }
+
     public async queryList() {
         const { data }= await this.colorDao.query({});
         const colors = data?.colors || [];

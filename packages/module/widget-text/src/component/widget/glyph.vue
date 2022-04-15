@@ -67,7 +67,7 @@ function unRef() {
             <MTitle title="字形">
                 <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </MTitle>
-            <glyph-content :text-style="textStyle" @change="() => emits('change')" />
+            <glyph-content :text-style="textStyle" @change="() => emits('change', textStyle)" />
         </div>
         <template v-else>
             <m-standard :standard="textStyle" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">

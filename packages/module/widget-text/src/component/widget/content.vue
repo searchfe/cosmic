@@ -27,6 +27,8 @@ const fillStyle = ref();
 
 const fillStyleList = ref(fillStyleService.getServiceStyles());
 
+const isFillRepeat = ref(false);
+
 watchEffect(() => {
     resetTextStyle(styleId.value);
     isStandard.value  =  !textStyleSevice.isLocalStyle(styleId.value);
@@ -89,6 +91,7 @@ function getTextStyle(node: TextNode): TextStyle {
 
 function getFillStyle(node: TextNode): FillStyle {
     if (!node) return {} as FillStyle;
+    // isFillRepeat.value =  fillStyleService.isRepeat(fillStyleId.value);
     const fillStyle = fillStyleService.get(node.getRangeFillStyleId(0,0) ?? Date.now() + '');
     if (node.getRangeFillStyleId(0,0) !== fillStyle.id) {
         node.setRangeFillStyleId(0, 0, fillStyle.id);
@@ -163,7 +166,7 @@ function saveFillStyle() {
             :text-style="textStyle"
             :style-list="styleList" 
             @add-style="saveStyle"
-            @change="fillChage"
+            @change="selectStyle"
             @select-style="selectStyle"
             @update-style="updateStyle"
             @un-select-style="unSelectStyle"
@@ -172,6 +175,7 @@ function saveFillStyle() {
             :is-local-style="isLocalFillStyle"
             :fill-style="fillStyle"
             :style-list="fillStyleList"
+            :is-repeat="isFillRepeat"
             @add-style="saveFillStyle"
             @change="fillChage"
             @select-style="selectFillStyle"

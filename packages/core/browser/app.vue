@@ -52,7 +52,7 @@ body {
 /** wait for add */
 :root {
     --border-style: solid;
-    --border-color: var(--color-gray-100);
+    --border-color: var(--color-gray-50);
 }
 .border-left {
     border-left: var(--border) var(--border-style) var(--border-color);

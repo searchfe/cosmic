@@ -1,14 +1,14 @@
 export const FontWeight = [
     {
-        label: '细体  300',
+        label: '细体',
         value: '300',
     },
     {
-        label: '常规  400',
+        label: '常规',
         value: '400',
     },
     {
-        label: '粗体  700',
+        label: '粗体',
         value: '700',
     },
 ];

@@ -73,7 +73,7 @@ body {
 :root {
     height: 100%;
     --border-style: solid;
-    --border-color: var(--color-gray-100);
+    --border-color: var(--color-gray-50);
 }
 
 :root .cos-mode-reverse .-v-bg-inapparent

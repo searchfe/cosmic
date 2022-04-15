@@ -108,7 +108,7 @@ watch(() => props.colorStyle, (newValue) => {
                 @blur="() => colorBurHandler(colorStyle)"
             >
         </div>
-        <div :class="$style.divider" />
+        <!-- <div :class="$style.divider" /> -->
         <div :class="$style.opacity">
             <input
                 v-model="opacity"
@@ -124,7 +124,7 @@ watch(() => props.colorStyle, (newValue) => {
 <style module>
 
 .color {
-    composes: -v-px -v-h w-180 sm from global;
+    composes: -v-px -v-h w-180 -v-bg-inapparent sm from global;
     display: flex;
     align-items: center;
     border: 1px solid rgba(0, 0, 0, 0);
@@ -136,10 +136,6 @@ watch(() => props.colorStyle, (newValue) => {
     flex: 1;
 }
 
-
-.color:hover.color-border, .color:active.color-border {
-    border: 1px solid var(--color-gray-200);
-}
 
 .color > .theme {
     flex: 0 1 auto;
@@ -169,7 +165,6 @@ watch(() => props.colorStyle, (newValue) => {
 .show-color {
     flex:  0 1 auto;
     margin-right: 4px;
-    border-radius: 4px;
     border: 1px solid var(--color-gray-200);
 }
 

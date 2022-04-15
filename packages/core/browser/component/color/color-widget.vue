@@ -14,7 +14,8 @@ const props = withDefaults(defineProps<{
     showTitle?: boolean,
     isLocalStyle: boolean,
     fillStyle: object,
-    styleList: object[]
+    styleList: object[],
+    isRepeat: boolean
 }>(), {
     type: 'TEXT',
     showTitle: true,
@@ -86,7 +87,7 @@ function unRef() {
                     >
                         <i-cosmic-sun :class="$style.icon" />
                         <i-cosmic-grid-outline
-                            :class="$style.icon"
+                            :class="[$style.icon, isRepeat ? $style.repeat : '']"
                             @click.stop="(event) => openStandardModal(content)"
                         />
                     </div>
@@ -168,6 +169,10 @@ function unRef() {
 
 .icon {
     font-size: 1.2rem;
+}
+
+.repeat {
+    color: blue;
 }
 
 .icon:first-child {
