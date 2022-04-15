@@ -25,12 +25,12 @@ export default function borderDao(client: Client) {
         },
 
         create(data: Partial<gql.CreateBorderDTO>, fields = ['id']) {
-            return client.mutation<{ createColor: Partial<gql.QueryBorderDTO> }>(
+            return client.mutation<{ createBorder: Partial<gql.QueryBorderDTO> }>(
                 `mutation ($data: CreateBorderDTO!) {
                     createBorder(data: $data) {
                         id,
                         name,
-                        top: {
+                        top {
                             weight,
                             style
                         },
@@ -44,10 +44,10 @@ export default function borderDao(client: Client) {
             ).toPromise();
         },
 
-        update(data: Partial<gql.QueryColorDTO>, fields = ['id']) {
-            return client.mutation<{ updateColor: boolean }>(
-                `mutation ($data: QueryColorDTO!) {
-                    updateColor(data: $data)
+        update(data: Partial<gql.QueryBorderDTO>, fields = ['id']) {
+            return client.mutation<{ updateBorder: boolean }>(
+                `mutation ($data: QueryBorderDTO!) {
+                    updateBorder(data: $data)
                 }`,
                 { data },
             ).toPromise();

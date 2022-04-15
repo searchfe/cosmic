@@ -47,7 +47,6 @@ function selectStyle(event: {data: Record<string, string>}) {
 
 function editStyleHandler(el: HTMLElement, id: string) {
     editId = id;
-    console.log(el);
     openDetaileModal(el);
 }
 
@@ -99,11 +98,7 @@ function unRef() {
             @cancel="cancelDetailModal"
             @ok="updateStyle"
         >
-            <div :class="$style['detail-content']">
-                <div :class="$style['glyph-content']">
-                    <glyph-content :text-style="editStyle" :show-layout="false" />
-                </div>
-            </div>
+            <glyph-content :text-style="editStyle" :show-layout="false" />
         </m-detail-modal>
     </div>
 </template>

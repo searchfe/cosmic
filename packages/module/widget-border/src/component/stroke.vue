@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import StrokeContent from './stroke-content.vue';
+import { inject } from '@cosmic/core/parts';
 import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service} from '@cosmic/core/browser';
 
 withDefaults(defineProps<{
@@ -11,7 +12,9 @@ withDefaults(defineProps<{
 
 const containerRef = ref(null);
 
-const emits = defineEmits(['change']);
+const emits = defineEmits(['change', 'addStyle', 'selectStyle', 'unSelectStyle', 'updateStyle', 'unSelectStyle']);
+
+const strokeStyleSevice = inject<service.StrokeStyleService>(service.TOKENS.StrokeStyle);
 
 const {
         isShowStandardModal,
@@ -25,7 +28,39 @@ const {
         openStandardModal,
     } = usePropterty(service.TOKENS.StrokeStyle);
 
+let editId = '';
+
+const editStyle = ref();
+
+watchEffect(() => {
+    if (isShowDetailModal.value) {
+        const style = strokeStyleSevice.cloneById(editId, false);
+        editStyle.value = style;
+    }
+});
+
+function selectStyle(event: {data: Record<string, string>}) {
+    cancelStandardModal(),
+    cancelDetailModal(),
+    emits('selectStyle', event.data);
+}
+
+function editStyleHandler(el: HTMLElement, id: string) {
+    editId = id;
+    openDetaileModal(el);
+}
+
+function unRef() {
+    emits('unSelectStyle');
+}
+
+function updateStyle() {
+    cancelDetailModal();
+    emits('updateStyle', editStyle.value);
+}
+
 </script>
+
 
 
 <template>
@@ -37,13 +72,13 @@ const {
             <stroke-content :stroke-style="strokeStyle" @change="() => emits('change')" />
         </div>
         <template v-else>
-            <m-standard :standard="standard" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
+            <m-standard :standard="strokeStyle" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-around"
                     >
-                        <i-cosmic-more @click.stop="() => openDetaileModal(containerRef, standard)" />
-                        <i-cosmic-link @click.stop="unRef" />
+                        <i-cosmic-more @click.stop="() => editStyleHandler(containerRef, strokeStyle.id)" />
+                        <i-cosmic-lock @click.stop="unRef" />
                     </div>
                 </template>
             </m-standard>
@@ -54,23 +89,20 @@ const {
             title="文字规范"
             :standard-list="styleList"
             :target="standardTarget"
+            @add="() => emits('addStyle')"
             @cancel="cancelStandardModal"
-            @select="(event) => selectStandard(event.data)"
+            @select="selectStyle"
             @show-detail="(event) => openDetaileModal(event.target, event.data)"
         />
         <m-detail-modal
             v-if="isShowDetailModal"
             title="文字规范"
             :target="detailTarget"
-            :standard="getDetailEdit()"
+            :standard="editStyle"
             @cancel="cancelDetailModal"
-            @ok="cancelDetailModal"
+            @ok="updateStyle"
         >
-            <div :class="$style['detail-content']">
-                <div :class="$style['glyph-content']">
-                    <stroke-content :stroke-style="getDetailEdit()" />
-                </div>
-            </div>
+            <stroke-content :stroke-style="editStyle" />
         </m-detail-modal>
     </div>
 </template>

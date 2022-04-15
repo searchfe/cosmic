@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watchEffect } from 'vue';
 import { MTitle, MWidget, MClolorWidget, service} from '@cosmic/core/browser';
-import { inject, FrameNode, hasMixin, MinimalStrokesMixin, BaseNodeMixin, TextNode, FillStyle } from '@cosmic/core/parts';
+import { inject, FrameNode, hasMixin, MinimalStrokesMixin, BaseNodeMixin, TextNode, FillStyle, StrokeStyle } from '@cosmic/core/parts';
 import Stroke from './stroke.vue';
 
 const isShowDetail = ref(false);
@@ -18,6 +18,8 @@ const strokeId = ref(getStrokeStyle(strokeNode).id);
 const isLocalStyle = computed(() => strokeStyleSevice.isLocalStyle(strokeId.value));
 
 const strokeStyle = computed(() => strokeStyleSevice.get(strokeId.value));
+
+const strokeStyleList = ref(strokeStyleSevice.getServiceStyles());
 
 const fillStyleId = ref(getFillStyle(strokeNode)?.id);
 
@@ -41,6 +43,18 @@ nodeService.selection.subscribe((nodes) => {
     strokeId.value = selectNode.strokeId;
     fillStyleId.value = selectNode.strokeStyleId;
 });
+
+strokeStyleSevice.subject.subscribe(source => {
+    const  { type, data } = source;
+    strokeStyleList.value = strokeStyleSevice.getServiceStyles();
+    switch(type) {
+        case 'C':
+        case 'U':
+            selectStyle({id: data as string});
+            styleChange();
+    }
+});
+
 
 fillStyleService.subject.subscribe((source: any) => {
     const  { type, data } = source;
@@ -67,6 +81,35 @@ function getStrokeStyle(node: TextNode | FrameNode) {
     return strokeStyle;
 }
 
+function styleChange() {
+    const style = strokeStyleSevice.get(strokeNode.strokeId);
+    strokeNode.strokeWeight = Number(style.strokeWeight);
+    strokeNode.strokeLineStyle = style.style;
+    if (hasMixin(strokeNode, BaseNodeMixin)) {
+        strokeNode.update();
+    }
+}
+
+function saveStrokeStyle() {
+    strokeStyleSevice.saveStyle(strokeId.value);
+}
+
+function selectStyle(data: {id: string}) {
+    strokeId.value = data.id;
+    strokeNode.strokeId = data.id; 
+    styleChange();
+}
+
+function updateStyle(style: StrokeStyle) {
+    strokeStyleSevice.updateStyle(style);
+}
+
+function unSelectStyle() {
+    const textStyle = strokeStyleSevice.cloneById(strokeId.value);
+    strokeStyleSevice.addLocalStyle(textStyle);
+    selectStyle({id: textStyle.id});
+} 
+
 function getFillStyle(node: TextNode | FrameNode ) {
     if (!node) return;
     const fillStyle = fillStyleService.get(node.strokeStyleId ?? Date.now() + '');
@@ -74,16 +117,6 @@ function getFillStyle(node: TextNode | FrameNode ) {
         node.strokeStyleId = fillStyle.id;
     }
     return fillStyle;
-}
-
-function styleChange() {
-    const node = nodeService.getSelection().find(item => hasMixin(item, MinimalStrokesMixin)) as MinimalStrokesMixin;
-    const style = strokeStyleSevice.get(node.strokeId);
-    node.strokeWeight = Number(style.strokeWeight);
-    node.strokeLineStyle = style.style;
-    if (hasMixin(node, BaseNodeMixin)) {
-        node.update();
-    }
 }
 
 function fillChage() {
@@ -136,7 +169,16 @@ function updateFillStyle(style: FillStyle) {
                 />
             </m-title>
             <div v-if="isShowDetail" :class="$style.detail">
-                <Stroke :is-local-style="isLocalStyle" :stroke-style="strokeStyle" @change="styleChange" />
+                <Stroke 
+                    :is-local-style="isLocalStyle"
+                    :stroke-style="strokeStyle" 
+                    :style-list="strokeStyleList"
+                    @add-style="saveStrokeStyle"
+                    @update-style="updateStyle"
+                    @select-style="selectStyle"
+                    @change="styleChange" 
+                    @un-select-style="unSelectStyle"
+                />
                 <m-clolor-widget 
                     :is-local-style="isLocalFillStyle"
                     :fill-style="fillStyle"
