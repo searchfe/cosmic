@@ -57,10 +57,13 @@ function filterHandler(data: string) {
         ref="container"
         :class="$style.container"
         :style="positionStyle"
-        class="cos-mode-reverse flex flex-col"
+        class="cos-mode-reverse flex flex-col pb-8"
     >
         <slot name="title">
-            <div :class="$style.title">
+            <div
+                :class="$style.title"
+                class="my-4"
+            >
                 <div
                     :class="[$style.wrapper]"
                     class="flex h-full justify-between items-center w-full"
@@ -135,7 +138,6 @@ function filterHandler(data: string) {
 <style module>
 
 .container {
-    padding: 1.2rem 0;
     font-size: 1.2rem;
     background-color: #25252B;
     border-radius: calc(var(--rounded-md) * 2);

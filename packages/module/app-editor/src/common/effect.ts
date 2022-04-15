@@ -11,14 +11,16 @@ export default {
 };
 
 function changeStyle(el: HTMLElement, binding: any) {
+    console.log(121);
     const node = toRaw(toRaw(binding.value).target) as BlendMixin & {effectStrokes: Array<any>};
     const field = toRaw(toRaw(binding.value).field) || 'boxShadow';
     const { effects = [], effectStrokes = [] } = node;
     const effect = effects[0];
     if (!effect) {
-        el.style.boxShadow = 'none';
+        el.style[field] = 'none';
         return;
     }
+    console.log(121);
     const [fill] = effectStrokes;
     const color = util.toBackgroundStyle(fill as Paint) || '#000000';
     const {offset, spread, radius} = effect as any;

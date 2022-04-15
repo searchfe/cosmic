@@ -94,7 +94,7 @@ function unRef() {
                         </span>
                         <span 
                             :class="[$style.icon, isRepeat ? $style.repeat : '']"
-                            @click.stop="(event) => openStandardModal(content)"
+                            @click.stop="(event) => openStandardModal(event.target)"
                         >
                             <i-cosmic-grid-outline />
                         </span>
@@ -123,12 +123,12 @@ function unRef() {
                     </div>
                 </template>
                 <template #subfix>
-                    <div
-                        class="flex items-center w-40 justify-between"
-                    >
+                    <span class="w-24 h-24 justify-center text-md items-center inline-flex mr-8">
                         <i-cosmic-more @click.stop="() => editStyleHandler(content, fillStyle.id)" />
+                    </span>
+                    <span class="w-24 h-24 justify-center text-md items-center inline-flex">
                         <i-cosmic-lock @click.stop="unRef" />
-                    </div>
+                    </span>
                 </template>
             </m-standard>
         </div>
