@@ -4,8 +4,8 @@ import { useQuery, useMutation } from '@urql/vue';
 export function query(schema: string, query: gql.QueryColorDTO, fields: string[]) {
     const projection = fields || ['id', 'name', 'day', 'night', 'dark'];
     return useQuery<Partial<gql.Color>, gql.QueryColorDTO>({
-        query: `query ($fields: [String!], $query: QueryColorDTO) {
-            colors(fields: $fields, query: $query) {
+        query: `query ($query: QueryColorDTO) {
+            colors(query: $query) {
                 id,
                 ${projection.join(',')}
             }

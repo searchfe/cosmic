@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@cosmic/core/urql';
 
 export function query(query: gql.QueryOpacityDTO, fields: string[] = []) {
     return useQuery<{ opacitys: Partial<gql.Opacity>[] }, gql.QueryOpacityDTO>({
-        query: `query ($fields: [String!], $query: QueryOpacityDTO) {
-            opacitys(fields: $fields, query: $query) {
+        query: `query ($query: QueryOpacityDTO) {
+            opacitys(query: $query) {
                 id,
                 ${fields.join(',')}
             }

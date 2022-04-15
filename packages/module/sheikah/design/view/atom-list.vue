@@ -259,7 +259,7 @@ function refresh() {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
-@media (min-width: 1920px) {
+@media (min-width: 1440px) {
     .atom-grid {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }

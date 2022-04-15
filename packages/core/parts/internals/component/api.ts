@@ -38,6 +38,7 @@ type QueryVariantResult = Pick<
 const queryFields = `name
 displayName
 desc
+id
 keyNodes {
     name
     type

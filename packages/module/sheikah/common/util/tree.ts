@@ -14,7 +14,6 @@ export function generateProjectForest(projects: gql.Project[], teams: string[]) 
         teamMap.set(team, {
             id: '',
             label: '项目类别',
-            extra: '+',
             children: [],
         });
     });

@@ -9,7 +9,7 @@
     position: relative;
     width: 100%;
     background: #fff;
-    border-radius: 16px;
+    border-radius: 8px;
     overflow: hidden;
 }
 .card:hover {

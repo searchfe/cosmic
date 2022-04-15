@@ -7,8 +7,8 @@ export default function prefabDAO(client: Client) {
     return {
         query(query: gql.QueryPrefabDTO, fields: PrefabFields = ['id']) {
             return client.query<{ prefabs: Partial<gql.Prefab>[] }>(
-                `query ($fields: [String!], $query: QueryPrefabDTO!) {
-                    prefabs(fields: $fields, query: $query) {
+                `query ($query: QueryPrefabDTO!) {
+                    prefabs(query: $query) {
                         id,
                         ${fields.join(',')}
                     }

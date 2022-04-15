@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@cosmic/core/urql';
 
 export function query(query: gql.QueryBorderDTO) {
     return useQuery<{ borders: Partial<gql.Border>[] }, gql.QueryBorderDTO>({
-        query: `query ($fields: [String!], $query: QueryBorderDTO) {
-            borders(fields: $fields, query: $query) {
+        query: `query ($query: QueryBorderDTO) {
+            borders(query: $query) {
                 id,
                 name,
                 team,

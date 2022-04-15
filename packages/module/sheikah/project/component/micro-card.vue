@@ -66,7 +66,7 @@
         <div :class="$style['card-img']">
             {{ (name || 'P')[0] }}
         </div>
-        <div :class="$style['card-name']">
+        <div class="text-lg" :class="$style['card-name']">
             {{ name }}
         </div>
         <div :class="$style['card-info']">
@@ -74,6 +74,7 @@
                 <img
                     v-for="user in users"
                     :key="user"
+                    class="mr-8"
                     :class="$style['card-user-img']"
                     :src="user"
                     alt=""
@@ -97,7 +98,7 @@
 .card {
     position: relative;
     overflow: visible;
-    padding-bottom: 40.7%;
+    padding-bottom: 60%;
     height: 0;
     font-size: 12px;
 }
@@ -123,17 +124,19 @@
     position: absolute;
     left: 12px;
     top: 62px;
-    height: 16px;
+    height: 20px;
+    line-height: 20px;
     width: 129px;
     color: #1f1f1f;
-    font-weight: 700;
+    font-weight: var(--font-normal);
 }
 .card-info {
     position: absolute;
     left: 0px;
     bottom: 12px;
     box-sizing: border-box;
-    padding: 0 14px;
+    padding-left: 14px;
+    padding-right: 12px;
     width: 100%;
     height: 24px;
     display: flex;

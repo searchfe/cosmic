@@ -78,7 +78,7 @@ function mouseenterHandler() {
 }
 .filter-item-text {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
 }
 .filter-item-num {
     font-size: 12px;
