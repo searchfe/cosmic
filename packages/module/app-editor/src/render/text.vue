@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, getCurrentInstance, onUnmounted } from 'vue';
+import { getCurrentInstance, onUnmounted } from 'vue';
 import  { type TextNode, util } from '@cosmic/core/parts';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
@@ -14,15 +14,7 @@ const props = withDefaults(defineProps<TextProps>(), {
 });
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-const selected = ref(true);
 
-nodeService.selection.subscribe(nodes => {
-    if(nodes.filter(node => node.id == props.node.id).length) {
-        selected.value = true;
-    } else {
-        selected.value = false;
-    }
-});
 const instance = getCurrentInstance();
 const subject = nodeService.watch(props.node);
 subject.subscribe(() => {
@@ -56,6 +48,6 @@ onUnmounted(() => {
         }"
     >
         {{ node?.name }}
-        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
+        <wrapper :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>
