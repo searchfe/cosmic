@@ -14,6 +14,7 @@ declare module 'vue' {
     ICosmicSearch: typeof import('~icons/cosmic/search')['default']
     ICosmicSquare: typeof import('~icons/cosmic/square')['default']
     ICosmicText: typeof import('~icons/cosmic/text')['default']
+    ICosmicTrash: typeof import('~icons/cosmic/trash')['default']
   }
 }
 

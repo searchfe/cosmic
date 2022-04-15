@@ -25,6 +25,7 @@ nodeService.selection.subscribe(nodes => {
 });
 const instance = getCurrentInstance();
 nodeService.watch(props.node).subscribe(() => {
+    // console.log('update text', node);
     instance?.proxy?.$forceUpdate();
 });
 

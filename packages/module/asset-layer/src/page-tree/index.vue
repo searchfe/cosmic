@@ -11,6 +11,7 @@ const treedata = ref<LayerTreeData[]>([]);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 const isOpen = ref(true);
+const isShowArrow = ref(true);
 
 let doc: DocumentNode;
 let selection: PageNode;
@@ -23,7 +24,12 @@ nodeService.document.subscribe(document => {
         updateSelection(treedata.value, [selection]);
     }
     nodeService.watch(document).subscribe((updateDocument) => {
-        if((updateDocument as DocumentNode).children.length === 0) isOpen.value = false;
+        if((updateDocument as DocumentNode).children.length === 0) {
+            isShowArrow.value = false;
+            isOpen.value = false;
+        } else {
+            isShowArrow.value = true;
+        }
         treedata.value = nodeToTree(updateDocument as DocumentNode);
         updateSelection(treedata.value, [selection]);
     });
@@ -65,6 +71,7 @@ function moveTo(event: TreeChangeEvent) {
         <div class="px-20 py-8 h-40 border-bottom flex items-center text-sm">
             <span class="flex-grow-0 flex-shrink-0">页面</span>
             <div
+                v-if="isShowArrow"
                 class="ml-12 flex-grow-0 flex-shrink-0 w-20 text-center"
                 @click="() => isOpen = !isOpen"
             >
@@ -90,8 +97,8 @@ function moveTo(event: TreeChangeEvent) {
             <template #label="slotProps">
                 {{ slotProps.nodeData.label }}
             </template>
-            <!-- <template #subfix="slotProps">
-                <i-cosmic-eye-open v-if="slotProps.nodeData.type !== 'PAGE'" />
+            <!-- <template #subfix="">
+                <i-cosmic-trash />
             </template> -->
         </tree>
     </div>
@@ -102,7 +109,6 @@ function moveTo(event: TreeChangeEvent) {
     }
     .customlized {
         --font-md : 1.2rem;
-        --icon-md : 1.4rem;
         --leading-md: 0;
     }
     .customlized input {
