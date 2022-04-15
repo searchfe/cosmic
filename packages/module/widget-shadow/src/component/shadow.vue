@@ -71,11 +71,14 @@ function updateStyle() {
 <template>
     <div ref="container">
         <div v-if="isLocalStyle">
-            <m-title aria-label="效果属性" title="效果">
+            <m-title
+                aria-label="效果属性"
+                title="效果"
+                @on-click="(event) => openStandardModal(event.currentTarget)"
+            >
                 <i-cosmic-grid-outline
                     :class="$style.icon"
                     class="-v-bg-inapparent"
-                    @click.stop="(event) => openStandardModal(event.currentTarget)"
                 />
             </m-title>
             <input-list :effect-style="effectStyle" @change="() => emits('change', shadowStyle)" />

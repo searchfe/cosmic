@@ -64,9 +64,12 @@ function unRef() {
 <template>
     <div ref="containerRef">
         <div v-if="!isStandard">
-            <MTitle title="字形">
-                <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
-            </MTitle>
+            <m-title
+                title="字形"
+                @on-click="(event) => openStandardModal(event.currentTarget)"
+            >
+                <i-cosmic-grid-outline :class="$style.icon" />
+            </m-title>
             <glyph-content :text-style="textStyle" @change="() => emits('change', textStyle)" />
         </div>
         <template v-else>
