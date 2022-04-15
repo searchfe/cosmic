@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type ComponentNode } from '@cosmic/core/parts';
-import { ref, getCurrentInstance, onUnmounted } from 'vue';
+import { getCurrentInstance, onUnmounted } from 'vue';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
@@ -15,15 +15,6 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 });
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-const selected = ref(true);
-
-nodeService.selection.subscribe(nodes => {
-    if(nodes.filter(node => node.id == props.node.id).length) {
-        selected.value = true;
-    } else {
-        selected.value = false;
-    }
-});
 
 const instance = getCurrentInstance();
 const subject = nodeService.watch(props.node);
@@ -52,6 +43,6 @@ onUnmounted(() => {
             <s-component v-else-if="node.cname === 'aladin'" class="w-full h-ull" name="aladin" />
             <s-component v-else-if="node.cname === 'scroll'" class="w-full h-ull" name="scroll" />
         </div>
-        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
+        <wrapper :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

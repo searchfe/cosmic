@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type FrameNode, util } from '@cosmic/core/parts';
-import { onMounted, ref, getCurrentInstance, onUnmounted } from 'vue';
+import { onMounted, getCurrentInstance, onUnmounted } from 'vue';
 import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
@@ -17,15 +17,6 @@ onMounted(() => {
 });
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-const selected = ref(true);
-
-nodeService.selection.subscribe(nodes => {
-    if(nodes.filter(node => node.id == props.node.id).length) {
-        selected.value = true;
-    } else {
-        selected.value = false;
-    }
-});
 
 const instance = getCurrentInstance();
 const subject = nodeService.watch(props.node);
@@ -55,6 +46,6 @@ onUnmounted(() => {
         <div class="relative">
             <children-render :children="node.children" />
         </div>
-        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
+        <wrapper :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>
