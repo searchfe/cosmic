@@ -45,63 +45,57 @@ watch(() => props.textStyle, (newValue) => {
             </Select>
         </div>
         <Row :class="$style.row">
-            <Col :span="4">
-                <div class="w-80">
-                    <Select
-                        size="sm"
-                        :value="textStyle.fontSize + ''"
-                        allow-input
-                        :class="$style['margin-left']"
-                        @on-change="(event) => changeStyle(originalStyle, 'fontSize', event)"
-                    >
-                        <template #prefix>
-                            <i-cosmic-font :class="$style.icon" />
-                        </template>
-                        <SelectOption
-                            v-for="data of FontSize"
-                            :key="data.value"
-                            :value="data.value"
-                            :label="data.label"
-                        />
-                    </Select>
-                </div>
+            <Col :span="4" :class="$style.col">
+                <Select
+                    size="sm"
+                    :value="textStyle.fontSize + ''"
+                    allow-input
+                    :class="$style['margin-left']"
+                    @on-change="(event) => changeStyle(originalStyle, 'fontSize', event)"
+                >
+                    <template #prefix>
+                        <i-cosmic-font :class="$style.icon" />
+                    </template>
+                    <SelectOption
+                        v-for="data of FontSize"
+                        :key="data.value"
+                        :value="data.value"
+                        :label="data.label"
+                    />
+                </Select>
             </Col>
-            <Col :span="4">
-                <div class="w-80">
-                    <Select
-                        size="sm"
-                        :value="textStyle.fontName.style"
-                        @on-change="(event) => changeStyle(originalStyle.fontName, 'style', event)"
-                    >
-                        <SelectOption
-                            v-for="data of FontWeight"
-                            :key="data.value"
-                            :value="data.value"
-                            :label="data.label"
-                        />
-                    </Select>
-                </div>
+            <Col :span="4" :class="$style.col">
+                <Select
+                    size="sm"
+                    :value="textStyle.fontName.style"
+                    @on-change="(event) => changeStyle(originalStyle.fontName, 'style', event)"
+                >
+                    <SelectOption
+                        v-for="data of FontWeight"
+                        :key="data.value"
+                        :value="data.value"
+                        :label="data.label"
+                    />
+                </Select>
             </Col>
-            <Col :span="4">
-                <div class="w-80">
-                    <Select
-                        size="sm"
-                        :value="textStyle.textDecoration"
-                        @on-change="event => changeStyle(originalStyle, 'textDecoration', event)"
-                    >
-                        <SelectOption
-                            v-for="data of FontType"
-                            :key="data.value"
-                            :value="data.value"
-                            :label="data.label"
-                        />
-                    </Select>
-                </div>
+            <Col :span="4" :class="$style.col">
+                <Select
+                    size="sm"
+                    :value="textStyle.textDecoration"
+                    @on-change="event => changeStyle(originalStyle, 'textDecoration', event)"
+                >
+                    <SelectOption
+                        v-for="data of FontType"
+                        :key="data.value"
+                        :value="data.value"
+                        :label="data.label"
+                    />
+                </Select>
             </Col>
         </Row>
         <Row :class="$style.row">
-            <Col :span="4">
-                <div :class="[$style['glyph-item']]" class="w-80">
+            <Col :span="4" :class="$style.col">
+                <div :class="[$style['glyph-item']]">
                     <input-number
                         size="sm"
                         controls="false"
@@ -114,8 +108,8 @@ watch(() => props.textStyle, (newValue) => {
                     </input-number>
                 </div>
             </Col>
-            <Col :span="4">
-                <div :class="[$style['glyph-item']]" class="w-80">
+            <Col :span="4" :class="$style.col">
+                <div :class="[$style['glyph-item']]">
                     <Select
                         size="sm"
                         :value="textStyle.letterSpacing.value"
@@ -141,35 +135,33 @@ watch(() => props.textStyle, (newValue) => {
                     </Select>
                 </div>
             </Col>
-            <Col :span="4">
-                <div class="w-80">
-                    <Select
-                        size="sm"
-                        :value="textStyle.paragraphSpacing"
-                        allow-input
-                        @on-change="(event) => changeStyle(originalStyle, 'paragraphSpacing', event)"
-                    >
-                        <template #prefix>
-                            <i-cosmic-vertical-height :class="[$style.icon]" />
-                        </template>
-                        <SelectOption
-                            value="123"
-                            label="1"
-                        />
-                        <SelectOption
-                            value="2"
-                            label="10"
-                        />
-                        <SelectOption
-                            value="3"
-                            label="20"
-                        />
-                    </Select>
-                </div>
+            <Col :span="4" :class="$style.col">
+                <Select
+                    size="sm"
+                    :value="textStyle.paragraphSpacing"
+                    allow-input
+                    @on-change="(event) => changeStyle(originalStyle, 'paragraphSpacing', event)"
+                >
+                    <template #prefix>
+                        <i-cosmic-vertical-height :class="[$style.icon]" />
+                    </template>
+                    <SelectOption
+                        value="123"
+                        label="1"
+                    />
+                    <SelectOption
+                        value="2"
+                        label="10"
+                    />
+                    <SelectOption
+                        value="3"
+                        label="20"
+                    />
+                </Select>
             </Col>
         </Row>
         <Row :class="$style.row">
-            <Col :span="16">
+            <Col :span="16" :class="$style.col">
                 <div :class="$style['radio-left']">
                     <RadioGroup value="1">
                         <RadioButton value="1">
@@ -189,7 +181,7 @@ watch(() => props.textStyle, (newValue) => {
                     </RadioGroup>
                 </div>
             </Col>
-            <Col :span="8">
+            <Col :span="8" :class="$style.col">
                 <div>
                     <RadioGroup value="1">
                         <RadioButton value="1">
@@ -214,5 +206,12 @@ watch(() => props.textStyle, (newValue) => {
     composes: mb-8 from global;
  }
 
- 
+.col {
+    margin-right: .8rem;
+}
+
+.icon {
+    font-size: .8rem;
+}
+
  </style>
