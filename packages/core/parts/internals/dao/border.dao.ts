@@ -6,8 +6,8 @@ export default function borderDao(client: Client) {
         query(query: gql.QueryBorderDTO) {
             const projection = ['id', 'name', 'top', 'right'];
             return client.query< {borders: Partial<gql.Border>[]}>(
-                `query ($fields: [String!], $query: QueryBorderDTO!) {
-                    borders(fields: $fields, query: $query) {
+                `query ( $query: QueryBorderDTO!) {
+                    borders( query: $query) {
                         id,
                         name,
                         top {
