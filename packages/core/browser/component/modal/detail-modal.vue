@@ -34,12 +34,15 @@ const styles = reactive(props.standard);
 <template>
     <div
         ref="container"
-        class="cos-mode-reverse"
+        class="cos-mode-reverse pb-8"
         :class="$style.container"
         :style="positionStyle"
         @click.stop="() => {}"
     >
-        <div :class="$style.title">
+        <div
+            :class="$style.title"
+            class="mt-4 mb-4"
+        >
             <slot name="title">
                 {{ props.title }}
             </slot>
@@ -75,12 +78,12 @@ const styles = reactive(props.standard);
 
         <footer
             :class="$style.footer"
-            class="flex items-center justify-evenly"
+            class="flex items-center justify-center"
         >
             <Button
                 size="sm"
                 :styles="buttonSolid"
-                class="rounded-full w-64"
+                class="rounded-full w-64 mr-8"
                 @click="() => emits('cancel')"
             >
                 取消
@@ -98,7 +101,7 @@ const styles = reactive(props.standard);
 
 <style module>
 .container {
-    padding: 1.2rem 0;
+    font-size: 1.2rem;
     border-radius: calc(var(--rounded-md) * 2);;
     color: var(--color-dark);
     position: fixed;
@@ -107,7 +110,7 @@ const styles = reactive(props.standard);
     width: 27rem;
 }
 .title {
-    composes: -v-h -v-px items-center flex justify-between md from global;
+    composes: -v-h -v-px items-center flex justify-cennter md from global;
 }
 
 .content {
@@ -123,4 +126,5 @@ const styles = reactive(props.standard);
 .footer {
     composes: -v-py sm from global;
 }
+
 </style>

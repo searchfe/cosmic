@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { toRaw, watch } from 'vue';
+import { computed } from 'vue';
 import { Select, SelectOption, Row, Col, InputNumber, RadioGroup, RadioButton } from 'cosmic-vue';
 import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
 import type { TextStyle } from '@cosmic/core/parts';
@@ -12,9 +12,9 @@ const props = withDefaults(defineProps<{
     textStyle: () => ({} as unknown as TextStyle),
 });
 
-let originalStyle = toRaw(props.textStyle);
+const textStyle = computed(() => props.textStyle);
 
-const emits = defineEmits('change');
+const emits = defineEmits(['change']);
 
 function changeStyle(textStyle, field, event) {
     textStyle[field] = event.value;
@@ -23,10 +23,6 @@ function changeStyle(textStyle, field, event) {
     }
     emits('change');
 }
-
-watch(() => props.textStyle, (newValue) => {
-    originalStyle = toRaw(newValue);
-});
 
 </script>
 
@@ -37,7 +33,7 @@ watch(() => props.textStyle, (newValue) => {
             <Select
                 size="sm"
                 :value="textStyle.fontName.family"
-                @on-change="(event) => changeStyle(originalStyle.fontName, 'family', event)"
+                @on-change="(event) => changeStyle(textStyle.fontName, 'family', event)"
             >
                 <SelectOption
                     v-for="data of GlyphData"
@@ -48,13 +44,13 @@ watch(() => props.textStyle, (newValue) => {
             </Select>
         </div>
         <Row :class="$style.row">
-            <Col :span="4" :class="$style.col">
+            <Col :span="4" class="ml-8">
                 <Select
                     size="sm"
                     :value="textStyle.fontSize + ''"
                     allow-input
                     :class="$style['margin-left']"
-                    @on-change="(event) => changeStyle(originalStyle, 'fontSize', event)"
+                    @on-change="(event) => changeStyle(textStyle, 'fontSize', event)"
                 >
                     <template #prefix>
                         <i-cosmic-font :class="$style.icon" />
@@ -67,11 +63,11 @@ watch(() => props.textStyle, (newValue) => {
                     />
                 </Select>
             </Col>
-            <Col :span="4" :class="$style.col">
+            <Col :span="4" class="ml-8">
                 <Select
                     size="sm"
                     :value="textStyle.fontName.style"
-                    @on-change="(event) => changeStyle(originalStyle.fontName, 'style', event)"
+                    @on-change="(event) => changeStyle(textStyle.fontName, 'style', event)"
                 >
                     <SelectOption
                         v-for="data of FontWeight"
@@ -81,11 +77,11 @@ watch(() => props.textStyle, (newValue) => {
                     />
                 </Select>
             </Col>
-            <Col :span="4" :class="$style.col">
+            <Col :span="4">
                 <Select
                     size="sm"
                     :value="textStyle.textDecoration"
-                    @on-change="event => changeStyle(originalStyle, 'textDecoration', event)"
+                    @on-change="event => changeStyle(textStyle, 'textDecoration', event)"
                 >
                     <SelectOption
                         v-for="data of FontType"
@@ -97,13 +93,13 @@ watch(() => props.textStyle, (newValue) => {
             </Col>
         </Row>
         <Row :class="$style.row">
-            <Col :span="4" :class="$style.col">
+            <Col :span="4" class="ml-8">
                 <div :class="[$style['glyph-item']]">
                     <input-number
                         size="sm"
                         controls="false"
                         :value="textStyle.lineHeight.value"
-                        @on-input="(event) => changeStyle(originalStyle.lineHeight, 'value', event)"
+                        @on-input="(event) => changeStyle(textStyle.lineHeight, 'value', event)"
                     >
                         <template #prefix>
                             <i-cosmic-line-height :class="[$style.icon]" />
@@ -111,14 +107,14 @@ watch(() => props.textStyle, (newValue) => {
                     </input-number>
                 </div>
             </Col>
-            <Col :span="4" :class="$style.col">
+            <Col :span="4" class="ml-8">
                 <div :class="[$style['glyph-item']]">
                     <Select
                         size="sm"
                         :value="textStyle.letterSpacing.value"
                         allow-input
                         :class="$style['margin-left']"
-                        @on-change="(event) => changeStyle(originalStyle.letterSpacing, 'value', event)"
+                        @on-change="(event) => changeStyle(textStyle.letterSpacing, 'value', event)"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="[$style.icon]" />
@@ -138,12 +134,12 @@ watch(() => props.textStyle, (newValue) => {
                     </Select>
                 </div>
             </Col>
-            <Col :span="4" :class="$style.col">
+            <Col :span="4">
                 <Select
                     size="sm"
                     :value="textStyle.paragraphSpacing"
                     allow-input
-                    @on-change="(event) => changeStyle(originalStyle, 'paragraphSpacing', event)"
+                    @on-change="(event) => changeStyle(textStyle, 'paragraphSpacing', event)"
                 >
                     <template #prefix>
                         <i-cosmic-vertical-height :class="[$style.icon]" />
@@ -209,9 +205,6 @@ watch(() => props.textStyle, (newValue) => {
     composes: mb-8 from global;
  }
 
-.col {
-    margin-right: .1rem;
-}
 
 .icon {
     font-size: .8rem;

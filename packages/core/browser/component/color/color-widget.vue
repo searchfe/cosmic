@@ -80,17 +80,26 @@ function unRef() {
             >
                 <m-title
                     v-if="showTitle"
+                    :coustom-icon="true"
                     title="颜色"
                 >
-                    <div
+                    <span
                         class="flex justify-between items-center"
                     >
-                        <i-cosmic-sun :class="$style.icon" />
-                        <i-cosmic-grid-outline
+                        <span
+                            :class="$style.icon"
+                            class="mr-8"
+                        >
+                            <i-cosmic-sun />
+                        </span>
+                        <span 
                             :class="[$style.icon, isRepeat ? $style.repeat : '']"
-                            @click.stop="(event) => openStandardModal(content)"
-                        />
-                    </div>
+                            @click.stop="(event) => openStandardModal(event.target)"
+                        >
+                            <i-cosmic-grid-outline />
+                        </span>
+                        
+                    </span>
                 </m-title>
                 <m-color
                     :color-style="fillStyle"
@@ -114,12 +123,12 @@ function unRef() {
                     </div>
                 </template>
                 <template #subfix>
-                    <div
-                        class="flex items-center w-40 justify-between"
-                    >
+                    <span class="w-24 h-24 justify-center text-md items-center inline-flex mr-8">
                         <i-cosmic-more @click.stop="() => editStyleHandler(content, fillStyle.id)" />
+                    </span>
+                    <span class="w-24 h-24 justify-center text-md items-center inline-flex">
                         <i-cosmic-lock @click.stop="unRef" />
-                    </div>
+                    </span>
                 </template>
             </m-standard>
         </div>
@@ -168,15 +177,13 @@ function unRef() {
 }
 
 .icon {
+    composes: w-24 h-24 inline-flex items-center justify-center -v-bg-inapparent from global;
+    border-radius: .4rem;
     font-size: 1.2rem;
 }
 
 .repeat {
     color: blue;
-}
-
-.icon:first-child {
-    margin-right: .8rem;
 }
 
 .demo {

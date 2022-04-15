@@ -39,13 +39,13 @@ watchEffect(() =>  {
     isLocalFillStyle.value = fillStyleService.isLocalStyle(fillStyleId.value);
 });
 
-nodeService.selection.subscribe((nodes) => {    
-    const selectNode = nodes.find(item => item.type === 'TEXT') as TextNode;
-    if (!selectNode) return;
-    getTextStyle(selectNode);
-    getFillStyle(selectNode);
-    styleId.value = selectNode.getRangeTextStyleId(0,0);
-    fillStyleId.value = selectNode.getRangeFillStyleId(0,0);
+nodeService.selection.subscribe((nodes) => {
+    textNode = nodes.find(item => item.type === 'TEXT') as TextNode;
+    if (!textNode) return;
+    getTextStyle(textNode);
+    getFillStyle(textNode);
+    styleId.value = textNode.getRangeTextStyleId(0,0);
+    fillStyleId.value = textNode.getRangeFillStyleId(0,0);
 });
 
 textStyleSevice.subject.subscribe((source: any) => {
@@ -91,7 +91,6 @@ function getTextStyle(node: TextNode): TextStyle {
 
 function getFillStyle(node: TextNode): FillStyle {
     if (!node) return {} as FillStyle;
-    // isFillRepeat.value =  fillStyleService.isRepeat(fillStyleId.value);
     const fillStyle = fillStyleService.get(node.getRangeFillStyleId(0,0) ?? Date.now() + '');
     if (node.getRangeFillStyleId(0,0) !== fillStyle.id) {
         node.setRangeFillStyleId(0, 0, fillStyle.id);
@@ -100,18 +99,18 @@ function getFillStyle(node: TextNode): FillStyle {
 }
 
 function textChange() {
-    const node = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
-    const style = textStyleSevice.get(node.getRangeTextStyleId(0,0));
-    node.setRangeFontSize(0, 0, style.fontSize);
-    node.setRangeFontName(0, 0, {family: style.fontName.family ?? '宋体', style: style.fontName.style ?? ''});
-    node.setRangeTextDecoration(0 , 0, style.textDecoration);
-    node.setRangeLineHeight(0, 0, {...style.lineHeight});
-    node.setParagraphSpacing(style.paragraphSpacing);
-    node.update();
+    const style = textStyleSevice.get(textNode.getRangeTextStyleId(0,0));
+    textNode.setRangeFontSize(0, 0, style.fontSize);
+    textNode.setRangeFontName(0, 0, {family: style.fontName.family ?? '宋体', style: style.fontName.style ?? ''});
+    textNode.setRangeTextDecoration(0 , 0, style.textDecoration);
+    textNode.setRangeLineHeight(0, 0, {...style.lineHeight});
+    textNode.setParagraphSpacing(style.paragraphSpacing);
+    textNode.update();
 }
 
 function fillChage() {
     const style = fillStyleService.get(textNode.getRangeFillStyleId(0, 0));
+    isFillRepeat.value =  fillStyleService.isRepeat(fillStyleId.value);
     textNode.setRangeFills(0, 0, [style as unknown as any]);
     textNode.update();
 }

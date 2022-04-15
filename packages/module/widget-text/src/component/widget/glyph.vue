@@ -64,20 +64,23 @@ function unRef() {
 <template>
     <div ref="containerRef">
         <div v-if="!isStandard">
-            <MTitle title="字形">
-                <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
-            </MTitle>
+            <m-title
+                title="字形"
+                @on-click="(event) => openStandardModal(event.currentTarget)"
+            >
+                <i-cosmic-grid-outline :class="$style.icon" />
+            </m-title>
             <glyph-content :text-style="textStyle" @change="() => emits('change', textStyle)" />
         </div>
         <template v-else>
             <m-standard :standard="textStyle" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
-                    <div
-                        class="flex items-center w-40 justify-around"
-                    >
+                    <span class="w-24 h-24 justify-center text-md items-center inline-flex mr-8">
                         <i-cosmic-more @click.stop="(event) => editStyleHandler(containerRef, textStyle.id)" />
+                    </span>
+                    <span class="w-24 h-24 justify-center text-md items-center inline-flex">
                         <i-cosmic-lock @click.stop="unRef" />
-                    </div>
+                    </span>
                 </template>
             </m-standard>
         </template>

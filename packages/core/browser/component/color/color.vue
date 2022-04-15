@@ -81,7 +81,6 @@ watch(() => props.colorStyle, (newValue) => {
             />
             <i-cosmic-dark 
                 v-else
-                class=""
             />
         </div>
         <div
@@ -139,7 +138,7 @@ watch(() => props.colorStyle, (newValue) => {
 
 .color > .theme {
     flex: 0 1 auto;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     display: flex;
     align-items: center;
     margin-right: 5px;
