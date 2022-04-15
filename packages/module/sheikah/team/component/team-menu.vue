@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { watchEffect, ref } from 'vue';
-import { Collapse, CollapseItem, Input, Dialog } from 'cosmic-vue';
+import { Collapse, CollapseItem, Input, Dialog, Button } from 'cosmic-vue';
+import { buttonLight } from 'cosmic-ui';
 import { router as vueRouter } from '@cosmic/core/browser';
 import TeamItem from './team-menu-item.vue';
 import { generateProjectForest } from '../../common/util/tree';
@@ -95,9 +96,61 @@ function saveProject() {
             </div>
         </collapse-item>
     </collapse>
-    <Dialog v-model:visible="openDialog" title="创建项目" :show-close-icon="false" @ok="saveProject">
-        <div class="my-20">
-            <Input v-model:value="newProject.name" placeholder="请输入项目名称" />
+    <Dialog v-model:visible="openDialog" :class="$style.dialog" width="434px" height="245px" title="创建项目" :show-close-icon="false" @ok="saveProject">
+        <div :class="$style['input-container']">
+            <Input v-model:value="newProject.name" :class="$style.input" placeholder="请输入项目名称" />
         </div>
+        <template #actions>
+            <Button
+                size="sm"
+                :styles="buttonLight"
+                :class="$style['cancel-button']"
+                class="rounded-full w-64 -v-border-apparent font-normal"
+            >
+                取消
+            </Button>
+            <Button
+                size="sm"
+                :class="$style['confirm-button']"
+                class="rounded-full w-64 font-normal"
+            >
+                确定
+            </Button>
+        </template>
     </Dialog>
 </template>
+
+<style module>
+.dialog {
+    padding-left: 73px;
+    padding-right: 73px;
+}
+
+.input-container {
+    margin-top: 38px;
+    margin-bottom: 42px;
+    width: 288px;
+    height: 36px;
+
+}
+.input {
+    opacity: .3;
+    border: 1px solid rgba(31, 31, 31, .1)
+}
+.cancel-button:hover {
+    opacity: .3;
+}
+.cancel-button {
+    width: 122px;
+    height: 40px !important;
+    margin-right: 10px;
+    background: #f5f5f5;
+    font-size: 16px !important;
+    border: none !important;
+}
+.confirm-button {
+    width: 122px;
+    height: 40px !important;
+    font-size: 16px !important;
+}
+</style>

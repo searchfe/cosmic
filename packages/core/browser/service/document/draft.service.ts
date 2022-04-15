@@ -59,6 +59,10 @@ export default class DraftService {
                 draft = d.data;
             }
         }
+        if (!draft) {
+            console.log('no draft loaded');
+            return;
+        }
         const data = JSON.parse(draft);
         console.log('open', data);
         if (data.refs) {

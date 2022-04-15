@@ -23,10 +23,11 @@ withDefaults(defineProps<PropRegion>(), {
 </script>
 
 <template>
-    <div class="text-2xl padding-2xl relative" :class="{ [$style.info]: true, [$style.inverse]: inverse }">
+    <div class="text-2xl relative" :class="{ [$style.info]: true, [$style.inverse]: inverse }">
         <div
-            class="flex justify-between items-center"
-            :class="{[$style['inverse-title']]: inverse, 'mb-20': hasDefault }"
+            v-if="title"
+            class="flex justify-between items-center h-20 text-xl font-normal"
+            :class="{[$style['inverse-title']]: inverse, 'mb-24': hasDefault }"
         >
             <span :class="{'font-semibold': level === 1}">{{ title }}</span>
             <slot name="extra" />
@@ -46,10 +47,10 @@ withDefaults(defineProps<PropRegion>(), {
 
 <style module>
 .info {
-    margin: 32px 40px 24px;
-    padding: var(--padding-2xl);
+    margin: 24px 24px 0;
+    padding: 24px;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 .inverse {
     background: none;
@@ -60,7 +61,7 @@ withDefaults(defineProps<PropRegion>(), {
     padding-right: 4px;
 }
 .rb-actions {
-    right: 24px;
-    bottom: 24px;
+    right: 32px;
+    bottom: 32px;
 }
 </style>

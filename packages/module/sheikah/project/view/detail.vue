@@ -66,8 +66,8 @@ function onSave() {
         </template>
         <template #rb-actions>
             <div class="flex justify-end">
-                <div :class="$style.dir">
-                    <img class="w-full h-full" src="https://fe-dev.bj.bcebos.com/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9%203%E5%80%8D%20.png" alt="dir">
+                <div class="flex items-center justify-center" :class="$style.dir">
+                    <i-cosmic-dir />
                 </div>
                 <div :class="$style.add" class="flex justify-center items-center" @click="showDialog = true">
                     <i-cosmic-plus class="text-md" />
@@ -106,6 +106,14 @@ function onSave() {
     border-radius: 4px;
     background: #f5f5f5;
 }
+.dir {
+    margin-right: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    border-radius: 4px;
+    background: #f5f5f5;
+}
 @media (min-width: 960px) {
     .card-list {
         grid-template-columns: 1fr 1fr;
@@ -120,11 +128,6 @@ function onSave() {
     .card-list {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
-}
-.dir {
-    margin-right: 12px;
-    width: 35px;
-    height: 35px;
 }
 </style>
 

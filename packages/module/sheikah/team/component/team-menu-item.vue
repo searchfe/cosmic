@@ -78,17 +78,27 @@ function onAddProject(data: { id: string }) {
     <div class="mx-10">
         <r-tree
             size="sm"
+            :indent="10"
             :styles="treeSecondary"
             :data="designTree"
             @click-node="onToggleDesignTree"
-        />
+        >
+            <template #arrow="slotProps">
+                <i-cosmic-atom v-if="slotProps.nodeData.children" class="text-md inline-block mt-2 mr-6" />
+            </template>
+        </r-tree>
         <r-tree
             size="sm"
+            :indent="25"
             :styles="treeSecondary"
             :data="[data]"
             @click-node="onToggleProject"
             @click-subfix="onAddProject"
         >
+            <template #arrow="slotProps">
+                <i-cosmic-category v-if="slotProps.nodeData.label === '项目类别'" class="text-md inline-block mt-2 mr-6" />
+                <i-cosmic-dir v-else class="text-md inline-block mt-2 mr-6" />
+            </template>
             <template #subfix>
                 <i-cosmic-plus />
             </template>

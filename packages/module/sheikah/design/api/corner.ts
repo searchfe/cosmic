@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@cosmic/core/urql';
 
 export function query(query: gql.QueryCornerDTO, fields: string[] = []) {
     return useQuery<{ corners: Partial<gql.Corner>[] }, gql.QueryCornerDTO>({
-        query: `query ($fields: [String!], $query: QueryCornerDTO) {
-            corners(fields: $fields, query: $query) {
+        query: `query ($query: QueryCornerDTO) {
+            corners(query: $query) {
                 id,
                 ${fields.join(',')}
             }

@@ -24,7 +24,7 @@ withDefaults(defineProps<ProjectProps>(), {
                 <img class="w-full h-full" src="https://fe-dev.bj.bcebos.com/0b45b7cab385c97703048aa0b.png" alt="稿件预览图">
             </div>
             <div :class="$style['card-content-info']">
-                <div class="h-16 text-md">
+                <div class="h-16 text-lg">
                     {{ name }}
                 </div>
                 <div class="mt-10 text-sm">

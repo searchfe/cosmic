@@ -18,8 +18,8 @@ export function queryOne(id: string, fields: PrefabFields = ['id', 'name', 'team
 
 export function query(query: gql.QueryPrefabDTO, fields: string[] = ['id', 'name', 'team', 'component', 'atoms']) {
     return useQuery<{ prefabs: Partial<gql.Prefab>[] }, gql.QueryPrefabDTO>({
-        query: `query ($fields: [String!], $query: QueryPrefabDTO) {
-            prefabs(fields: $fields, query: $query) {
+        query: `query ($query: QueryPrefabDTO) {
+            prefabs(query: $query) {
                 id,
                 ${fields.join(',')}
             }

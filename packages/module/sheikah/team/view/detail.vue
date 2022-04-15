@@ -45,30 +45,39 @@ function onDeleteProject(data: { id: string }) {
     });
 }
 
-const tempItem = {
-    header: 'https://fe-dev.bj.bcebos.com/design-card-header.png',
-    title: '原子',
-    type: 'atom',
-    imgs: [
-        'https://fe-dev.bj.bcebos.com/%E5%B7%A6.png',
-        'https://fe-dev.bj.bcebos.com/%E4%B8%AD.png',
-        'https://fe-dev.bj.bcebos.com/%E4%B8%AD2.png',
-        'https://fe-dev.bj.bcebos.com/%E5%8F%B3.png',
-    ],
-    extra: '38个',
-};
-const teamAssetsData = [
-    tempItem,
-    {
-        ...tempItem,
-        title: '组件',
+const teamAssetsData = [{
+        header: 'https://fe-dev.bj.bcebos.com/design-card-header.png',
+        title: '原子',
+        type: 'atom',
+        imgs: [
+            'https://fe-dev.bj.bcebos.com/%E5%B7%A6.png',
+            'https://fe-dev.bj.bcebos.com/%E4%B8%AD.png',
+            'https://fe-dev.bj.bcebos.com/%E4%B8%AD2.png',
+            'https://fe-dev.bj.bcebos.com/%E5%8F%B3.png',
+        ],
+        extra: '38个',
+    }, {
+        header: 'https://fe-dev.bj.bcebos.com/design-card-header.png',
         type: 'component',
+        title: '组件',
         imgs: [
             'https://fe-dev.bj.bcebos.com/dash%20%E9%A2%84%E5%88%B6%E7%BC%A9%E5%92%AF%E5%9B%BE1.png',
             'https://fe-dev.bj.bcebos.com/dash%20%E9%A2%84%E5%88%B6%E7%BC%A9%E5%92%AF%E5%9B%BE2.png',
             'https://fe-dev.bj.bcebos.com/dash%20%E9%A2%84%E5%88%B6%E7%BC%A9%E5%92%AF%E5%9B%BE3.png',
             'https://fe-dev.bj.bcebos.com/dash%20%E9%A2%84%E5%88%B6%E7%BC%A9%E5%92%AF%E5%9B%BE4.png',
         ],
+        extra: '6个',
+    }, {
+        header: 'https://fe-dev.bj.bcebos.com/design-card-header.png',
+        title: '预置',
+        type: 'prefab',
+        imgs: [
+            'https://fe-dev.bj.bcebos.com/%E5%B7%A6.png',
+            'https://fe-dev.bj.bcebos.com/%E4%B8%AD.png',
+            'https://fe-dev.bj.bcebos.com/%E4%B8%AD2.png',
+            'https://fe-dev.bj.bcebos.com/%E5%8F%B3.png',
+        ],
+        extra: '8个',
     },
 ];
 </script>
@@ -98,6 +107,7 @@ const teamAssetsData = [
     display: grid;
     grid-template-columns: 1fr;
     column-gap: 24px;
+    row-gap: 24px;
 }
 .project-list {
     display: grid;
@@ -107,21 +117,13 @@ const teamAssetsData = [
 }
 @media (min-width: 960px) {
     .project-list {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
     .design-list {
         grid-template-columns: 1fr 1fr;
     }
 }
-@media (min-width: 1280px) {
-    .project-list {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-    .design-list {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-}
-@media (min-width: 1920px) {
+@media (min-width: 1080px) {
     .project-list {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }

@@ -73,8 +73,7 @@ const menuData = [{
     box-sizing: border-box;
     height: 0;
     padding-bottom: 23.25%;
-    background-color: #eee;
-    background-image: url(https://fe-dev.bj.bcebos.com/%E5%8E%9F%E5%AD%90%E6%96%B9%E5%9D%97%E8%83%8C%E6%99%AF.png);
+    background-image: url(https://fe-dev.bj.bcebos.com/%E8%B6%85%E5%A4%A7%E8%83%8C%E6%99%AF.png);
     border: 1px solid rgba(151, 151, 151, .1);
     border-radius: 12px;
 }
