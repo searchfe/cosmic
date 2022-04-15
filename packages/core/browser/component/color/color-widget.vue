@@ -109,6 +109,7 @@ function unRef() {
             <m-standard
                 v-else
                 classes="-v-bg-inapparent"
+                :is-border="true"
                 :standard="fillStyle"
                 :can-edit="false"
                 @click="(event) => editStyleHandler(content, fillStyle)"

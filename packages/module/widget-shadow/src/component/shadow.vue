@@ -90,6 +90,7 @@ function updateStyle() {
                 :class="[$style['border']]"
                 :standard="shadowStyle"
                 :can-edit="false"
+                :is-border="true"
                 @click="(event) => openStandardModal(event.event.currentTarget)"
             >
                 <template #prefix>

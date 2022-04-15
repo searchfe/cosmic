@@ -73,7 +73,7 @@ function unRef() {
             <glyph-content :text-style="textStyle" @change="() => emits('change', textStyle)" />
         </div>
         <template v-else>
-            <m-standard :standard="textStyle" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
+            <m-standard :standard="textStyle" :can-edit="false" :is-border="true" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <span class="w-24 h-24 justify-center text-md items-center inline-flex mr-8">
                         <i-cosmic-more @click.stop="(event) => editStyleHandler(containerRef, textStyle.id)" />
