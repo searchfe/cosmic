@@ -66,8 +66,11 @@ function updateStyle() {
 <template>
     <div ref="containerRef">
         <div v-if="isLocalStyle">
-            <m-title title="描边">
-                <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
+            <m-title
+                title="描边"
+                @on-click="(event) => openStandardModal(event.currentTarget)"
+            >
+                <i-cosmic-grid-outline />
             </m-title>
             <stroke-content :stroke-style="strokeStyle" @change="() => emits('change')" />
         </div>

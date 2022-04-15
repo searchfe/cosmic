@@ -23,7 +23,7 @@ const boardSwitch = () => {
             <MTitle
                 title="文字"
                 :is-open="open"
-                @click="boardSwitch"
+                @on-click="boardSwitch"
             >
                 <i-cosmic-arrow-down />
             </MTitle>
