@@ -34,7 +34,6 @@ export default class DraftService {
 
     async save() {
         const obj = serialize(this.nodeService.getDocument());
-        console.log('save', obj);
         this.draft.data  = JSON.stringify(obj);
         if (!this.draft.id) {
             const newOne = await this.create(this.draft);
@@ -64,10 +63,8 @@ export default class DraftService {
             return;
         }
         const data = JSON.parse(draft);
-        console.log('open', data);
         if (data.refs) {
             const document = deserialize(data);
-            console.log('deserialize', document);
             this.nodeService.load(document);
         }
     }

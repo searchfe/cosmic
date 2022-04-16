@@ -42,7 +42,6 @@ function editStyleHandler(el: HTMLElement, id: string) {
 watchEffect(() => {
     if (isShowDetailModal.value) {
         const style = effectStyleSevice.cloneById(editId, false);
-        console.log(style);
         editStyle.value = style;
     }
 });

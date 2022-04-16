@@ -96,7 +96,6 @@ export default class EffectStyleService extends BaseService<EffectStyle, Subject
         const shadows = data?.shadows || [] ;
         this.serviceStyles.clear();
         shadows.map(shadow => this.transformToLocal(shadow)).forEach(shadow => this.addServiceStyle(shadow));
-        console.log(this.getServiceStyles());
         this.subject.next({type: 'R', data: this.getServiceStyles()});
     }
 

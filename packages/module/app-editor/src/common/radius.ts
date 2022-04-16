@@ -18,5 +18,4 @@ function changeStyle(el: HTMLElement, binding: any) {
     // if (bottomLeftRadius) el.style.borderBottomLeftRadius = `${bottomLeftRadius}px`;
     // if (bottomRightRadius) el.style.borderBottomRightRadius = `${bottomRightRadius}px`;
     el.style.borderRadius = `${topLeftRadius}px ${topRightRadius}px  ${bottomRightRadius}px ${bottomLeftRadius}px`;
-    console.log(12);
 }

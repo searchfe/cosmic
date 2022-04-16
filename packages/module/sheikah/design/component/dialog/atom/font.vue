@@ -136,7 +136,6 @@ function onOK(args: { team: string }) {
             showDialog.value = false;
         } else {
             const duplicatData = res.error?.graphQLErrors?.[0]?.extensions?.data;
-            console.log(duplicatData);
             if (Array.isArray(duplicatData)) {
                 exsistingData.value = duplicatData as unknown as Partial<gql.Font>[];
             }

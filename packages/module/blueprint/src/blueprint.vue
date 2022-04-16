@@ -86,7 +86,6 @@ function save() {
                 }
             });
         } else {
-            console.log(data);
             updateComponent({ data }).then(res => {
                 if (res.data?.updateComponentByTeamAndName) {
                     componentService.component.next(data);
