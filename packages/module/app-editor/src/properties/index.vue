@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { Tabs, TabPane } from 'cosmic-vue';
-import { inject, hasMixin, MinimalStrokesMixin, BlendMixin } from '@cosmic/core/parts';
+import { inject, hasMixin, MinimalStrokesMixin, BlendMixin, DefaultFrameMixin } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
+import MComponent from '@cosmic-module/core/src/m-component.vue';
 
 
 const activeIdx = ref('0');
@@ -17,7 +18,7 @@ const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 nodeService.selection.subscribe((nodes) => {
     const arr = [];
-    if (nodes.some(node => node.type === 'FRAME')) arr.push('@cosmic-module/widget-radius');
+    if (nodes.some(node => hasMixin(node, DefaultFrameMixin))) arr.push('@cosmic-module/widget-radius');
     if (nodes.some(node => node.type === 'TEXT')) arr.push('@cosmic-module/widget-text');
     if (nodes.some(node => hasMixin(node, MinimalStrokesMixin))) arr.push('@cosmic-module/widget-border');
     if (nodes.some(node => hasMixin(node, BlendMixin))) arr.push('@cosmic-module/widget-shadow');
@@ -46,6 +47,8 @@ nodeService.selection.subscribe((nodes) => {
             <div class="border-bottom" />
             <m-component src="@cosmic-module/widget-mask" /> -->
         </div>
-        <div :hidden="activeIdx != '1'" />
+        <div :hidden="activeIdx != '1'">
+            <m-component src="@cosmic-module/widget-case" />
+        </div>
     </div>
 </template>

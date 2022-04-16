@@ -17,6 +17,10 @@ import MStandard from './component/standard/standard.vue';
 import type { BootstrapOption } from '@cosmic/core/parts';
 import type { GqlClient } from './service/index';
 
+export { default as IImage} from './case/image/image.vue';
+
+export { default as IAvatar } from './case/avatar/avatar.vue';
+
 
 function bootstrap(option: BootstrapOption) {
     const app = createApp((location.search || '').indexOf('preview=1') == -1? App: Preview);
