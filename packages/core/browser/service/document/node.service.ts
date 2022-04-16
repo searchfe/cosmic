@@ -175,6 +175,9 @@ export default class NodeService {
     getDocument() {
         return this._document;
     }
+    getCurrentPage() {
+        return this._currentPage;
+    }
 
     load(doc: DocumentNode) {
         this._document = doc;

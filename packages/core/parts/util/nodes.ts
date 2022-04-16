@@ -45,3 +45,23 @@ export function toCanvasPos(node: LayoutMixin & BaseNodeMixin) : Pos {
     offset.y = node.y;
     return {x: parentPos.x + offset.x, y: parentPos.y + offset.y};
 }
+
+export function offsetNodePos(node: LayoutMixin & BaseNodeMixin, offset: Pos, origin: Pos) : Pos {
+    const parents = getParents(node, []);
+    parents.forEach(parent => {
+        // offset.x += parent.x;
+        // offset.y += parent.y;
+        // 没有比例尺就不需要变化
+    });
+    return {
+        x: origin.x + offset.x,
+        y: origin.y + offset.y,
+    };
+}
+
+function getParents(node: LayoutMixin & BaseNodeMixin, base: Array<LayoutMixin & BaseNodeMixin>): Array<LayoutMixin & BaseNodeMixin> {
+    if (node.parent && hasMixin(node.parent, LayoutMixin)) {
+        return getParents(node.parent as any, [node.parent as any, ...base]);
+    }
+    return base;
+}

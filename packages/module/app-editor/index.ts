@@ -6,6 +6,7 @@ import effect from './src/common/effect';
 import radius from './src/common/radius';
 import root from './src/index.vue';
 import childrenRender from './src/render/children.vue';
+import NodeControllService from './src/service/node-controll.service';
 export default {
   root,
   imports: [
@@ -19,4 +20,5 @@ export default {
     app.directive('radius', radius);
     app.component('ChildrenRender', childrenRender);
   },
+  providers: [NodeControllService],
 } as Module;
