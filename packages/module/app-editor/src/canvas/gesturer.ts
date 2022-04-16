@@ -14,6 +14,7 @@ interface SpringOption {
     scrollX: Ref<WidgetGuides>;
     scrollY: Ref<WidgetGuides>;
 }
+type OnMovedCallback = (x: number, y: number) => void;
 
 export class Gesturer {
     private content: Ref<HTMLElement>;
@@ -25,6 +26,7 @@ export class Gesturer {
     private _enableDrag = false;
     private _enableWhile = true;
     private wheeling = false;
+    private cbs: OnMovedCallback[] = [];
     constructor(option: SpringOption) {
         this.content = option.content;
         this.wrapper = option.wrapper;
@@ -56,6 +58,8 @@ export class Gesturer {
         }
     }
     moveTo(x: number, y: number, delta = false) {
+        x = Math.round(x * 10) / 10;
+        y = Math.round(y * 10) / 10;
         this.content.value.style.transform = `translate(${x + 25}px, ${y+25}px)`;
         this.scrollX.value.scroll(x * -1);
         this.scrollX.value.scrollGuides(y * -1);
@@ -65,6 +69,9 @@ export class Gesturer {
             this.x = x;
             this.y = y;
         }
+        requestAnimationFrame(() => {
+            this.cbs.forEach(cb => cb(x, y));
+        });
     }
     moveToCenter() {
         const node: HTMLElement = this.content.value;
@@ -94,6 +101,9 @@ export class Gesturer {
     disableDrag() {
         this._enableDrag = false;
         this.wrapper.value.style.cursor = 'default';
+    }
+    onMoved(cb: OnMovedCallback) {
+        this.cbs.push(cb);
     }
 }
 

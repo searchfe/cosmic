@@ -48,11 +48,9 @@ export default class NodeService {
         } else {
             this._selection = this._currentPage.findAll(node => ids.indexOf(node.id) > -1);
         }
-        if(this._selection.length) {
-            requestAnimationFrame(() => {
-                this.selection.next(this._selection);
-            });
-        }
+        requestAnimationFrame(() => {
+            this.selection.next(this._selection);
+        });
     }
     addPage() {
         const page = new PageNode();
@@ -187,6 +185,7 @@ export default class NodeService {
         this.setSelectionPage();
         this.setSelection([]);
     }
+    
 }
 
 function increaseId(document: DocumentNode | PageNode, type: string) {

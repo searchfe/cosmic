@@ -2,6 +2,7 @@ import { type Observable, Subject, BehaviorSubject, of, filter } from '@cosmic/c
 import { injectable } from '@cosmic/core/inversify';
 
 @injectable()
+/** 处理全局键盘事务 */
 export default class KeyboardService {
     private subject: Subject<KeyboardEvent>;
     constructor(private root: HTMLElement = document.body) {

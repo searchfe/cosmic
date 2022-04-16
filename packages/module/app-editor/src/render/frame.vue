@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { type FrameNode, util } from '@cosmic/core/parts';
 import { onMounted, getCurrentInstance, onUnmounted } from 'vue';
-import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 
@@ -47,6 +46,5 @@ onUnmounted(() => {
         <div class="relative">
             <children-render :children="node.children" />
         </div>
-        <wrapper :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>
