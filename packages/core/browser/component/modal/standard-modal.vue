@@ -96,6 +96,7 @@ function filterHandler(data: string) {
             v-if="!isEmpty"
             ref="content"
             :class="$style.content"
+            class="ml-4 mr-2"
         >
             <m-standard
                 v-for="(data, index) of filterStandardList"
@@ -117,7 +118,7 @@ function filterHandler(data: string) {
                     <slot name="subfix">
                         <div
                             v-if="index === hoverIndex"
-                            class="flex items-center w-40"
+                            class="flex items-center justify-center w-40"
                         >
                             <i-cosmic-more @click.stop="showDetail(index, data)" />
                         </div>

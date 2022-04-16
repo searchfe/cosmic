@@ -118,7 +118,7 @@ function changeHandler({value}: {value: string}) {
 }
 
 .title {
-    composes: mb-8 flex -v-px sm items-center from global;
+    composes: mb-2 flex -v-px sm items-center from global;
 }
 
 .content-border {
