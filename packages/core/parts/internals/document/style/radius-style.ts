@@ -1,7 +1,6 @@
 import { default as  BaseStyle } from './base-style';
 
 export class RadiusStyle extends BaseStyle implements Internal.SolidPaint {
-    private type: 'RADIUS';
     
     tl: number;
     bl: number;
@@ -9,12 +8,11 @@ export class RadiusStyle extends BaseStyle implements Internal.SolidPaint {
     br: number;
 
 
-    constructor() {
-        super();
-        this.type = 'RADIUS';
+    constructor(id: string) {
+        super(id, 'RADIUS');
     }
 
-    clone(): FillStyle {
+    clone(): RadiusStyle {
         return this;
     }
 }

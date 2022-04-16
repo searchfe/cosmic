@@ -6,6 +6,10 @@ import { serializable } from '../serialize';
 export default class FrameNode extends Mixin(DefaultFrameMixin) implements Internal.FrameNode {
     readonly type = 'FRAME';
 
+    radiusStyleId: string;
+
+    backgroundStyleId: string;
+
     clone() {
         // TODO
         return new FrameNode();

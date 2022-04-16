@@ -7,7 +7,7 @@ import { service } from '@cosmic/core/browser';
 
 const activeIdx = ref('0');
 
-const properties = ref([]);
+const properties = ref<string[]>([]);
 
 function change(opt: any) {
     activeIdx.value = opt.value; 
@@ -17,6 +17,7 @@ const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 nodeService.selection.subscribe((nodes) => {
     const arr = [];
+    if (nodes.some(node => node.type === 'FRAME')) arr.push('@cosmic-module/widget-radius');
     if (nodes.some(node => node.type === 'TEXT')) arr.push('@cosmic-module/widget-text');
     if (nodes.some(node => hasMixin(node, MinimalStrokesMixin))) arr.push('@cosmic-module/widget-border');
     if (nodes.some(node => hasMixin(node, BlendMixin))) arr.push('@cosmic-module/widget-shadow');

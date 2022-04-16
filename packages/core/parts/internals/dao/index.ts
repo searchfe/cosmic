@@ -5,4 +5,5 @@ export { default as colorDao } from './color.dao';
 export { default as prefabDAO } from './prefab.dao';
 export { default as borderDao } from './border.dao';
 export { default as shadowDao } from './shadow.dao';
+export { default as cornerDao } from './corner.dao';
 export * from './atom/index';

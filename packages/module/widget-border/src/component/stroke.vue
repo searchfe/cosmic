@@ -84,6 +84,9 @@ function updateStyle() {
                         <i-cosmic-lock @click.stop="unRef" />
                     </span>
                 </template>
+                <template #prefix>
+                    <i-cosmic-square />
+                </template>
             </m-standard>
         </template>
 
@@ -96,7 +99,11 @@ function updateStyle() {
             @cancel="cancelStandardModal"
             @select="selectStyle"
             @show-detail="(event) => openDetaileModal(event.target, event.data)"
-        />
+        >
+            <template #prefix>
+                <i-cosmic-square />
+            </template>
+        </m-standard-modal>
         <m-detail-modal
             v-if="isShowDetailModal"
             title="文字规范"
