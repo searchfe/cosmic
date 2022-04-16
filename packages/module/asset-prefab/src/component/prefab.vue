@@ -87,7 +87,6 @@ const onContentClick = function () {
 };
 const menuChangeHandler = () => {
     // eslint-disable-next-line no-console
-    console.log(11);
 };
 const opeSelect = ref([{
     label: '高亮显示',

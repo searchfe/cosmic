@@ -106,7 +106,6 @@ function saveStyle() {
 }
 
 function effectChange() {
-    console.log(1212);
     const style = effectStyleSevice.get(effectId.value);
     effectStyle.value = style;
     effectNode.effects = [style.effects[0]];
