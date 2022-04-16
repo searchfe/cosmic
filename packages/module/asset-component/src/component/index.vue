@@ -15,8 +15,7 @@ const toolService = inject<service.ToolService>(service.TOKENS.Tool);
 function addBtn(name: string) {
         pos.value.x = 0;
         pos.value.y = 0;
-        toolService.data.name = name;
-        toolService.set(service.ToolState.Component);
+        toolService.set(service.ToolState.Component, {name});
         switch(name) {
             case 'button':
                 example.value = exampleButton.value;

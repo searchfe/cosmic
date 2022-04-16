@@ -15,9 +15,11 @@ export default class CanvasService {
 
     private scale = 1;
 
-    setClientPos(x: number, y: number, width: number, height: number) {
+    setClient(x: number, y: number, width: number, height: number) {
         this.clientX = round(x);
         this.clientY = round(y);
+        this.clientWidth = width;
+        this.clientHeight = height;
     }
 
     setContentOffset(x: number, y: number) {
@@ -34,6 +36,14 @@ export default class CanvasService {
             x: round(clientX) - this.clientX - this.contentOffsetX,
             y: round(clientY) - this.clientY - this.contentOffsetY,
         };
+    }
+
+    inCanvas(clientX: number, clientY: number) {
+        if ( clientX < this.clientX) return false;
+        if ( clientY < this.clientY) return false;
+        if ( clientX > this.clientX + this.clientWidth) return false;
+        if ( clientY > this.clientY + this.clientHeight) return false;
+        return true;
     }
 }
 

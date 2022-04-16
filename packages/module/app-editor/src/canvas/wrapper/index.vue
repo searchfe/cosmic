@@ -5,12 +5,15 @@ import { service } from '@cosmic/core/browser';
 import { inject, util } from '@cosmic/core/parts';
 import { onUnmounted, ref } from 'vue';
 
+import NodeControllService from '../../service/node-controll.service';
+
 interface WrapperProps {
     node: BaseNodeMixin,
 }
 
 const props = withDefaults(defineProps<WrapperProps>(), {});
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+const nodeControllService = inject(NodeControllService);
 
 const subject = nodeService.watch(props.node);
 subject.subscribe((node: any) => {
@@ -29,7 +32,6 @@ function getWapperStyle(node: SceneNode) {
             height: node.height + 'px',
     };
 }
-
 </script>
 <template>
     <div
@@ -38,7 +40,12 @@ function getWapperStyle(node: SceneNode) {
         :style="wrapperStyle"
     >
         <div class="absolute w-full h-full" :class="$style.dragGroup">
-            <div v-for="item in (new Array(8))" :key="item" class="absolute" :class="$style.dragItem" />
+            <div
+                v-for="item in (new Array(8).keys())"
+                :key="item" class="absolute"
+                :class="$style.dragItem"
+                @mousedown="(event) => nodeControllService.startResize(node, item, event)"
+            />
         </div>
         <div :class="$style.info">{{ node.width }} × {{ node.height }}</div>
     </div>

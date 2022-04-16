@@ -33,6 +33,9 @@ toolService.state().subscribe(state => {
         case service.ToolState.Text:
             wrapper.value.style.cursor = 'crosshair';
             break;
+        case service.ToolState.MoveNode:
+            wrapper.value.style.cursor = 'move';
+            break;
         default:
             wrapper.value.style.cursor = 'default';
     }
@@ -57,7 +60,7 @@ gesturer.onMoved((x, y) => {
 function setCanvasClientPos() {
     if (!wrapper.value) return;
     const {left, top, width, height} = wrapper.value.getBoundingClientRect();
-    canvasService.setClientPos(left + 25, top + 25, width - 25, height + 25);
+    canvasService.setClient(left + 25, top + 25, width - 25, height + 25);
 }
 function onChange(e: any) {
     console.log(e);
