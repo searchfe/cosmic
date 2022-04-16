@@ -29,6 +29,8 @@ const fillStyleList = ref(fillStyleService.getServiceStyles());
 
 const isFillRepeat = ref(false);
 
+const isRepeat = ref(false);
+
 watchEffect(() => {
     resetTextStyle(styleId.value);
     isStandard.value  =  !textStyleSevice.isLocalStyle(styleId.value);
@@ -100,10 +102,12 @@ function getFillStyle(node: TextNode): FillStyle {
 
 function textChange() {
     const style = textStyleSevice.get(textNode.getRangeTextStyleId(0,0));
+    isRepeat.value = textStyleSevice.isRepeat(textNode.getRangeTextStyleId(0,0));
     textNode.setRangeFontSize(0, 0, style.fontSize);
     textNode.setRangeFontName(0, 0, {family: style.fontName.family ?? '宋体', style: style.fontName.style ?? ''});
     textNode.setRangeTextDecoration(0 , 0, style.textDecoration);
     textNode.setRangeLineHeight(0, 0, {...style.lineHeight});
+    textNode.setRangeLetterSpacing(0, 0, style.letterSpacing);
     textNode.setParagraphSpacing(style.paragraphSpacing);
     textNode.update();
 }
@@ -163,7 +167,8 @@ function saveFillStyle() {
         <Glyph 
             :is-standard="isStandard"
             :text-style="textStyle"
-            :style-list="styleList" 
+            :style-list="styleList"
+            :is-repeat="isRepeat"
             @add-style="saveStyle"
             @change="selectStyle"
             @select-style="selectStyle"

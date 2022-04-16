@@ -49,6 +49,7 @@ function inputAction(event: InputEvent, node: TextNode) {
             fontSize: node.fontSize + 'px',
             fontFamily: node.fontName?.family,
             fontWeight: node.fontName?.style ?? '400',
+            letterSpacing: node.letterSpacing?.value + 'px',
             textDecoration: node.textDecoration === 'STRIKETHROUGH' ? 'line-through' : node.textDecoration ?? 'none',
             lineHeight: node.lineHeight?.value + 'px',
             background: util.toBackgroundStyle(node?.backgrounds?.[0]),

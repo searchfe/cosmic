@@ -62,8 +62,8 @@ export default class TextNode
         return this.lineHeight;
     }
 
-    setRangeLetterSpacing(start: number, end: number, value: Internal.LetterSpacing): void {
-        this.letterSpacing = value;
+    setRangeLetterSpacing(start: number, end: number, letter: Internal.LetterSpacing): void {
+        this.letterSpacing = letter;
     }
 
     getRangeLetterSpacing(start: number, end: number) {
