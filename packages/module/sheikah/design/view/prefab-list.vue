@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import { watchEffect, ref } from 'vue';
 import { Input } from 'cosmic-vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRouter } from '@cosmic/core/router';
 import CompCard from '../component/card/comp.vue';
 import CompFilter from '../component/filter.vue';
 import Region from '../../common/component/region.vue';
 import { query } from '../api/prefab';
 
-const { useRouter } = vueRouter;
 
 const router = useRouter();
 const { data, fetching } = query({});

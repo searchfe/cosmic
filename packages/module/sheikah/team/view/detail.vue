@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRouter, useRoute } from '@cosmic/core/router';
 import { watchEffect, ref } from 'vue';
 import Region from '../../common/component/region.vue';
 import DesignCard from '../../design/component/summary-card.vue';
@@ -9,7 +9,6 @@ import { useProjects, useDeleteProject } from '../../project/api';
 
 // TODO 抽离一个容器组件，提供统一context，子组件不持有数据
 
-const { useRouter, useRoute } = vueRouter;
 const router = useRouter();
 const { query = {} } = useRoute();
 

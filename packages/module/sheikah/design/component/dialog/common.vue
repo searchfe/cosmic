@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Dialog, Button, Input } from 'cosmic-vue';
 import { buttonSolid, buttonLight } from 'cosmic-ui';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRoute } from '@cosmic/core/router';
 
 withDefaults(defineProps<{ title: string, visible: boolean, name: string, editMode: boolean }>(), {
     title: '',
@@ -10,7 +10,7 @@ withDefaults(defineProps<{ title: string, visible: boolean, name: string, editMo
     editMode: false,
 });
 
-const team = vueRouter.useRoute().query?.team;
+const team = useRoute().query?.team;
 
 const emits = defineEmits(['ok', 'update:visible', 'update:name']);
 

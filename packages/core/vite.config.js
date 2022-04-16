@@ -70,6 +70,7 @@ const config = {
                 rxjs: resolve(__dirname, './rxjs.ts'),
                 urql: resolve(__dirname, './urql.ts'),
                 gql: resolve(__dirname, './gql.ts'),
+                router: resolve(__dirname, './router.ts'),
             },
             output: [
                 {
@@ -94,6 +95,7 @@ const config = {
                 '@cosmic/core/rxjs',
                 '@cosmic/core/urql',
                 '@cosmic/core/gql',
+                '@cosmic/core/router',
                 '@cosmic-module/core',
                 '@cosmic-module/san-loader',
                 ...builtinModules.flatMap(p => [p, `node:${p}`]),

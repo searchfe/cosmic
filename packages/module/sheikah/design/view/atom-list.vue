@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue';
 import { Input } from 'cosmic-vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRouter } from '@cosmic/core/router';
 import Region from '../../common/component/region.vue';
 import AtomCard from '../component/card/atom.vue';
 import AtomFilter from '../component/filter.vue';
@@ -34,8 +34,6 @@ const dialogMap = {
     corner: ColorDialog,
     opacity: ColorDialog,
 };
-
-const { useRouter } = vueRouter;
 
 const router = useRouter();
 const currentType = ref<AtomType>('color');

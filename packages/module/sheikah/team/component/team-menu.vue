@@ -2,7 +2,7 @@
 import { watchEffect, ref } from 'vue';
 import { Collapse, CollapseItem, Input, Dialog, Button } from 'cosmic-vue';
 import { buttonLight } from 'cosmic-ui';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRoute, useRouter } from '@cosmic/core/router';
 import TeamItem from './team-menu-item.vue';
 import { generateProjectForest } from '../../common/util/tree';
 import { useProjects } from '../../project/api';
@@ -20,7 +20,6 @@ let teams = ref<Team[]>([]);
 let projects  = ref<gql.Project[]>([]);
 let teamMaps = ref(new Map);
 
-const { useRoute, useRouter } = vueRouter;
 const { query } = useRoute();
 const router = useRouter();
 const selectedTeam = ref<string>(query.team as string || '');

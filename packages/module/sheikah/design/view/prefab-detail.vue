@@ -3,11 +3,10 @@ import { watchEffect, ref } from 'vue';
 import Region from '../../common/component/region.vue';
 import CompCard from '../component/card/comp-refs.vue';
 import Dropdown from '../../common/component/dropdown.vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRoute } from '@cosmic/core/router';
 import { queryOne as queryOnePrefab } from '../api/prefab';
 import { query as queryColor } from '../api/color';
 
-const { useRoute } = vueRouter;
 
 const id = useRoute().query.prefab as string;
 

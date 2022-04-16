@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-    import { router as vueRouter } from '@cosmic/core/browser';
+    import { useRouter } from '@cosmic/core/router';
     import Card from '../../common/component/card.vue';
     import Dropdown from '../../common/component/dropdown.vue';
 
@@ -13,7 +13,6 @@
         name: string;
     }
 
-    const { useRouter } = vueRouter;
     const router = useRouter();
 
     const props = withDefaults(defineProps<Props>(), {

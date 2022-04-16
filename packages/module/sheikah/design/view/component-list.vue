@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { Input, Dialog, Button, Space } from 'cosmic-vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRoute } from '@cosmic/core/router';
 import CompFilter from '../component/filter.vue';
 import Region from '../../common/component/region.vue';
 import { service } from '@cosmic/core/browser';
@@ -11,7 +11,6 @@ import { inject, type QueryComponentResult, createFetchTeamComponentsRequest } f
 // import { inject, type QueryComponentResult, createFetchTeamComponentsRequest, deleteComponentQuery } from '@cosmic/core/parts';
 import { useQuery } from '@cosmic/core/urql';
 
-const { useRoute } = vueRouter;
 // const { useQuery, useMutation } = urql;
 
 const routerService = inject<service.RouterService>(service.TOKENS.Router);

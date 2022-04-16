@@ -50,7 +50,6 @@ function bootstrap(option: BootstrapOption) {
 export { bootstrap };
 
 // export * as service from './service/index';
-export * as router from 'vue-router';
 export { default as lodash } from 'lodash';
 export { default as color } from 'color';
 

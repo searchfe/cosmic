@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { Tree as RTree } from 'cosmic-vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRouter } from '@cosmic/core/router';
 import { treeSecondary } from 'cosmic-ui';
 
-
-const { useRouter } = vueRouter;
 
 const router = useRouter();
 
