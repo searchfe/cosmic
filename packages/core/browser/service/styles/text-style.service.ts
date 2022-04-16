@@ -57,6 +57,20 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
         return fontStyle;
     }
 
+    public isRepeat(styleId: string) {
+        const localStyle = this.localStyles.get(styleId);
+        if (!localStyle) return false;
+        const serviceStyles = this.getServiceStyles();
+        return serviceStyles.some(item => {
+            return +localStyle.fontSize === +item.fontSize
+                && localStyle.textDecoration === item.textDecoration
+                && +localStyle.lineHeight?.value === +localStyle.lineHeight.value
+                && localStyle.fontName.family === item.fontName.family
+                && localStyle.fontName.style === item.fontName.style
+                && +localStyle.letterSpacing.value === +item.letterSpacing.value;
+        });
+    }
+
     public async queryList() {
         const { data } = await this.fontDao.query({});
         const fonts = data?.fonts || [];
@@ -90,8 +104,8 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
         textStyle.textDecoration = 'NONE';
         textStyle.fontName = { family: family!, style: style } as unknown as Internal.FontName;
         textStyle.lineHeight = {value: Number(lineHeight), unit: 'PIXELS'};
-        textStyle.letterSpacing = {value: Number(10), unit: 'PIXELS'};
-        textStyle.paragraphSpacing = Number('1');
+        textStyle.letterSpacing = {value: Number(0), unit: 'PIXELS'};
+        textStyle.paragraphSpacing = 0;
         return textStyle;
     }
 

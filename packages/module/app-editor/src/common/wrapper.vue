@@ -98,6 +98,7 @@ nodeService.selection.subscribe(nodes => {
     border: 1px solid var(--color-primary-500);
     top: 0;
     pointer-events :none;
+    letter-spacing: 0;
 }
 
 .info {

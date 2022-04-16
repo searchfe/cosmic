@@ -7,8 +7,11 @@ import GlyphContent from './glyph-content.vue';
 withDefaults(defineProps<{
     isStandard: boolean,
     textStyle: object,
-    styleList: object[]
-}>(), {});
+    styleList: object[],
+    isRepeat: boolean,
+}>(), {
+    isRepeat: false,
+});
 
 const textStyleSevice = inject<service.TextStyleSevice>(service.TOKENS.TextStyle);
 
@@ -68,7 +71,7 @@ function unRef() {
                 title="字形"
                 @on-click="(event) => openStandardModal(event.currentTarget)"
             >
-                <i-cosmic-grid-outline :class="$style.icon" />
+                <i-cosmic-grid-outline :class="[$style.icon, isRepeat ? $style.repeat : '']" />
             </m-title>
             <glyph-content :text-style="textStyle" @change="() => emits('change', textStyle)" />
         </div>
@@ -119,5 +122,9 @@ function unRef() {
 
 .icon {
     font-size: 1.2rem;
+}
+
+.repeat {
+    color: var(--color-primary-500);
 }
 </style>

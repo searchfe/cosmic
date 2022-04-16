@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { Select, SelectOption, Row, Col, InputNumber, RadioGroup, RadioButton } from 'cosmic-vue';
-import { GlyphData, FontSize, FontWeight, FontType } from '../../data';
+import { GlyphData, FontWeight, FontType } from '../../data';
 import type { TextStyle } from '@cosmic/core/parts';
 
 const props = withDefaults(defineProps<{
@@ -45,23 +45,17 @@ function changeStyle(textStyle, field, event) {
         </div>
         <Row :class="$style.row">
             <Col :span="4" class="ml-8">
-                <Select
+                <input-number
                     size="sm"
                     :value="textStyle.fontSize + ''"
                     allow-input
                     :class="$style['margin-left']"
-                    @on-change="(event) => changeStyle(textStyle, 'fontSize', event)"
+                    @on-input="(event) => changeStyle(textStyle, 'fontSize', event)"
                 >
                     <template #prefix>
                         <i-cosmic-font :class="$style.icon" />
                     </template>
-                    <SelectOption
-                        v-for="data of FontSize"
-                        :key="data.value"
-                        :value="data.value"
-                        :label="data.label"
-                    />
-                </Select>
+                </input-number>
             </Col>
             <Col :span="4" class="ml-8">
                 <Select
@@ -109,54 +103,30 @@ function changeStyle(textStyle, field, event) {
             </Col>
             <Col :span="4" class="ml-8">
                 <div :class="[$style['glyph-item']]">
-                    <Select
+                    <input-number
                         size="sm"
                         :value="textStyle.letterSpacing.value"
                         allow-input
                         :class="$style['margin-left']"
-                        @on-change="(event) => changeStyle(textStyle.letterSpacing, 'value', event)"
+                        @on-input="(event) => changeStyle(textStyle.letterSpacing, 'value', event)"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="[$style.icon]" />
                         </template>
-                        <SelectOption
-                            value="123"
-                            label="1"
-                        />
-                        <SelectOption
-                            value="2"
-                            label="10"
-                        />
-                        <SelectOption
-                            value="3"
-                            label="20"
-                        />
-                    </Select>
+                    </input-number>
                 </div>
             </Col>
             <Col :span="4">
-                <Select
+                <input-number
                     size="sm"
                     :value="textStyle.paragraphSpacing"
                     allow-input
-                    @on-change="(event) => changeStyle(textStyle, 'paragraphSpacing', event)"
+                    @on-input="(event) => changeStyle(textStyle, 'paragraphSpacing', event)"
                 >
                     <template #prefix>
                         <i-cosmic-vertical-height :class="[$style.icon]" />
                     </template>
-                    <SelectOption
-                        value="123"
-                        label="1"
-                    />
-                    <SelectOption
-                        value="2"
-                        label="10"
-                    />
-                    <SelectOption
-                        value="3"
-                        label="20"
-                    />
-                </Select>
+                </input-number>
             </Col>
         </Row>
         <Row :class="$style.row">
