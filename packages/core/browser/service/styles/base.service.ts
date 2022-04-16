@@ -1,9 +1,15 @@
 import { injectable } from '@cosmic/core/inversify';
 import { Subject } from '@cosmic/core/rxjs';
+
+export interface SubjectSourceType {
+    type: 'C' | 'U' | 'D' | 'R';
+    data?: string;
+}
+
 @injectable()
 export class BaseService<T extends {id: string, clone: () => T}, P > {
 
-    public subject: Subject<P>;
+    public subject: Subject<SubjectSourceType>;
 
     // 当前service类型
     protected type: string;
@@ -15,7 +21,7 @@ export class BaseService<T extends {id: string, clone: () => T}, P > {
     constructor() {
         this.localStyles =  new Map<string, T>();
         this.serviceStyles = new Map<string, T>();
-        this.subject = new Subject<P>();
+        this.subject = new Subject<SubjectSourceType>();
     }
 
     public create(): any {

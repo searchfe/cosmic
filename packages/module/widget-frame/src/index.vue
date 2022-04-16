@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {ref, type Ref} from 'vue';
-import { MTitle, MWidget, MColor, service } from '@cosmic/core/browser';
+import { MTitle, MWidget, service } from '@cosmic/core/browser';
 import { inject, PageNode, hasMixin, ContainerMixin, type SceneNode, type Paint, SolidPaint, BaseNodeMixin } from '@cosmic/core/parts';
 import { Row, Col, InputNumber } from 'cosmic-vue';
 import { type Subject } from '@cosmic/core/rxjs';
@@ -58,15 +58,15 @@ function update(key: 'x' | 'y' | 'width' | 'height', value: any) {
     node.update();
 }
 
-function change(event) {
-    const [r, g, b] = event.colorObj.color;
-    node.backgrounds = [{
-        color: {r, g, b},
-        opacity: event.opacity,
-        type: 'SOLID',
-    }];
-    if(node) node.update();
-}
+// function change(event) {
+//     const [r, g, b] = event.colorObj.color;
+//     node.backgrounds = [{
+//         color: {r, g, b},
+//         opacity: event.opacity,
+//         type: 'SOLID',
+//     }];
+//     if(node) node.update();
+// }
 </script>
 
 <template>
@@ -136,11 +136,11 @@ function change(event) {
                     <i-cosmic-lock />
                 </div>
             </div>
-            <m-color
+            <!-- <m-color
                 v-if="!data.isHideColor"
                 :color-style="data.fillStyle"
                 @on-change="change"
-            />
+            /> -->
         </div>
     </m-widget>
 </template>

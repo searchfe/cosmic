@@ -1,86 +1,83 @@
 <script lang="ts" setup>
-import { ref, reactive} from 'vue';
-import { Row, Col, RadioGroup, RadioButton, Input} from 'cosmic-vue';
+import { ref } from 'vue';
+import { RadioGroup, RadioButton, InputNumber} from 'cosmic-vue';
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
     radiusStyle: any,
 }>(), {
     radiusStyle: () => ({}),
 });
 
-const radiusStyle = reactive(props.radiusStyle);
+const emits = defineEmits(['change']);
 
 const multiple = ref(false);
 
 const changeHandler = () => {
     multiple.value = !multiple.value;
 };
+
+function changeStyle(event: {value: any},  style: any, field: string) {
+    style[field] = event.value;
+    if (!multiple.value) {
+        style.tl = event.value;
+        style.tr = event.value;
+        style.bl = event.value;
+        style.br = event.value;
+    }
+    emits('change');
+}
+
 </script>
 
 <template>
-    <Row :class="$style.row">
-        <Col
-            class="flex"
-            :span="6"
-        >
-            <RadioGroup
-                value="1"
-                @on-change="changeHandler"
-            >
-                <RadioButton value="1">
-                    <i-cosmic-square />
-                </RadioButton>
-                <RadioButton value="2">
-                    <i-cosmic-linked-square />
-                </RadioButton>
-            </RadioGroup>
-        </Col>
-        <Col
-            class="flex"
-            :span="6"
-        >
-            <div class="w-60">
-                <Input
-                    size="sm"
-                    :value="radiusStyle.tl"
-                    @on-change="event => radiusStyle.tl = event.value"
-                />
+    <div class="flex">
+        <div class="flex flex-auto">
+            <div class="flex flex-auto mr-8">
+                <RadioGroup
+                    value="1"
+                    @on-change="changeHandler"
+                >
+                    <RadioButton value="1">
+                        <i-cosmic-square />
+                    </RadioButton>
+                    <RadioButton value="2">
+                        <i-cosmic-linked-square />
+                    </RadioButton>
+                </RadioGroup>
             </div>
-            <div class="w-60">
-                <Input
-                    v-if="multiple"
-                    size="sm"
-                    :value="radiusStyle.tr"
-                    @on-change="event => radiusStyle.tr = event.value"
-                />
+            <div class="grid" :class="$style.grid">
+                <div>
+                    <input-number
+                        size="sm"
+                        :value="radiusStyle.tl"
+                        @on-input="event => changeStyle(event, radiusStyle, 'tl')"
+                    />
+                </div>
+                <div>
+                    <input-number
+                        v-if="multiple"
+                        size="sm"
+                        :value="radiusStyle.tr"
+                        @on-input="event => changeStyle(event, radiusStyle, 'tr')"
+                    />
+                </div>
+                <div v-if="multiple">
+                    <input-number
+                        size="sm"
+                        :value="radiusStyle.bl"
+                        @on-input="event => changeStyle(event, radiusStyle, 'bl')"
+                    />
+                </div>
+                <div v-if="multiple">
+                    <input-number
+                        size="sm"
+                        :value="radiusStyle.br"
+                        @on-input="event => changeStyle(event, radiusStyle, 'br')"
+                    />
+                </div>
             </div>
-        </Col>
-    </Row>
-    <Row
-        v-if="multiple"
-        :class="$style.row"
-    >
-        <Col :span="6" />
-        <Col
-            class="flex"
-            :span="6"
-        >   
-            <div class="w-60">
-                <Input
-                    size="sm"
-                    :value="radiusStyle.bl"
-                    @on-change="event => radiusStyle.bl = event.value"
-                />
-            </div>
-            <div class="w-60">
-                <Input
-                    size="sm"
-                    :value="radiusStyle.br"
-                    @on-change="event => radiusStyle.bl = event.value"
-                />
-            </div>
-        </Col>
-    </Row>
+        </div>
+    </div>
 </template>
 
 <style module>
@@ -89,5 +86,10 @@ const changeHandler = () => {
 }
 .row {
     composes: mb-8 from global;
+}
+
+.grid {
+    grid-template-columns: repeat(2, auto);
+    grid-gap: .8rem;
 }
 </style>

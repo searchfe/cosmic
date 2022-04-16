@@ -44,6 +44,7 @@ export { default as ContainerMixin } from './mixin/container-mixin';
 export { default as BaseNodeMixin } from './mixin/base-node-mixin';
 export { default as MinimalStrokesMixin} from './mixin/minimal-strokes-mixin';
 export { default as BlendMixin } from './mixin/blend-mixin';
+export { default as CornerMixin} from './mixin/coner-mixin';
 
 export * from './style/text-style';
 export * from './style/fill-style';

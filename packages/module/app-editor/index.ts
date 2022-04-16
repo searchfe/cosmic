@@ -4,6 +4,7 @@ import creator from './src/common/creator';
 import select from './src/common/select';
 import stroke from './src/common/stroke';
 import effect from './src/common/effect';
+import radius from './src/common/radius';
 import root from './src/index.vue';
 import childrenRender from './src/render/children.vue';
 export default {
@@ -17,6 +18,7 @@ export default {
     app.directive('select', select);
     app.directive('stroke', stroke);
     app.directive('effect', effect);
+    app.directive('radius', radius);
     app.component('ChildrenRender', childrenRender);
   },
 } as Module;
