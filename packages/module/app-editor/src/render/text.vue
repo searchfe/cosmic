@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { getCurrentInstance, onUnmounted } from 'vue';
 import  { type TextNode, util } from '@cosmic/core/parts';
-import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 
@@ -59,6 +58,5 @@ function inputAction(event: InputEvent, node: TextNode) {
         @blur="(event) => inputAction(event, node)"
     >   
         {{ node?.name }}
-        <wrapper :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

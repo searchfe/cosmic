@@ -11,4 +11,5 @@ export const TOKENS = {
     Keyboard: Symbol.for('KeyboardService'),
     Tool: Symbol.for('ToolService'),
     Draft: Symbol.for('DraftService'),
+    Canvas: Symbol.for('CanvasService'),
 };

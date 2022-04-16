@@ -1,40 +1,46 @@
 <script lang="ts" setup>
-import { BaseNodeMixin } from '@cosmic/core/parts';
-import { ref } from 'vue';
+import { BaseNodeMixin, SceneNode } from '@cosmic/core/parts';
 
 import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { inject, util } from '@cosmic/core/parts';
+import { onUnmounted, ref } from 'vue';
 
 interface WrapperProps {
     node: BaseNodeMixin,
-    hidden?: boolean,
-    info?: string,
 }
 
-const props = withDefaults(defineProps<WrapperProps>(), {
-    hidden: false,
-    info: '',
-
-});
-const selected = ref(false);
-
+const props = withDefaults(defineProps<WrapperProps>(), {});
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
-nodeService.selection.subscribe(nodes => {
-    if(nodes.filter(node => node.id == props.node.id).length) {
-        selected.value = true;
-    } else {
-        selected.value = false;
-    }
+const subject = nodeService.watch(props.node);
+subject.subscribe((node: any) => {
+    wrapperStyle.value = getWapperStyle(node);
 });
+onUnmounted(() => {
+    nodeService.unwatch(subject);
+});
+const wrapperStyle = ref(getWapperStyle(props.node as any));
+function getWapperStyle(node: SceneNode) {
+    const canvasPos = util.toCanvasPos(node);
+    return {
+            left: canvasPos.x + 'px',
+            top: canvasPos.y + 'px',
+            width: node.width + 'px',
+            height: node.height + 'px',
+    };
+}
 
 </script>
 <template>
-    <div v-if="selected" class="absolute w-full h-full flex flex-col-reverse items-center" :class="$style.root">
+    <div
+        class="absolute w-full h-full flex flex-col-reverse items-center"
+        :class="$style.root"
+        :style="wrapperStyle"
+    >
         <div class="absolute w-full h-full" :class="$style.dragGroup">
             <div v-for="item in (new Array(8))" :key="item" class="absolute" :class="$style.dragItem" />
         </div>
-        <div :class="$style.info">{{ info }}</div>
+        <div :class="$style.info">{{ node.width }} × {{ node.height }}</div>
     </div>
 </template>
 <style module>
@@ -110,6 +116,7 @@ nodeService.selection.subscribe(nodes => {
     padding: 0 0.2rem 0.1rem 0.2rem;
     border-radius: 0.2rem;
     background-color: var(--color-primary-500);
+    white-space: nowrap;
 }
 
 </style>

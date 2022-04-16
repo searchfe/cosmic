@@ -11,8 +11,8 @@ export default class ToolService {
     public  data : {[index: string]: string} = {};
     constructor(@inject(TOKENS.Keyboard) private keyboardService: KeyboardService) {
         this.subject = new Subject();
-        keyboardService.keydown('Space').subscribe(() => this.set(ToolState.Hand));
-        keyboardService.keyup('Space').subscribe(() => this.cancel(ToolState.Hand));
+        keyboardService.keydown('SPACE').subscribe(() => this.set(ToolState.Hand));
+        keyboardService.keyup('SPACE').subscribe(() => this.cancel(ToolState.Hand));
         this.initShortcutKey();
     }
     getState() {

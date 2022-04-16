@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { type ComponentNode } from '@cosmic/core/parts';
 import { getCurrentInstance, onUnmounted } from 'vue';
-import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 import { Button } from 'cosmic-vue';
@@ -43,6 +42,5 @@ onUnmounted(() => {
             <s-component v-else-if="node.cname === 'aladin'" class="w-full h-ull" name="aladin" />
             <s-component v-else-if="node.cname === 'scroll'" class="w-full h-ull" name="scroll" />
         </div>
-        <wrapper :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

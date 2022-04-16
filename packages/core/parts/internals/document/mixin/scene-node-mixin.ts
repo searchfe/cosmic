@@ -1,4 +1,4 @@
 export default class SceneNodeMixin {
-  visible: boolean;
-  locked: boolean;
+  visible = true;
+  locked = false;
 }

@@ -12,6 +12,7 @@ import EffectStyleService from './styles/effect-style.service';
 import StrokeStyleService from './styles/stroke-style.service';
 import ToolService from './interactivity/tool.service';
 import DraftService from './document/draft.service';
+import CanvasService from './interactivity/canvas.service';
 
 
 /**
@@ -27,6 +28,7 @@ export function load(options: interfaces.ContainerOptions) {
 
     container.bind<KeyboardService>(TOKENS.Keyboard).to(KeyboardService);
     container.bind<ToolService>(TOKENS.Tool).to(ToolService);
+    container.bind<CanvasService>(TOKENS.Canvas).to(CanvasService);
 
     container.bind<NodeService>(TOKENS.Node).to(NodeService);
     container.bind<DraftService>(TOKENS.Draft).to(DraftService);

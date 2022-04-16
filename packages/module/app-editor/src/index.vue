@@ -3,6 +3,7 @@ import WidgetProperties from './properties/index.vue';
 import WidgetAssets from './assets/index.vue';
 import WidgetCanvas from './canvas/index.vue';
 import PageNodeRender from './render/page.vue';
+import CanvasHelper from './canvas/helper.vue';
 
 import { inject } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
@@ -25,6 +26,7 @@ nodeService.currentPage.subscribe(pageNode => {
         >
             <widget-canvas class="h-full w-full overflow-hidden">
                 <children-render :children="page.children" />
+                <canvas-helper />
             </widget-canvas>
         </page-node-render>
         <widget-properties class="h-full w-270 min-w-270 border-left" />

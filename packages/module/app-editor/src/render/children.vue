@@ -15,8 +15,8 @@ withDefaults(defineProps<RenderNodeProps>(), {
         v-for="child in children"
         :key="child.id"
     >
-        <frame-render v-if="child.type === 'FRAME'" v-select="child" :node="child" />
-        <text-render v-if="child.type === 'TEXT'" v-select="child" :node="child" />
-        <component-render v-else-if="child.type === 'COMPONENT'" v-select="child" :node="child" />
+        <frame-render v-if="child.type === 'FRAME'" :node="child" />
+        <text-render v-if="child.type === 'TEXT'" :node="child" />
+        <component-render v-else-if="child.type === 'COMPONENT'" :node="child" />
     </template>
 </template>
