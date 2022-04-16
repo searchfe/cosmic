@@ -25,6 +25,12 @@ onUnmounted(() => {
     nodeService.unwatch(subject);
 });
 
+function inputAction(event: InputEvent, node: TextNode) {
+    const firstChild = (event.target as HTMLElement).firstChild as HTMLTextAreaElement;
+    node.name = firstChild.textContent || '';
+    node.update();
+}
+
 </script>
 
 <template>
@@ -32,6 +38,7 @@ onUnmounted(() => {
         v-creator="{target: node}"
         v-stroke="{target: node}"
         v-effect="{target: node, field: 'textShadow'}"
+        contenteditable="true"
         class="text-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
@@ -46,8 +53,10 @@ onUnmounted(() => {
             lineHeight: node.lineHeight?.value + 'px',
             background: util.toBackgroundStyle(node?.backgrounds?.[0]),
             color: util.toBackgroundStyle(node?.fills?.[0]),
+            outline: 'none'
         }"
-    >
+        @blur="(event) => inputAction(event, node)"
+    >   
         {{ node?.name }}
         <wrapper :node="node" :info="node.width + '×' + node.height" />
     </div>
