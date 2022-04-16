@@ -8,11 +8,11 @@ export const Images = [{
     value: 'https://t7.baidu.com/it/u=2566690358,2662267479&fm=217&app=126&size=r3,2&n=0&g=4n&f=JPEG&fmt=auto&maxorilen2heic=2000000?s=60B91DD704B2459C03B104F80300D03A',
     label: '背影',
 },{
-    value: 'https://t10.baidu.com/it/u=3002225004,3002678253&fm=58',
-    label: '冰封王座',
+    value: 'https://t9.baidu.com/it/u=1986654674,3323070387&fm=217&app=126&size=r3,2&n=0&g=4n&f=PNG&fmt=auto&maxorilen2heic=2000000?s=3380B64ACBE2FC471207CE680300705F',
+    label: '蝴蝶',
 },{
-    value: 'https://t12.baidu.com/it/u=2861957069,1880514034&fm=58',
-    label: '炉石传说',
+    value: 'https://t7.baidu.com/it/u=1359014999,1940747832&fm=217&app=126&size=r3,2&n=0&g=4n&f=JPEG&fmt=auto&maxorilen2heic=2000000?s=2BAEC7046C620F0338A78DCB03004093',
+    label: '电脑',
 }];
 
 export const Avatars = [{
