@@ -14,7 +14,7 @@ interface AtomCardOption {
     data: Record<string, unknown>,
     name?: string;
     type: AtomType;
-    meta?: string;
+    desc?: string;
     refCount: number;
 }
 
@@ -30,7 +30,7 @@ const COMP_MAP = {
 withDefaults(defineProps<AtomCardOption>(), {
     data: () => ({}),
     name: '',
-    meta: '描述信息',
+    desc: '',
     refCount: 0,
 });
 
@@ -42,11 +42,11 @@ withDefaults(defineProps<AtomCardOption>(), {
             <component :is="COMP_MAP[type]" v-bind="data" />
         </div>
         <div :class="$style['atom-info']">
-            <div :class="$style['atom-title']">
+            <div :class="[$style['atom-title'], $style['atom-info-line']]">
                 {{ name }}
             </div>
-            <div class="mt-7">
-                {{ meta }}
+            <div :class="$style['atom-info-line']">
+                {{ desc || '描述信息' }}
             </div>
         </div>
 
@@ -69,7 +69,6 @@ withDefaults(defineProps<AtomCardOption>(), {
     padding: 12px;
     font-size: var(--font-sm);
     color: #1f1f1f;
-    border-radius: 9px;
 }
 .atom-preview {
     flex: none;
@@ -79,18 +78,26 @@ withDefaults(defineProps<AtomCardOption>(), {
     border-radius: 8px;
 }
 .atom-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     height: 72px;
     padding-right: 10px;
     flex: auto;
     color: #858585
+}
+.atom-info-line {
+    height: 24px;
+    line-height: 24px;
+    font-size: var(--font-xs);
 }
 .atom-title {
     color: #1f1f1f;
 }
 .atom-extra {
     position: absolute;
-    bottom: 18px;
-    right: 17px;
+    top: 12px;
+    right: 14px;
     height: 26px;
 }
 .atom-link-num {

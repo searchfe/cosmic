@@ -2,12 +2,15 @@
 import { useSlots } from 'vue';
 const props = withDefaults(defineProps<{
     title: string,
+    coustomIcon: boolean
 }>(), {
     title: '',
+    coustomIcon: false,
 });
 
 const isHavePrefix = !!useSlots().prefix?.();
 const isHaveSuffix = !!useSlots().suffix?.();
+const emits = defineEmits(['onClick']);
 </script>
 
 <template>
@@ -35,6 +38,11 @@ const isHaveSuffix = !!useSlots().suffix?.();
             </span>
         </div>
         <span :class="$style.icon">
+        <span>{{ props.title }}</span>
+        <span 
+            :class="coustomIcon ? '' : $style.icon"
+            @click.stop="(event) => emits('onClick', event)"
+        >
             <slot />
         </span>
     </div>
@@ -50,6 +58,8 @@ const isHaveSuffix = !!useSlots().suffix?.();
 }
 
 .icon {
+    composes: w-24 h-24 inline-flex items-center justify-center -v-bg-inapparent from global;
+    border-radius: .4rem;
     font-size: 1.2rem;
 }
 

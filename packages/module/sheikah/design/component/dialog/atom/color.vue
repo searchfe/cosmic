@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-import { ref, watchEffect, toRaw, watch } from 'vue';
-import { Input } from 'cosmic-vue';
+import { ref, toRaw, watch } from 'vue';
 import { createUnique, update } from '../../../api/color';
 import Dialog from '../common.vue';
-import { color } from '@cosmic/core/browser';
 import ColorCell from '../../cell/color.vue';
+import ColorField from './color-field.vue';
 
 
-const { executeMutation: createColor } = createUnique(['id']);
+const { executeMutation: createColor } = createUnique();
 const { executeMutation: updateColor } = update();
 
 interface ColorOption {
     name: string;
+    desc: string;
     id: string;
     day: string;
     night: string;
@@ -21,6 +21,7 @@ interface ColorOption {
 const props = withDefaults(defineProps<ColorOption>(), {
     id: '',
     name: '',
+    desc: '',
     day: '',
     night: '',
     dark: '',
@@ -29,6 +30,7 @@ const props = withDefaults(defineProps<ColorOption>(), {
 // 输入框双向绑定
 const data = ref({
     name: '',
+    desc: '',
     day: '',
     night: '',
     dark: '',
@@ -37,9 +39,10 @@ const data = ref({
 watch(() => [props.id, props.name, props.dark, props.night, props.day], () => {
     data.value = {
         name: props.name,
-        day: props.day ? props.day.substring(1) : props.day,
-        night: props.night ? props.night.substring(1) : props.night,
-        dark: props.dark ? props.dark.substring(1) : props.dark,
+        desc: props.desc,
+        day: props.day,
+        night: props.night,
+        dark: props.dark,
     };
 });
 
@@ -47,29 +50,21 @@ const exsistingData = ref<Partial<gql.Color>[]>([]);
 
 const showDialog = ref(false);
 
-const backgroundDay = ref('none');
-const backgroundNight = ref('none');
-const backgroundDark = ref('none');
-
-watchEffect(() => {
-    backgroundDay.value = data.value.day ? '#' + data.value.day : 'none';
-    backgroundNight.value = data.value.night ? '#' + data.value.night : 'none';
-    backgroundDark.value = data.value.dark ? '#' + data.value.dark : 'none';
-});
 
 const emits = defineEmits(['success']);
 
 function onOK(args: { team: string }) {
-    const { day, night, dark, name} = toRaw(data.value);
+    const { day, night, dark, name, desc} = toRaw(data.value);
     if (!name) {
         alert('请输入名字');
         return;
     }
     const newColor = {
         name,
-        day: day ? color(`#${day}`).hex() : '',
-        night: night ? color(`#${night}`).hex() : '',
-        dark: dark ? color(`#${dark}`).hex() : '',
+        desc,
+        day,
+        night,
+        dark,
     };
     const queryData = {
         ...args,
@@ -97,35 +92,24 @@ function onOK(args: { team: string }) {
     <Dialog
         v-model:visible="showDialog"
         v-model:name="data.name"
+        v-model:desc="data.desc"
         :title="id ? '编辑颜色' : '新建颜色'"
         :edit-mode="id !== ''"
         @ok="onOK"
     >
         <div :class="$style.container">
             <i-cosmic-sun class="text-lg" />
-            <div :style="{ background: backgroundDay }" :class="$style.color" />
+            <div :style="{ background: data.day }" :class="$style.color" />
             <div>
-                <Input v-model:value="data.day" size="sm">
-                    <template #prefix>
-                        #
-                    </template>
-                </Input>
+                <color-field v-model:value="data.day" />
             </div>
-            <div>100%</div>
             <div />
 
             <!-- night -->
             <i-cosmic-night class="text-lg" />
-            <div :style="{ background: backgroundNight }" :class="$style.color" />
+            <div :style="{ background: data.night }" :class="$style.color" />
             <div>
-                <Input v-model:value="data.night" size="sm">
-                    <template #prefix>
-                        #
-                    </template>
-                </Input>
-            </div>
-            <div>
-                100%
+                <color-field v-model:value="data.night" />
             </div>
             <div :class="$style.clear" class="flex justify-center items-center" @click="data.night = ''">
                 <i-cosmic-minus />
@@ -133,15 +117,10 @@ function onOK(args: { team: string }) {
 
             <!-- dark -->
             <i-cosmic-dark class="text-lg" />
-            <div :style="{ background: backgroundDark }" :class="$style.color" />
+            <div :style="{ background: data.dark }" :class="$style.color" />
             <div>
-                <Input v-model:value="data.dark" size="sm">
-                    <template #prefix>
-                        #
-                    </template>
-                </Input>
+                <color-field v-model:value="data.dark" />
             </div>
-            <div>100%</div>
             <div :class="$style.clear" class="flex justify-center items-center" @click="data.dark = ''">
                 <i-cosmic-minus class="text-sm" />
             </div>
@@ -172,7 +151,7 @@ function onOK(args: { team: string }) {
 <style module>
 .container {
     display: grid;
-    grid-template-columns: 9.24% 8.4% 34.45% 36.97% 10.92%;
+    grid-template-columns: 9.24% 8.4% 71.42% 10.92%;
     grid-template-rows: 26px;
     align-items: center;
     row-gap: 6px;

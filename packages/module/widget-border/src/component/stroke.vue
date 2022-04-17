@@ -66,20 +66,26 @@ function updateStyle() {
 <template>
     <div ref="containerRef">
         <div v-if="isLocalStyle">
-            <m-title title="描边">
-                <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
+            <m-title
+                title="描边"
+                @on-click="(event) => openStandardModal(event.currentTarget)"
+            >
+                <i-cosmic-grid-outline />
             </m-title>
             <stroke-content :stroke-style="strokeStyle" @change="() => emits('change')" />
         </div>
         <template v-else>
-            <m-standard :standard="strokeStyle" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
+            <m-standard :standard="strokeStyle" :is-border="true" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
-                    <div
-                        class="flex items-center w-40 justify-around"
-                    >
+                    <span class="w-24 h-24 justify-center text-md items-center inline-flex mr-8">
                         <i-cosmic-more @click.stop="() => editStyleHandler(containerRef, strokeStyle.id)" />
+                    </span>
+                    <span class="w-24 h-24 justify-center text-md items-center inline-flex">
                         <i-cosmic-lock @click.stop="unRef" />
-                    </div>
+                    </span>
+                </template>
+                <template #prefix>
+                    <i-cosmic-square />
                 </template>
             </m-standard>
         </template>
@@ -93,7 +99,11 @@ function updateStyle() {
             @cancel="cancelStandardModal"
             @select="selectStyle"
             @show-detail="(event) => openDetaileModal(event.target, event.data)"
-        />
+        >
+            <template #prefix>
+                <i-cosmic-square />
+            </template>
+        </m-standard-modal>
         <m-detail-modal
             v-if="isShowDetailModal"
             title="文字规范"

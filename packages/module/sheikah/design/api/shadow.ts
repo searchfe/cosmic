@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@cosmic/core/urql';
 
 export function query(query: gql.QueryShadowDTO, fields: string[] = []) {
     return useQuery<{ shadows: Partial<gql.Shadow>[] }, gql.QueryShadowDTO>({
-        query: `query ($fields: [String!], $query: QueryShadowDTO) {
-            shadows(fields: $fields, query: $query) {
+        query: `query ($query: QueryShadowDTO) {
+            shadows(query: $query) {
                 id,
                 ${fields.join(',')}
             }

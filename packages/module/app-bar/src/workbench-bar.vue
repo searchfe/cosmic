@@ -1,12 +1,22 @@
 <script lang="ts" setup>
 import { inject } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
-import { Button } from 'cosmic-vue';
+import { Button, Menu, MenuOption } from 'cosmic-vue';
 import buttonText from './workbench-button.module.css';
 import { WorkbenchBarService, type WorkbenchBarItem } from './workbench-bar.service';
 import { ref, onBeforeMount } from 'vue';
 
+
+
 const routerService = inject<service.RouterService>(service.TOKENS.Router);
+const userService = inject<service.UserService>(service.TOKENS.User);
+
+const user = ref({});
+
+userService.user.subscribe(u => {
+    user.value = u;
+});
+
 const workbenchBarService = inject(WorkbenchBarService);
 
 const configs = ref<WorkbenchBarItem []>([]);
@@ -27,7 +37,7 @@ onBeforeMount(async () => {
     }
 });
 
-async function changeRoute(id: string, replace = false) {
+function changeRoute(id: string, replace = false) {
     const to = { name: id };
     selectedId.value = id;
     localStorage.setItem('route', JSON.stringify(to));
@@ -38,21 +48,41 @@ async function changeRoute(id: string, replace = false) {
     }
 }
 
+const menuData = [{
+    label: '退出',
+    value: '1',
+}];
+
+function onClickUser(data: { value: string } = { value: '' }) {
+    if (data.value === '1') {
+        userService.logout();
+    }
+}
 </script>
 
 <template>
-    <div class="flex justify-start mr-16">
+    <div class="flex justify-start mr-16  items-center">
         <Button
             v-for="(config, index) in configs" :key="index"
             size="xs"
-            :class="[config.id === selectedId ? 'active': '', 'min-w-70 mx-1 mt-4']"
+            :class="[config.id === selectedId ? 'active': '', 'min-w-70 mx-1']"
             :styles="buttonText"
             @mousedown="changeRoute(config.id)"
         >
             {{ config.text }}
         </Button>
+        <Menu size="xs" value="2" :class="$style.menu" @on-change="onClickUser">
+            <template #activator>
+                <div class="flex items-center">
+                    <img v-if="user.token" :class="$style.avatar" class="ml-10 rounded-full mr-6" src="https://erp.baidu.com/avatar/getAvatar?appCode=ERP&uuap=biyingshuai&token=HNURPZHFZC" alt="avatar">
+                    <div class="text-sm" :class="$style.username">{{ user.name || '登录' }}</div>
+                </div>
+            </template>
+            <MenuOption v-for="data of menuData" :key="data.value" :value="data.value" :label="data.label" :has-check="false" />
+        </Menu>
     </div>
 </template>
+
 <style module>
 .logo {
   color: #D8D8D8;
@@ -62,5 +92,12 @@ async function changeRoute(id: string, replace = false) {
 }
 .logo:hover {
     background: #424242;
+}
+.username {
+    color: var(--color-white);
+}
+.avatar {
+    width: 16px;
+    height: 16px;
 }
 </style>

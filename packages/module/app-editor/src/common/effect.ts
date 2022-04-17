@@ -16,7 +16,7 @@ function changeStyle(el: HTMLElement, binding: any) {
     const { effects = [], effectStrokes = [] } = node;
     const effect = effects[0];
     if (!effect) {
-        el.style.boxShadow = 'none';
+        el.style[field] = 'none';
         return;
     }
     const [fill] = effectStrokes;

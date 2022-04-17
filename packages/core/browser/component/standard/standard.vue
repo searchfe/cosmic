@@ -7,11 +7,13 @@ const props = withDefaults(defineProps<{
     active?: boolean,
     classes?: string,
     canEdit?: boolean,
+    isBorder: boolean
 }>(), {
     active: false,
     standard: () => ({}),
     classes: '',
     canEdit: false,
+    isBorder: false,
 });
 
 const emits = defineEmits(['click', 'hover', 'change']);
@@ -26,7 +28,7 @@ function changeHandler({value}: {value: string}) {
 
 <template>
     <div
-        :class="[$style.standard, props.classes]"
+        :class="[$style.standard, props.classes, isBorder ? $style['content-border'] : '']"
         class="flex justify-between"
         @click.stop="(event) => emits('click', {event, standard: props.standard})"
         @mouseenter="() => emits('hover', true)"
@@ -98,9 +100,8 @@ function changeHandler({value}: {value: string}) {
     height: 5rem;
     border-radius: var(--rounded-md);
     font-size: 26px;
-    background-color: var(--color-gray-300);
-    background-image: linear-gradient(45deg, var(--color-gray-100) 25%, transparent 25%, transparent 75%, var(--color-gray-100) 75%, var(--color-gray-100)),
-                    linear-gradient(45deg, var(--color-gray-100) 26%, transparent 26%, transparent 74%, var(--color-gray-100) 74%, var(--color-gray-100));
+    background-image: linear-gradient(45deg, var(--bg-hover-color) 25%, transparent 25%, transparent 75%, var(--bg-hover-color) 75%, var(--bg-hover-color)),
+                    linear-gradient(45deg, var(--bg-hover-color) 26%, transparent 26%, transparent 74%, var(--bg-hover-color) 74%, var(--bg-hover-color));
     background-size: 10px 10px;
     background-position: 0 0, 5px 5px;
     overflow: hidden;
@@ -117,12 +118,16 @@ function changeHandler({value}: {value: string}) {
 }
 
 .title {
-    composes: h-32 flex -v-px sm items-center from global;
+    composes: mb-2 flex -v-px sm items-center from global;
+}
+
+.content-border {
+    border: var(--border) var(--border-style) var(--border-color);
 }
 
 .description {
     composes: -v-px sm from global;
-    color: var(--color-gray-500);
+    color: var(--color-gray-300);
 }
 
 </style>

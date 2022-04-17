@@ -17,6 +17,11 @@ import MStandard from './component/standard/standard.vue';
 import type { BootstrapOption } from '@cosmic/core/parts';
 import type { GqlClient } from './service/index';
 
+export { default as IImage} from './case/image/image.vue';
+export { default as IImageList } from './case/image/image-list.vue';
+
+export { default as IAvatar } from './case/avatar/avatar.vue';
+
 
 function bootstrap(option: BootstrapOption) {
     const app = createApp((location.search || '').indexOf('preview=1') == -1? App: Preview);
@@ -31,8 +36,8 @@ function bootstrap(option: BootstrapOption) {
 
     const routerPlugin = container.get<RouterService>(TOKENS.Router);
     app.use(routerPlugin.getRouterConfig());
-    const urql = container.get<GqlClient>(TOKENS.GqlClient);
 
+    const urql = container.get<GqlClient>(TOKENS.GqlClient);
     app.use(function (app: VueApp) {
         app.provide('$urql', ref(urql));
     });
@@ -45,7 +50,6 @@ function bootstrap(option: BootstrapOption) {
 export { bootstrap };
 
 // export * as service from './service/index';
-export * as router from 'vue-router';
 export { default as lodash } from 'lodash';
 export { default as color } from 'color';
 

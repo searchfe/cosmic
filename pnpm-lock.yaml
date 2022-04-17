@@ -5,15 +5,15 @@ importers:
   .:
     specifiers:
       '@typescript-eslint/eslint-plugin': 5.10.1
-      '@typescript-eslint/parser': ^5.10.1
+      '@typescript-eslint/parser': ^5.19.0
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
       '@vueuse/gesture': ^2.0.0-beta.1
-      cosmic-icon: ^0.0.9
+      cosmic-icon: 0.0.10
       cosmic-ui-alpha: ^0.0.49
-      cosmic-vue: 0.0.66
+      cosmic-vue: 0.0.67
       cross-env: 7.0.3
-      csstype: ^2.6
+      csstype: ^2.6.20
       dotenv: ~16.0.0
       dts-for-context-bridge: 0.7.1
       electron: 16.0.7
@@ -22,7 +22,7 @@ importers:
       electron-updater: 4.6.5
       eslint: 8.7.0
       eslint-plugin-vue: 8.3.0
-      fs-extra: ^10.0.0
+      fs-extra: ^10.0.1
       git-cz: ~4.8.0
       graphql: ~16.3.0
       happy-dom: 2.30.1
@@ -36,7 +36,7 @@ importers:
       simple-git-hooks: 2.7.0
       ts-mixer: ^6.0.1
       typescript: 4.5.5
-      unplugin-icons: ^0.13.2
+      unplugin-icons: ^0.13.4
       unplugin-vue-components: ^0.17.21
       uuid: ^8.3.2
       vite: 2.7.13
@@ -48,7 +48,7 @@ importers:
     dependencies:
       '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.29
       cosmic-ui-alpha: 0.0.49
-      cosmic-vue: 0.0.66
+      cosmic-vue: 0.0.67
       electron-updater: 4.6.5
       qrcode: 1.5.0
       reflect-metadata: 0.1.13
@@ -62,7 +62,7 @@ importers:
       '@typescript-eslint/parser': 5.19.0_eslint@8.7.0+typescript@4.5.5
       '@vitejs/plugin-vue': 2.1.0_vite@2.7.13+vue@3.2.29
       '@vue/test-utils': 2.0.0-rc.18_vue@3.2.29
-      cosmic-icon: 0.0.9_vite@2.7.13
+      cosmic-icon: 0.0.10_vite@2.7.13
       cross-env: 7.0.3
       csstype: 2.6.20
       dotenv: 16.0.0
@@ -92,15 +92,15 @@ importers:
   packages/core:
     specifiers:
       '@types/color': ~3.0.3
-      '@types/lodash': ~4.14.179
-      '@urql/core': ~2.4.3
+      '@types/lodash': ~4.14.181
+      '@urql/core': ~2.4.4
       '@urql/exchange-auth': ~0.1.7
       '@urql/exchange-graphcache': ~4.3.6
       '@urql/vue': ~0.6.1
       axios: ~0.26.1
-      color: ~4.2.1
+      color: ~4.2.3
       graphql-tag: ^2.12.6
-      graphql-ws: ~5.6.2
+      graphql-ws: ~5.6.4
       inversify: ^6.0.1
       lodash: ~4.17.21
       vue-router: ^4.0.14
@@ -1634,8 +1634,8 @@ packages:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: true
 
-  /cosmic-icon/0.0.9_vite@2.7.13:
-    resolution: {integrity: sha512-AYu4ADxxrGNsl+xAhEckl6YA9gx2C6lN67w+dxg+Z7hhQXHufUa1jmkTxAIzVGpDvois7UnmpOUquA/zbPkZPQ==}
+  /cosmic-icon/0.0.10_vite@2.7.13:
+    resolution: {integrity: sha512-YyezIvPmLKtC7YhoEDBC/W8SYFN0M1SD8PapTOynxhB+joDPK4KVGXVVw+SyCDY/hZKbU9bBCE0Kn8MXG0AmZQ==}
     dependencies:
       unplugin-icons: 0.13.4_vite@2.7.13
     transitivePeerDependencies:
@@ -1654,8 +1654,8 @@ packages:
     resolution: {integrity: sha512-2SdVlpWASQ+lu1/dJyWgFKB0f72+Cqkks10pHksjNcZg6XVq33L5mxNK/o9t773G0ILKOCdox8zebxtBnRw4UA==}
     dev: false
 
-  /cosmic-vue/0.0.66:
-    resolution: {integrity: sha512-NAwAG5UcSjSDn6RIyoGLY3LUkfdmbfrZ+fL5N1wQMAKQyjbnusfTYHMi6n4Pk/X8C/f9j6OJcSxHIdq3hBd6HQ==}
+  /cosmic-vue/0.0.67:
+    resolution: {integrity: sha512-x5B54uxmHaLyF8lx5cYyv3zW4T9aC5C3WS47wiT3loJb+oYCSdrlUea6QMYRRgaOx1XnaU1DQuHix640+iC0Eg==}
     dependencies:
       '@babel/types': 7.17.0
       lodash.kebabcase: 4.1.1

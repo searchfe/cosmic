@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import {ref, type Ref} from 'vue';
-import { MTitle, MWidget, MColor, service } from '@cosmic/core/browser';
-import { inject, PageNode, hasMixin, ContainerMixin, type SceneNode, type Paint, SolidPaint } from '@cosmic/core/parts';
+import { MTitle, MWidget, service } from '@cosmic/core/browser';
+import { inject, PageNode, hasMixin, ContainerMixin, type SceneNode, type Paint, SolidPaint, BaseNodeMixin } from '@cosmic/core/parts';
 import { Row, Col, InputNumber } from 'cosmic-vue';
+import { type Subject } from '@cosmic/core/rxjs';
 
-
+const isShow = ref(true);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+let subject: Subject<BaseNodeMixin>;
 
 interface FramePorps {
     x: number,
@@ -16,6 +18,7 @@ interface FramePorps {
     fillStyle: Paint;
 }
 
+
 const data: Ref<FramePorps>  = ref({
     x: 0, y: 0, width: 0, height: 0, isHideColor: false,
     fillStyle: new SolidPaint(),
@@ -24,15 +27,21 @@ const data: Ref<FramePorps>  = ref({
 
 let node: SceneNode;
 nodeService.selection.subscribe(nodes => {
+    isShow.value = false;
     if(node instanceof PageNode) {
         return;
     }
-    nodeService.unwatch(node);
-    node = nodes[0] as SceneNode;
-    nodeService.watch(node).subscribe((n) => {
-        toData(n);
-    });
-    toData(node);
+    nodeService.unwatch(subject);
+    if (nodes.length) {
+        node = nodes[0] as SceneNode;
+        subject = nodeService.watch(node);
+        subject.subscribe((n) => {
+            toData(n as SceneNode);
+        });
+        toData(node);
+        isShow.value = true;
+    }
+
 });
 
 
@@ -55,19 +64,19 @@ function update(key: 'x' | 'y' | 'width' | 'height', value: any) {
     node.update();
 }
 
-function change(event) {
-    const [r, g, b] = event.colorObj.color;
-    node.backgrounds = [{
-        color: {r, g, b},
-        opacity: event.opacity,
-        type: 'SOLID',
-    }];
-    if(node) node.update();
-}
+// function change(event) {
+//     const [r, g, b] = event.colorObj.color;
+//     node.backgrounds = [{
+//         color: {r, g, b},
+//         opacity: event.opacity,
+//         type: 'SOLID',
+//     }];
+//     if(node) node.update();
+// }
 </script>
 
 <template>
-    <m-widget>
+    <m-widget v-show="isShow">
         <m-title title="布局" />
         <div class="mb-8">
             <div class="flex justify-between items-center">
@@ -118,7 +127,7 @@ function change(event) {
                             <div :class="[$style['glyph-item']]">
                                 <input-number
                                     size="sm"
-                                    :value="height"
+                                    :value="data.height"
                                     @on-input="(event) => { update('height', Number(event.value))}"
                                 >
                                     <template #prefix>
@@ -133,11 +142,11 @@ function change(event) {
                     <i-cosmic-lock />
                 </div>
             </div>
-            <m-color
+            <!-- <m-color
                 v-if="!data.isHideColor"
                 :color-style="data.fillStyle"
                 @on-change="change"
-            />
+            /> -->
         </div>
     </m-widget>
 </template>

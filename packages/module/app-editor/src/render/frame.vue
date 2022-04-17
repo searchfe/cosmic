@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { type FrameNode, util } from '@cosmic/core/parts';
-import { onMounted, ref, getCurrentInstance } from 'vue';
-import Wrapper from '../common/wrapper.vue';
+import { onMounted, getCurrentInstance, onUnmounted } from 'vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 
@@ -17,19 +16,14 @@ onMounted(() => {
 });
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-const selected = ref(true);
-
-nodeService.selection.subscribe(nodes => {
-    if(nodes.filter(node => node.id == props.node.id).length) {
-        selected.value = true;
-    } else {
-        selected.value = false;
-    }
-});
 
 const instance = getCurrentInstance();
-nodeService.watch(props.node).subscribe(() => {
+const subject = nodeService.watch(props.node);
+subject.subscribe(() => {
     instance?.proxy?.$forceUpdate();
+});
+onUnmounted(() => {
+    nodeService.unwatch(subject);
 });
 
 </script>
@@ -38,6 +32,7 @@ nodeService.watch(props.node).subscribe(() => {
         v-creator="{target: node}"
         v-stroke="{target: node}"
         v-effect="{target: node}"
+        v-radius="{target: node}"
         class="frame-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
@@ -51,6 +46,5 @@ nodeService.watch(props.node).subscribe(() => {
         <div class="relative">
             <children-render :children="node.children" />
         </div>
-        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

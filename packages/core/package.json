@@ -22,6 +22,10 @@
             "import": "./dist/es/urql.mjs",
             "require": "./dist/cjs/urql.cjs"
         },
+        "./router": {
+            "import": "./dist/es/router.mjs",
+            "require": "./dist/cjs/router.cjs"
+        },
         "./browser.css": {
             "import": "./dist/es/browser.css",
             "require": "./dist/cjs/browser.css"
@@ -34,20 +38,20 @@
         "clean": "rimraf dist"
     },
     "dependencies": {
-        "@urql/core": "~2.4.3",
+        "@urql/core": "~2.4.4",
         "@urql/exchange-auth": "~0.1.7",
         "@urql/exchange-graphcache": "~4.3.6",
         "@urql/vue": "~0.6.1",
         "axios": "~0.26.1",
-        "color": "~4.2.1",
+        "color": "~4.2.3",
         "graphql-tag": "^2.12.6",
-        "graphql-ws": "~5.6.2",
+        "graphql-ws": "~5.6.4",
         "inversify": "^6.0.1",
         "lodash": "~4.17.21",
         "vue-router": "^4.0.14"
     },
     "devDependencies": {
         "@types/color": "~3.0.3",
-        "@types/lodash": "~4.14.179"
+        "@types/lodash": "~4.14.181"
     }
 }

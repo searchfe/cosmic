@@ -2,13 +2,12 @@
 import { ref, watchEffect } from 'vue';
 import { Dialog, Input, Button } from 'cosmic-vue';
 import { buttonSolid } from 'cosmic-ui';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRoute } from '@cosmic/core/router';
 import Region from '../../common/component/region.vue';
 import FileCard from '../component/file-card.vue';
 import DirCard from '../component/dir-card.vue';
 import { useProjects, useDrafts, useCreateDraft, queryOne } from '../api';
 
-const { useRoute } = vueRouter;
 
 const { project, team } = useRoute().query as { project: string, team: string };
 
@@ -66,8 +65,8 @@ function onSave() {
         </template>
         <template #rb-actions>
             <div class="flex justify-end">
-                <div :class="$style.dir">
-                    <img class="w-full h-full" src="https://fe-dev.bj.bcebos.com/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9%203%E5%80%8D%20.png" alt="dir">
+                <div class="flex items-center justify-center" :class="$style.dir">
+                    <i-cosmic-dir />
                 </div>
                 <div :class="$style.add" class="flex justify-center items-center" @click="showDialog = true">
                     <i-cosmic-plus class="text-md" />
@@ -106,6 +105,14 @@ function onSave() {
     border-radius: 4px;
     background: #f5f5f5;
 }
+.dir {
+    margin-right: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    border-radius: 4px;
+    background: #f5f5f5;
+}
 @media (min-width: 960px) {
     .card-list {
         grid-template-columns: 1fr 1fr;
@@ -120,11 +127,6 @@ function onSave() {
     .card-list {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
-}
-.dir {
-    margin-right: 12px;
-    width: 35px;
-    height: 35px;
 }
 </style>
 

@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, type Ref } from 'vue';
 import WidgetGuides from 'vue-guides';
 import { Gesturer } from './gesturer';
 
-const wrapper = ref();
-const content = ref();
+const wrapper = ref() as Ref<HTMLDivElement>;
+const content = ref() as Ref<HTMLDivElement>;
+const box = ref() as Ref<HTMLDivElement>;
 
 const guideHorizontal = ref();
 const guideVertical = ref();
@@ -18,6 +19,7 @@ const gesturer = new Gesturer({
 });
 
 const toolService = inject<service.ToolService>(service.TOKENS.Tool);
+const canvasService = inject<service.CanvasService>(service.TOKENS.Canvas);
 
 toolService.state().subscribe(state => {
     if (state !== service.ToolState.Hand) {
@@ -31,25 +33,52 @@ toolService.state().subscribe(state => {
         case service.ToolState.Text:
             wrapper.value.style.cursor = 'crosshair';
             break;
+        case service.ToolState.MoveNode:
+            wrapper.value.style.cursor = 'move';
+            break;
         default:
             wrapper.value.style.cursor = 'default';
     }
 
 });
 
-const box = ref();
 onMounted(() => {
     gesturer.resize();
-    window.addEventListener('resize', () => { gesturer.resize(); });
+    window.addEventListener('resize', () => {
+        gesturer.resize();
+        setCanvasClientPos();
+    });
     gesturer.moveTo(100, 100);
+    setCanvasClientPos();
+    canvasService.setContentOffset(100, 100);
 });
+
+gesturer.onMoved((x, y) => {
+    canvasService.setContentOffset(x, y);
+});
+
+function setCanvasClientPos() {
+    if (!wrapper.value) return;
+    const {left, top, width, height} = wrapper.value.getBoundingClientRect();
+    canvasService.setClient(left + 25, top + 25, width - 25, height + 25);
+}
 function onChange(e: any) {
     console.log(e);
 }
+
+const cursorPos = ref({x: 0, y: 0});
+function onWraperMouseMove(event: MouseEvent) {
+    cursorPos.value = canvasService.getPosition(event.clientX, event.clientY);
+}
 </script>
+
 <template>
-    <div ref="wrapper" class="relative w-full h-full overflow-hidden">
-        <div ref="content" class="relative inline-block overflow-visable w-0 h-0 base-point flex">
+    <div
+        ref="wrapper"
+        class="relative w-full h-full overflow-hidden"
+        @mousemove="onWraperMouseMove"
+    >
+        <div ref="content" class="relative overflow-visable w-0 h-0 base-point flex">
             <slot />
         </div>
         <div ref="box" class="box" @click="() => gesturer.moveToStart()" />
@@ -85,6 +114,9 @@ function onChange(e: any) {
                 }"
                 @change-guides="onChange"
             />
+        </div>
+        <div class="console">
+            {{ cursorPos.x }} , {{ cursorPos.x }}
         </div>
     </div>
 </template>
@@ -132,6 +164,14 @@ function onChange(e: any) {
     height: 1px;
     width: 100%;
     top: 100%;
+}
+
+.console {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0.4rem;
+    opacity: 0.3;
 }
 
 </style>

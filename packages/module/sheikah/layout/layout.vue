@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { Layout, Content, Sider } from 'cosmic-vue';
-import { router } from '@cosmic/core/browser';
+import { RouterView, useRoute } from '@cosmic/core/router';
 
-const { RouterView, useRoute } = router;
 
 const route = useRoute();
 </script>

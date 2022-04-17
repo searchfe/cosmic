@@ -1,17 +1,16 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { Input, Dialog, Button, Space } from 'cosmic-vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRoute } from '@cosmic/core/router';
 import CompFilter from '../component/filter.vue';
 import Region from '../../common/component/region.vue';
 import { service } from '@cosmic/core/browser';
-import CompCard from '../component/card/comp-refs.vue';
+import CompCard from '../component/card/comp.vue';
 
 import { inject, type QueryComponentResult, createFetchTeamComponentsRequest } from '@cosmic/core/parts';
 // import { inject, type QueryComponentResult, createFetchTeamComponentsRequest, deleteComponentQuery } from '@cosmic/core/parts';
 import { useQuery } from '@cosmic/core/urql';
 
-const { useRoute } = vueRouter;
 // const { useQuery, useMutation } = urql;
 
 const routerService = inject<service.RouterService>(service.TOKENS.Router);
@@ -116,8 +115,8 @@ function addComponent() {
             </comp-filter>
         </div>
         <template #bottom>
-            <div class="flex justify-between items-center">
-                <Input placeholder="组件查询" :class="$style.input" />
+            <div class="flex justify-end items-center">
+                <!-- <Input placeholder="组件查询" :class="$style.input" /> -->
                 <div
                     :class="$style.add"
                     class="flex justify-center items-center"
@@ -131,7 +130,7 @@ function addComponent() {
     <Region inverse>
         <div :class="$style['card-list']">
             <section v-for="i, index of componentsRef" :key="index" :class="['relative', $style.card]">
-                <comp-card :class="$style['comp-card']" :title="i.displayName" :meta="[i.name, i.desc]" img="https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png" @click="onClickComp(i)" />
+                <comp-card :title="i.displayName" :meta="[i.name, i.desc]" img="https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png" @click="onClickComp(i)" />
                 <!-- <i-cosmic-close
                     :class="['absolute', $style['card-delete']]"
                     @click="deleteComponent(i.name)"
@@ -190,7 +189,7 @@ function addComponent() {
     border-radius: 4px;
     background: #f5f5f5;
 }
-/* @media (min-width: 960px) {
+@media (min-width: 960px) {
     .card-list {
         grid-template-columns: 1fr 1fr;
     }
@@ -204,7 +203,7 @@ function addComponent() {
     .card-list {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
-} */
+}
 
 .filter {
     overflow-x: scroll;
@@ -215,9 +214,5 @@ function addComponent() {
 
 .dialog {
     box-shadow: 1px 4px 6px #0000001a;
-}
-.comp-card {
-    width: 240px;
-    height: 230px;
 }
 </style>

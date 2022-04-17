@@ -42,7 +42,6 @@ function editStyleHandler(el: HTMLElement, id: string) {
 watchEffect(() => {
     if (isShowDetailModal.value) {
         const style = effectStyleSevice.cloneById(editId, false);
-        console.log(style);
         editStyle.value = style;
     }
 });
@@ -71,11 +70,14 @@ function updateStyle() {
 <template>
     <div ref="container">
         <div v-if="isLocalStyle">
-            <m-title aria-label="效果属性" title="效果">
+            <m-title
+                aria-label="效果属性"
+                title="效果"
+                @on-click="(event) => openStandardModal(event.currentTarget)"
+            >
                 <i-cosmic-grid-outline
                     :class="$style.icon"
                     class="-v-bg-inapparent"
-                    @click.stop="(event) => openStandardModal(event.currentTarget)"
                 />
             </m-title>
             <input-list :effect-style="effectStyle" @change="() => emits('change', shadowStyle)" />
@@ -87,6 +89,7 @@ function updateStyle() {
                 :class="[$style['border']]"
                 :standard="shadowStyle"
                 :can-edit="false"
+                :is-border="true"
                 @click="(event) => openStandardModal(event.event.currentTarget)"
             >
                 <template #prefix>

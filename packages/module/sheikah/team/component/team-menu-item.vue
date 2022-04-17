@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { Tree as RTree } from 'cosmic-vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRouter } from '@cosmic/core/router';
 import { treeSecondary } from 'cosmic-ui';
 
-
-const { useRouter } = vueRouter;
 
 const router = useRouter();
 
@@ -37,6 +35,7 @@ const designTree = [{
             label: '预置',
         },
     ],
+    isGroup: '1',
 }];
 
 const props = withDefaults(defineProps<ProjectOptions>(), {
@@ -51,13 +50,10 @@ const props = withDefaults(defineProps<ProjectOptions>(), {
     },
 });
 
-const emits = defineEmits(['add-project']);
+const emits = defineEmits(['add-project', 'toogle-project']);
 
 function onToggleProject(data: { id: string }) {
-    const { id: project } = data;
-    if (project) {
-        router.push({ name: 'project:detail', query: { project, team: props.team } });
-    }
+    emits('toogle-project', { ...data, team: props.team });
 }
 
 function onToggleDesignTree(data: { id: string }) {
@@ -78,17 +74,28 @@ function onAddProject(data: { id: string }) {
     <div class="mx-10">
         <r-tree
             size="sm"
+            :indent="10"
             :styles="treeSecondary"
             :data="designTree"
             @click-node="onToggleDesignTree"
-        />
+        >
+            <template #arrow="slotProps">
+                <i-cosmic-atom v-if="slotProps.nodeData.children" class="text-md inline-block mt-2 mr-6" />
+            </template>
+        </r-tree>
         <r-tree
             size="sm"
+            :indent="25"
             :styles="treeSecondary"
             :data="[data]"
+            style="margin-left: -15px"
             @click-node="onToggleProject"
             @click-subfix="onAddProject"
         >
+            <template #prefix="slotProps">
+                <i-cosmic-category v-if="slotProps.nodeData.label === '项目类别'" class="text-md inline-block mt-2 mr-6" />
+                <i-cosmic-dir v-else class="text-md inline-block mt-2 mr-6" />
+            </template>
             <template #subfix>
                 <i-cosmic-plus />
             </template>

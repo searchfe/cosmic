@@ -9,7 +9,7 @@ export default {
         el.addEventListener('mousedown', (event) => {
             if (toolService.getState() === service.ToolState.Null) {
                 nodeService.setSelection([binding.value.id]);
-                event.preventDefault();
+                // event.preventDefault();
                 event.stopPropagation();
             }
         });

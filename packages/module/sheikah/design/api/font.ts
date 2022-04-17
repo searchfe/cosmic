@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@cosmic/core/urql';
 
 export function query(query: gql.QueryFontDTO, fields: string[] = []) {
     return useQuery<{ fonts: Partial<gql.Font>[] }, gql.QueryFontDTO>({
-        query: `query ($fields: [String!], $query: QueryFontDTO) {
-            fonts(fields: $fields, query: $query) {
+        query: `query ($query: QueryFontDTO) {
+            fonts(query: $query) {
                 id,
                 ${fields.join(',')}
             }

@@ -14,8 +14,10 @@ export function generateProjectForest(projects: gql.Project[], teams: string[]) 
         teamMap.set(team, {
             id: '',
             label: '项目类别',
-            extra: '+',
             children: [],
+            isGroup: '',
+            selected: '',
+            open: '0',
         });
     });
 
@@ -26,6 +28,8 @@ export function generateProjectForest(projects: gql.Project[], teams: string[]) 
             children: [],
             parent: project.parent,
             extra: '+',
+            selected: '',
+            open: '0',
         };
         idNodeMap.set(project.id, treeNode);
         if (!project.parent) {
@@ -47,5 +51,5 @@ export function generateProjectForest(projects: gql.Project[], teams: string[]) 
         }
     });
 
-    return teamMap;
+    return { teamMap, projectMap: idNodeMap};
 }

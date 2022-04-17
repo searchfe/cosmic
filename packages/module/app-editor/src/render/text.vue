@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { ref, getCurrentInstance } from 'vue';
+import { getCurrentInstance, onUnmounted } from 'vue';
 import  { type TextNode, util } from '@cosmic/core/parts';
-import Wrapper from '../common/wrapper.vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 
@@ -14,19 +13,22 @@ const props = withDefaults(defineProps<TextProps>(), {
 });
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-const selected = ref(true);
 
-nodeService.selection.subscribe(nodes => {
-    if(nodes.filter(node => node.id == props.node.id).length) {
-        selected.value = true;
-    } else {
-        selected.value = false;
-    }
-});
 const instance = getCurrentInstance();
-nodeService.watch(props.node).subscribe(() => {
+const subject = nodeService.watch(props.node);
+subject.subscribe(() => {
     instance?.proxy?.$forceUpdate();
 });
+
+onUnmounted(() => {
+    nodeService.unwatch(subject);
+});
+
+function inputAction(event: InputEvent, node: TextNode) {
+    const firstChild = (event.target as HTMLElement).firstChild as HTMLTextAreaElement;
+    node.name = firstChild.textContent || '';
+    node.update();
+}
 
 </script>
 
@@ -35,6 +37,7 @@ nodeService.watch(props.node).subscribe(() => {
         v-creator="{target: node}"
         v-stroke="{target: node}"
         v-effect="{target: node, field: 'textShadow'}"
+        contenteditable="true"
         class="text-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
@@ -45,13 +48,15 @@ nodeService.watch(props.node).subscribe(() => {
             fontSize: node.fontSize + 'px',
             fontFamily: node.fontName?.family,
             fontWeight: node.fontName?.style ?? '400',
+            letterSpacing: node.letterSpacing?.value + 'px',
             textDecoration: node.textDecoration === 'STRIKETHROUGH' ? 'line-through' : node.textDecoration ?? 'none',
             lineHeight: node.lineHeight?.value + 'px',
             background: util.toBackgroundStyle(node?.backgrounds?.[0]),
             color: util.toBackgroundStyle(node?.fills?.[0]),
+            outline: 'none'
         }"
-    >
+        @blur="(event) => inputAction(event, node)"
+    >   
         {{ node?.name }}
-        <wrapper :hidden="!selected" :node="node" :info="node.width + '×' + node.height" />
     </div>
 </template>

@@ -2,12 +2,11 @@ import { Client } from '@urql/core';
 
 export default function ColorDao(client: Client) {
     return {
-
         query(query: gql.QueryColorDTO) {
             const projection = ['id', 'name', 'day', 'night', 'dark'];
             return client.query< {colors: Partial<gql.Color>[]}>(
-                `query ($fields: [String!], $query: QueryColorDTO!) {
-                    colors(fields: $fields, query: $query) {
+                `query ($query: QueryColorDTO!) {
+                    colors(query: $query) {
                         id,
                         ${projection.join(',')}
                     }

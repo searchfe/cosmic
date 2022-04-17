@@ -1,6 +1,16 @@
 <script lang="ts" setup>
+import { watchEffect, ref } from 'vue';
 import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service } from '@cosmic/core/browser';
 import RadiusContent from './radius-content.vue';
+import { inject } from '@cosmic/core/parts';
+
+const radiusStyleService = inject<service.RadiusStyleService>(service.TOKENS.RadiusStyle);
+
+withDefaults(defineProps<{
+    radiusStyle: any,
+    styleList: Record<string, string>[],
+    isLocalStyle: boolean,
+}>(), {});
 
 const {
         isShowStandardModal,
@@ -12,52 +22,88 @@ const {
         cancelDetailModal,
         openDetaileModal,
         openStandardModal,
-    } = usePropterty(service.TOKENS.RadiusStyle);
+    } = usePropterty();
+
+
+const emits = defineEmits(['change', 'selectStyle', 'updateStyle', 'unSelectStyle', 'addStyle']);
+
+let editId = '';
+
+const editStyle = ref();
+
+watchEffect(() => {
+    if (isShowDetailModal.value) {
+        const style = radiusStyleService.cloneById(editId, false);
+        editStyle.value = style;
+    }
+});
+
+function updateStyle() {
+    cancelDetailModal();
+    emits('updateStyle', editStyle.value);
+}
+
+
+function selectStyle(event: {data: Record<string, string>}) {
+    cancelStandardModal(),
+    cancelDetailModal(),
+    emits('selectStyle', event.data);
+}
+
+function unRef() {
+    emits('unSelectStyle');
+}
 
 </script>
 
 <template>
     <div>
-        <div v-if="!isStandard">
+        <div v-if="isLocalStyle">
             <m-title title="边角">
                 <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </m-title>
-            <radius-content :radius-style="standard" />
+            <radius-content :radius-style="radiusStyle" @change="() => emits('change', radiusStyle)" />
         </div>
         <template v-else>
-            <m-standard :standard="standard" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
+            <m-standard :standard="radiusStyle" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
                 <template #subfix>
                     <div
                         class="flex items-center w-40 justify-around"
                     >
-                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container, standard)" />
+                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container, radiusStyle)" />
                         <i-cosmic-lock @click.stop="unRef" />
                     </div>
+                </template>
+                <template #prefix>
+                    <i-cosmic-linked-square />
                 </template>
             </m-standard>
         </template>
 
         <m-standard-modal
             v-if="isShowStandardModal"
-            title="文字规范"
-            :standard-list="standardList"
+            title="圆角规范"
+            :standard-list="styleList"
             :target="standardTarget"
             @cancel="cancelStandardModal"
-            @select="(event) => selectStandard(event.data)"
+            @add="() => emits('addStyle')"
+            @select="(event) => selectStyle(event)"
             @show-detail="(event) => openDetaileModal(event.target, event.data)"
-        />
+        >
+            <template #prefix>
+                <i-cosmic-linked-square />
+            </template>
+        </m-standard-modal>
         <m-detail-modal
             v-if="isShowDetailModal"
-            title="文字规范"
+            title="圆角规范"
             :target="detailTarget"
-            :standard="getDetailEdit()"
+            :standard="editStyle"
             @cancel="cancelDetailModal"
-            @ok="saveDetail"
+            @ok="updateStyle"
         >
-            <div :class="$style['detail-content']">
-                <div :class="$style['glyph-content']">
-                    <radius-content :radius-style="getDetailEdit()" />
-                </div>
+            <div class="my-8">
+                <radius-content :radius-style="editStyle" />
             </div>
         </m-detail-modal>
     </div>
@@ -73,8 +119,7 @@ const {
 }
 
 .glyph-content {
-    border-top: solid 1px var(--color-gray-100);
-    border-bottom: solid 1px var(--color-gray-100);
+    
 }
 </style>
 

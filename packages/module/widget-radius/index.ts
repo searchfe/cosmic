@@ -1,4 +1,4 @@
-import root from './src/component/index.vue';
+import root from './src/index.vue';
 import RadiusService from './src/service/radius.service';
 
 

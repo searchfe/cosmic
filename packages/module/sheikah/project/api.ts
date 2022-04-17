@@ -16,8 +16,8 @@ export function queryOne(id: string, fields: string[] = []) {
 
 export function useDrafts(query: gql.QueryDraftDTO, fields: string[] = ['name', 'team', 'project']) {
     return useQuery<{ drafts: Partial<gql.Draft>[] }, gql.QueryDraftDTO>({
-        query: `query ($fields: [String!], $query: QueryDraftDTO) {
-            drafts(fields: $fields, query: $query) {
+        query: `query ($query: QueryDraftDTO) {
+            drafts(query: $query) {
                 id,
                 ${fields.join(',')}
             }

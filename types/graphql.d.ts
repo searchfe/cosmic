@@ -8,6 +8,16 @@
 /* tslint:disable */
 /* eslint-disable */
 namespace gql {
+export interface QueryTeamDTO {
+    id?: Nullable<string>;
+    name?: Nullable<string>;
+    members?: Nullable<QueryTeamMemberDTO>;
+}
+
+export interface QueryTeamMemberDTO {
+    user: string;
+}
+
 export interface QueryProjectDTO {
     id?: Nullable<string>;
     name?: Nullable<string>;
@@ -17,6 +27,7 @@ export interface QueryProjectDTO {
 
 export interface QueryColorDTO {
     name?: Nullable<string>;
+    desc?: Nullable<string>;
     team?: Nullable<string>;
     day?: Nullable<string>;
     night?: Nullable<string>;
@@ -26,6 +37,7 @@ export interface QueryColorDTO {
 
 export interface QueryFontDTO {
     name?: Nullable<string>;
+    desc?: Nullable<string>;
     team?: Nullable<string>;
     style?: Nullable<string>;
     variant?: Nullable<string>;
@@ -38,6 +50,7 @@ export interface QueryFontDTO {
 
 export interface QueryShadowDTO {
     name?: Nullable<string>;
+    desc?: Nullable<string>;
     team?: Nullable<string>;
     type?: Nullable<string>;
     offsetX?: Nullable<string>;
@@ -50,6 +63,7 @@ export interface QueryShadowDTO {
 
 export interface QueryBorderDTO {
     name?: Nullable<string>;
+    desc?: Nullable<string>;
     team?: Nullable<string>;
     top?: Nullable<BorderItemInput>;
     right?: Nullable<BorderItemInput>;
@@ -65,6 +79,7 @@ export interface BorderItemInput {
 
 export interface QueryCornerDTO {
     name?: Nullable<string>;
+    desc?: Nullable<string>;
     team?: Nullable<string>;
     tl?: Nullable<string[]>;
     tr?: Nullable<string[]>;
@@ -75,6 +90,7 @@ export interface QueryCornerDTO {
 
 export interface QueryOpacityDTO {
     name?: Nullable<string>;
+    desc?: Nullable<string>;
     team?: Nullable<string>;
     opacity?: Nullable<number>;
     id?: Nullable<string>;
@@ -87,6 +103,7 @@ export interface QueryComponentDTO {
 
 export interface QueryPrefabDTO {
     name?: Nullable<string>;
+    desc?: Nullable<string>;
     team?: Nullable<string>;
     component?: Nullable<string>;
     atoms?: Nullable<string[]>;
@@ -95,6 +112,7 @@ export interface QueryPrefabDTO {
 
 export interface QueryDraftDTO {
     name?: Nullable<string>;
+    desc?: Nullable<string>;
     team?: Nullable<string>;
     project?: Nullable<string>;
     data?: Nullable<JSON>;
@@ -182,6 +200,7 @@ export interface UpdateProjectDTO {
 
 export interface CreateColorDTO {
     name: string;
+    desc?: Nullable<string>;
     team: string;
     day: string;
     night?: Nullable<string>;
@@ -190,6 +209,7 @@ export interface CreateColorDTO {
 
 export interface CreateFontDTO {
     name: string;
+    desc?: Nullable<string>;
     team: string;
     style?: Nullable<string>;
     variant?: Nullable<string>;
@@ -201,6 +221,7 @@ export interface CreateFontDTO {
 
 export interface CreateShadowDTO {
     name: string;
+    desc?: Nullable<string>;
     team: string;
     type?: Nullable<string>;
     offsetX?: Nullable<string>;
@@ -212,6 +233,7 @@ export interface CreateShadowDTO {
 
 export interface CreateBorderDTO {
     name: string;
+    desc?: Nullable<string>;
     team: string;
     top: BorderItemInput;
     right: BorderItemInput;
@@ -221,6 +243,7 @@ export interface CreateBorderDTO {
 
 export interface CreateCornerDTO {
     name: string;
+    desc?: Nullable<string>;
     team: string;
     tl: string[];
     tr: string[];
@@ -230,15 +253,16 @@ export interface CreateCornerDTO {
 
 export interface CreateOpacityDTO {
     name: string;
+    desc?: Nullable<string>;
     team: string;
     opacity: number;
 }
 
 export interface CreateComponentDTO {
     name: string;
+    desc: string;
     team: string;
     displayName: string;
-    desc: string;
     keyNodes: CreateKeyNode[];
     properties: CreateProperty[];
     variants: CreateVariant[];
@@ -266,6 +290,7 @@ export interface CreateVariant {
 
 export interface CreatePrefabDTO {
     name: string;
+    desc?: Nullable<string>;
     team: string;
     component: string;
     atoms: string[];
@@ -273,6 +298,7 @@ export interface CreatePrefabDTO {
 
 export interface CreateDraftDTO {
     name: string;
+    desc?: Nullable<string>;
     team: string;
     project: string;
     data: JSON;
@@ -340,6 +366,7 @@ export interface Category {
 export interface Color {
     id: string;
     name: string;
+    desc?: Nullable<string>;
     team: string;
     updatedAt: string;
     day: string;
@@ -350,6 +377,7 @@ export interface Color {
 export interface Font {
     id: string;
     name: string;
+    desc?: Nullable<string>;
     team: string;
     updatedAt: string;
     style: string;
@@ -363,6 +391,7 @@ export interface Font {
 export interface Shadow {
     id: string;
     name: string;
+    desc?: Nullable<string>;
     team: string;
     updatedAt: string;
     type?: Nullable<string>;
@@ -381,6 +410,7 @@ export interface BorderItem {
 export interface Border {
     id: string;
     name: string;
+    desc?: Nullable<string>;
     team: string;
     updatedAt: string;
     top: BorderItem;
@@ -392,6 +422,7 @@ export interface Border {
 export interface Corner {
     id: string;
     name: string;
+    desc?: Nullable<string>;
     team: string;
     updatedAt: string;
     tl: string[];
@@ -403,6 +434,7 @@ export interface Corner {
 export interface Opacity {
     id: string;
     name: string;
+    desc?: Nullable<string>;
     team: string;
     updatedAt: string;
     opacity: number;
@@ -431,10 +463,10 @@ export interface KeyNode {
 export interface Component {
     id: string;
     name: string;
+    desc: string;
     team: string;
     updatedAt: string;
     displayName: string;
-    desc: string;
     keyNodes: KeyNode[];
     properties: Property[];
     variants: Variant[];
@@ -443,6 +475,7 @@ export interface Component {
 export interface Prefab {
     id: string;
     name: string;
+    desc?: Nullable<string>;
     team: string;
     updatedAt: string;
     component: string;
@@ -452,6 +485,7 @@ export interface Prefab {
 export interface Draft {
     id: string;
     name: string;
+    desc?: Nullable<string>;
     team: string;
     updatedAt: string;
     project: string;
@@ -461,7 +495,7 @@ export interface Draft {
 export interface IQuery {
     user(id: string): User | Promise<User>;
     team(id: string): Team | Promise<Team>;
-    teams(): Team[] | Promise<Team[]>;
+    teams(query?: Nullable<QueryTeamDTO>): Team[] | Promise<Team[]>;
     specification(fields?: Nullable<string[]>, id: string): Specification | Promise<Specification>;
     getAllSpecification(teamId: string): Specification[] | Promise<Specification[]>;
     category(fields?: Nullable<string[]>, categoryId: string, specificationId: string): Category | Promise<Category>;
@@ -470,24 +504,24 @@ export interface IQuery {
     project(id: string): Project | Promise<Project>;
     projects(project?: Nullable<QueryProjectDTO>): Project[] | Promise<Project[]>;
     projectStructure(id: string): ProjectPlus[] | Promise<ProjectPlus[]>;
-    getColor(fields?: Nullable<string[]>, id: string): Nullable<Color> | Promise<Nullable<Color>>;
-    colors(fields?: Nullable<string[]>, query?: Nullable<QueryColorDTO>): Color[] | Promise<Color[]>;
-    getFont(fields?: Nullable<string[]>, id: string): Nullable<Font> | Promise<Nullable<Font>>;
-    fonts(fields?: Nullable<string[]>, query?: Nullable<QueryFontDTO>): Font[] | Promise<Font[]>;
-    getShadow(fields?: Nullable<string[]>, id: string): Nullable<Shadow> | Promise<Nullable<Shadow>>;
-    shadows(fields?: Nullable<string[]>, query?: Nullable<QueryShadowDTO>): Shadow[] | Promise<Shadow[]>;
-    getBorder(fields?: Nullable<string[]>, id: string): Nullable<Border> | Promise<Nullable<Border>>;
-    borders(fields?: Nullable<string[]>, query?: Nullable<QueryBorderDTO>): Border[] | Promise<Border[]>;
-    getCorner(fields?: Nullable<string[]>, id: string): Nullable<Corner> | Promise<Nullable<Corner>>;
-    corners(fields?: Nullable<string[]>, query?: Nullable<QueryCornerDTO>): Corner[] | Promise<Corner[]>;
-    getOpacity(fields?: Nullable<string[]>, id: string): Nullable<Opacity> | Promise<Nullable<Opacity>>;
-    opacitys(fields?: Nullable<string[]>, query?: Nullable<QueryOpacityDTO>): Opacity[] | Promise<Opacity[]>;
-    getComponent(fields?: Nullable<string[]>, id: string): Nullable<Component> | Promise<Nullable<Component>>;
-    components(fields?: Nullable<string[]>, query?: Nullable<QueryComponentDTO>): Component[] | Promise<Component[]>;
-    getPrefab(fields?: Nullable<string[]>, id: string): Nullable<Prefab> | Promise<Nullable<Prefab>>;
-    prefabs(fields?: Nullable<string[]>, query?: Nullable<QueryPrefabDTO>): Prefab[] | Promise<Prefab[]>;
-    getDraft(fields?: Nullable<string[]>, id: string): Nullable<Draft> | Promise<Nullable<Draft>>;
-    drafts(fields?: Nullable<string[]>, query?: Nullable<QueryDraftDTO>): Draft[] | Promise<Draft[]>;
+    getColor(id: string): Nullable<Color> | Promise<Nullable<Color>>;
+    colors(query?: Nullable<QueryColorDTO>): Color[] | Promise<Color[]>;
+    getFont(id: string): Nullable<Font> | Promise<Nullable<Font>>;
+    fonts(query?: Nullable<QueryFontDTO>): Font[] | Promise<Font[]>;
+    getShadow(id: string): Nullable<Shadow> | Promise<Nullable<Shadow>>;
+    shadows(query?: Nullable<QueryShadowDTO>): Shadow[] | Promise<Shadow[]>;
+    getBorder(id: string): Nullable<Border> | Promise<Nullable<Border>>;
+    borders(query?: Nullable<QueryBorderDTO>): Border[] | Promise<Border[]>;
+    getCorner(id: string): Nullable<Corner> | Promise<Nullable<Corner>>;
+    corners(query?: Nullable<QueryCornerDTO>): Corner[] | Promise<Corner[]>;
+    getOpacity(id: string): Nullable<Opacity> | Promise<Nullable<Opacity>>;
+    opacitys(query?: Nullable<QueryOpacityDTO>): Opacity[] | Promise<Opacity[]>;
+    getComponent(id: string): Nullable<Component> | Promise<Nullable<Component>>;
+    components(query?: Nullable<QueryComponentDTO>): Component[] | Promise<Component[]>;
+    getPrefab(id: string): Nullable<Prefab> | Promise<Nullable<Prefab>>;
+    prefabs(query?: Nullable<QueryPrefabDTO>): Prefab[] | Promise<Prefab[]>;
+    getDraft(id: string): Nullable<Draft> | Promise<Nullable<Draft>>;
+    drafts(query?: Nullable<QueryDraftDTO>): Draft[] | Promise<Draft[]>;
 }
 
 export interface ProjectPlus {
@@ -550,7 +584,7 @@ export interface IMutation {
     deletePrefab(id: string): boolean | Promise<boolean>;
     createDraft(data: CreateDraftDTO): Draft | Promise<Draft>;
     createUniqueDraft(filter: QueryDraftDTO, data: CreateDraftDTO): Draft | Promise<Draft>;
-    updateDraft(data: CreateDraftDTO): boolean | Promise<boolean>;
+    updateDraft(data: QueryDraftDTO): boolean | Promise<boolean>;
     deleteDraft(id: string): boolean | Promise<boolean>;
 }
 

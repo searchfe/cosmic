@@ -7,8 +7,8 @@ export default function fontDao(client: Client) {
     return {
         query(query: gql.QueryFontDTO) {
             return client.query< {fonts: Partial<gql.Font>[]}>(
-                `query ($fields: [String!], $query: QueryFontDTO!) {
-                    fonts(fields: $fields, query: $query) {
+                `query ($query: QueryFontDTO!) {
+                    fonts(query: $query) {
                         id,
                         name,
                         team,

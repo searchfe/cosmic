@@ -4,12 +4,14 @@ interface CompCardOption {
     id: string;
     img: string;
     name: string;
-    meta: string[];
+    hideInfo: boolean;
 }
+const meta = ['关联 2'];
 withDefaults(defineProps<CompCardOption>(), {
     id: '',
     img: 'https://fe-dev.bj.bcebos.com/%E9%A2%84%E5%88%B6%E5%88%97%E8%A1%A8%20%20%E4%B8%BB%E6%8C%89%E9%92%AE-%E9%9D%A2%E5%BA%95%203%E5%80%8D.png',
     name: '2n 按钮',
+    hideInfo: false,
 });
 </script>
 
@@ -23,7 +25,7 @@ withDefaults(defineProps<CompCardOption>(), {
                 <div class="text-lg">
                     {{ name }}
                 </div>
-                <div :class="$style.ref" class="flex justify-start text-sm">
+                <div v-if="!hideInfo" :class="$style.ref" class="flex justify-start text-sm">
                     <template v-for="str, index of meta" :key="index">
                         <span>{{ str }}</span>
                         <span v-if="index !== meta.length - 1" class="inline-block mx-10"> | </span>

@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import Card from '../../common/component/card.vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRouter } from '@cosmic/core/router';
 
-const { useRouter } = vueRouter;
 
 const router = useRouter();
 

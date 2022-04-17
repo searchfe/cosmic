@@ -4,7 +4,6 @@ import { service } from '@cosmic/core/browser';
 import { TextStyle } from '@cosmic/core/parts';
 import { fontDao } from '@cosmic/core/parts';
 import { TOKENS } from '../token';
-import { Subject } from '@cosmic/core/rxjs';
 import { v4, v5 } from 'uuid';
 
 const DEFAULT_STYLES = {
@@ -14,6 +13,7 @@ const DEFAULT_STYLES = {
     id: Date.now() + '',
     family: 'PingFang SC',
     style: '400',
+    lineHeight: '12',
 };
 
 interface SubjectSourceType {
@@ -32,7 +32,6 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
         super();
         this.fontDao = fontDao(this.client);
         this.setType('TEXT');
-        this.subject = new Subject<SubjectSourceType>();
         this.queryList();
     }
 
@@ -56,9 +55,23 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
         return fontStyle;
     }
 
+    public isRepeat(styleId: string) {
+        const localStyle = this.localStyles.get(styleId);
+        if (!localStyle) return false;
+        const serviceStyles = this.getServiceStyles();
+        return serviceStyles.some(item => {
+            return +localStyle.fontSize === +item.fontSize
+                && localStyle.textDecoration === item.textDecoration
+                && +localStyle.lineHeight?.value === +localStyle.lineHeight.value
+                && localStyle.fontName.family === item.fontName.family
+                && localStyle.fontName.style === item.fontName.style
+                && +localStyle.letterSpacing.value === +item.letterSpacing.value;
+        });
+    }
+
     public async queryList() {
         const { data } = await this.fontDao.query({});
-        const fonts = data?.fonts || [];
+        const fonts = data?.fonts || [] as gql.Font[];
         this.serviceStyles.clear();
         fonts.map(font => this.transformToLocal(font)).forEach(font => this.addServiceStyle(font));
         this.subject.next({type: 'R', data: this.getServiceStyles()});
@@ -68,7 +81,7 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
         const style = this.transformToService(this.get(id)!);
         const creatOption = await this.fontDao.create(style);
         await this.queryList();
-        this.subject.next({type: 'C', data: []});
+        this.subject.next({type: 'C', data: ''});
     }
 
     public async updateStyle(style: TextStyle) {
@@ -81,7 +94,7 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
     }
 
     public transformToLocal(fontStyle: Partial<gql.Font>): TextStyle {
-        const { id, name, size, family, style = '400', lineHeight = '10' } = fontStyle;
+        const { id, name, size, family, style = '400', lineHeight } = fontStyle;
         const textStyle = new TextStyle(id!);
         textStyle.description = '默认描述';
         textStyle.name = name as string;
@@ -89,8 +102,8 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
         textStyle.textDecoration = 'NONE';
         textStyle.fontName = { family: family!, style: style } as unknown as Internal.FontName;
         textStyle.lineHeight = {value: Number(lineHeight), unit: 'PIXELS'};
-        textStyle.letterSpacing = {value: Number(10), unit: 'PIXELS'};
-        textStyle.paragraphSpacing = Number('1');
+        textStyle.letterSpacing = {value: Number(0), unit: 'PIXELS'};
+        textStyle.paragraphSpacing = 0;
         return textStyle;
     }
 

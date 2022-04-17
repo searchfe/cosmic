@@ -58,7 +58,18 @@ onMounted(() => {
 }
 :root {
     font-size: 10px;
+    height: 100%;
+    --border-style: solid;
+    --border-color: var(--color-gray-50);
+    --bg-hover-color: var(--color-gray-50);
 }
+
+
+:root .cos-mode-reverse {
+    --bg-hover-color: rgba(255, 255, 255, 0.09)
+}
+
+
 html{
     height: 100%;
 }
@@ -69,11 +80,14 @@ body {
     overflow: hidden;
     overscroll-behavior-x: none;
 }
-/** wait for add */
-:root {
-    height: 100%;
-    --border-style: solid;
-    --border-color: var(--color-gray-50);
+
+::-webkit-scrollbar {
+    width: .2rem;
+    height: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(255, 255, 255);
 }
 
 :root .cos-mode-reverse .-v-bg-inapparent

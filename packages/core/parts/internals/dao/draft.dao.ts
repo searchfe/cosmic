@@ -18,8 +18,8 @@ export default function draftDAO(client: Client) {
         },
         query(query: gql.QueryDraftDTO, fields: DraftFields = ['id']) {
             return client.query<{ drafts: Partial<gql.Draft>[] }>(
-                `query ($fields: [String!], $query: QueryDraftDTO!) {
-                    drafts(fields: $fields, query: $query) {
+                `query ($query: QueryDraftDTO!) {
+                    drafts(query: $query) {
                         id,
                         ${fields.join(',')}
                     }

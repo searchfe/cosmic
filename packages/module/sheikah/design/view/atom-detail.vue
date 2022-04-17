@@ -3,12 +3,12 @@ import { watchEffect, ref } from 'vue';
 import Region from '../../common/component/region.vue';
 import ColorPreview from '../component/preview/color.vue';
 import CompCard from '../component/card/comp.vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRoute } from '@cosmic/core/router';
 import { queryOne } from '../api/color';
 import ColorDialog from '../component/dialog/atom/color.vue';
 
 
-const route = vueRouter.useRoute();
+const route = useRoute();
 
 const { type: atomType, id } = route.query as { id: string, type: string };
 

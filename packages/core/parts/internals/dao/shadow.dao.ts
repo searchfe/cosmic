@@ -6,8 +6,8 @@ export default function shadowDao(client: Client) {
         query(query: gql.QueryShadowDTO) {
             const projection = ['id', 'name', 'offsetX', 'offsetY', 'blur', 'spread'];
             return client.query< {shadows: Partial<gql.Shadow>[]}>(
-                `query ($fields: [String!], $query: QueryShadowDTO!) {
-                    shadows(fields: $fields, query: $query) {
+                `query ($query: QueryShadowDTO!) {
+                    shadows(query: $query) {
                         id,
                         ${projection.join(',')}   
                     }

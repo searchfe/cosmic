@@ -29,7 +29,7 @@ const isLocalFillStyle = ref(fillStyleService.isLocalStyle(fillStyleId.value));
 
 const isLocalStyle = ref(false);
 
-nodeService.selection.subscribe((nodes) => {    
+nodeService.selection.subscribe((nodes) => {
     effectNode = nodes.find(item => hasMixin(item, BlendMixin)) as BlendMixin;
     if (!effectNode) return;
     getEffectStyle(effectNode as SceneNode);

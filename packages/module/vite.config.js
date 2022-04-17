@@ -81,6 +81,7 @@ export function genConfig(PACKAGE_ROOT) {
           '@cosmic/core/rxjs',
           '@cosmic/core/urql',
           '@cosmic/core/gql',
+          '@cosmic/core/router',
           ...listOfModule().map(m => `@cosmic-module/${m}`),
           ...builtinModules.flatMap(p => [p, `node:${p}`]),
         ],
