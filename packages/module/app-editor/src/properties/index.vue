@@ -11,7 +11,7 @@ const activeIdx = ref('0');
 const properties = ref<string[]>([]);
 
 function change(opt: any) {
-    activeIdx.value = opt.value; 
+    activeIdx.value = opt.value;
 }
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
@@ -49,6 +49,7 @@ nodeService.selection.subscribe((nodes) => {
         </div>
         <div :hidden="activeIdx != '1'">
             <m-component src="@cosmic-module/widget-case" />
+            <m-component src="@cosmic-module/widget-interaction" />
         </div>
     </div>
 </template>
