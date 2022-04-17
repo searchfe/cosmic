@@ -32,7 +32,7 @@ function changeStyle(strokeStyle, field: string, event) {
                     @on-input="(event) => changeStyle(strokeStyle, 'strokeWeight', event)"
                 >
                     <template #prefix>
-                        <i-cosmic-text-even />
+                        <i-cosmic-line />
                     </template>
                 </input-number>
             </Col>

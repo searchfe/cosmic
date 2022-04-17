@@ -43,7 +43,9 @@ nodeService.selection.subscribe((nodes) => {
     rudiusNode = nodes.find(item => hasMixin(item, CornerMixin)) as FrameNode;
     if (!rudiusNode) return;
     getRadiusStyle(rudiusNode);
+    getFillStyle(rudiusNode);
     radiusStyleId.value = rudiusNode.radiusStyleId;
+    fillStyleId.value = rudiusNode.backgroundStyleId;
 });
 
 radiusStyleService.subject.subscribe((source: service.SubjectSourceType) => {
@@ -73,7 +75,7 @@ fillStyleService.subject.subscribe((source: any) => {
 
 function getRadiusStyle(node: FrameNode): RadiusStyle {
     if (!node) return {} as RadiusStyle;
-    const radiusStyle = radiusStyleService.get(node.radiusStyleId);
+    const radiusStyle = radiusStyleService.get(node.radiusStyleId ?? v5('cosmic', v4()));
     if (node.radiusStyleId !== radiusStyle.id) {
         node.radiusStyleId = radiusStyle.id;
     }
