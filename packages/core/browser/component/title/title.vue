@@ -37,9 +37,7 @@ const emits = defineEmits(['onClick']);
                 />
             </span>
         </div>
-        <span :class="$style.icon">
-        <span>{{ props.title }}</span>
-        <span 
+        <span
             :class="coustomIcon ? '' : $style.icon"
             @click.stop="(event) => emits('onClick', event)"
         >
