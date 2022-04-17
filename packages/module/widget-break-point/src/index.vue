@@ -65,7 +65,7 @@ const innerData: BreakPointProps = reactive({
 });
 
 function toData(node: FrameNode) {
-    // todo: getData from frameNode 
+    // todo: getData from frameNode
     if (!dataMap[node.id]) return;
     innerData.breakPoints = dataMap[node.id].breakPoints;
     innerData.active = dataMap[node.id].active;
@@ -128,7 +128,7 @@ const {breakPoints, active} = toRefs(innerData);
 <template>
     <div v-if="isShow" class="border-bottom" />
     <m-widget v-if="isShow">
-        <m-title title="断点">
+        <m-title title="媒体">
             <i-cosmic-plus v-if="showAdd" @click="addHandler" />
             <i-cosmic-arrow-down v-if="!showAdd && !isShowDetail" @click="clickHandler" />
             <i-cosmic-arrow-up v-if="!showAdd && isShowDetail" @click="clickHandler" />

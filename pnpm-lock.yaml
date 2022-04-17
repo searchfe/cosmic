@@ -9,7 +9,7 @@ importers:
       '@vitejs/plugin-vue': 2.1.0
       '@vue/test-utils': 2.0.0-rc.18
       '@vueuse/gesture': ^2.0.0-beta.1
-      cosmic-icon: ^0.0.9
+      cosmic-icon: 0.0.10
       cosmic-ui-alpha: ^0.0.49
       cosmic-vue: 0.0.67
       cross-env: 7.0.3
@@ -62,7 +62,7 @@ importers:
       '@typescript-eslint/parser': 5.19.0_eslint@8.7.0+typescript@4.5.5
       '@vitejs/plugin-vue': 2.1.0_vite@2.7.13+vue@3.2.29
       '@vue/test-utils': 2.0.0-rc.18_vue@3.2.29
-      cosmic-icon: 0.0.9_vite@2.7.13
+      cosmic-icon: 0.0.10_vite@2.7.13
       cross-env: 7.0.3
       csstype: 2.6.20
       dotenv: 16.0.0
@@ -1634,8 +1634,8 @@ packages:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: true
 
-  /cosmic-icon/0.0.9_vite@2.7.13:
-    resolution: {integrity: sha512-AYu4ADxxrGNsl+xAhEckl6YA9gx2C6lN67w+dxg+Z7hhQXHufUa1jmkTxAIzVGpDvois7UnmpOUquA/zbPkZPQ==}
+  /cosmic-icon/0.0.10_vite@2.7.13:
+    resolution: {integrity: sha512-YyezIvPmLKtC7YhoEDBC/W8SYFN0M1SD8PapTOynxhB+joDPK4KVGXVVw+SyCDY/hZKbU9bBCE0Kn8MXG0AmZQ==}
     dependencies:
       unplugin-icons: 0.13.4_vite@2.7.13
     transitivePeerDependencies:

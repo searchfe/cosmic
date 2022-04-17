@@ -6,10 +6,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     ICosmicArrowDown: typeof import('~icons/cosmic/arrow-down')['default']
     ICosmicArrowUp: typeof import('~icons/cosmic/arrow-up')['default']
+    ICosmicMediaDesktop: typeof import('~icons/cosmic/media-desktop')['default']
+    ICosmicMediaMobile: typeof import('~icons/cosmic/media-mobile')['default']
     ICosmicPlus: typeof import('~icons/cosmic/plus')['default']
     ICosmicTrash: typeof import('~icons/cosmic/trash')['default']
-    ICosmicX: typeof import('~icons/cosmic/x')['default']
-    ICosmicY: typeof import('~icons/cosmic/y')['default']
   }
 }
 
