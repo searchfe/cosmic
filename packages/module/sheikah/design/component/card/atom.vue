@@ -14,7 +14,7 @@ interface AtomCardOption {
     data: Record<string, unknown>,
     name?: string;
     type: AtomType;
-    meta?: string;
+    desc?: string;
     refCount: number;
 }
 
@@ -30,7 +30,7 @@ const COMP_MAP = {
 withDefaults(defineProps<AtomCardOption>(), {
     data: () => ({}),
     name: '',
-    meta: '描述信息',
+    desc: '',
     refCount: 0,
 });
 
@@ -46,7 +46,7 @@ withDefaults(defineProps<AtomCardOption>(), {
                 {{ name }}
             </div>
             <div :class="$style['atom-info-line']">
-                {{ meta }}
+                {{ desc || '描述信息' }}
             </div>
         </div>
 

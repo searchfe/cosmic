@@ -3,6 +3,7 @@ import gt from 'graphql-tag';
 const defaultFragment = gt`
     fragment colorFields on Color {
         id
+        desc
         name
         team
         day

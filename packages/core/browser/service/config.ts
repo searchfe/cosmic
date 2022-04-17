@@ -1,6 +1,6 @@
 import { Container, type interfaces  }  from '@cosmic/core/inversify';
 import { TOKENS } from './token';
-import { create as createGqlClient, type GqlClient } from './gql-client/index.service';
+import { GqlClientService, type GqlClient } from './gql-client/index.service';
 import { RouterService } from './router/index.service';
 import NodeService from './document/node.service';
 import ComponentService from './document/component.service';
@@ -13,6 +13,7 @@ import StrokeStyleService from './styles/stroke-style.service';
 import ToolService from './interactivity/tool.service';
 import DraftService from './document/draft.service';
 import CanvasService from './interactivity/canvas.service';
+import { UserService } from './user/index.service';
 
 
 /**
@@ -21,10 +22,13 @@ import CanvasService from './interactivity/canvas.service';
 export function load(options: interfaces.ContainerOptions) {
     const container = new Container(options);
 
-    // urql: gql client
-    container.bind<GqlClient>(TOKENS.GqlClient).toConstantValue(createGqlClient());
     // router
     container.bind<RouterService>(TOKENS.Router).toConstantValue(RouterService.create());
+
+    container.bind<UserService>(TOKENS.User).to(UserService);
+
+    // urql: gql client
+    container.bind<GqlClient>(TOKENS.GqlClient).to(GqlClientService);
 
     container.bind<KeyboardService>(TOKENS.Keyboard).to(KeyboardService);
     container.bind<ToolService>(TOKENS.Tool).to(ToolService);

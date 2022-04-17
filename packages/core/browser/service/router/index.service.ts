@@ -14,7 +14,7 @@ export interface RouterService {
 
 
 // control all initial logic inside the module
-let instance:symbol;
+let instance: symbol;
 
 export class RouterService implements RouterService {
 

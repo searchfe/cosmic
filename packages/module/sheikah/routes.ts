@@ -1,4 +1,4 @@
-import { router } from '@cosmic/core/browser';
+import { createRouter, createMemoryHistory } from '@cosmic/core/router';
 import TeamDetail from './team/view/detail.vue';
 import ProjectDetail from './project/view/detail.vue';
 import AtomList from './design/view/atom-list.vue';
@@ -8,7 +8,6 @@ import PrefabList from './design/view/prefab-list.vue';
 import PrefabDetail from './design/view/prefab-detail.vue';
 import Left from './layout/left.vue';
 
-const { createRouter, createMemoryHistory } = router;
 
 const routes = [
     {

@@ -22,6 +22,10 @@
             "import": "./dist/es/urql.mjs",
             "require": "./dist/cjs/urql.cjs"
         },
+        "./router": {
+            "import": "./dist/es/router.mjs",
+            "require": "./dist/cjs/router.cjs"
+        },
         "./browser.css": {
             "import": "./dist/es/browser.css",
             "require": "./dist/cjs/browser.css"

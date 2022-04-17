@@ -3,18 +3,17 @@ import { watchEffect, ref } from 'vue';
 import Region from '../../common/component/region.vue';
 import CompCard from '../component/card/comp-refs.vue';
 import Dropdown from '../../common/component/dropdown.vue';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRoute } from '@cosmic/core/router';
 import { queryOne as queryOnePrefab } from '../api/prefab';
 import { query as queryColor } from '../api/color';
 
-const { useRoute } = vueRouter;
 
 const id = useRoute().query.prefab as string;
 
 const prefab = ref<Partial<gql.Prefab>>({});
 const atoms = ref<Partial<gql.Color>[]>([]);
 
-const {data: colorsData, fetching: colorFetching } = queryColor({}, ['id', 'name']);
+const {data: colorsData, fetching: colorFetching } = queryColor({});
 const { data: prefabData, fetching: prefabFetching } = queryOnePrefab(id);
 
 watchEffect(() => {

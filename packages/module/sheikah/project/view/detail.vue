@@ -2,13 +2,12 @@
 import { ref, watchEffect } from 'vue';
 import { Dialog, Input, Button } from 'cosmic-vue';
 import { buttonSolid } from 'cosmic-ui';
-import { router as vueRouter } from '@cosmic/core/browser';
+import { useRoute } from '@cosmic/core/router';
 import Region from '../../common/component/region.vue';
 import FileCard from '../component/file-card.vue';
 import DirCard from '../component/dir-card.vue';
 import { useProjects, useDrafts, useCreateDraft, queryOne } from '../api';
 
-const { useRoute } = vueRouter;
 
 const { project, team } = useRoute().query as { project: string, team: string };
 
