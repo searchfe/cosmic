@@ -21,20 +21,20 @@ const deleteHandler = (key: string) => {
 
 const hoverRef = ref(props.active);
 const mouseoverHander = (e: MouseEvent) => {
-    hoverRef.value = e.currentTarget?.dataset?.id; 
+    hoverRef.value = e.currentTarget?.dataset?.id;
 };
 
 </script>
 
 <template>
-    <Menu size="xs" :value="props.active" :opened="true" :class="$style.menu" @on-change="menuChangeHandler">
+    <Menu size="sm" :value="props.active" :opened="true" :class="$style.menu" @on-change="menuChangeHandler">
         <menu-option
-            v-for="data of props.breakPoints" :key="data.id" :value="data.id" :label="data.label"
+            v-for="data of props.breakPoints" :key="data.id" :value="data.id" :label="data.label" :class="$style.menuOption"
             :has-check="false"
         >
             <div :class="[$style.item, hoverRef===data.id ? $style.hoverItem: '']" :data-id="data.id" @mouseover="mouseoverHander">
-                <i-cosmic-x v-if="data.range[1] <= 500" :class="$style.leading" @click.stop="deleteHandler(data.id)" />
-                <i-cosmic-y v-else :class="$style.leadding" @click.stop="deleteHandler(data.id)" />
+                <i-cosmic-media-mobile v-if="data.range[1] <= 500" :class="$style.leading" @click.stop="deleteHandler(data.id)" />
+                <i-cosmic-media-desktop v-else :class="$style.leading" @click.stop="deleteHandler(data.id)" />
                 {{ data.label }}
                 <i-cosmic-trash :class="$style.trash" @click.stop="deleteHandler(data.id)" />
             </div>
@@ -44,6 +44,9 @@ const mouseoverHander = (e: MouseEvent) => {
 
  <style module>
  /* style for override */
+ .menu {
+    composes: -v-text from global;
+ }
 .menu>ul {
     padding-top: 0;
     background-color: transparent;
@@ -61,18 +64,25 @@ const mouseoverHander = (e: MouseEvent) => {
 /* style for item */
 .item {
     composes: -v-h md flex from global;
-    border-radius: var(--rounded);
     align-items: center;
+    border-radius: var(--rounded);
+    line-height: 0;
 }
 
 .trash {
     composes: hidden from global;
     margin-left: auto;
-    margin-right: var(--margin-md);
+    margin-right: 1.2rem;
+    font-size: var(--font-md);
+}
+
+.trash:hover {
+    color: var(--color-primary-500);
 }
 
 .leading {
-    composes: -v-mx md from global;
+    margin: 0 0.8rem 0 1rem;
+    font-size: var(--font-md);
 }
 
 .menu :global(.active) .item {
@@ -81,5 +91,9 @@ const mouseoverHander = (e: MouseEvent) => {
 
 .hoverItem .trash {
     display: block;
+}
+
+.menuOption>div {
+    background-color: transparent;
 }
 </style>
