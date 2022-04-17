@@ -43,7 +43,7 @@ const {
     data: colorData,
     fetching: colorFetching,
     executeQuery: refreshColor,
-} = queryColor({}, ['id', 'team', 'day', 'night', 'dark', 'name']);
+} = queryColor({});
 
 const {
     data: borderData,
@@ -55,25 +55,25 @@ const {
     data: cornerData,
     fetching: cornerFetching,
     executeQuery: refreshCorner,
-} = queryCorner({}, ['id', 'team', 'tl', 'tr', 'bl', 'br', 'name']);
+} = queryCorner({}, ['id', 'team', 'tl', 'tr', 'bl', 'br', 'name', 'desc']);
 
 const {
     data: opacityData,
     fetching: opacityFetching,
     executeQuery: refreshOpacity,
-} = queryOpacity({}, ['id', 'team', 'opacity', 'name']);
+} = queryOpacity({}, ['id', 'team', 'opacity', 'name', 'desc']);
 
 const {
     data: shadowData,
     fetching: shadowFetching,
     executeQuery: refreshShadow,
-} = queryShadow({}, ['id', 'team', 'type', 'offsetX', 'offsetY', 'blur', 'spread', 'color', 'name']);
+} = queryShadow({}, ['id', 'team', 'type', 'offsetX', 'offsetY', 'blur', 'spread', 'color', 'name', 'desc']);
 
 const {
     data: fontData,
     fetching: fontFetching,
     executeQuery: refreshFont,
-} = queryFont({}, ['id', 'team', 'weight', 'size', 'lineHeight', 'family', 'name']);
+} = queryFont({}, ['id', 'team', 'weight', 'size', 'lineHeight', 'family', 'name', 'desc']);
 
 const refreshers: Record<AtomType, (opts?: any) => UseQueryResponse<unknown, unknown>> = {
     color: refreshColor,
@@ -87,9 +87,9 @@ const refreshers: Record<AtomType, (opts?: any) => UseQueryResponse<unknown, unk
 watchEffect(() => {
     if (currentType.value === 'color' && colorData.value && !colorFetching.value) {
         atoms.value = colorData.value.colors.map(atom => {
-            const { id, day, night, dark, name } = atom;
+            const { id, day, night, dark, name, desc } = atom;
             return {
-                id, name,
+                id, name, desc,
                 data: {
                     day, night, dark,
                 },
@@ -98,9 +98,9 @@ watchEffect(() => {
     }
     if (currentType.value === 'border' && borderData.value && !borderFetching.value) {
         atoms.value = borderData.value.borders.map(atom => {
-            const { id, top, left, right, bottom, name } = atom;
+            const { id, top, left, right, bottom, name, desc } = atom;
             return {
-                id, name,
+                id, name, desc,
                 data: {
                     top, left, right, bottom,
                 },
@@ -109,9 +109,9 @@ watchEffect(() => {
     }
     if (currentType.value === 'corner' && cornerData.value && !cornerFetching.value) {
         atoms.value = cornerData.value.corners.map(atom => {
-            const { id, tl, tr, br, bl, name } = atom;
+            const { id, tl, tr, br, bl, name, desc } = atom;
             return {
-                id, name,
+                id, name, desc,
                 data: {
                     tl, tr, br, bl,
                 },
@@ -120,9 +120,9 @@ watchEffect(() => {
     }
     if (currentType.value === 'opacity' && opacityData.value && !opacityFetching.value) {
         atoms.value = opacityData.value.opacitys.map(atom => {
-            const { id, opacity, name } = atom;
+            const { id, opacity, name, desc } = atom;
             return {
-                id, name,
+                id, name, desc,
                 data: {
                     opacity,
                 },
@@ -131,9 +131,9 @@ watchEffect(() => {
     }
     if (currentType.value === 'font' && fontData.value && !fontFetching.value) {
         atoms.value = fontData.value.fonts.map(atom => {
-            const { id, style, variant, weight, size, lineHeight, family, name } = atom;
+            const { id, style, variant, weight, size, lineHeight, family, name, desc } = atom;
             return {
-                id, name,
+                id, name, desc,
                 data: {
                     style, variant, weight, size, lineHeight, family,
                 },
@@ -142,9 +142,9 @@ watchEffect(() => {
     }
     if (currentType.value === 'shadow' && shadowData.value && !shadowFetching.value) {
         atoms.value = shadowData.value.shadows.map(atom => {
-            const { id, type, offsetX, offsetY, blur, spread, color, name } = atom;
+            const { id, type, offsetX, offsetY, blur, spread, color, name, desc } = atom;
             return {
-                id, name,
+                id, name, desc,
                 data: {
                     type, offsetX, offsetY, blur, spread, color,
                 },

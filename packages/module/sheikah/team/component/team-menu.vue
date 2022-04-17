@@ -1,37 +1,74 @@
 <script lang="ts" setup>
-import { watchEffect, ref } from 'vue';
+import { ref } from 'vue';
 import { Collapse, CollapseItem, Input, Dialog, Button } from 'cosmic-vue';
 import { buttonLight } from 'cosmic-ui';
 import { useRoute, useRouter } from '@cosmic/core/router';
 import TeamItem from './team-menu-item.vue';
 import { generateProjectForest } from '../../common/util/tree';
-import { useProjects } from '../../project/api';
-import { useAllTeams } from '../api';
 import { useCreateProject } from '../../project/api';
+import { service } from '@cosmic/core/browser';
+import { inject } from '@cosmic/core/parts';
 
 
 interface Team extends gql.Team{
     avatar?: string;
 }
 
+const userService = inject<service.UserService>(service.TOKENS.User);
+const client = inject<service.GqlClient>(service.TOKENS.GqlClient);
 const { executeMutation: createProject } = useCreateProject();
 
-let teams = ref<Team[]>([]);
-let projects  = ref<gql.Project[]>([]);
-let teamMaps = ref(new Map);
-
+const teams = ref<Team[]>([]);
+const projects  = ref<gql.Project[]>([]);
+const teamMaps = ref(new Map);
+const projectMaps = ref(new Map);
+const userId = ref('');
 const { query } = useRoute();
 const router = useRouter();
 const selectedTeam = ref<string>(query.team as string || '');
-
-// TODO merge into one query in server side
-const { data: teamData, fetching: teamFetching } = useAllTeams();
-const { data: projectData, fetching: projectFetching } = useProjects({});
 
 let newProject = ref<Partial<gql.CreateProjectDTO>>({
     name: '',
 });
 const openDialog = ref(false);
+
+userService.user.subscribe(async user => {
+    userId.value = user.id || '';
+    if (user.id) {
+        const { data: teamData } = await client.query(
+            `query teams($query: QueryTeamDTO!) {
+                teams(query: $query) {
+                    id,
+                    name,
+                    members{
+                        user
+                    }
+                }
+            }`,
+            { query: { members: { user: userId.value }} },
+        ).toPromise();
+        teams.value = teamData.teams || [];
+        const { data: projectData } = await client.query(
+            `query ($project: QueryProjectDTO) {
+                projects(project: $project) {
+                    id,
+                    name,
+                    team,
+                    parent
+                }
+            }`,
+            { team: { $in: teams.value.map(team => team.id) }},
+        ).toPromise();
+        projects.value = projectData.projects || [];
+
+        const { teamMap, projectMap } = generateProjectForest(projects.value, teams.value.map(team => team.id));
+        teamMaps.value = teamMap;
+        projectMaps.value = projectMap;
+        if (!selectedTeam.value) {
+            changeSelectedTeam(teams.value[0].id);
+        }
+    }
+});
 
 async function changeSelectedTeam(arg: string | { keys: string[] }) {
     const newValue = typeof arg === 'string' ? arg : arg.keys[0];
@@ -41,20 +78,6 @@ async function changeSelectedTeam(arg: string | { keys: string[] }) {
     selectedTeam.value = newValue;
     router.push({ name: 'team:detail', query: { team: selectedTeam.value }});
 }
-
-
-watchEffect(() => {
-    if (teamData.value && !teamFetching.value) {
-        teams.value = teamData.value?.teams || [];
-        if (projectData.value && !projectFetching.value) {
-            projects.value = projectData.value.projects;
-        }
-        teamMaps.value = generateProjectForest(projects.value, teams.value.map(team => team.id));
-        if (!selectedTeam.value) {
-            changeSelectedTeam(teams.value[0].id);
-        }
-    }
-});
 
 const defautlAvatar = 'https://fe-dev.bj.bcebos.com/%E4%BE%A7%E8%BE%B9%E6%A0%8F%E5%9B%BE%E6%A0%8714*14.png';
 
@@ -71,6 +94,18 @@ function saveProject() {
         createProject({ project: newProject.value }).finally(() => {
             openDialog.value = false;
         });
+    }
+}
+
+function onToogleProject(data: { id: string, team: string }) {
+    console.log(data);
+    const { id: project, team } = data;
+    // const treeNode = projectMaps.value.get(id);
+    // treeNode.open = '1';
+    // console.log('--open---', treeNode.open)
+    // teamMaps.value = new Map(teamMaps.value);
+    if (project) {
+        router.push({ name: 'project:detail', query: { project, team } });
     }
 }
 </script>
@@ -91,7 +126,7 @@ function saveProject() {
                 <img :src="team.avatar || defautlAvatar" alt="SC">
             </template>
             <div class="w-full">
-                <team-item :data="teamMaps.get(team.id)" :team="team.id" @add-project="onAddProject" />
+                <team-item :data="teamMaps.get(team.id)" :team="team.id" @add-project="onAddProject" @toogle-project="onToogleProject" />
             </div>
         </collapse-item>
     </collapse>

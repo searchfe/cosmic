@@ -35,6 +35,7 @@ const designTree = [{
             label: '预置',
         },
     ],
+    isGroup: '1',
 }];
 
 const props = withDefaults(defineProps<ProjectOptions>(), {
@@ -49,13 +50,10 @@ const props = withDefaults(defineProps<ProjectOptions>(), {
     },
 });
 
-const emits = defineEmits(['add-project']);
+const emits = defineEmits(['add-project', 'toogle-project']);
 
 function onToggleProject(data: { id: string }) {
-    const { id: project } = data;
-    if (project) {
-        router.push({ name: 'project:detail', query: { project, team: props.team } });
-    }
+    emits('toogle-project', { ...data, team: props.team });
 }
 
 function onToggleDesignTree(data: { id: string }) {
@@ -90,10 +88,11 @@ function onAddProject(data: { id: string }) {
             :indent="25"
             :styles="treeSecondary"
             :data="[data]"
+            style="margin-left: -15px"
             @click-node="onToggleProject"
             @click-subfix="onAddProject"
         >
-            <template #arrow="slotProps">
+            <template #prefix="slotProps">
                 <i-cosmic-category v-if="slotProps.nodeData.label === '项目类别'" class="text-md inline-block mt-2 mr-6" />
                 <i-cosmic-dir v-else class="text-md inline-block mt-2 mr-6" />
             </template>

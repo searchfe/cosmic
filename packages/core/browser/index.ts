@@ -36,8 +36,8 @@ function bootstrap(option: BootstrapOption) {
 
     const routerPlugin = container.get<RouterService>(TOKENS.Router);
     app.use(routerPlugin.getRouterConfig());
-    const urql = container.get<GqlClient>(TOKENS.GqlClient);
 
+    const urql = container.get<GqlClient>(TOKENS.GqlClient);
     app.use(function (app: VueApp) {
         app.provide('$urql', ref(urql));
     });

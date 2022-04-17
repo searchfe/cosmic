@@ -1,10 +1,16 @@
 <script lang="ts" setup>
 import { useRouter, useRoute } from '@cosmic/core/router';
-import { watchEffect, ref } from 'vue';
+import { watchEffect, ref, onBeforeMount } from 'vue';
 import Region from '../../common/component/region.vue';
 import DesignCard from '../../design/component/summary-card.vue';
 import ProjectCard from '../../project/component/micro-card.vue';
 import { useProjects, useDeleteProject } from '../../project/api';
+import { service } from '@cosmic/core/browser';
+import { inject } from '@cosmic/core/parts';
+
+
+const userService = inject<service.UserService>(service.TOKENS.User);
+
 
 
 // TODO 抽离一个容器组件，提供统一context，子组件不持有数据
@@ -19,6 +25,13 @@ const projects = ref<gql.Project[]>([]);
 const { data, fetching, executeQuery: refreshProjects } = useProjects({ team, parent: null });
 
 const { executeMutation: deleteProject } = useDeleteProject();
+
+onBeforeMount(() => {
+    if (!userService.hasLogin()) {
+        // TODO: redirect 逻辑需要重新设计
+        userService.logout({ name: 'sheikah' });
+    }
+});
 
 watchEffect(() => {
     if (team && data.value && !fetching.value) {

@@ -12,6 +12,7 @@ const { executeMutation: updateFont } = update();
 interface TextOption {
     id: string;
     name: string;
+    desc: string;
     lineHeight: string;
     family: string;
     weight: string;
@@ -24,19 +25,21 @@ const name = ref('');
 // 输入框双向绑定
 const data = ref<Partial<gql.Font>>({
     id: '',
+    desc: '',
     family: 'PingFang',
     lineHeight: '12',
     weight: '400',
     size: '12px',
 });
 
-watch(() => [props.family, props.lineHeight, props.weight, props.size, props.name], () => {
+watch(() => [props.family, props.lineHeight, props.weight, props.size, props.name, props.desc], () => {
     data.value = {
         id: props.id,
         family: props.family,
         lineHeight: props.lineHeight,
         weight: props.weight,
         size: props.size,
+        desc: props.desc,
     };
     name.value = props.name;
 });
@@ -148,6 +151,7 @@ function onOK(args: { team: string }) {
     <Dialog
         v-model:visible="showDialog"
         v-model:name="name"
+        v-model:desc="data.desc"
         :title="id ? '编辑字形' : '新建字形'"
         :edit-mode="Boolean(id)"
         @ok="onOK"

@@ -13,7 +13,7 @@ const id = useRoute().query.prefab as string;
 const prefab = ref<Partial<gql.Prefab>>({});
 const atoms = ref<Partial<gql.Color>[]>([]);
 
-const {data: colorsData, fetching: colorFetching } = queryColor({}, ['id', 'name']);
+const {data: colorsData, fetching: colorFetching } = queryColor({});
 const { data: prefabData, fetching: prefabFetching } = queryOnePrefab(id);
 
 watchEffect(() => {

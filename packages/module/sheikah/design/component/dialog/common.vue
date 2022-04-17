@@ -3,16 +3,17 @@ import { Dialog, Button, Input } from 'cosmic-vue';
 import { buttonSolid, buttonLight } from 'cosmic-ui';
 import { useRoute } from '@cosmic/core/router';
 
-withDefaults(defineProps<{ title: string, visible: boolean, name: string, editMode: boolean }>(), {
+withDefaults(defineProps<{ title: string, visible: boolean, name: string, editMode: boolean, desc: string }>(), {
     title: '',
     visible: false,
     name: '',
     editMode: false,
+    desc: '',
 });
 
 const team = useRoute().query?.team;
 
-const emits = defineEmits(['ok', 'update:visible', 'update:name']);
+const emits = defineEmits(['ok', 'update:visible', 'update:name', 'update:desc']);
 
 function onCancel() {
     emits('update:name', '');
@@ -33,6 +34,10 @@ function onUpdateVisible(value: boolean) {
 
 function onUpdateName(data: {value: string}) {
     emits('update:name', data.value);
+}
+
+function onUpdateDesc(data: {value: string}) {
+    emits('update:desc', data.value);
 }
 
 </script>
@@ -63,6 +68,12 @@ function onUpdateName(data: {value: string}) {
                     名称
                 </div>
                 <Input :value="name" size="sm" placeholder="起个名字吧" @on-input="onUpdateName" />
+            </div>
+            <div class="my-12 flex justify-between items-center" :class="[$style['has-line'], $style.region]">
+                <div :class="$style['title-label']">
+                    描述
+                </div>
+                <Input :value="desc" size="sm" placeholder="描述" @on-input="onUpdateDesc" />
             </div>
             <div class="py-6 mb-20">
                 <slot />

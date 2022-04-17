@@ -2,6 +2,7 @@ import Blueprint from './view/blueprint.vue';
 import Preview from './view/preview.vue';
 import Editor from './view/editor.vue';
 import Sheika from './view/sheikah.vue';
+import User from './view/user.vue';
 import { createRouter, createMemoryHistory } from 'vue-router';
 
 
@@ -21,6 +22,10 @@ const routes = [{
     name: 'editor',
     path: '/editor',
     component: Editor,
+}, {
+    name: 'user',
+    path: '/user',
+    component: User,
 }, {
     name: 'home',
     path: '/',
