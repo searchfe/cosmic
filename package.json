@@ -36,7 +36,7 @@
         "@typescript-eslint/parser": "^5.19.0",
         "@vitejs/plugin-vue": "2.1.0",
         "@vue/test-utils": "2.0.0-rc.18",
-        "cosmic-icon": "0.0.10",
+        "cosmic-icon": "0.0.11",
         "cross-env": "7.0.3",
         "csstype": "^2.6.20",
         "dotenv": "~16.0.0",

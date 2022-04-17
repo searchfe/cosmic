@@ -1,5 +1,5 @@
 {
-    "name": "@cosmic-module/widget-frame",
+    "name": "@cosmic-module/widget-layout",
     "version": "0.0.1",
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
