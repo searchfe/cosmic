@@ -71,7 +71,8 @@ function unRef() {
                 title="字形"
                 @on-click="(event) => openStandardModal(event.currentTarget)"
             >
-                <i-cosmic-grid-outline :class="[$style.icon, isRepeat ? $style.repeat : '']" />
+                <i-cosmic-grid v-if="isRepeat" :class="$style.repeat" />
+                <i-cosmic-grid-outline v-else />
             </m-title>
             <glyph-content :text-style="textStyle" @change="() => emits('change', textStyle)" />
         </div>
