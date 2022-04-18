@@ -1,111 +1,81 @@
 <script lang="ts" setup>
-import { ref, watchEffect, type Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { type Subject } from '@cosmic/core/rxjs';
 import { MTitle, MWidget, service } from '@cosmic/core/browser';
-import { inject, PageNode, type SceneNode, SolidPaint, BaseNodeMixin } from '@cosmic/core/parts';
-import { Button, Menu, MenuOption, Row, Col} from 'cosmic-vue';
-import ButtonModeStyle from './component/button-mode.module.css';
-import ButtoLightStyle from './component/button-light.module.css';
+import { inject, BaseNodeMixin, LayoutMixin, SceneNode, hasMixin } from '@cosmic/core/parts';
+import { Select, SelectOption, Row, Col} from 'cosmic-vue';
 
-import PaddingInput from './component/padding-input.vue';
+import { VerticalStretchValue, HorizontalStretchValue, HorizontalLayoutValue, VerticalLayoutValue } from './data';
+
+interface LayoutData {
+    // layoutAlign: 'MIN' | 'CENTER' | 'MAX' | 'STRETCH' | 'INHERIT';
+    HorizontalStretch: number,
+    VerticalStretch: number,
+    VerticalLayout: number;
+    HorizontalLayout: number;
+}
 
 
+const data: Ref<LayoutData>  = ref({
+    HorizontalStretch: 0,
+    VerticalStretch: 0,
+    VerticalLayout: 0,
+    HorizontalLayout: 0,
 
-const isShow = ref(true);
+} as LayoutData);
+
+
+const isShow = ref(false);
+const isOpen = ref(true);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 let subject: Subject<BaseNodeMixin>;
 
-const data = ref({
-    x: 0, y: 0, width: 0, height: 0, isHideColor: false,
-    fillStyle: new SolidPaint(),
-});
 
-
-let node: SceneNode;
+let node: SceneNode | undefined;
 nodeService.selection.subscribe(nodes => {
     isShow.value = false;
-    if (node instanceof PageNode) {
-        return;
-    }
-    nodeService.unwatch(subject);
+    node = undefined;
+    nodeService.unwatch(subject as any);
     if (nodes.length) {
         node = nodes[0] as SceneNode;
+        if (!hasMixin(node, LayoutMixin)) {
+            return;
+        }
         subject = nodeService.watch(node);
         subject.subscribe((n) => {
-            toData(n as SceneNode);
+            toData(n as any);
         });
         toData(node);
         isShow.value = true;
     }
-
 });
 
+const HorizontalLayoutValues = ref(HorizontalLayoutValue);
+const VerticalLayoutValues = ref(VerticalLayoutValue);
 
-function toData(node: SceneNode) {
-    data.value.x = node.x;
-    data.value.y = node.y;
-    data.value.width = node.width;
-    data.value.height = node.height;
-    // if (hasMixin(node, ContainerMixin) && node.backgrounds && node.backgrounds[0]) {
-    //     data.value.isHideColor = false;
-    //     data.value.fillStyle = node.backgrounds[0];
-    // } else {
-    //     data.value.isHideColor = true;
-    //     data.value.fillStyle = new SolidPaint();
-    // }
+function toData(node: LayoutMixin) {
+    data.value.VerticalStretch = node.VerticalStretch || 0;
+    data.value.HorizontalStretch = node.HorizontalStretch || 0;
+    data.value.VerticalLayout = node.VerticalLayout || 0;
+    data.value.HorizontalLayout = node.HorizontalLayout || 0;
+    HorizontalLayoutValues.value = HorizontalLayoutValue.slice(0, node.HorizontalStretch ? 3: 5);
+    VerticalLayoutValues.value = VerticalLayoutValue.slice(0, node.VerticalStretch ? 3: 5);
+    // data.value.layoutAlign = node.layoutAlign;
+    // data.value.paddingTop = node.paddingTop || 0;
+    // data.value.paddingRight = node.paddingRight || 0;
+    // data.value.paddingBottom = node.paddingBottom || 0;
+    // data.value.paddingLeft = node.paddingLeft || 0;
 }
 
-// function change(event) {
-//     const [r, g, b] = event.colorObj.color;
-//     node.backgrounds = [{
-//         color: {r, g, b},
-//         opacity: event.opacity,
-//         type: 'SOLID',
-//     }];
-//     if(node) node.update();
-// }
-type OverflowType = 'visible' | 'hidden' | 'overflow-x' | 'overflow-y';
-const isOpen = ref(true);
-const overflow = ref('visible') as Ref<OverflowType>;
-
-const overflowX = ref(false);
-const overflowY = ref(false);
-
-watchEffect(() => {
-    // if(overflowX.value == false && overflowY.value == false) {
-    //     // overflow.value ='visible';
-    // } else if(overflowX.value == true && overflowY.value == true) {
-    //     overflow.value = 'hidden';
-    // } else if (overflowX.value == true) {
-    //     overflow.value = 'overflow-x';
-    // } else {
-    //     overflow.value = 'overflow-y';
-    // }
-});
 
 </script>
 
 <template>
+    <div v-show="isShow" class="border-bottom" />
     <m-widget v-show="isShow">
-        <MTitle style="padding-left: 0;" :is-open="open" @on-click="boardSwitch">
+        <MTitle :is-open="open" @on-click="boardSwitch">
             <template #prefix>
-                <Menu size="sm" value="0" :class="$style.menu" @on-change="handler">
-                    <template #activator>
-                        <Button class="justify-start" size="sm" :styles="ButtonModeStyle" @click="isOpen = true">
-                            自由布局
-                            <template #subfix>
-                                <i-cosmic-select-up-down />
-                            </template>
-                        </Button>
-                    </template>
-                    <MenuOption
-                        v-for="data of [
-                            { id: 'save', label: '自由布局' },
-                            { id: 'new', label: '自适应' },
-                            { id: 'open', label: '栅格' },
-                        ]" :key="data.id" :value="data.id" :label="data.label" :has-check="false"
-                    />
-                </Menu>
+                布局属性
             </template>
             <i-cosmic-arrow-up v-if="isOpen" @click="isOpen = flase" />
             <i-cosmic-arrow-down v-else @click="isOpen = true" />
@@ -115,35 +85,125 @@ watchEffect(() => {
                 <Col
                     class="flex"
                     :class="$style.col"
-                    :span="7"
+                    :span="5"
                 >
-                    <padding-input />
+                    <Select
+                        size="sm"
+                        :value="data.HorizontalStretch"
+                        @on-change="({value}) => {node.HorizontalStretch = parseInt(value); node.update();}"
+                    >
+                        <template #prefix>
+                            <i-cosmic-offset-x v-if="data.HorizontalStretch == 0" />
+                            <i-cosmic-scale-x v-else />
+                        </template>
+                        <select-option
+                            v-for="sv of HorizontalStretchValue"
+                            :key="sv.value"
+                            :value="sv.value"
+                            :label="sv.label"
+                        />
+                    </Select>
+                </Col>
+                <!-- <Col :span="1" /> -->
+                <Col
+                    class="flex"
+                    :class="$style.col"
+                    :span="5"
+                >
+                    <Select
+                        size="sm"
+                        :value="data.VerticalStretch"
+                        @on-change="({value}) => {node.VerticalStretch = parseInt(value); node.update();}"
+                    >
+                        <template #prefix>
+                            <i-cosmic-offset-y v-if="data.VerticalStretch == 0" />
+                            <i-cosmic-scale-y v-else />
+                        </template>
+                        <select-option
+                            v-for="sv of VerticalStretchValue"
+                            :key="sv.value"
+                            :value="sv.value"
+                            :label="sv.label"
+                        />
+                    </Select>
                 </Col>
             </Row>
             <Row :class="$style.row">
                 <Col
-                    class="flex"
+                    class="flex ml-6"
                     :class="$style.col"
-                    :span="7"
-                    @click="overflow=overflow=='visible' ? 'hidden': 'visible'"
+                    :span="4"
                 >
-                    <div class="-v-px -v-text sm" :class="[$style['flow-icon'], overflow == 'visible' ? 'off' : 'on']">
-                        <i-cosmic-select-off v-if="overflow == 'visible'" class="align-middle" />
-                        <i-cosmic-select-on v-else class="align-middle" />
-                    </div>
-                    <div>内容超出隐藏</div>
+                    <!-- #546BFF -->
+                    <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="none" fill-rule="evenodd">
+                            <rect stroke="#E0E0E0" fill="#FFF" x=".5" y=".5" width="63" height="63" rx="4" />
+                            <rect stroke="#25252B" x="20.5" y="20.5" width="23" height="23" rx="4" />
+                            <path d="M23 23h18v18H23z" />
+                            <path fill="#25252B" d="M28 32.5v-1h8v1z" />
+                            <path fill="#25252B" d="M31.5 28h1v8h-1z" />
+                            <path d="M5 32.75v-1.5h10v1.5z" fill="#25252B" />
+                            <path d="M31.25 50.25h1.5v8h-1.5z" fill="#25252B" />
+                            <g fill="#25252B">
+                                <path d="M50.25 32.75v-1.5h8v1.5z" />
+                            </g>
+                            <g fill="#25252B">
+                                <path d="M31.25 5.25h1.5v10h-1.5z" />
+                            </g>
+                        </g>
+                    </svg>
                 </Col>
                 <Col
-                    class="flex flex-row-reverse relative"
-                    :class="[$style.col, $style['flow-icons']]"
-                    :span="7"
+                    class="flex flex-col"
+                    :class="$style.col"
+                    :span="5"
                 >
-                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowY? 'active': ''" @click="overflowY = !overflowY">
-                        <i-cosmic-scroll-y />
-                    </Button>
-                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowX? 'active': ''" @click="overflowX = !overflowX">
-                        <i-cosmic-scroll-x />
-                    </Button>
+                    <template v-if="HorizontalLayoutValues.length == 3">
+                        <Select
+                            size="sm" :value="data.HorizontalLayout"
+                            @on-change="({ value }) => { node.HorizontalLayout = parseInt(value); node.update(); }"
+                        >
+                            <select-option
+                                v-for="sv of HorizontalLayoutValues" :key="sv.value" :value="sv.value"
+                                :label="sv.label"
+                            />
+                        </Select>
+                    </template>
+                    <template v-else>
+                        <Select
+                            size="sm" :value="data.HorizontalLayout"
+                            @on-change="({ value }) => { node.HorizontalLayout = parseInt(value); node.update(); }"
+                        >
+                            <select-option
+                                v-for="sv of HorizontalLayoutValues" :key="sv.value" :value="sv.value"
+                                :label="sv.label"
+                            />
+                        </Select>
+                    </template>
+                    <template v-if="HorizontalLayoutValues.length == 3">
+                        <Select
+                            class="mt-6"
+                            size="sm" :value="data.VerticalLayout"
+                            @on-change="({ value }) => { node.VerticalLayout = parseInt(value); node.update(); }"
+                        >
+                            <select-option
+                                v-for="sv of VerticalLayoutValues" :key="sv.value" :value="sv.value"
+                                :label="sv.label"
+                            />
+                        </Select>
+                    </template>
+                    <template v-else>
+                        <Select
+                            class="mt-6"
+                            size="sm" :value="data.VerticalLayout"
+                            @on-change="({ value }) => { node.VerticalLayout = parseInt(value); node.update(); }"
+                        >
+                            <select-option
+                                v-for="sv of VerticalLayoutValues" :key="sv.value" :value="sv.value"
+                                :label="sv.label"
+                            />
+                        </Select>
+                    </template>
                 </Col>
             </Row>
         </div>

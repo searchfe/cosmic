@@ -5,7 +5,7 @@ import { inject, PageNode, hasMixin, ContainerMixin, type SceneNode, type Paint,
 import { Row, Col, InputNumber } from 'cosmic-vue';
 import { type Subject } from '@cosmic/core/rxjs';
 
-const isShow = ref(true);
+const isShow = ref(false);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 let subject: Subject<BaseNodeMixin>;
 

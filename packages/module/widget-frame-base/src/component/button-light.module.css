@@ -1,0 +1,20 @@
+.button {
+    composes: cos-btn -v-text -v-h -v-px -v-border-none rounded from global;
+    color: var(--color-dark);
+}
+.button:hover {
+    background: var(--color-gray-50);
+}
+.button:active,  .button:global(.active){
+    background: var(--color-gray-50);
+}
+
+.prefix {
+    composes: -v-mr from global;
+}
+.content {
+
+}
+.suffix {
+    composes: -v-ml from global;
+}
