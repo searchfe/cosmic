@@ -33,15 +33,15 @@ export const HorizontalLayoutValue = [
         value: 1,
     },
     {
-        label: '左右居中',
+        label: '左右固定',
         value: 2,
     },
     {
-        label: '左右固定',
+        label: '左右居中 *',
         value: 3,
     },
     {
-        label: '水平缩放',
+        label: '水平缩放 *',
         value: 4,
     },
 ];
@@ -56,15 +56,15 @@ export const VerticalLayoutValue = [
         value: 1,
     },
     {
-        label: '垂直居中',
+        label: '上下固定',
         value: 2,
     },
     {
-        label: '垂直固定',
+        label: '垂直居中 *',
         value: 3,
     },
     {
-        label: '垂直缩放',
+        label: '垂直缩放 *',
         value: 4,
     },
 ];

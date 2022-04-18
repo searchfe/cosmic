@@ -1,4 +1,4 @@
-import { hasMixin, SceneNode, BaseFrameMixin, FramePrototypingMixin } from '@cosmic/core/parts';
+import { hasMixin, SceneNode, BaseFrameMixin, FramePrototypingMixin, LayoutMixin } from '@cosmic/core/parts';
 
 interface NodeStyle {
     [index: string]: string,
@@ -15,10 +15,13 @@ export function makeNode(node: SceneNode): NodeData {
     };
     const classes: string[] = [];
     if (hasMixin(node, BaseFrameMixin)) {
-        styles = { ...makeBaseFrameStyle(node) };
+        styles = { ...styles, ...makeBaseFrameStyle(node) };
     }
     if (hasMixin(node, FramePrototypingMixin)) {
-        styles = { ...makeFramePrototypingStyle(node) };
+        styles = { ...styles, ...makeFramePrototypingStyle(node) };
+    }
+    if (hasMixin(node, LayoutMixin) && node.parent) {
+        styles = { ...styles, ...makeLayoutStyle(node)};
     }
 
     return {
@@ -53,4 +56,45 @@ export function makeFramePrototypingStyle(node: FramePrototypingMixin) {
     }
 
     return  styles;
+}
+
+export function  makeLayoutStyle(node: LayoutMixin) {
+    const styles: NodeStyle = {};
+    switch(node.HorizontalLayout) {
+        case 0:
+            styles.left = node.x + 'px';
+            styles.width = node.width + 'px';
+            break;
+        case 1:
+            styles.right = node.r + 'px';
+            styles.width = node.width + 'px';
+            break;
+        case 2:
+            styles.left = node.x + 'px';
+            styles.width = ((node as any).parent.width - node.x - node.r) + 'px';
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+    }
+    switch(node.VerticalLayout) {
+        case 0:
+            styles.top = node.y + 'px';
+            styles.height = node.height + 'px';
+            break;
+        case 1:
+            styles.bottom = node.b + 'px';
+            styles.height = node.height + 'px';
+            break;
+        case 2:
+            styles.top = node.y + 'px';
+            styles.height = ((node as any).parent.height - node.y - node.b) + 'px';
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+    }
+    return styles;
 }

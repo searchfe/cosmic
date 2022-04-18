@@ -43,7 +43,9 @@ function getWapperStyle(node: SceneNode) {
             <div
                 v-for="item in (new Array(8).keys())"
                 :key="item" class="absolute"
-                :class="$style.dragItem"
+                :class="[
+                    $style.dragItem,
+                ]"
                 @mousedown="(event) => nodeControllService.startResize(node, item, event)"
             />
         </div>

@@ -134,6 +134,7 @@ function checkTab() {
     width: 12.4rem;
     height: 12.4rem;
     border-radius: 0.8rem;
+    z-index: 10;
 }
 .wrapper :global(.layout-input) {
     padding: 0;

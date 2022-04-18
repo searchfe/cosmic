@@ -49,6 +49,7 @@ nodeService.selection.subscribe(nodes => {
         // 监听数据
         node = nodes[0] as FrameNode;
         nodeService.watch(node).subscribe((n) => {
+            if (!isShowDetail.value) return;
             toData(n as FrameNode);
         });
         toData(node);
@@ -100,6 +101,7 @@ const removeBreakPoint = (id: string) => {
     // 更新组件内部数据
     innerData.breakPoints = dataMap[node.id].breakPoints;
     innerData.active = dataMap[node.id].active;
+    isShowDetail.value = false;
 };
 
 // 监听状态数据，调整显示符号
@@ -113,11 +115,13 @@ watchEffect(() => {
 // 监听状态数据，调整canvas宽度显示
 watchEffect(() => {
     if (!innerData) return;
+    if (!isShowDetail.value) return;
     // FIXME: 现在只设置frame对应的宽度
     const selectedBp = innerData?.breakPoints.find(bp => bp.id === innerData.active);
     if (!selectedBp) return;
     const { fakeValue } = selectedBp;
     node.width = fakeValue;
+    node.resize(node.width, node.height);
     node.update();
 });
 

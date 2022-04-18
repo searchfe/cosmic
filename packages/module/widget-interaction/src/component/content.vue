@@ -25,7 +25,7 @@ const effectStyle = reactive({
 
 // 处理交互
 const effectChange = () => {
-    console.log('effectStyle', effectStyle);
+    // console.log('effectStyle', effectStyle);
 };
 </script>
 
