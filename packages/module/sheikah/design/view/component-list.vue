@@ -20,6 +20,12 @@ const team = route.query.team as string;
 const createComponentDialogIsOpenRef = ref(false);
 const newComponentNameRef = ref('');
 const componentsRef = ref<QueryComponentResult[]>();
+const imgMap = {
+    '文本段落': 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8-1%E6%96%87%E6%9C%AC%E6%AE%B5%E8%90%BD%20%20x4.png',
+    '单图': 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8-2%E5%8D%95%E5%9B%BE%20%20x4.png',
+    '图集': 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8-3%E5%9B%BE%E9%9B%86%20%20x4.png',
+    '来源': 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8-4%E6%9D%A5%E6%BA%90%20%20x4.png',
+};
 
 const { executeQuery: fetchTeamComponents } = useQuery(createFetchTeamComponentsRequest({ team }));
 
@@ -130,7 +136,12 @@ function addComponent() {
     <Region inverse>
         <div :class="$style['card-list']">
             <section v-for="i, index of componentsRef" :key="index" :class="['relative', $style.card]">
-                <comp-card :title="i.displayName" :meta="[i.name, i.desc]" img="https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png" @click="onClickComp(i)" />
+                <comp-card
+                    :name="i.displayName || '图集'"
+                    :meta="[i.name, i.desc]"
+                    :img="imgMap[i.displayName || '图集']"
+                    @click="onClickComp(i)"
+                />
                 <!-- <i-cosmic-close
                     :class="['absolute', $style['card-delete']]"
                     @click="deleteComponent(i.name)"

@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@cosmic/core/urql';
 
 type PrefabFields = (keyof gql.Prefab)[];
 
-export function queryOne(id: string, fields: PrefabFields = ['id', 'name', 'team', 'component', 'atoms']) {
+export function queryOne(id: string, fields: PrefabFields = ['id', 'name', 'team', 'component', 'atoms', 'preview']) {
     return useQuery<{ getPrefab: Partial<gql.Prefab> }, gql.QueryPrefabDTO>({
         query: `query ($id: String!) {
             getPrefab(id: $id) {
@@ -16,7 +16,7 @@ export function queryOne(id: string, fields: PrefabFields = ['id', 'name', 'team
     });
 }
 
-export function query(query: gql.QueryPrefabDTO, fields: string[] = ['id', 'name', 'team', 'component', 'atoms']) {
+export function query(query: gql.QueryPrefabDTO, fields: string[] = ['id', 'name', 'team', 'component', 'atoms', 'preview']) {
     return useQuery<{ prefabs: Partial<gql.Prefab>[] }, gql.QueryPrefabDTO>({
         query: `query ($query: QueryPrefabDTO) {
             prefabs(query: $query) {

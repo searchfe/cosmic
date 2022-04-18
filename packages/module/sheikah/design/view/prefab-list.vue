@@ -82,7 +82,13 @@ function onClickComp(id?: string) {
     </Region>
     <Region inverse>
         <div :class="$style['card-list']">
-            <comp-card v-for="prefab in prefabs" :key="prefab.id" v-bind="prefab" @click.stop="onClickComp(prefab.id)" />
+            <comp-card
+                v-for="prefab in prefabs"
+                :key="prefab.id"
+                v-bind="prefab"
+                :img="prefab.preview"
+                @click.stop="onClickComp(prefab.id)"
+            />
         </div>
     </Region>
 </template>

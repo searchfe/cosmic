@@ -5,23 +5,45 @@ import CompCard from '../component/card/comp-refs.vue';
 import Dropdown from '../../common/component/dropdown.vue';
 import { useRoute } from '@cosmic/core/router';
 import { queryOne as queryOnePrefab } from '../api/prefab';
-import { query as queryColor } from '../api/color';
+// import { query as queryColor } from '../api/color';
+import { useQuery } from '@cosmic/core/urql';
 
 
 const id = useRoute().query.prefab as string;
 
 const prefab = ref<Partial<gql.Prefab>>({});
-const atoms = ref<Partial<gql.Color>[]>([]);
+const comp = ref<Partial<gql.Component>>({});
 
-const {data: colorsData, fetching: colorFetching } = queryColor({});
+const {data: compsData, fetching: compsFetching } = useQuery<{ components: gql.Component[] }>({
+    query: `
+        query components {
+            components {
+                id
+                displayName
+                preview
+            }
+    }`,
+    requestPolicy: 'cache-and-network',
+});
+
+const imgMap: Record<string, string> = {
+    '文本段落': 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8-1%E6%96%87%E6%9C%AC%E6%AE%B5%E8%90%BD%20%20x4.png',
+    '单图': 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8-2%E5%8D%95%E5%9B%BE%20%20x4.png',
+    '图集': 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8-3%E5%9B%BE%E9%9B%86%20%20x4.png',
+    '来源': 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8-4%E6%9D%A5%E6%BA%90%20%20x4.png',
+};
+
 const { data: prefabData, fetching: prefabFetching } = queryOnePrefab(id);
 
 watchEffect(() => {
     if (id && prefabData.value?.getPrefab && !prefabFetching.value) {
         prefab.value = prefabData.value.getPrefab;
     }
-    if (colorsData.value && !colorFetching.value) {
-        atoms.value = (colorsData.value.colors || []).slice(0, 1);
+    if (compsData.value && !compsFetching.value && prefab.value.id) {
+        comp.value = compsData.value.components.filter(c => {
+            c.preview = imgMap[(c.displayName || '图集')];
+            return c.id === prefab.value.component;
+        })[0] || {};
     }
 });
 
@@ -36,12 +58,12 @@ const menuData = [{
 </script>
 
 <template>
-    <Region :title="prefab.name" desc="强蓝色，用于突出意图的表达，多用于按钮">
+    <Region :title="prefab.name" :desc="prefab.name">
         <template #extra>
             <div class="flex items-center">
                 <div :class="[$style['extra-item'], $style['extra-link']]" class="flex items-center justify-center text-md">
                     <i-cosmic-lock />
-                    <span>{{ atoms.length }}</span>
+                    <span>1</span>
                 </div>
                 <div :class="$style['extra-item']" class="flex items-center justify-center text-md px-30 mx-10">
                     编辑
@@ -55,13 +77,13 @@ const menuData = [{
     <Region title="组件变体" class="mt-20">
         <div :class="$style.preview" class="w-fll">
             <div :class="$style['preview-mask']" />
-            <img src="https://fe-dev.bj.bcebos.com/%E9%A2%84%E5%88%B6%E8%AF%A6%E6%83%85%E9%A1%B5%20%E4%B8%BB%E6%8C%89%E9%92%AE-%E9%9D%A2%E5%BA%95%203%E5%80%8D.png" alt="预置变体" :class="$style.img">
+            <img :src="prefab.preview" alt="预置变体" :class="$style.img">
         </div>
         <div class="text-2xl my-20">
             预置构成
         </div>
         <div :class="$style['card-list']">
-            <comp-card v-for="item in atoms" :key="item.id" v-bind="item" />
+            <comp-card v-for="item in [comp]" :key="item.id" v-bind="item" :img="item.preview" />
         </div>
     </Region>
 </template>
