@@ -2,7 +2,7 @@
 import Card from '../../../common/component/card.vue';
 
 withDefaults(defineProps<{ name: string, img: string }>(), {
-    name: '2n 按钮',
+    name: '文本段落',
     img: 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png',
 });
 </script>
