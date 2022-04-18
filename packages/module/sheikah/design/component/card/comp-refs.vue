@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import Card from '../../../common/component/card.vue';
 
-withDefaults(defineProps<{ name: string }>(), {
+withDefaults(defineProps<{ name: string, img: string }>(), {
     name: '2n 按钮',
+    img: 'https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png',
 });
 </script>
 <template>
@@ -10,10 +11,10 @@ withDefaults(defineProps<{ name: string }>(), {
         <div :class="$style.card">
             <div :class="$style['card-content']" class="w-full h-full">
                 <div :class="$style.preview" class="w-full">
-                    <img class="w-full h-full" src="https://fe-dev.bj.bcebos.com/%E7%BB%84%E4%BB%B6%E5%B0%81%E9%9D%A2-%E6%8C%89%E9%92%AE1.png" alt="">
+                    <img class="w-full h-full" :src="img" alt="">
                 </div>
                 <div :class="$style.info" class="w-full flex items-center pl-20 text-md">
-                    按钮
+                    {{ name }}
                 </div>
             </div>
         </div>

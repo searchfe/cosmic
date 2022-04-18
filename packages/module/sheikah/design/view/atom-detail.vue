@@ -6,6 +6,7 @@ import CompCard from '../component/card/comp.vue';
 import { useRoute } from '@cosmic/core/router';
 import { queryOne } from '../api/color';
 import ColorDialog from '../component/dialog/atom/color.vue';
+import { useQuery } from '@cosmic/core/urql';
 
 
 const route = useRoute();
@@ -13,12 +14,30 @@ const route = useRoute();
 const { type: atomType, id } = route.query as { id: string, type: string };
 
 const color = ref<Partial<gql.Color>>({});
+const prefabs = ref<gql.Prefab[]>([]);
 
 const { data, fetching, executeQuery } = queryOne(id);
+const {data: prefabData, fetching: prefabFetching } = useQuery<{ prefabs: gql.Prefab[] }>({
+    query: `
+        query prefabs {
+            prefabs {
+                id
+                name
+                preview
+                desc
+                atoms
+            }
+    }`,
+});
 
 watchEffect(() => {
     if (atomType === 'color' && id && data.value?.getColor && !fetching.value) {
         color.value = data.value.getColor || {};
+    }
+    if (prefabData.value && !prefabFetching.value && color.value.id) {
+        prefabs.value = prefabData.value.prefabs.filter(c => {
+            return c.atoms.indexOf(color.value.id as string) > -1;
+        });
     }
 });
 
@@ -36,9 +55,15 @@ function refresh() {
             </div>
         </template>
     </Region>
-    <Region title=" 组件数量 1" inverse>
+    <Region title="预置" inverse>
         <div :class="$style['comp-list']">
-            <comp-card v-for="item in [1]" :key="item" />
+            <comp-card
+                v-for="item in prefabs"
+                :id="item.id"
+                :key="item.id"
+                :img="item.preview"
+                :name="item.name"
+            />
         </div>
     </Region>
 </template>
