@@ -21,6 +21,7 @@ export { default as IImage} from './case/image/image.vue';
 export { default as IImageList } from './case/image/image-list.vue';
 
 export { default as IAvatar } from './case/avatar/avatar.vue';
+export { useModal } from './component/modal/setup';
 
 
 function bootstrap(option: BootstrapOption) {

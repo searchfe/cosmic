@@ -1,0 +1,37 @@
+.root {
+    composes: -v-bg-inapparent -v-h -v-px -v-text from global;
+    border-radius: 0.4rem;
+}
+
+.root:active, .root.active {
+    background-color: var(--color-gray-100);
+}
+
+.input {
+    composes: -v-text from global;
+    color: var(--color-dark);
+    outline: none;
+    border: none;
+    background-color: transparent;
+    user-select: none;
+}
+
+.prefix {
+    margin-right: 0.8rem;
+    color: var(--color-gray-300);
+}
+
+.root:hover .prefix {
+    color: var(--color-dark);
+}
+
+
+.subfix {
+    visibility: hidden;
+    margin-left: var(--margin-md);
+    font-size: 1rem;
+}
+
+.root:active .subfix, .root:hover .subfix, .root:global(.active) .subfix{
+    visibility: visible;
+}

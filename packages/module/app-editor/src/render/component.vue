@@ -36,11 +36,9 @@ onUnmounted(() => {
             height: node.height + 'px',
         }"
     >
-        <div class="relative">
-            <Button v-if="node.cname === 'button'">按钮</Button>
-            <s-component v-else-if="node.cname === 'image'" class="w-full h-ull" name="image" />
-            <s-component v-else-if="node.cname === 'aladin'" class="w-full h-ull" name="aladin" />
-            <s-component v-else-if="node.cname === 'scroll'" class="w-full h-ull" name="scroll" />
-        </div>
+        <Button v-if="node.cname === 'button'">按钮</Button>
+        <s-component v-else-if="node.cname === 'image'" class="w-full h-ull" name="image" />
+        <s-component v-else-if="node.cname === 'aladin'" class="w-full h-ull" name="aladin" />
+        <s-component v-else-if="node.cname === 'scroll'" class="w-full h-ull" name="scroll" />
     </div>
 </template>

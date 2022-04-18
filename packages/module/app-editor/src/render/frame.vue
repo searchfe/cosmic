@@ -3,6 +3,7 @@ import { type FrameNode, util } from '@cosmic/core/parts';
 import { onMounted, getCurrentInstance, onUnmounted } from 'vue';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
+import { makeNode } from './make-node';
 
 interface FrameProps {
     node: FrameNode,
@@ -41,10 +42,9 @@ onUnmounted(() => {
             width: node.width + 'px',
             height: node.height + 'px',
             background: util.toBackgroundStyle(node?.backgrounds[0]),
+            ...makeNode(node).styles,
         }"
     >
-        <div class="relative">
-            <children-render :children="node.children" />
-        </div>
+        <children-render :children="node.children" />
     </div>
 </template>

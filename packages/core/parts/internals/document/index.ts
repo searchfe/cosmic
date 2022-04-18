@@ -42,11 +42,14 @@ export { default as ChildrenMixin } from './mixin/children-mixin';
 export { default as SceneNodeMixin } from './mixin/scene-node-mixin';
 export { default as ContainerMixin } from './mixin/container-mixin';
 export { default as BaseNodeMixin } from './mixin/base-node-mixin';
+export { default as BaseFrameMixin } from './mixin/base-frame-mixin';
 export { default as MinimalStrokesMixin} from './mixin/minimal-strokes-mixin';
 export { default as BlendMixin } from './mixin/blend-mixin';
 export { default as CornerMixin} from './mixin/coner-mixin';
 export { default as LayoutMixin} from './mixin/layout-mixin';
 export { default as DefaultFrameMixin } from './mixin/default-frame-mixin';
+export { default as FramePrototypingMixin } from './mixin/frame-prototyping-mixin';
+
 
 export * from './style/text-style';
 export * from './style/fill-style';
