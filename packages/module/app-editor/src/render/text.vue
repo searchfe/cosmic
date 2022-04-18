@@ -3,6 +3,7 @@ import { getCurrentInstance, onUnmounted } from 'vue';
 import  { type TextNode, util } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
+import { makeNode } from './make-node';
 
 interface TextProps {
     node: TextNode,
@@ -41,10 +42,7 @@ function inputAction(event: InputEvent, node: TextNode) {
         class="text-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
-            top: node.y + 'px',
-            left: node.x + 'px',
-            width: node.width + 'px',
-            height: node.height + 'px',
+            ...makeNode(node).styles,
             fontSize: node.fontSize + 'px',
             fontFamily: node.fontName?.family,
             fontWeight: node.fontName?.style ?? '400',

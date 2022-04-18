@@ -86,8 +86,11 @@ export default class NodeControllService {
         const node = data.node;
         node.x = round(x);
         node.y = round(y);
+        node.r = round((node as any)?.parent?.width - node.width - node.x);
+        node.b = round((node as any)?.parent?.height - node.height - node.y);
         node.width = round(width);
         node.height = round(height);
+        node.resize(node.width, node.height);
         node.update();
     }
 
@@ -106,6 +109,8 @@ export default class NodeControllService {
         });
         node.x = round(pos.x);
         node.y = round(pos.y);
+        node.r = round((node as any)?.parent?.width - node.width - node.x);
+        node.b = round((node as any)?.parent?.height - node.height - node.y);
         node.update();
     }
 

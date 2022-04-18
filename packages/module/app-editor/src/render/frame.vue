@@ -37,10 +37,6 @@ onUnmounted(() => {
         class="frame-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
-            top: node.y + 'px',
-            left: node.x + 'px',
-            width: node.width + 'px',
-            height: node.height + 'px',
             background: util.toBackgroundStyle(node?.backgrounds[0]),
             ...makeNode(node).styles,
         }"
