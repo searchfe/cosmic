@@ -127,6 +127,6 @@ const menuData = [{
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) scale(0.4);
+    transform: translate(-50%, -50%) scale(0.3);
 }
 </style>

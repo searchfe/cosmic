@@ -19,7 +19,7 @@ withDefaults(defineProps<CompCardOption>(), {
     <Card>
         <div class="flex flex-col overflow-hidden" :class="$style.card">
             <div :class="$style.preview" class="flex items-center justify-center">
-                <img class="w-full h-full" :src="img" alt="预置预览">
+                <img style="width: 75%; height: 75%;" :src="img" alt="预置预览">
             </div>
             <div :class="$style.info" class="flex flex-col justify-around">
                 <div class="text-lg">
@@ -49,6 +49,7 @@ withDefaults(defineProps<CompCardOption>(), {
     height: 70%;
     width: 100%;
     overflow: hidden;
+    background: rgb(229, 229, 229);
 }
 .info {
     position: absolute;
