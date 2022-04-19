@@ -65,7 +65,6 @@ function enableEdit(event: MouseEvent) {
 </script>
 
 <template>
-    {{ ableEdit }}
     <div
         ref="input"
         v-creator="{target: node}"
