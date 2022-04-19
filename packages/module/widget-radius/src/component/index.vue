@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {ref, watchEffect} from 'vue';
 import { MClolorWidget, service } from '@cosmic/core/browser';
-import { FrameNode, inject, RadiusStyle, hasMixin, CornerMixin, FillStyle } from '@cosmic/core/parts';
+import { FrameNode, inject, RadiusStyle, hasMixin, CornerMixin, FillStyle, SolidPaint } from '@cosmic/core/parts';
 import Raduis from './radius.vue';
 import { v4, v5 } from 'uuid';
 
@@ -119,7 +119,12 @@ function unSelectStyle() {
 
 function getFillStyle(node: FrameNode): FillStyle {
     if (!node) return {} as FillStyle;
-    const fillStyle = fillStyleService.get(node.backgroundStyleId ?? v5('cosmic', v4()));
+    let fillStyle;
+    if (!node.backgroundStyleId && node.backgrounds && node.backgrounds[0]) {
+        fillStyle = fillStyleService.createBySolidPaint(node.backgrounds[0] as SolidPaint);
+    } else {
+        fillStyle = fillStyleService.get(node.backgroundStyleId ?? v5('cosmic', v4()));
+    }
     if (node.backgroundStyleId !== fillStyle.id) {
         node.backgroundStyleId = fillStyle.id;
     }

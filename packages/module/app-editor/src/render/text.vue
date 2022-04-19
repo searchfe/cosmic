@@ -83,7 +83,8 @@ function enableEdit(event: MouseEvent) {
             lineHeight: node.lineHeight?.value + 'px',
             background: util.toBackgroundStyle(node?.backgrounds?.[0]),
             color: util.toBackgroundStyle(node?.fills?.[0]),
-            outline: 'none'
+            outline: 'none',
+            textAlign: node.textAlignHorizontal
         }"
         @mouseup="prepareEdit"
         @mousedown="enableEdit"

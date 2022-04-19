@@ -38,7 +38,7 @@ export class BaseService<T extends {id: string, clone: () => T}> {
         this.type = type;
     }
 
-    public get(styleId: string): T {
+    public get(styleId: string): T  {
         let style = this.localStyles.get(styleId) || this.serviceStyles.get(styleId);
         // 当前style为空的时候创建默认
         if (!style) {
@@ -46,7 +46,7 @@ export class BaseService<T extends {id: string, clone: () => T}> {
             style.id = styleId;
             this.addLocalStyle(style);
         }
-        return style || {};
+        return style;
     }
 
     public delete(styleId: string) {

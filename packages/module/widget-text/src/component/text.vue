@@ -25,7 +25,12 @@ const boardSwitch = () => {
                 :is-open="open"
                 @on-click="boardSwitch"
             >
-                <i-cosmic-arrow-down />
+                <i-cosmic-arrow-down
+                    v-if="!open"
+                />
+                <i-cosmic-arrow-up
+                    v-else
+                />
             </MTitle>
             <Content v-if="open" />
         </div>

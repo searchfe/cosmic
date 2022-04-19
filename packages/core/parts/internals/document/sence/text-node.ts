@@ -25,6 +25,7 @@ export default class TextNode
         this.height = option.height || 0;
         this.fontSize = 12;
         this.name = option.name || '';
+        this.textAlignHorizontal = 'LEFT';
     }
     clone() {
         return this as any;

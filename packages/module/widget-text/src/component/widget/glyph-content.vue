@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { Select, SelectOption, Row, Col, InputNumber, RadioGroup, RadioButton } from 'cosmic-vue';
+import { Select, SelectOption, Row, Col, InputNumber } from 'cosmic-vue';
 import { GlyphData, FontWeight, FontType } from '../../data';
 import type { TextStyle } from '@cosmic/core/parts';
 
@@ -17,9 +17,10 @@ const textStyle = computed(() => props.textStyle);
 const emits = defineEmits(['change']);
 
 function changeStyle(textStyle, field, event) {
-    textStyle[field] = event.value;
+    const vulue = event.value || '1';
+    textStyle[field] = vulue;
     if (field === 'fontSize') {
-        textStyle.lineHeight.value = event.value;
+        textStyle.lineHeight.value =vulue;
     }
     emits('change');
 }
@@ -47,8 +48,8 @@ function changeStyle(textStyle, field, event) {
             <Col :span="4" class="ml-8">
                 <input-number
                     size="sm"
-                    :value="textStyle.fontSize + ''"
-                    allow-input
+                    :value="textStyle.fontSize"
+                    :default-min-value="1"
                     :class="$style['margin-left']"
                     @on-input="(event) => changeStyle(textStyle, 'fontSize', event)"
                 >
@@ -129,7 +130,7 @@ function changeStyle(textStyle, field, event) {
                 </input-number>
             </Col>
         </Row>
-        <Row :class="$style.row">
+        <!-- <Row :class="$style.row">
             <Col :span="16" :class="$style.col">
                 <div :class="$style['radio-left']">
                     <RadioGroup value="1">
@@ -166,7 +167,7 @@ function changeStyle(textStyle, field, event) {
                     </RadioGroup>
                 </div>
             </Col>
-        </Row>
+        </Row> -->
     </div>
 </template>
 
