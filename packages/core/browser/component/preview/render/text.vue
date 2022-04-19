@@ -42,7 +42,6 @@ nodeService.selection.subscribe(nodes => {
             color: util.toBackgroundStyle(node?.fills?.[0]),
             outline: 'none'
         }"
-    >
-        {{ node?.name }}
-    </div>
+        v-html="node?.characters"
+    />
 </template>

@@ -1,5 +1,6 @@
+/* eslint-disable vue/no-v-html */
 <script lang="ts" setup>
-import { getCurrentInstance, onUnmounted } from 'vue';
+import { getCurrentInstance, onUnmounted, Ref, ref } from 'vue';
 import  { type TextNode, util } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
@@ -9,11 +10,27 @@ interface TextProps {
     node: TextNode,
 }
 
+enum EditState {
+    Disbaled,
+    Prepare,
+    Enable
+}
+
+const ableEdit = ref(EditState.Disbaled);
+
 const props = withDefaults(defineProps<TextProps>(), {
 
 });
+const input = ref() as Ref<HTMLDivElement>;
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+const toolService = inject<service.ToolService>(service.TOKENS.Tool);
+toolService.state().subscribe((state) => {
+    if (state === service.ToolState.MoveNode && ableEdit.value == EditState.Enable) {
+        ableEdit.value = EditState.Prepare;
+        input.value.blur();
+    }
+});
 
 const instance = getCurrentInstance();
 const subject = nodeService.watch(props.node);
@@ -25,20 +42,36 @@ onUnmounted(() => {
     nodeService.unwatch(subject);
 });
 
-function inputAction(event: InputEvent, node: TextNode) {
-    const firstChild = (event.target as HTMLElement).firstChild as HTMLTextAreaElement;
-    node.name = firstChild.textContent || '';
+function inputAction() {
+    const node = props.node as TextNode;
+    if (!node) return;
+    node.characters = input.value.innerHTML.replace(/<div>/g, '<br/>').replace(/<\/div>/g, '');
     node.update();
+    ableEdit.value = EditState.Disbaled;
 }
-
+function prepareEdit() {
+    if (ableEdit.value == EditState.Disbaled) {
+        input.value.blur();
+        ableEdit.value = EditState.Prepare;
+    }
+}
+function enableEdit(event: MouseEvent) {
+    if (ableEdit.value == EditState.Prepare) {
+        ableEdit.value = EditState.Enable;
+    } else if (ableEdit.value == EditState.Enable) {
+        event.stopPropagation();
+    }
+}
 </script>
 
 <template>
+    {{ ableEdit }}
     <div
+        ref="input"
         v-creator="{target: node}"
         v-stroke="{target: node}"
         v-effect="{target: node, field: 'textShadow'}"
-        contenteditable="true"
+        :contenteditable="ableEdit === EditState.Enable"
         class="text-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
@@ -53,8 +86,9 @@ function inputAction(event: InputEvent, node: TextNode) {
             color: util.toBackgroundStyle(node?.fills?.[0]),
             outline: 'none'
         }"
-        @blur="(event) => inputAction(event, node)"
-    >   
-        {{ node?.name }}
-    </div>
+        @mouseup="prepareEdit"
+        @mousedown="enableEdit"
+        @blur="inputAction"
+        v-html="node?.characters"
+    />
 </template>
