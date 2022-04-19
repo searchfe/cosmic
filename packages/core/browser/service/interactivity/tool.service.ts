@@ -65,6 +65,7 @@ export enum ToolState {
     Component,
     ResizeNode,
     MoveNode,
+    TextEdit,
 }
 
 
