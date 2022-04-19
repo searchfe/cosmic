@@ -82,7 +82,6 @@ function addComponent(name: string, event: MouseEvent) {
         pos.value.x = 0;
         pos.value.y = 0;
         toolService.set(service.ToolState.Component, {name});
-        console.log(name, exampleImageList.value);
         switch(name) {
             case 'button':
                 example.value = exampleButton.value;
@@ -202,7 +201,7 @@ onMounted(() => {
                 </div>
             </div>
             <h1>头像</h1>
-            <i-avatar 
+            <i-avatar
                 :is-show-avatar="isShowAvatar === '1'"
                 :src="avatar"
                 :title="avatarTitle"
@@ -217,7 +216,7 @@ onMounted(() => {
                     left: pos.x + 'px',
                 }"
             >
-                <i-avatar 
+                <i-avatar
                     :is-show-avatar="isShowAvatar === '1'"
                     :src="avatar"
                     :title="avatarTitle"

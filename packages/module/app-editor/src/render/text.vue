@@ -46,6 +46,7 @@ function inputAction() {
     const node = props.node as TextNode;
     if (!node) return;
     node.characters = input.value.innerHTML.replace(/<div>/g, '<br/>').replace(/<\/div>/g, '');
+    node.height = input.value.getBoundingClientRect().height;
     node.update();
     ableEdit.value = EditState.Disbaled;
 }

@@ -27,9 +27,9 @@ nodeService.selection.subscribe(nodes => {
     if (!node) return;
 
     subject = nodeService.watch(node);
-    subject.subscribe(value => {
-        console.log(value);
-    });
+    // subject.subscribe(value => {
+    //     // console.log(value);
+    // });
 });
 
 
@@ -46,7 +46,7 @@ function update(key: 'textAlignHorizontal' | 'textAutoResize', value: any) {
     <Row :class="$style.row">
         <Col :span="16" :class="$style.col">
             <div :class="$style['radio-left']">
-                <RadioGroup 
+                <RadioGroup
                     :value="data.textAlignHorizontal"
                     @on-change="(event) => update('textAlignHorizontal', event.value)"
                 >

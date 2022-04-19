@@ -9,7 +9,7 @@ export default class NodeService {
     public document: Subject<DocumentNode>;
     public selection: Subject<Array<SceneNode>>;
     public currentPage: Subject<PageNode>;
-    
+
     private _watchList: {[index: string]: {subjects: Subject<BaseNodeMixin>[], node: BaseNodeMixin, lastEditTime: number, dirty: boolean}} = {};
     private _document: DocumentNode;
     private _selection: Array<SceneNode> = [];
@@ -86,6 +86,7 @@ export default class NodeService {
         const paint = new SolidPaint();
         paint.color = { r: 0, g: 0, b: 0 };
         textNode.fills = [paint];
+        textNode.characters = '文本';
         textNode.parent = target;
         target.appendChild(textNode);
         textNode.update();
@@ -188,7 +189,7 @@ export default class NodeService {
         this.setSelectionPage();
         this.setSelection([]);
     }
-    
+
 }
 
 function increaseId(document: DocumentNode | PageNode, type: string) {
