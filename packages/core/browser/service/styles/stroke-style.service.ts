@@ -10,7 +10,7 @@ const DEFAULT_STYLES = {
     name: '默认名称',
     team: '',
     updatedAt: '',
-    top: {weight: '1', style: 'solid'},
+    top: {weight: '0', style: 'solid'},
 };
 
 @injectable()

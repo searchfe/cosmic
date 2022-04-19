@@ -1,6 +1,6 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { BaseService } from './base.service';
-import { FillStyle, colorDao } from '@cosmic/core/parts';
+import { FillStyle, colorDao, SolidPaint } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
 import Color from 'color';
 import { TOKENS } from '../token';
@@ -23,8 +23,17 @@ export default class FillStyleService extends BaseService<FillStyle> {
         this.queryList();
     }
 
-    create() {
-        const style = this.transformToLocal(DEFAULT_STYLES);
+    create(s: Partial<gql.Color> = {}) {
+        const style = this.transformToLocal({...DEFAULT_STYLES, ...s});
+        return style;
+    }
+
+    createBySolidPaint(paint: SolidPaint) {
+        const style = new FillStyle(v5('cosmic', v4()));
+        style.name = '默认名称';
+        style.opacity = paint.opacity as number;
+        style.color = {...paint.color, a: 1};
+        this.addLocalStyle(style);
         return style;
     }
 

@@ -27,11 +27,11 @@ const clickHandler = () => {
 <template>
     <MWidget>
         <MTitle title="矩形">
-            <i-cosmic-plus
+            <i-cosmic-arrow-down
                 v-if="!open"
                 @click="clickHandler"
             />
-            <i-cosmic-minus
+            <i-cosmic-arrow-up
                 v-else
                 @click="clickHandler"
             />
