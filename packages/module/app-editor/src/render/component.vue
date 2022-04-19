@@ -5,6 +5,8 @@ import { service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 import { Button } from 'cosmic-vue';
 import { makeNode } from './make-node';
+import { IImage, IAvatar, IImageList } from '@cosmic/core/browser';
+import { buttonLight } from 'cosmic-ui';
 
 interface ComponentProps {
     node: ComponentNode,
@@ -24,6 +26,12 @@ subject.subscribe(() => {
 onUnmounted(() => {
     nodeService.unwatch(subject);
 });
+const style = {
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 4,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
+};
 
 </script>
 <template>
@@ -34,9 +42,15 @@ onUnmounted(() => {
             ...makeNode(node).styles,
         }"
     >
-        <Button v-if="node.cname === 'button'">按钮</Button>
-        <s-component v-else-if="node.cname === 'image'" class="w-full h-ull" name="image" />
-        <s-component v-else-if="node.cname === 'aladin'" class="w-full h-ull" name="aladin" />
-        <s-component v-else-if="node.cname === 'scroll'" class="w-full h-ull" name="scroll" />
+        <Button v-if="node.cname === 'button'" size="sm" :styles="buttonLight" @mousedown="(e) => {e.preventDefault();}">按钮</Button>
+        <i-image v-if="node.cname === 'v-image'" :src="node.getPluginData('imageSrc')" @mousedown="(e) => {e.preventDefault();}" />
+        <i-image-list v-if="node.cname === 'v-image-list'" :style="style" :images="node.getPluginData('imageList')" @mousedown="(e) => {e.preventDefault();}" />
+        <i-avatar
+            v-if="node.cname === 'v-avatar'"
+            style="font-size: 12px"
+            :is-show-avatar="node.getPluginData('isShowAvatar') == '1'"
+            :src="node.getPluginData('avatar')"
+            :title="node.getPluginData('avatarTitle')"
+        />
     </div>
 </template>

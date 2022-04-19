@@ -41,6 +41,6 @@ onUnmounted(() => {
             ...makeNode(node).styles,
         }"
     >
-        <children-render :children="node.children" />
+        <children-render :node="node" />
     </div>
 </template>

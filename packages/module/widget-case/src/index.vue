@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
- import { IImage, IAvatar, IImageList } from '@cosmic/core/browser';
+import { type Subject } from '@cosmic/core/rxjs';
+import { service } from '@cosmic/core/browser';
+import { inject, BaseNodeMixin, ComponentNode } from '@cosmic/core/parts';
  import { Select, SelectOption, Input } from 'cosmic-vue';
 
 import { Images, Avatars } from './data';
@@ -14,30 +16,66 @@ const avatarTitle = ref('极兔测试');
 
 const imageList = ref(Images.filter((_, index) => index < 3).map(item => item.value));
 
-const style = {
-    borderTopLeftRadius: 4,
-    borderBottomLeftRadius: 4,
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
-};
 
 function chngeImageList(images: string[], index: number, event: {value: string}) {
     imageList.value[index] = event.value;
     console.log(images);
 }
 
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+let subject: Subject<BaseNodeMixin>;
+
+let node: ComponentNode | undefined;
+
+nodeService.selection.subscribe(nodes => {
+    node = undefined;
+    nodeService.unwatch(subject);
+    if (nodes.length) {
+        node = nodes[0] as ComponentNode;
+        if (!(node instanceof ComponentNode)) {
+            return;
+        }
+        subject = nodeService.watch(node);
+        subject.subscribe((n) => {
+            toData(n as ComponentNode);
+        });
+        toData(node);
+    }
+
+});
+
+const type = ref(0);
+
+function toData(node: ComponentNode) {
+    console.log(node.cname);
+    type.value = 0;
+    if (node.cname == 'v-image') {
+        imageSrc.value = node.getPluginData('imageSrc');
+        type.value = 1;
+    }
+    if (node.cname == 'v-image-list') {
+        type.value = 2;
+        imageList.value = node.getPluginData('imageList');
+    }
+    if (node.cname == 'v-avatar') {
+        type.value = 3;
+        isShowAvatar.value = node.getPluginData('isShowAvatar');
+        avatar.value = node.getPluginData('avatar');
+        avatarTitle.value = node.getPluginData('avatarTitle');
+    }
+}
+
 </script>
 
 <template>
     <div class="m-12" :class="$style.content">
-        <h1>图片切换</h1>
-        <div class="flex justify-between items-center">
+        <div v-show="type == 1" class="flex justify-between items-center">
             <span class="mr-8">图片地址：</span>
             <div>
                 <Select
                     size="sm"
                     :value="imageSrc"
-                    @on-change="(event) => imageSrc = event.value"
+                    @on-change="(event) => {imageSrc = event.value; node.setPluginData('imageSrc', imageSrc);node.update();}"
                 >
                     <select-option
                         v-for="item of Images"
@@ -48,8 +86,7 @@ function chngeImageList(images: string[], index: number, event: {value: string})
                 </Select>
             </div>
         </div>
-        <h1>图片集合</h1>
-        <div>
+        <div v-show="type == 2">
             <div class="flex justify-between items-center mb-8">
                 <span class="mr-8">图片1：</span>
                 <div>
@@ -103,8 +140,7 @@ function chngeImageList(images: string[], index: number, event: {value: string})
             </div>
         </div>
 
-        <h1>头像</h1>
-        <div>
+        <div v-show="type == 3">
             <div class="flex justify-between items-center mb-8">
                 <span class="mr-8">标题: </span>
                 <div>
@@ -112,7 +148,7 @@ function chngeImageList(images: string[], index: number, event: {value: string})
                         size="sm"
                         placeholder="请输入标题"
                         :value="avatarTitle"
-                        @on-input="event => avatarTitle = event.value"
+                        @on-input="event => {avatarTitle = event.value; node.setPluginData('avatarTitle', avatarTitle);node.update();}"
                     />
                 </div>
             </div>
@@ -121,7 +157,7 @@ function chngeImageList(images: string[], index: number, event: {value: string})
                 <div>
                     <Select
                         :value="isShowAvatar"
-                        @on-change="(event) => isShowAvatar = event.value"
+                        @on-change="(event) => {isShowAvatar = event.value; node.setPluginData('isShowAvatar', isShowAvatar);node.update();}"
                     >
                         <select-option value="1" label="是" />
 
@@ -135,7 +171,7 @@ function chngeImageList(images: string[], index: number, event: {value: string})
                     <Select 
                         size="sm"
                         :value="avatar"
-                        @on-change="(event) => avatar = event.value"
+                        @on-change="(event) => {avatar = event.value; node.setPluginData('avatar', avatar);node.update();}"
                     >
                         <select-option
                             v-for="item of Avatars"
@@ -148,7 +184,7 @@ function chngeImageList(images: string[], index: number, event: {value: string})
             </div>
         </div>
     </div>
-
+<!-- 
     <div class="m-12">
         <h1>图片</h1>
         <div class="h-80">
@@ -166,7 +202,7 @@ function chngeImageList(images: string[], index: number, event: {value: string})
             :src="avatar"
             :title="avatarTitle"
         />
-    </div>
+    </div> -->
 </template>
 
 <style module>

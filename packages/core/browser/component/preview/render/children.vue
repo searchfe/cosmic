@@ -6,12 +6,8 @@ import FrameRender from './frame.vue';
 import TextRender from './text.vue';
 import ComponentRender from './component.vue';
 interface RenderNodeProps {
-    children: SceneNode[],
+    node: SceneNode,
 }
-// interface updateList {
-//     [id: string]: string;
-// }
-
 const props = withDefaults(defineProps<RenderNodeProps>(), {
 
 });
@@ -29,7 +25,7 @@ const props = withDefaults(defineProps<RenderNodeProps>(), {
 </script>
 <template>
     <template
-        v-for="child in children "
+        v-for="child in node.children"
         :key="child.id"
     >
         <frame-render

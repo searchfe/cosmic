@@ -112,6 +112,9 @@ export function deserialize(data: {
             }).filter(v => v !== undefined) as Array<string | number | boolean| BaseNodeMixin>;
             return rs;
         }
+        if (value === null) {
+            return;
+        }
         if (typeof value === 'object') {
             // eslint-disable-next-line no-prototype-builtins
             if ((value as NodeRef).ref) {

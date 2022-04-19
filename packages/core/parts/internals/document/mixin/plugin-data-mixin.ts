@@ -1,10 +1,12 @@
 export default class PluginDataMixinx implements Internal.PluginDataMixin {
+    public _pluginData: any = {};
 
     getPluginData(key: string) {
         // TODO
-        return key;
+        return this._pluginData[key];
     }
-    setPluginData(key: string, value: string) {
+    setPluginData(key: string, value: any) {
+        this._pluginData[key] = value;
         // TODO
     }
     getPluginDataKeys() {

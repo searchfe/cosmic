@@ -15,9 +15,6 @@ export default {
         let editState: service.ToolState | undefined;
         let editingChild: SceneNode | undefined;
         toolService.state().subscribe((state: service.ToolState) => {
-            if (editState === service.ToolState.Component && state !== editState) {
-                addComponent();
-            }
             if (
                 state === service.ToolState.Frame ||
                 state === service.ToolState.Text ||
@@ -94,33 +91,6 @@ export default {
                     editingChild.height = height;
                 break;
             }
-        }
-        function addComponent() {
-            targetNode = (el as any).__c_target || targetNode;
-            let width = 60, height = 32;
-            if (originX !== -9999 && originY !== -9999) {
-                switch(toolService.data.name) {
-                    case 'aladin':
-                        width=480;
-                        height=400;
-                        break;
-                    case 'image':
-                        width=40;
-                        height=40;
-                        break;
-                    case 'scroll':
-                        width=480;
-                        height=125;
-                        break;
-                }
-                const node = nodeService.addComponent(targetNode);
-                node.x = originX - width/2;
-                node.y = originY - height/2;
-                node.width = width;
-                node.height = height;
-                node.cname = toolService.data.name;
-            }
-            editState = undefined;
         }
     },
     updated(el, binding) {
