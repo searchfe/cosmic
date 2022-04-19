@@ -31,6 +31,8 @@ let editId = '';
 
 const editStyle = ref();
 
+const container = ref<HTMLElement>();
+
 watchEffect(() => {
     if (isShowDetailModal.value) {
         const style = radiusStyleService.cloneById(editId, false);
@@ -57,7 +59,7 @@ function unRef() {
 </script>
 
 <template>
-    <div>
+    <div ref="container">
         <div v-if="isLocalStyle">
             <m-title title="边角">
                 <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />

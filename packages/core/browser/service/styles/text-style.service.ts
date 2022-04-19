@@ -16,17 +16,12 @@ const DEFAULT_STYLES = {
     lineHeight: '12',
 };
 
-interface SubjectSourceType {
-    type: 'C' | 'U' | 'D' | 'R';
-    data?: Partial<TextStyle>[] | string;
-}
-
 /**
  * todo: figma 字体没有fontweight
  */
 
 @injectable()
-export default class TextService extends BaseService<TextStyle, SubjectSourceType> {
+export default class TextService extends BaseService<TextStyle> {
     private fontDao: ReturnType<typeof fontDao>;
     constructor(@inject(TOKENS.GqlClient) private client: service.GqlClient) {
         super();
@@ -74,14 +69,17 @@ export default class TextService extends BaseService<TextStyle, SubjectSourceTyp
         const fonts = data?.fonts || [] as gql.Font[];
         this.serviceStyles.clear();
         fonts.map(font => this.transformToLocal(font)).forEach(font => this.addServiceStyle(font));
-        this.subject.next({type: 'R', data: this.getServiceStyles()});
+        this.subject.next({type: 'R', data: ''});
     }
 
     public async saveStyle(id: string) {
-        const style = this.transformToService(this.get(id)!);
-        const creatOption = await this.fontDao.create(style);
-        await this.queryList();
-        this.subject.next({type: 'C', data: ''});
+        const style = this.transformToService(this.get(id));
+        const team = await this.teamService.getCurrentUserTeam();
+        const { data } = await this.fontDao.create({...style, team: team?.id});
+        if (data?.createFont) {
+            await this.queryList();
+            this.subject.next({type: 'C', data: data.createFont?.id as string});
+        }
     }
 
     public async updateStyle(style: TextStyle) {

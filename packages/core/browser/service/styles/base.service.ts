@@ -1,5 +1,8 @@
 import { injectable } from '@cosmic/core/inversify';
 import { Subject } from '@cosmic/core/rxjs';
+import { TOKENS } from '../token';
+import { TeamService } from '../team/index.service';
+import { inject } from '@cosmic/core/parts';
 
 export interface SubjectSourceType {
     type: 'C' | 'U' | 'D' | 'R';
@@ -7,7 +10,7 @@ export interface SubjectSourceType {
 }
 
 @injectable()
-export class BaseService<T extends {id: string, clone: () => T}, P > {
+export class BaseService<T extends {id: string, clone: () => T}> {
 
     public subject: Subject<SubjectSourceType>;
 
@@ -18,10 +21,13 @@ export class BaseService<T extends {id: string, clone: () => T}, P > {
 
     protected serviceStyles: Map<string, T>;
 
+    protected teamService: TeamService;
+
     constructor() {
         this.localStyles =  new Map<string, T>();
         this.serviceStyles = new Map<string, T>();
         this.subject = new Subject<SubjectSourceType>();
+        this.teamService = inject<TeamService>(TOKENS.Teams);
     }
 
     public create(): any {
@@ -32,7 +38,7 @@ export class BaseService<T extends {id: string, clone: () => T}, P > {
         this.type = type;
     }
 
-    public get(styleId: string) {
+    public get(styleId: string): T {
         let style = this.localStyles.get(styleId) || this.serviceStyles.get(styleId);
         // 当前style为空的时候创建默认
         if (!style) {
@@ -102,7 +108,7 @@ export class BaseService<T extends {id: string, clone: () => T}, P > {
         // TODO
     }
 
-    public updateLocalStyles(style: T): T {
+    public updateLocalStyles(style: T): void {
         this.localStyles.set(style.id, style);
     }
 

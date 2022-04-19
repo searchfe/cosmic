@@ -14,6 +14,7 @@ const userService = inject<service.UserService>(service.TOKENS.User);
 const user = ref({});
 
 userService.user.subscribe(u => {
+    console.log(u);
     user.value = u;
 });
 

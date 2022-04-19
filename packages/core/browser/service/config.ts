@@ -14,6 +14,7 @@ import ToolService from './interactivity/tool.service';
 import DraftService from './document/draft.service';
 import CanvasService from './interactivity/canvas.service';
 import { UserService } from './user/index.service';
+import { TeamService } from './team/index.service';
 
 
 /**
@@ -26,6 +27,8 @@ export function load(options: interfaces.ContainerOptions) {
     container.bind<RouterService>(TOKENS.Router).toConstantValue(RouterService.create());
 
     container.bind<UserService>(TOKENS.User).to(UserService);
+
+    container.bind<TeamService>(TOKENS.Teams).to(TeamService);
 
     // urql: gql client
     container.bind<GqlClient>(TOKENS.GqlClient).to(GqlClientService);
