@@ -3,16 +3,32 @@ import  { type SceneNode} from '@cosmic/core/parts';
 import FrameRender from './frame.vue';
 import TextRender from './text.vue';
 import ComponentRender from './component.vue';
-interface RenderNodeProps {
-    children: SceneNode[],
-}
-withDefaults(defineProps<RenderNodeProps>(), {
 
+import { getCurrentInstance, onUnmounted } from 'vue';
+import { service } from '@cosmic/core/browser';
+import { inject } from '@cosmic/core/parts';
+
+interface RenderNodeProps {
+    node: SceneNode,
+}
+const props = withDefaults(defineProps<RenderNodeProps>(), {
+
+});
+
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+
+const instance = getCurrentInstance();
+const subject = nodeService.watch(props.node);
+subject.subscribe(() => {
+    instance?.proxy?.$forceUpdate();
+});
+onUnmounted(() => {
+    nodeService.unwatch(subject);
 });
 </script>
 <template>
     <template
-        v-for="child in children"
+        v-for="child in node.children"
         :key="child.id"
     >
         <frame-render v-if="child.type === 'FRAME'" :node="child" />

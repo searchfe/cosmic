@@ -32,7 +32,7 @@ onMounted(() => {
         class="relative"
         :style="{height: '85vh'}"
     >
-        <children-render :children="page.children" />
+        <children-render :node="page" />
     </div>
     <div
         class="fixed flex justify-center items-center "

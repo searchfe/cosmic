@@ -33,8 +33,9 @@ export default class ToolService {
         this._states.push(state);
         this.subject.next(state);
     }
-    cancel(state: ToolState) {
+    cancel(state: ToolState, data?: ToolData) {
         const last = this._states.pop();
+        this.data = data || {};
         if (last === state) {
             const sec = this._states.pop();
             if (sec) {

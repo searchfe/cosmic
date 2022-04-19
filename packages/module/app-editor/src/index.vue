@@ -32,7 +32,7 @@ const nodeControllService = inject(NodeControllService);
             v-creator="{target: page, container: 'base-point'}" :node="page" class="h-full w-full"
         >
             <widget-canvas class="h-full w-full overflow-hidden">
-                <children-render :children="page.children" />
+                <children-render :node="page" />
                 <canvas-helper />
             </widget-canvas>
         </page-node-render>

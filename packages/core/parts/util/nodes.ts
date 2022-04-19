@@ -59,9 +59,27 @@ export function offsetNodePos(node: LayoutMixin & BaseNodeMixin, offset: Pos, or
     };
 }
 
-function getParents(node: LayoutMixin & BaseNodeMixin, base: Array<LayoutMixin & BaseNodeMixin>): Array<LayoutMixin & BaseNodeMixin> {
+export function canvasPosToFrame(node: LayoutMixin & BaseNodeMixin, canvasPos: Pos) {
+    const parents = [...getParents(node, []), node];
+    const pos = {
+        x: canvasPos.x,
+        y: canvasPos.y,
+    };
+    parents.forEach(parent => {
+        pos.x -= parent.x;
+        pos.y -= parent.y;
+    });
+    return pos;
+}
+
+export function getParents(node: LayoutMixin & BaseNodeMixin, base: Array<LayoutMixin & BaseNodeMixin>): Array<LayoutMixin & BaseNodeMixin> {
     if (node.parent && hasMixin(node.parent, LayoutMixin)) {
         return getParents(node.parent as any, [node.parent as any, ...base]);
     }
     return base;
+}
+export function findParent(node: LayoutMixin & BaseNodeMixin | undefined, callback: (node: ChildrenMixin) => boolean): ChildrenMixin | undefined {
+    if (!node) return;
+    if(callback(node as any)) return node as any;
+    return findParent(node.parent as any, callback);
 }
