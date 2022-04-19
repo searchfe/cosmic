@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { BaseNodeMixin, SceneNode } from '@cosmic/core/parts';
+import { BaseNodeMixin, FrameNode, PageNode, SceneNode } from '@cosmic/core/parts';
 
 import { service } from '@cosmic/core/browser';
 import { inject, util } from '@cosmic/core/parts';
@@ -13,16 +13,26 @@ interface WrapperProps {
 
 const props = withDefaults(defineProps<WrapperProps>(), {});
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+const toolService = inject<service.ToolService>(service.TOKENS.Tool);
 const nodeControllService = inject(NodeControllService);
 
 const subject = nodeService.watch(props.node);
 subject.subscribe((node: any) => {
     wrapperStyle.value = getWapperStyle(node);
+    checkDistanceTop(node);
 });
+
+const showInfo = ref(true);
+toolService.state().subscribe(state => {
+    if (state == service.ToolState.MoveNode) showInfo.value = false;
+    else showInfo.value = true;
+});
+
 onUnmounted(() => {
     nodeService.unwatch(subject);
 });
 const wrapperStyle = ref(getWapperStyle(props.node as any));
+
 function getWapperStyle(node: SceneNode) {
     const canvasPos = util.toCanvasPos(node);
     return {
@@ -32,6 +42,35 @@ function getWapperStyle(node: SceneNode) {
             height: node.height + 'px',
     };
 }
+const distance = ref({top: 0, right: 0, bottom: 0, left: 0});
+function checkDistanceTop(node: SceneNode) {
+    distance.value.top = distance.value.bottom = distance.value.left = distance.value.right = 0;
+    const parent = node.parent as FrameNode | PageNode;
+    if(!parent || parent.type === 'PAGE') return;
+    let topDistance: number = node.y;
+    let bottomDistance: number = parent.height - node.y - node.height;
+    let leftDistance: number = node.x;
+    let rightDistance: number = parent.width - node.x - node.width;
+    parent.findAll((n => {
+        if (n.y + n.height < node.y && node.y - (n.y + n.height) < topDistance) {
+            topDistance = node.y - (n.y + n.height);
+        }
+        if (n.y > node.y + node.height && node.y + node.height - n.y < bottomDistance) {
+            bottomDistance = n.y - node.y - node.height;
+        }
+        if (n.x + n.width < node.x && node.x - (n.x + n.width) < leftDistance) {
+            leftDistance = node.x - (n.x + n.width);
+        }
+        if (n.x > node.x + node.width && node.x + node.width - n.y < rightDistance) {
+            rightDistance = n.x - node.x - node.width;
+        }
+        return false;
+    }));
+    if(topDistance > 0) distance.value.top = topDistance;
+    if(bottomDistance > 0) distance.value.bottom = bottomDistance;
+    if(leftDistance > 0) distance.value.left = leftDistance;
+    if(rightDistance > 0) distance.value.right = rightDistance;
+}
 </script>
 <template>
     <div
@@ -39,6 +78,18 @@ function getWapperStyle(node: SceneNode) {
         :class="$style.root"
         :style="wrapperStyle"
     >
+        <div v-show="distance.top" :class="$style['d-x']" :style="{top: (distance.top * -1) + 'px', height: distance.top + 'px'}">
+            <div :class="[$style.info]">{{ distance.top }}</div>
+        </div>
+        <div v-show="distance.bottom" :class="$style['d-x']" :style="{bottom: (distance.bottom * -1) + 'px', height: distance.bottom + 'px'}">
+            <div :class="[$style.info]">{{ distance.bottom }}</div>
+        </div>
+        <div v-show="distance.left" :class="[$style['d-y'], $style['d-y-l']]" :style="{left: (distance.left * -1) + 'px', width: distance.left + 'px'}">
+            <div :class="[$style.info]">{{ distance.left }}</div>
+        </div>
+        <div v-show="distance.right" :class="[$style['d-y'], $style['d-y-r']]" :style="{right: (distance.right * -1) + 'px', width: distance.right + 'px'}">
+            <div :class="[$style.info]">{{ distance.right }}</div>
+        </div>
         <div class="absolute w-full h-full" :class="$style.dragGroup">
             <div
                 v-for="item in (new Array(8).keys())"
@@ -49,7 +100,7 @@ function getWapperStyle(node: SceneNode) {
                 @mousedown="(event) => nodeControllService.startResize(node, item, event)"
             />
         </div>
-        <div :class="$style.info">{{ node.width }} × {{ node.height }}</div>
+        <div v-show="showInfo" :class="[$style.info, $style['info-wh']]">{{ node.width }} × {{ node.height }}</div>
     </div>
 </template>
 <style module>
@@ -118,7 +169,6 @@ function getWapperStyle(node: SceneNode) {
 
 .info {
     position: absolute;
-    bottom: -2.5rem;
     color: var(--color-light);
     font-size: 1.0rem;
     line-height: 1.4rem;
@@ -126,6 +176,41 @@ function getWapperStyle(node: SceneNode) {
     border-radius: 0.2rem;
     background-color: var(--color-primary-500);
     white-space: nowrap;
+}
+.info-wh {
+    bottom: -2.5rem;
+}
+
+.d-x {
+    position: absolute;
+    width: 0px;
+    left: 50%;
+    margin-left: -0.5px;
+    border-left: 1px dashed var(--color-primary-500);
+}
+
+.d-x div {
+    left: 0.4rem;
+    top: 50%;
+    margin-top: -0.7rem;
+}
+.d-y {
+    position: absolute;
+    height: 0px;
+    top: 50%;
+    margin-top: -0.5px;
+    border-top: 1px dashed var(--color-primary-500);
+}
+
+.d-y-l div {
+    top: 0.4rem;
+    left: 50%;
+    margin-left: -2rem;
+}
+.d-y-r div {
+    top: 0.4rem;
+    left: 50%;
+    margin-right: -2rem;
 }
 
 </style>
