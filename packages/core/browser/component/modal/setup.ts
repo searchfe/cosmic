@@ -1,20 +1,26 @@
-import { ref, onMounted, onUnmounted } from 'vue';
-import type { EmitFn, EE } from 'vue';
+import { ref, onMounted, onUnmounted, defineEmits } from 'vue';
+import { inject } from '@cosmic/core/parts';
+import { service } from '@cosmic/core/browser';
 
-export function useModal(target: HTMLElement, emits: EmitFn<EE[]>) {
+
+export function useModal(
+    target: HTMLElement,
+    emits: (event: 'ok' | 'cancel', ...args: any[]) => void,
+) {
+
+    const toolService = inject<service.ToolService>(service.TOKENS.Tool);
 
     const positionStyle = ref({});
 
     let containerTarget: HTMLElement | null = null;
 
     function autoClose(event: MouseEvent) {
-        console.log(22);
         const currentTarget = event.target as HTMLElement;
         const isIncludes = containerTarget && containerTarget.contains(currentTarget);
         if (isIncludes) {
             return;
         }
-        emits('cancel');
+        cancel();
     }
 
     function setContainerTarget(ele: HTMLElement) {
@@ -27,19 +33,31 @@ export function useModal(target: HTMLElement, emits: EmitFn<EE[]>) {
         positionStyle.value = {left: `${react.left}px`, top: `${react.top}px`, zIndex: 9};
     }
 
+    function cancel() {
+        toolService.cancel(service.ToolState.Modal);
+        emits('cancel');
+    }
+
+    function ok() {
+        toolService.cancel(service.ToolState.Modal);
+        emits('ok');
+    }
+
 
     onUnmounted(() =>  {
         window.document.body.removeEventListener('click', autoClose);
     });
 
     onMounted(() => {
-        window.document.body.addEventListener('click', autoClose, false);
+        toolService.set(service.ToolState.Modal);
+        window.document.body.addEventListener('click', autoClose);
     });
 
     return {
-        emits,
         positionStyle,
         setContainerTarget,
         comoutPositionStyle,
+        ok,
+        cancel,
     };
 }

@@ -7,14 +7,14 @@ import { useModal } from './setup';
 
 const props = withDefaults(defineProps<{
     title: string,
-    standardList: unknown[],
+    standardList: Record<string, string>[],
     target: HTMLElement,
 }>(), {
     title: '',
     select: () => ({}),
 });
 
-const emits = defineEmits(['cancel', 'showDetail',  'select', 'add', 'change']);
+const emits = defineEmits(['ok', 'cancel', 'showDetail',  'select', 'add', 'change']);
 
 const content = ref(null);
 
@@ -22,7 +22,11 @@ const hoverIndex = ref(-1);
 
 const container = ref(null);
 
-const { comoutPositionStyle, positionStyle, setContainerTarget } = useModal(props.target, emits);
+const {
+    positionStyle,
+    comoutPositionStyle,
+    setContainerTarget,
+} = useModal(props.target, emits);
 
 comoutPositionStyle();
 
@@ -32,21 +36,19 @@ onMounted(() => {
 
 const isEmpty = computed(() => !props.standardList || props.standardList.length === 0);
 
-const filterTitle = ref('2');
-
-const inputValue = ref(null);
+const inputValue = ref<string>();
 
 const filterStandardList = computed(() => {
     const arr = toRaw(props.standardList).filter(item => !inputValue.value || item.name.includes(inputValue.value));
     return arr;
 });
 
-function showDetail(index: number, data) {
+function showDetail(index: number, data: Record<string, string>) {
     const target = (content.value! as HTMLElement).children[index];
     emits('showDetail', {target, data});
 }
 
-function filterHandler(data: string) {
+function filterHandler(data: {value: string}) {
     inputValue.value = data.value;
 }
 

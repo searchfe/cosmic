@@ -77,7 +77,7 @@ export default class RadiusStyleService extends BaseService<RadiusStyle> {
         }
     }
 
-    public async update(style: RadiusStyle) {
+    public async updateStyle(style: RadiusStyle) {
         const serviceStyle = this.transformToService(style);
         const {data} = await this.cornerDao.update({...serviceStyle, id: style.id});
         if (data?.updateCorner) {

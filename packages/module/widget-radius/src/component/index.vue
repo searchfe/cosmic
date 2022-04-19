@@ -106,6 +106,7 @@ function resetRadiusStyle(id: string) {
 }
 
 function updateStyle(style: RadiusStyle) {
+    console.log(12221);
     radiusStyleService.updateStyle(style);
 }
 

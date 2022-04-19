@@ -66,6 +66,7 @@ export enum ToolState {
     ResizeNode,
     MoveNode,
     TextEdit,
+    Modal
 }
 
 

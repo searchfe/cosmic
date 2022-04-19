@@ -40,6 +40,11 @@ watchEffect(() => {
     }
 });
 
+function editStyleHandler(el: HTMLElement, id: string) {
+    editId = id;
+    openDetaileModal(el);
+}
+
 function updateStyle() {
     cancelDetailModal();
     emits('updateStyle', editStyle.value);
@@ -72,7 +77,7 @@ function unRef() {
                     <div
                         class="flex items-center w-40 justify-around"
                     >
-                        <i-cosmic-more @click.stop="(event) => openDetaileModal(container, radiusStyle)" />
+                        <i-cosmic-more @click.stop="(event) => editStyleHandler(container, radiusStyle.id)" />
                         <i-cosmic-lock @click.stop="unRef" />
                     </div>
                 </template>

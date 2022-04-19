@@ -15,10 +15,16 @@ const props = withDefaults(defineProps<{
 
 const container = ref(null);
 
-const emits = defineEmits(['cancel', 'ok']);
+const emits = defineEmits(['ok', 'cancel']);
 
 
-const { comoutPositionStyle, positionStyle, setContainerTarget } = useModal(props.target, emits);
+const { 
+    comoutPositionStyle,
+    setContainerTarget,
+    positionStyle,
+    cancel,
+    ok,
+} = useModal(props.target, emits);
 
 comoutPositionStyle();
 
@@ -37,7 +43,6 @@ const styles = reactive(props.standard);
         class="cos-mode-reverse pb-8"
         :class="$style.container"
         :style="positionStyle"
-        @mousedown.stop="() => {}"
     >
         <div
             :class="$style.title"
@@ -84,14 +89,14 @@ const styles = reactive(props.standard);
                 size="sm"
                 :styles="buttonSolid"
                 class="rounded-full w-64 mr-8"
-                @click="() => emits('cancel')"
+                @click="() => cancel()"
             >
                 取消
             </Button>
             <Button
                 size="sm"
                 class="rounded-full w-64"
-                @click="() => emits('ok')"
+                @click="() => ok()"
             >
                 确定
             </Button>
