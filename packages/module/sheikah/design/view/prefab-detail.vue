@@ -83,7 +83,7 @@ const menuData = [{
             预置构成
         </div>
         <div :class="$style['card-list']">
-            <comp-card v-for="item in [comp]" :key="item.id" v-bind="item" :img="item.preview" />
+            <comp-card v-for="item in [comp]" :key="item.id" v-bind="item" :img="item.preview" :name="item.displayName || '图集'" />
         </div>
     </Region>
 </template>
@@ -127,6 +127,6 @@ const menuData = [{
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) scale(0.4);
+    transform: translate(-50%, -50%) scale(0.3);
 }
 </style>
