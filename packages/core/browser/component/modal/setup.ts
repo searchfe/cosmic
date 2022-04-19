@@ -8,6 +8,7 @@ export function useModal(target: HTMLElement, emits: EmitFn<EE[]>) {
     let containerTarget: HTMLElement | null = null;
 
     function autoClose(event: MouseEvent) {
+        console.log(22);
         const currentTarget = event.target as HTMLElement;
         const isIncludes = containerTarget && containerTarget.contains(currentTarget);
         if (isIncludes) {

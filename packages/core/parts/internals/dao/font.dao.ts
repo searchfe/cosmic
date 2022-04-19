@@ -22,7 +22,7 @@ export default function fontDao(client: Client) {
             ).toPromise();
         },
         create(data: Partial<gql.CreateFontDTO>, fields = ['id']) {
-            return client.mutation<{ createDraft: Partial<gql.CreateFontDTO> }>(
+            return client.mutation<{ createFont: Partial<gql.QueryFontDTO> }>(
                 `mutation ($data: CreateFontDTO!) {
                     createFont(data: $data) {
                         id,

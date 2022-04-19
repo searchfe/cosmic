@@ -8,7 +8,7 @@ import { v4, v5 } from 'uuid';
 const DEFAULT_STYLES = {
     name: '默认名称',
     description: '默认主题',
-    tl: ['1'],
+    tl: ['0'],
     tr: ['0'],
     bl: ['0'],
     br: ['0'],
@@ -18,13 +18,9 @@ const DEFAULT_STYLES = {
 };
 
 
-interface SubjectSourceType {
-    type: 'C' | 'U' | 'D' | 'R';
-    data?: string;
-}
 
 @injectable()
-export default class RadiusStyleService extends BaseService<RadiusStyle, SubjectSourceType> {
+export default class RadiusStyleService extends BaseService<RadiusStyle> {
     private cornerDao: ReturnType<typeof cornerDao>;
     constructor(@inject(TOKENS.GqlClient) private client: service.GqlClient) {
         super();
@@ -56,7 +52,6 @@ export default class RadiusStyleService extends BaseService<RadiusStyle, Subject
             tr: [tr + ''],
             bl: [bl + ''],
             br: [br + ''],
-            team: '6166bd9cc13b026875181927',
        };
     }
 
@@ -73,10 +68,13 @@ export default class RadiusStyleService extends BaseService<RadiusStyle, Subject
     }
 
     public async saveStyle(id: string) {
-        const style = this.transformToService(this.get(id)!);
-        const { data } = await this.cornerDao.create(style);
-        await this.queryList();
-        this.subject.next({type: 'C', data: data.createCorner.id});
+        const style = this.transformToService(this.get(id));
+        const team = await this.teamService.getCurrentUserTeam();
+        const { data } = await this.cornerDao.create({...style, team: team?.id});
+        if (data?.createCorner) {
+            await this.queryList();
+            this.subject.next({type: 'C', data: data?.createCorner.id as string});
+        }
     }
 
     public async update(style: RadiusStyle) {
@@ -93,7 +91,7 @@ export default class RadiusStyleService extends BaseService<RadiusStyle, Subject
         const corners = data?.corners || [] as gql.Corner[];
         this.serviceStyles.clear();
         corners.map(corner => this.transformToLocal(corner)).forEach(corner => this.addServiceStyle(corner));
-        this.subject.next({type: 'R', data: this.getServiceStyles()});
+        this.subject.next({type: 'R', data: ''});
     }
  
 }

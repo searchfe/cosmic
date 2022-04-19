@@ -13,13 +13,8 @@ const DEFAULT_STYLES = {
     day: 'rgba(0, 0, 0, 0)',
 };
 
-interface SubjectSourceType {
-    type: 'C' | 'U' | 'D' | 'R';
-    data?: Partial<FillStyle>[] | string;
-}
-
 @injectable()
-export default class FillStyleService extends BaseService<FillStyle, SubjectSourceType> {
+export default class FillStyleService extends BaseService<FillStyle> {
     private colorDao: ReturnType<typeof colorDao>;
     constructor(@inject(TOKENS.GqlClient) private client: service.GqlClient) {
         super();
@@ -57,7 +52,6 @@ export default class FillStyleService extends BaseService<FillStyle, SubjectSour
         const { name, color, opacity } = fillStyle;
         return { 
             name,
-            team: '6166bd9cc13b026875181927',
             day: `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity})`,
             night: '',
             dark: '',
@@ -96,9 +90,13 @@ export default class FillStyleService extends BaseService<FillStyle, SubjectSour
 
     public async saveStyle(id: string) {
         const style = this.transformToService(this.get(id));
-        const creatOption = await this.colorDao.create(style);
-        await this.queryList();
-        this.subject.next({type: 'C', data: creatOption.data?.createColor?.id as string});
+        const team = await this.teamService.getCurrentUserTeam();
+        const { data } = await this.colorDao.create({...style, team: team?.id});
+        if (data?.createColor) {
+            await this.queryList();
+            this.subject.next({type: 'C', data: data?.createColor?.id as string});
+        }
+        
     }
  
 }

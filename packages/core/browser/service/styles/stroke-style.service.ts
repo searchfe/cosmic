@@ -12,14 +12,9 @@ const DEFAULT_STYLES = {
     updatedAt: '',
     top: {weight: '1', style: 'solid'},
 };
-interface SubjectSourceType {
-    type: 'C' | 'U' | 'D' | 'R';
-    data?: Partial<StrokeStyle>[] | string;
-}
-
 
 @injectable()
-export default class StrokeStyleService extends BaseService<StrokeStyle, SubjectSourceType> {
+export default class StrokeStyleService extends BaseService<StrokeStyle> {
     private borderDao: ReturnType<typeof borderDao>;
     constructor(@inject(TOKENS.GqlClient) private client: service.GqlClient) {
         super();
@@ -64,15 +59,19 @@ export default class StrokeStyleService extends BaseService<StrokeStyle, Subject
             bottom: {style, weight: strokeWeight},
             left: {style, weight: strokeWeight},
             right: {style, weight: strokeWeight},
-            team: '6166bd9cc13b026875181927',
         };
     }
 
     public async saveStyle(id: string) {
-        const style = this.transformToService(this.get(id)!);
-        const creatOption = await this.borderDao.create(style);
-        await this.queryList();
-        this.subject.next({type: 'C', data: []});
+        const style = this.transformToService(this.get(id));
+        const team = await this.teamService.getCurrentUserTeam();
+        const { data } = await this.borderDao.create({...style, team: team?.id});
+        
+        if (data?.createBorder) {
+            await this.queryList();
+            this.subject.next({type: 'C', data: data.createBorder.id as string});
+        }
+        
     }
 
     public async updateStyle(style: StrokeStyle) {
@@ -89,7 +88,7 @@ export default class StrokeStyleService extends BaseService<StrokeStyle, Subject
         const borders = data?.borders || [] ;
         this.serviceStyles.clear();
         borders.map(border => this.transformToLocal(border)).forEach(border => this.addServiceStyle(border));
-        this.subject.next({type: 'R', data: this.getServiceStyles()});
+        this.subject.next({type: 'R', data: ''});
     }
  
 }
