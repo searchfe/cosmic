@@ -26,6 +26,10 @@
             "import": "./dist/es/router.mjs",
             "require": "./dist/cjs/router.cjs"
         },
+        "./lodash": {
+            "import": "./dist/es/lodash.mjs",
+            "require": "./dist/cjs/lodash.cjs"
+        },
         "./browser.css": {
             "import": "./dist/es/browser.css",
             "require": "./dist/cjs/browser.css"

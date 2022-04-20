@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { BaseNodeMixin, FrameNode, PageNode, SceneNode } from '@cosmic/core/parts';
-
+import { round } from '@cosmic/core/lodash';
 import { service } from '@cosmic/core/browser';
 import { inject, util } from '@cosmic/core/parts';
 import { onUnmounted, ref } from 'vue';
@@ -36,10 +36,10 @@ const wrapperStyle = ref(getWapperStyle(props.node as any));
 function getWapperStyle(node: SceneNode) {
     const canvasPos = util.toCanvasPos(node);
     return {
-            left: canvasPos.x + 'px',
-            top: canvasPos.y + 'px',
-            width: node.width + 'px',
-            height: node.height + 'px',
+            left: round(canvasPos.x) + 'px',
+            top: round(canvasPos.y) + 'px',
+            width: round(node.width) + 'px',
+            height: round(node.height) + 'px',
     };
 }
 const distance = ref({top: 0, right: 0, bottom: 0, left: 0});
@@ -70,10 +70,10 @@ function checkDistanceTop(node: SceneNode) {
         }
         return false;
     }));
-    if(topDistance > 0) distance.value.top = topDistance;
-    if(bottomDistance > 0) distance.value.bottom = bottomDistance;
-    if(leftDistance > 0) distance.value.left = leftDistance;
-    if(rightDistance > 0) distance.value.right = rightDistance;
+    if(topDistance > 0) distance.value.top = round(topDistance);
+    if(bottomDistance > 0) distance.value.bottom = round(bottomDistance);
+    if(leftDistance > 0) distance.value.left = round(leftDistance);
+    if(rightDistance > 0) distance.value.right = round(rightDistance);
 }
 </script>
 <template>
@@ -120,7 +120,7 @@ function checkDistanceTop(node: SceneNode) {
                 @mousedown="(event) => nodeControllService.startResize(node, item, event)"
             />
         </div>
-        <div v-show="showInfo" :class="[$style.info, $style['info-wh']]">{{ node.width }} × {{ node.height }}</div>
+        <div v-show="showInfo" :class="[$style.info, $style['info-wh']]">{{ round(node.width) }} × {{ round(node.height) }}</div>
     </div>
 </template>
 <style module>

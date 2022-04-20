@@ -71,6 +71,7 @@ const config = {
                 urql: resolve(__dirname, './urql.ts'),
                 gql: resolve(__dirname, './gql.ts'),
                 router: resolve(__dirname, './router.ts'),
+                lodash: resolve(__dirname, './lodash.ts'),
             },
             output: [
                 {
@@ -96,6 +97,7 @@ const config = {
                 '@cosmic/core/urql',
                 '@cosmic/core/gql',
                 '@cosmic/core/router',
+                '@cosmic/core/lodash',
                 '@cosmic-module/core',
                 '@cosmic-module/san-loader',
                 ...builtinModules.flatMap(p => [p, `node:${p}`]),
