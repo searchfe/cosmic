@@ -36,7 +36,7 @@ onMounted(() => {
         <div
             v-for="frame in page.children"
             :key="frame.id"
-            class="mx-12 mb-12"
+            class=""
         >
             <frame-render
                 :node="frame"

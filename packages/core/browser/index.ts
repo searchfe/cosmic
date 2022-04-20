@@ -14,6 +14,10 @@ import MStandardModal from './component/modal/standard-modal.vue';
 import MDetailModal from './component/modal/detail-modal.vue';
 import MStandard from './component/standard/standard.vue';
 
+import stroke from './component/preview/common/stroke';
+import effect from './component/preview/common/effect';
+import radius from './component/preview/common/radius';
+
 import type { BootstrapOption } from '@cosmic/core/parts';
 import type { GqlClient } from './service/index';
 
@@ -32,6 +36,9 @@ function bootstrap(option: BootstrapOption) {
     // eslint-disable-next-line vue/component-definition-name-casing
     app.component('m-component', MComponent);
     app.component('SComponent', SanComponent);
+    app.directive('stroke', stroke);
+    app.directive('effect', effect);
+    app.directive('radius', radius);
     app.component('ChildrenRender', ChildrenRender);
 
     // ioc container
