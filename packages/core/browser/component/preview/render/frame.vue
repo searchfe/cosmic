@@ -30,6 +30,9 @@ nodeService.selection.subscribe(nodes => {
 </script>
 <template>
     <div
+        v-stroke="{target: node}"
+        v-effect="{target: node}"
+        v-radius="{target: node}"
         class="frame-render"
         :style="{
             position: 'absolute', // 需要根据模式切换
