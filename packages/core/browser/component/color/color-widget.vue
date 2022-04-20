@@ -112,7 +112,7 @@ function unRef() {
                 :is-border="true"
                 :standard="fillStyle"
                 :can-edit="false"
-                @click="(event) => editStyleHandler(content, fillStyle)"
+                @click="(event) => editStyleHandler(content, fillStyle.id)"
             >
                 <!-- demo 样式 -->
                 <template #prefix="data">
@@ -143,6 +143,7 @@ function unRef() {
         @add="() => emits('addStyle')"
         @cancel="cancelStandardModal"
         @select="selectStyle"
+        @show-detail="(event) => editStyleHandler(event.target, event.data.id)"
     >
         <!-- demo 样式 -->
         <template #prefix="data">
