@@ -26,6 +26,9 @@ export { useModal } from './component/modal/setup';
 
 function bootstrap(option: BootstrapOption) {
     const app = createApp((location.search || '').indexOf('preview=1') == -1? App: Preview);
+    if (location.search.match(/draft=([\S]+)$/)) {
+        localStorage.setItem('draft', RegExp.$1);
+    }
     // eslint-disable-next-line vue/component-definition-name-casing
     app.component('m-component', MComponent);
     app.component('SComponent', SanComponent);

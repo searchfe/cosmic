@@ -43,7 +43,14 @@ const style = {
         }"
     >
         <Button v-if="node.cname === 'button'" size="sm" :styles="buttonLight" @mousedown="(e) => {e.preventDefault();}">按钮</Button>
-        <i-image v-if="node.cname === 'v-image'" :src="node.getPluginData('imageSrc')" @mousedown="(e) => {e.preventDefault();}" />
+        <i-image
+            v-if="node.cname === 'v-image'" 
+            :src="node.getPluginData('imageSrc')"
+            :style="{
+                borderRadius: node.cornerRadius + 'px',
+            }"
+            @mousedown="(e) => {e.preventDefault();}"
+        />
         <i-image-list v-if="node.cname === 'v-image-list'" :style="style" :images="node.getPluginData('imageList')" @mousedown="(e) => {e.preventDefault();}" />
         <i-avatar
             v-if="node.cname === 'v-avatar'"

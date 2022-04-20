@@ -3,6 +3,7 @@ import { inject, type PageNode } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
 import { onMounted, ref, type Ref } from 'vue';
 import { Button as CButton } from 'cosmic-vue';
+import FrameRender from './render/frame.vue';
 
 const page: Ref<PageNode> = ref<PageNode>() as any;
 
@@ -32,7 +33,16 @@ onMounted(() => {
         class="relative"
         :style="{height: '85vh'}"
     >
-        <children-render :node="page" />
+        <div
+            v-for="frame in page.children"
+            :key="frame.id"
+            class="mx-12 mb-12"
+        >
+            <frame-render
+                :node="frame"
+                style="width: 100%; position:relative;"
+            />
+        </div>
     </div>
     <div
         class="fixed flex justify-center items-center "

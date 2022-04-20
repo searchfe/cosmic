@@ -1,7 +1,9 @@
 <script lang="ts" setup>import { computed } from 'vue';
 import { ref } from 'vue';
 import QRCode from 'qrcode';
-const href = import.meta.env.VITE_PREVIEW_SERVER  + '?preview=1&page=0&frame=0';
+
+const draft = localStorage.getItem('draft');
+const href = import.meta.env.VITE_PREVIEW_SERVER  + '?preview=1&page=0&frame=0&draft=' + draft;
 const qrurl = ref();
 QRCode.toDataURL(href).then((url: string) => {
     qrurl.value = url;
@@ -18,7 +20,10 @@ QRCode.toDataURL(href).then((url: string) => {
         <div class="mt-20">
             <img :src="qrurl">
         </div>
-        <div class="mt-20 text-md select-text">
+        <div
+            class="mt-20 text-md select-text"
+            contenteditable="true"
+        >
             <a src="href">{{ href }}</a>
         </div>
     </div>
