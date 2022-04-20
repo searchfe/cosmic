@@ -52,17 +52,21 @@ function checkDistanceTop(node: SceneNode) {
     let leftDistance: number = node.x;
     let rightDistance: number = parent.width - node.x - node.width;
     parent.findAll((n => {
-        if (n.y + n.height < node.y && node.y - (n.y + n.height) < topDistance) {
-            topDistance = node.y - (n.y + n.height);
+        if (node.x + node.width / 2 > n.x && node.x + node.width / 2 < n.x + n.width) {
+            if (n.y + n.height < node.y && node.y - (n.y + n.height) < topDistance) {
+                topDistance = node.y - (n.y + n.height);
+            }
+            if (n.y > node.y + node.height && n.y - node.y - node.height  < bottomDistance) {
+                bottomDistance = n.y - node.y - node.height;
+            }
         }
-        if (n.y > node.y + node.height && node.y + node.height - n.y < bottomDistance) {
-            bottomDistance = n.y - node.y - node.height;
-        }
-        if (n.x + n.width < node.x && node.x - (n.x + n.width) < leftDistance) {
-            leftDistance = node.x - (n.x + n.width);
-        }
-        if (n.x > node.x + node.width && node.x + node.width - n.y < rightDistance) {
-            rightDistance = n.x - node.x - node.width;
+        if (node.y + node.height / 2 > n.y && node.y + node.height / 2 < n.y + n.height) {
+            if (n.x + n.width < node.x && node.x - (n.x + n.width) < leftDistance) {
+                leftDistance = node.x - (n.x + n.width);
+            }
+            if (n.x > node.x + node.width && node.x - node.width - n.y < rightDistance) {
+                rightDistance = n.x - node.x - node.width;
+            }
         }
         return false;
     }));
@@ -78,16 +82,32 @@ function checkDistanceTop(node: SceneNode) {
         :class="$style.root"
         :style="wrapperStyle"
     >
-        <div v-show="distance.top" :class="$style['d-x']" :style="{top: (distance.top * -1) + 'px', height: distance.top + 'px'}">
+        <div
+            v-show="distance.top"
+            :class="[$style['d-x'], node.VerticalLayout == 0 || node.VerticalLayout == 2? 'limit': '' ]"
+            :style="{top: (distance.top * -1) + 'px', height: distance.top + 'px'}"
+        >
             <div :class="[$style.info]">{{ distance.top }}</div>
         </div>
-        <div v-show="distance.bottom" :class="$style['d-x']" :style="{bottom: (distance.bottom * -1) + 'px', height: distance.bottom + 'px'}">
+        <div
+            v-show="distance.bottom"
+            :class="[$style['d-x'], node.VerticalLayout == 1 || node.VerticalLayout == 2? 'limit': '']"
+            :style="{bottom: (distance.bottom * -1) + 'px', height: distance.bottom + 'px'}"
+        >
             <div :class="[$style.info]">{{ distance.bottom }}</div>
         </div>
-        <div v-show="distance.left" :class="[$style['d-y'], $style['d-y-l']]" :style="{left: (distance.left * -1) + 'px', width: distance.left + 'px'}">
+        <div
+            v-show="distance.left"
+            :class="[$style['d-y'], $style['d-y-l'], node.HorizontalLayout == 0 || node.HorizontalLayout == 2? 'limit': '']" 
+            :style="{left: (distance.left * -1) + 'px', width: distance.left + 'px'}"
+        >
             <div :class="[$style.info]">{{ distance.left }}</div>
         </div>
-        <div v-show="distance.right" :class="[$style['d-y'], $style['d-y-r']]" :style="{right: (distance.right * -1) + 'px', width: distance.right + 'px'}">
+        <div
+            v-show="distance.right"
+            :class="[$style['d-y'], $style['d-y-r'], , node.HorizontalLayout == 1 || node.HorizontalLayout == 2? 'limit': '']"
+            :style="{right: (distance.right * -1) + 'px', width: distance.right + 'px'}"
+        >
             <div :class="[$style.info]">{{ distance.right }}</div>
         </div>
         <div class="absolute w-full h-full" :class="$style.dragGroup">
@@ -211,6 +231,10 @@ function checkDistanceTop(node: SceneNode) {
     top: 0.4rem;
     left: 50%;
     margin-right: -2rem;
+}
+
+.d-x:global(.limit), .d-y:global(.limit){
+    border-color: red;
 }
 
 </style>
