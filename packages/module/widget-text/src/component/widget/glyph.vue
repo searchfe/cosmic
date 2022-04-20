@@ -96,6 +96,7 @@ function unRef() {
             :standard-list="styleList"
             :target="standardTarget"
             @add="() => emits('addStyle')"
+            @show-detail="(event) => editStyleHandler(event.target, event.data.id)"
             @cancel="cancelStandardModal"
             @select="selectStyle"
         />

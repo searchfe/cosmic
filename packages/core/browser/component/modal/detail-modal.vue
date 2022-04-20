@@ -43,6 +43,7 @@ const styles = reactive(props.standard);
         class="cos-mode-reverse pb-8"
         :class="$style.container"
         :style="positionStyle"
+        @click.stop="() => {}"
     >
         <div
             :class="$style.title"

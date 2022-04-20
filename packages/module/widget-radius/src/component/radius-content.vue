@@ -17,12 +17,13 @@ const changeHandler = () => {
 };
 
 function changeStyle(event: {value: any},  style: any, field: string) {
-    style[field] = event.value;
+    const value = event.value || '0';
+    style[field] = value;
     if (!multiple.value) {
-        style.tl = event.value;
-        style.tr = event.value;
-        style.bl = event.value;
-        style.br = event.value;
+        style.tl = value;
+        style.tr = value;
+        style.bl = value;
+        style.br = value;
     }
     emits('change');
 }

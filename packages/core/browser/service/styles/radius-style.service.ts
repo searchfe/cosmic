@@ -36,10 +36,10 @@ export default class RadiusStyleService extends BaseService<RadiusStyle> {
     transformToLocal(radius: gql.Corner) {
         const {tl, tr, bl, br, name, id} = radius; 
         const radiusStyle = new RadiusStyle(id);
-        radiusStyle.tl = +tl[0];
-        radiusStyle.tr = +tr[0];
-        radiusStyle.bl = +bl[0];
-        radiusStyle.br = +br[0];
+        radiusStyle.tl = parseInt(tl[0], 10);
+        radiusStyle.tr = parseInt(tr[0], 10);
+        radiusStyle.bl = parseInt(bl[0], 10);
+        radiusStyle.br = parseInt(br[0], 10);
         radiusStyle.name = name;
         return radiusStyle;
     }

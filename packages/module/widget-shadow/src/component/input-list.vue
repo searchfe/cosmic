@@ -11,7 +11,7 @@ withDefaults(defineProps<{
 const emits = defineEmits(['change']);
 
 function changeStyle(style, field: string, event) {
-    style[field] = event.value;
+    style[field] = event.value || '0';
     emits('change');
 }
 

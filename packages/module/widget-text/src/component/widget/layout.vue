@@ -19,7 +19,7 @@ const data= reactive<TextLayout>({
     textAutoResize: 'NONE',
 });
 
-let node: TextNode;
+let node: TextNode = nodeService.getSelection().find(item => item instanceof TextNode) as TextNode;
 
 nodeService.selection.subscribe(nodes => {
     nodeService.unwatch(subject);
@@ -27,16 +27,21 @@ nodeService.selection.subscribe(nodes => {
     if (!node) return;
 
     subject = nodeService.watch(node);
-    // subject.subscribe(value => {
-    //     // console.log(value);
-    // });
+    subject.subscribe(value => {
+        toData(value as TextNode);
+    });
 });
 
 
+function toData(value: TextNode) {
+    data.textAlignHorizontal = value.textAlignHorizontal;
+    data.textAutoResize = value.textAutoResize;
+}
+
 function update(key: 'textAlignHorizontal' | 'textAutoResize', value: any) {
     if (!node) return;
-    console.log(value);
     node[key] = value;
+    console.log(node[key]);
     node.update();
 }
 
@@ -69,7 +74,7 @@ function update(key: 'textAlignHorizontal' | 'textAutoResize', value: any) {
         </Col>
         <Col :span="8" :class="$style.col">
             <div>
-                <RadioGroup value="1">
+                <RadioGroup value="3">
                     <RadioButton value="1">
                         <i-cosmic-width-auto :class="$style['radio-icon']" />
                     </RadioButton>

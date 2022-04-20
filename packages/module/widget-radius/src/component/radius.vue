@@ -95,7 +95,7 @@ function unRef() {
             @cancel="cancelStandardModal"
             @add="() => emits('addStyle')"
             @select="(event) => selectStyle(event)"
-            @show-detail="(event) => openDetaileModal(event.target, event.data)"
+            @show-detail="(event) => editStyleHandler(event.target, event.data.id)"
         >
             <template #prefix>
                 <i-cosmic-linked-square />

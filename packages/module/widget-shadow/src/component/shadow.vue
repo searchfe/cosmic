@@ -118,7 +118,7 @@ function updateStyle() {
             @add="() => emits('addStyle')"
             @cancel="cancelStandardModal"
             @select="selectStyle"
-            @show-detail="(event) => openDetaileModal(event.target, event.data)"
+            @show-detail="(event) => editStyleHandler(event.target, event.data.id)"
         >
             <template #prefix="data">
                 <div
