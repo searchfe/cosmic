@@ -1,6 +1,6 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { BaseService } from './base.service';
-import { RadiusStyle, cornerDao } from '@cosmic/core/parts';
+import { RadiusStyle, cornerDao, serializable} from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
 import { TOKENS } from '../token';
 import { v4, v5 } from 'uuid';
@@ -18,7 +18,6 @@ const DEFAULT_STYLES = {
 };
 
 
-
 @injectable()
 export default class RadiusStyleService extends BaseService<RadiusStyle> {
     private cornerDao: ReturnType<typeof cornerDao>;
@@ -28,8 +27,8 @@ export default class RadiusStyleService extends BaseService<RadiusStyle> {
         this.queryList();
     }
 
-    create() {
-        const style = this.transformToLocal(DEFAULT_STYLES);
+    create(s: Partial<gql.Corner> = {}) {
+        const style = this.transformToLocal({...DEFAULT_STYLES, ...s});
         return style;
     }
 

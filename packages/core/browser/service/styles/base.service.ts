@@ -38,15 +38,15 @@ export class BaseService<T extends {id: string, clone: () => T}> {
         this.type = type;
     }
 
-    public get(styleId: string): T  {
+    public get(styleId: string, isAutoCreate = true): T  {
         let style = this.localStyles.get(styleId) || this.serviceStyles.get(styleId);
         // 当前style为空的时候创建默认
-        if (!style) {
+        if (!style && isAutoCreate) {
             style = this.create() as T;
             style.id = styleId;
             this.addLocalStyle(style);
         }
-        return style;
+        return style as T;
     }
 
     public delete(styleId: string) {

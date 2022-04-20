@@ -75,7 +75,20 @@ fillStyleService.subject.subscribe((source: any) => {
 
 function getRadiusStyle(node: FrameNode): RadiusStyle {
     if (!node) return {} as RadiusStyle;
-    const radiusStyle = radiusStyleService.get(node.radiusStyleId ?? v5('cosmic', v4()));
+    let radiusStyle = radiusStyleService.get(node.radiusStyleId, false);
+    if (!radiusStyle) {
+        const tl = node.topLeftRadius + '' ?? '0';
+        const tr = node.topRightRadius + '' ?? '0';
+        const bl =  node.bottomLeftRadius + '' ?? '0';
+        const br = node.bottomRightRadius + '' ?? '0';
+        radiusStyle = radiusStyleService.create({
+            tl: [tl],
+            tr: [tr],
+            bl: [bl],
+            br: [br],
+        });
+        radiusStyleService.addLocalStyle(radiusStyle);
+    }
     if (node.radiusStyleId !== radiusStyle.id) {
         node.radiusStyleId = radiusStyle.id;
     }

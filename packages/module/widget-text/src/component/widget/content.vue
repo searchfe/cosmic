@@ -9,7 +9,7 @@ const textStyleSevice = inject<service.TextStyleSevice>(service.TOKENS.TextStyle
 const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillStyle);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
-let textNode = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
+let textNode = nodeService.getSelection().find(item =>  item instanceof TextNode) as TextNode;
 
 const styleId = ref(getTextStyle(textNode).id);
 
@@ -84,7 +84,20 @@ function resetFillStyle(id: string) {
 
 function getTextStyle(node: TextNode): TextStyle {
     if (!node) return {} as TextStyle;
-    const textStyle = textStyleSevice.get(node.getRangeTextStyleId(0,0) ?? Date.now() + '');
+    let textStyle = textStyleSevice.get(node.getRangeTextStyleId(0,0), false);
+
+    if (!textStyle) {
+        const fontName = node.getRangeFontName(0,0) as Internal.FontName;
+        textStyle = textStyleSevice.create({
+            size: node.fontSize.toString(),
+            family: fontName?.family ?? 'PingFang SC',
+            style: fontName?.style ?? '',
+            lineHeight: (node.lineHeight as unknown as {value: string}).value ?? '12',
+            
+        });
+        textStyleSevice.addLocalStyle(textStyle);
+    }
+
     if (node.getRangeTextStyleId(0,0) !== textStyle.id) {
         node.setRangeTextStyleId(0, 0, textStyle.id);
     }

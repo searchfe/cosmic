@@ -30,8 +30,8 @@ export default class TextService extends BaseService<TextStyle> {
         this.queryList();
     }
 
-    public create(): TextStyle  {
-        const style = this.transformToLocal(DEFAULT_STYLES);
+    public create(s: Partial<gql.Font> = {}): TextStyle  {
+        const style = this.transformToLocal({...DEFAULT_STYLES, ...s});
         return style;
     }
 

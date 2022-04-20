@@ -13,13 +13,12 @@ interface TextLayout {
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 let subject: Subject<BaseNodeMixin>;
 
+let node: TextNode = nodeService.getSelection().find(item => item instanceof TextNode) as TextNode;
 
 const data= reactive<TextLayout>({
-    textAlignHorizontal: 'LEFT',
-    textAutoResize: 'NONE',
+    textAlignHorizontal: node.textAlignHorizontal,
+    textAutoResize: node.textAutoResize,
 });
-
-let node: TextNode = nodeService.getSelection().find(item => item instanceof TextNode) as TextNode;
 
 nodeService.selection.subscribe(nodes => {
     nodeService.unwatch(subject);
