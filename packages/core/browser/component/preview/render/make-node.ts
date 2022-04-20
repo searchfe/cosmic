@@ -96,5 +96,9 @@ export function  makeLayoutStyle(node: LayoutMixin) {
         case 4:
             break;
     }
+    if(node?.parent.type == 'PAGE') {
+        styles.width = '100%';
+        styles.position = 'relative';
+    }
     return styles;
 }

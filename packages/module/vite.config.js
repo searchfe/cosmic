@@ -82,6 +82,7 @@ export function genConfig(PACKAGE_ROOT) {
           '@cosmic/core/urql',
           '@cosmic/core/gql',
           '@cosmic/core/router',
+          '@cosmic/core/lodash',
           ...listOfModule().map(m => `@cosmic-module/${m}`),
           ...builtinModules.flatMap(p => [p, `node:${p}`]),
         ],

@@ -46,7 +46,6 @@ const opacityBurHandler = (colorStyle) => {
     if (value > 100 || value < 0) value = 100;
     opacity.value = `${value}%`;
     colorStyle.opacity = number / 100;
-    console.log(colorStyle.opacity);
     changeEvent();
 };
 

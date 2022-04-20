@@ -31,7 +31,7 @@ onMounted(() => {
 <template>
     <div
         class="relative"
-        :style="{height: '85vh'}"
+        :style="{height: '92vh', overflowY: 'auto'}"
     >
         <div
             v-for="frame in page.children"
@@ -49,7 +49,7 @@ onMounted(() => {
         :style="{bottom: 0,left:0, textAlign: 'center'}"
     >
         <c-button
-            class="w-150"
+            class="w-150 mt-20"
             @click="() => sync = !sync"
         >
             {{ sync ? '暂停实时同步' : '恢复实时同步' }}

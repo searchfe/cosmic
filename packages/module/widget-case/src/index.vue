@@ -47,7 +47,6 @@ nodeService.selection.subscribe(nodes => {
 const type = ref(0);
 
 function toData(node: ComponentNode) {
-    console.log(node.cname);
     type.value = 0;
     if (node.cname == 'v-image') {
         imageSrc.value = node.getPluginData('imageSrc');

@@ -41,6 +41,7 @@ const config = {
       '@cosmic/core/gql':  join(PACKAGE_ROOT, 'packages/core/dist/es'),
       '@cosmic/core/router':  join(PACKAGE_ROOT, 'packages/core/dist/es'),
       '@cosmic/core/inversify':  join(PACKAGE_ROOT, 'packages/core/dist/es'),
+      '@cosmic/core/lodash':  join(PACKAGE_ROOT, 'packages/core/dist/es'),
       '@cosmic/core': join(PACKAGE_ROOT, '../core/dist'),
       'cosmic-ui': 'cosmic-ui-alpha',
       // '@cosmic-module/': join(PACKAGE_ROOT, '../module') + '/',
@@ -55,6 +56,7 @@ const config = {
         '@cosmic/core/gql':  APP_ROOT + 'packages/core/dist/es/gql.mjs',
         '@cosmic/core/router':  APP_ROOT + 'packages/core/dist/es/router.mjs',
         '@cosmic/core/inversify':  APP_ROOT + 'packages/core/dist/es/inversify.mjs',
+        '@cosmic/core/lodash':  APP_ROOT + 'packages/core/dist/es/lodash.mjs',
         ...moduleImports(),
         ...development? {} :{
           'cosmic-ui': resolveLib('cosmic-ui-alpha/dist/index.es.js'),
