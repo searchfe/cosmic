@@ -14,8 +14,9 @@ QRCode.toDataURL(href).then((url: string) => {
     <div class="flex justify-center items-center w-full h-full flex-col">
         <iframe
             src="?preview=1&page=0&frame=0"
-            width="480"
+            width="418"
             height="700"
+            style="overflow-y:auto"
         />
         <div class="mt-20">
             <img :src="qrurl">

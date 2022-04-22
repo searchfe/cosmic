@@ -61,7 +61,7 @@ function bootstrap(option: BootstrapOption) {
 export { bootstrap };
 
 // export * as service from './service/index';
-export { default as lodash } from 'lodash';
+// export { default as lodash } from 'lodash';
 export { default as color } from 'color';
 
 export { MColor, MTitle, MWidget, MStandardModal, MStandard, MDetailModal, MClolorWidget};

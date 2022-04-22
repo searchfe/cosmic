@@ -36,6 +36,7 @@ export default class NodeService {
                 this._currentPage = page;
                 requestAnimationFrame(() => {
                     this.currentPage.next(this._currentPage);
+                    this.setSelection([]);
                 });
             }
         }
