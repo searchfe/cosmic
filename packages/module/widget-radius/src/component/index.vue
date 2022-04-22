@@ -1,166 +1,160 @@
 <script lang="ts" setup>
-import {ref, watchEffect} from 'vue';
+import {ref} from 'vue';
 import { MClolorWidget, service } from '@cosmic/core/browser';
-import { FrameNode, inject, RadiusStyle, hasMixin, CornerMixin, FillStyle, SolidPaint } from '@cosmic/core/parts';
+import { FrameNode, inject, SolidPaint, hasMixin, CornerMixin, BaseNodeMixin, util } from '@cosmic/core/parts';
+import { type Subject } from '@cosmic/core/rxjs';
 import Raduis from './radius.vue';
-import { v4, v5 } from 'uuid';
+
+const RADIUS_STYLE_ID = 'radiusStyleId';
+const BACKGROUN_STYLE_ID = 'backgroundStyleId';
 
 const radiusStyleService = inject<service.RadiusStyleService>(service.TOKENS.RadiusStyle);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-
-let rudiusNode = nodeService.getSelection().find(item => hasMixin(item, CornerMixin)) as FrameNode;
 const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillStyle);
 
-const radiusStyleId = ref(getRadiusStyle(rudiusNode).id);
+let radiusNode = nodeService.getSelection().find(item => hasMixin(item, CornerMixin)) as FrameNode;
+let subject: Subject<BaseNodeMixin>;
 
-const isLocalStyle = ref(radiusStyleService.isLocalStyle(radiusStyleId.value));
+const radiusStyle = ref<Internal.RectangleCornerMixin>();
 
-const radiusStyle = ref(radiusStyleService.get(radiusStyleId.value));
+const isLocalStyle = ref<boolean>(!radiusNode.getPluginData(RADIUS_STYLE_ID));
 
 const radiusStyleList = ref(radiusStyleService.getServiceStyles());
 
-const fillStyleId = ref(getFillStyle(rudiusNode).id);
+const fillStyle = ref<Partial<Internal.SolidPaint>>();
 
 const fillStyleList = ref(fillStyleService.getServiceStyles());
 
-const fillStyle =  ref(fillStyleService.get(fillStyleId.value));
+const isFillLocalStyle = ref<boolean>(!radiusNode.getPluginData(BACKGROUN_STYLE_ID));
 
-const isLocalFillStyle = ref(fillStyleService.isLocalStyle(fillStyleId.value));
-
-
-watchEffect(() => {
-    resetRadiusStyle(radiusStyleId.value);
-    isLocalStyle.value = radiusStyleService.isLocalStyle(radiusStyleId.value);
+nodeService.selection.subscribe(nodes => {
+    radiusNode = nodes.find(item => hasMixin(item, CornerMixin)) as FrameNode;
+    if (!radiusNode) return;
+    watchNode(radiusNode);
 });
 
-watchEffect(() =>  {
-    const id = fillStyleId.value as string;
-    resetFillStyle(id);
-    isLocalFillStyle.value = fillStyleService.isLocalStyle(id);
-});
-
-nodeService.selection.subscribe((nodes) => {
-    rudiusNode = nodes.find(item => hasMixin(item, CornerMixin)) as FrameNode;
-    if (!rudiusNode) return;
-    getRadiusStyle(rudiusNode);
-    getFillStyle(rudiusNode);
-    radiusStyleId.value = rudiusNode.radiusStyleId;
-    fillStyleId.value = rudiusNode.backgroundStyleId;
-});
-
-radiusStyleService.subject.subscribe((source: service.SubjectSourceType) => {
-    const { type, data } = source;
+radiusStyleService.subject.subscribe((res: service.SubjectSourceType) => {
     radiusStyleList.value = radiusStyleService.getServiceStyles();
+    const { type, data } = res;
     switch(type) {
         case 'C':
+            radiusNode.setPluginData(RADIUS_STYLE_ID, data);
+            break;
         case 'U':
-            selectStyle({id: data as string});
-            resetRadiusStyle(data as string);
+            if (radiusNode.getPluginData(RADIUS_STYLE_ID) === data) {
+                changeRadiusStyle(radiusStyleService.get(data as string) as any);
+            }
+            break;
     }
-}); 
-
-
-fillStyleService.subject.subscribe((source: any) => {
-    const  { type, data } = source;
-    fillStyleList.value = fillStyleService.getServiceStyles();
-    switch(type) {
-        case 'C':
-        case 'U':
-            selectFillStyle({id: data as string});
-            resetFillStyle(data as string);
-    }
-
 });
 
-
-function getRadiusStyle(node: FrameNode): RadiusStyle {
-    if (!node) return {} as RadiusStyle;
-    const radiusStyle = radiusStyleService.get(node.radiusStyleId ?? v5('cosmic', v4()));
-    if (node.radiusStyleId !== radiusStyle.id) {
-        node.radiusStyleId = radiusStyle.id;
+fillStyleService.subject.subscribe((res: service.SubjectSourceType) => {
+    fillStyleList.value = fillStyleService.getServiceStyles();
+    const { type, data } = res;
+    switch(type) {
+        case 'C':
+            radiusNode.setPluginData(BACKGROUN_STYLE_ID, data);
+            break;
+        case 'U':
+            if (radiusNode.getPluginData(BACKGROUN_STYLE_ID) === data) {
+                fillChangeStyle(fillStyleService.get(data as string) as any);
+            }
     }
-    return radiusStyle;
-}
+});
 
-function selectStyle(data: {id: string}) {
-    radiusStyleId.value = data.id;
-    rudiusNode.radiusStyleId = data.id;
-    raduisChange();
-}
+// 创建监控
+watchNode(radiusNode);
 
-function saveStyle() {
-    radiusStyleService.saveStyle(radiusStyleId.value);
-}
-
-function raduisChange() {
-    const style = radiusStyleService.get(radiusStyleId.value);
-    rudiusNode.topLeftRadius = style.tl;
-    rudiusNode.topRightRadius = style.tr;
-    rudiusNode.bottomLeftRadius = style.bl;
-    rudiusNode.bottomRightRadius = style.br;
-    rudiusNode.update();
-}
-
-function resetRadiusStyle(id: string) {
-    radiusStyle.value = radiusStyleService.get(id);
-}
-
-function updateStyle(style: RadiusStyle) {
-    console.log(12221);
-    radiusStyleService.updateStyle(style);
-}
-
-
-function unSelectStyle() {
-    const radiusStyle = radiusStyleService.cloneById(radiusStyleId.value);
-    radiusStyleService.addLocalStyle(radiusStyle);
-    selectStyle({id: radiusStyle.id});
-} 
-
-function getFillStyle(node: FrameNode): FillStyle {
-    if (!node) return {} as FillStyle;
-    let fillStyle;
-    if (!node.backgroundStyleId && node.backgrounds && node.backgrounds[0]) {
-        fillStyle = fillStyleService.createBySolidPaint(node.backgrounds[0] as SolidPaint);
+function resetRadius(node: FrameNode) {
+    if (!node) return;
+    if (node.getPluginData(RADIUS_STYLE_ID)) {
+        isLocalStyle.value = false;
+        radiusStyle.value = radiusStyleService.cloneById(node.getPluginData(RADIUS_STYLE_ID), false);
+        console.log(radiusStyle.value);
     } else {
-        fillStyle = fillStyleService.get(node.backgroundStyleId ?? v5('cosmic', v4()));
+        isLocalStyle.value = true;
+        radiusStyle.value = util.transformCornerFromNode(node);
     }
-    if (node.backgroundStyleId !== fillStyle.id) {
-        node.backgroundStyleId = fillStyle.id;
-    }
-    return fillStyle;
 }
 
-function fillChage() {
-    const style = fillStyleService.get(rudiusNode.backgroundStyleId);
-    rudiusNode.backgrounds = [style as any];
-    rudiusNode.update();
+function resetBackgroundStyle(node: FrameNode) {
+    if (!node) return;
+    if (node.getPluginData(BACKGROUN_STYLE_ID)) {
+        isFillLocalStyle.value = false;
+        fillStyle.value = fillStyleService.cloneById(node.getPluginData(BACKGROUN_STYLE_ID), false);
+    } else {
+        isFillLocalStyle.value = true;
+        fillStyle.value = util.transformBackgroundFormNode(node);
+    }
 }
 
+function watchNode(node: FrameNode) {
+    if (!node) return;
+    nodeService.unwatch(subject);
+    subject = nodeService.watch(node);
+    subject.subscribe(() => {
+        resetRadius(radiusNode);
+        resetBackgroundStyle(radiusNode);
+    });
+    resetRadius(radiusNode);
+    resetBackgroundStyle(radiusNode);
+}
 
-function resetFillStyle(id: string) {
-    fillStyle.value = fillStyleService.get(id);
+function changeRadiusStyle(data: Internal.RectangleCornerMixin) {
+    radiusNode.topLeftRadius = data.topLeftRadius;
+    radiusNode.topRightRadius = data.topRightRadius;
+    radiusNode.bottomLeftRadius = data.bottomLeftRadius;
+    radiusNode.bottomRightRadius = data.bottomRightRadius;
+    radiusNode.update();
+}
+
+function selectRadiusStyle(data: {id: string}) {
+    radiusNode.setPluginData(RADIUS_STYLE_ID, data.id);
+    changeRadiusStyle(radiusStyleService.cloneById(data.id, false));
+}
+
+function unSelectRadiusStyle() {
+    radiusNode.setPluginData(RADIUS_STYLE_ID, void 0);
+    radiusNode.update();
+}
+
+function updateRadiusStyle(radius: Internal.RectangleCornerMixin & {name: string, id: string}) {
+    radiusStyleService.updateStyle(radius);
+}
+
+function saveRadiusStyle(radius: Internal.RectangleCornerMixin) {
+    radiusStyleService.saveStyle(radius);
+}
+
+function fillChangeStyle(data: Partial<Internal.SolidPaint>) {
+    const { opacity, color } = data;
+    const solidPaint = new SolidPaint();
+    solidPaint.opacity = opacity;
+    solidPaint.color = color as Internal.RGB;
+    radiusNode.backgrounds = [solidPaint];
+    radiusNode.update();
 }
 
 function selectFillStyle(data: {id: string}) {
-    fillStyleId.value = data.id;
-    rudiusNode.backgroundStyleId = data.id;
-    fillChage();
-}
-
-function unFillSelectStyle() {
-    const cloneStyle = fillStyleService.cloneById(fillStyleId.value as string);
-    fillStyleService.addLocalStyle(cloneStyle);
-    selectFillStyle({id: cloneStyle.id});
+    console.log(12);
+    radiusNode.setPluginData(BACKGROUN_STYLE_ID, data.id);
+    isFillLocalStyle.value = false;
+    fillChangeStyle(fillStyleService.get(data.id));
 }
 
 function saveFillStyle() {
-    fillStyleService.saveStyle(fillStyleId.value as string);
+    fillStyleService.saveStyle(util.transformBackgroundFormNode(radiusNode) as Internal.SolidPaint);
 }
 
-function updateFillStyle(style: FillStyle) {
-    fillStyleService.updateStyle(style);
+function updateFillStyle(fill: Internal.SolidPaint & {id: string, name: string}) {
+    fillStyleService.updateStyle(fill);
 }
+
+function unFillSelectStyle() {
+    radiusNode.setPluginData(BACKGROUN_STYLE_ID, void 0);
+    radiusNode.update();
+}
+
 
 </script>
 
@@ -168,20 +162,19 @@ function updateFillStyle(style: FillStyle) {
     <Raduis
         :is-local-style="isLocalStyle"
         :radius-style="radiusStyle"
-        :select-style="selectStyle"
         :style-list="radiusStyleList"
-        @add-style="saveStyle"
-        @select-style="selectStyle"
-        @change="selectStyle"
-        @update-style="updateStyle"
-        @un-select-style="unSelectStyle"
+        @add-style="saveRadiusStyle"
+        @select-style="selectRadiusStyle"
+        @change="changeRadiusStyle"
+        @update-style="updateRadiusStyle"
+        @un-select-style="unSelectRadiusStyle"
     />
     <m-clolor-widget 
-        :is-local-style="isLocalFillStyle"
+        :is-local-style="isFillLocalStyle"
         :fill-style="fillStyle"
         :style-list="fillStyleList"
         @add-style="saveFillStyle"
-        @change="fillChage"
+        @change="fillChangeStyle"
         @select-style="selectFillStyle"
         @update-style="updateFillStyle"
         @un-select-style="unFillSelectStyle"

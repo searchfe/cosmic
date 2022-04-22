@@ -72,7 +72,7 @@ function updateStyle() {
             >
                 <i-cosmic-grid-outline />
             </m-title>
-            <stroke-content :stroke-style="strokeStyle" @change="() => emits('change')" />
+            <stroke-content :stroke-style="strokeStyle" @change="(event) => emits('change', event)" />
         </div>
         <template v-else>
             <m-standard :standard="strokeStyle" :is-border="true" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">

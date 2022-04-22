@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, toRaw } from 'vue';
 import { Select, SelectOption, Row, Col, InputNumber } from 'cosmic-vue';
 import { GlyphData, FontWeight, FontType } from '../../data';
 import type { TextStyle } from '@cosmic/core/parts';
@@ -16,13 +16,23 @@ const textStyle = computed(() => props.textStyle);
 
 const emits = defineEmits(['change']);
 
-function changeStyle(textStyle, field, event) {
-    const vulue = event.value || '1';
-    textStyle[field] = vulue;
-    if (field === 'fontSize') {
-        textStyle.lineHeight.value =vulue;
+function changeStyle(textStyle: any, key: string, event: {value: any}) {
+    const value = event.value || '1';
+    const originaStyle = toRaw(textStyle);
+    if (key === 'fontSize') {
+        originaStyle.fontSize = parseInt(value, 10);
+        originaStyle.lineHeight = {...originaStyle.lineHeight, value: +value};
     }
-    emits('change');
+    if (key === 'family' || key === 'style') {
+        originaStyle.fontName = {...originaStyle.fontName, [key]: value};
+    }
+    if (key === 'textDecoration') {
+        originaStyle.textDecoration = value;
+    }
+    if (key === 'lineHeight' || key === 'letterSpacing') {
+        originaStyle[key] = {...originaStyle[key], value: parseInt(value, 10)};
+    }
+    emits('change', originaStyle);
 }
 
 </script>
@@ -34,7 +44,7 @@ function changeStyle(textStyle, field, event) {
             <Select
                 size="sm"
                 :value="textStyle.fontName.family"
-                @on-change="(event) => changeStyle(textStyle.fontName, 'family', event)"
+                @on-change="(event) => changeStyle(textStyle, 'family', event)"
             >
                 <SelectOption
                     v-for="data of GlyphData"
@@ -62,7 +72,7 @@ function changeStyle(textStyle, field, event) {
                 <Select
                     size="sm"
                     :value="textStyle.fontName.style"
-                    @on-change="(event) => changeStyle(textStyle.fontName, 'style', event)"
+                    @on-change="(event) => changeStyle(textStyle, 'style', event)"
                 >
                     <SelectOption
                         v-for="data of FontWeight"
@@ -94,7 +104,7 @@ function changeStyle(textStyle, field, event) {
                         size="sm"
                         controls="false"
                         :value="textStyle.lineHeight.value"
-                        @on-input="(event) => changeStyle(textStyle.lineHeight, 'value', event)"
+                        @on-input="(event) => changeStyle(textStyle, 'lineHeight', event)"
                     >
                         <template #prefix>
                             <i-cosmic-line-height :class="[$style.icon]" />
@@ -109,7 +119,7 @@ function changeStyle(textStyle, field, event) {
                         :value="textStyle.letterSpacing.value"
                         allow-input
                         :class="$style['margin-left']"
-                        @on-input="(event) => changeStyle(textStyle.letterSpacing, 'value', event)"
+                        @on-input="(event) => changeStyle(textStyle, 'letterSpacing', event)"
                     >
                         <template #prefix>
                             <i-cosmic-font :class="[$style.icon]" />
@@ -130,44 +140,6 @@ function changeStyle(textStyle, field, event) {
                 </input-number>
             </Col>
         </Row>
-        <!-- <Row :class="$style.row">
-            <Col :span="16" :class="$style.col">
-                <div :class="$style['radio-left']">
-                    <RadioGroup value="1">
-                        <RadioButton value="1">
-                            <i-cosmic-text-left :class="$style['radio-icon']" />
-                        </RadioButton>
-
-                        <RadioButton value="2">
-                            <i-cosmic-text-center :class="$style['radio-icon']" />
-                        </RadioButton>
-
-                        <RadioButton value="3">
-                            <i-cosmic-text-right :class="$style['radio-icon']" />
-                        </RadioButton>
-                        <RadioButton value="4">
-                            <i-cosmic-text-even :class="$style['radio-icon']" />
-                        </RadioButton>
-                    </RadioGroup>
-                </div>
-            </Col>
-            <Col :span="8" :class="$style.col">
-                <div>
-                    <RadioGroup value="1">
-                        <RadioButton value="1">
-                            <i-cosmic-width-auto :class="$style['radio-icon']" />
-                        </RadioButton>
-
-                        <RadioButton value="2">
-                            <i-cosmic-height-auto :class="$style['radio-icon']" />
-                        </RadioButton>
-                        <RadioButton value="3">
-                            <i-cosmic-linked-square :class="$style['radio-icon']" />
-                        </RadioButton>
-                    </RadioGroup>
-                </div>
-            </Col>
-        </Row> -->
     </div>
 </template>
 

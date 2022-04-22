@@ -1,6 +1,6 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { BaseService } from './base.service';
-import { StrokeStyle, borderDao } from '@cosmic/core/parts';
+import { StrokeStyle, borderDao, MinimalStrokesMixin } from '@cosmic/core/parts';
 import { service } from '@cosmic/core/browser';
 import { TOKENS } from '../token';
 import { v4, v5 } from 'uuid';
@@ -31,10 +31,10 @@ export default class StrokeStyleService extends BaseService<StrokeStyle> {
     cloneById(id: string, isChangeId = true) {
         const originalStyle = this.get(id);
         const cloneStyle = new StrokeStyle(isChangeId ? v5('cosmic',v4()) : id);
-        const {strokeWeight, strokeAlign, style, dashPattern, name} = originalStyle;
+        const {strokeWeight, strokeAlign, strokeLineStyle, dashPattern, name} = originalStyle;
         cloneStyle.strokeWeight = strokeWeight;
         cloneStyle.strokeAlign = strokeAlign;
-        cloneStyle.style = style;
+        cloneStyle.strokeLineStyle = strokeLineStyle;
         cloneStyle.dashPattern = [...dashPattern];
         cloneStyle.name = name;
         return cloneStyle;
@@ -43,29 +43,29 @@ export default class StrokeStyleService extends BaseService<StrokeStyle> {
     transformToLocal(servicerColor: Partial<gql.Border>) {
         const{id = Date.now() + '', name, team, updatedAt, top = {weight: '10', style: 'solid'}} = servicerColor;
         const strokeStyle = new StrokeStyle(id);
-        strokeStyle.strokeWeight = top.weight;
+        strokeStyle.strokeWeight = parseInt(top.weight);
         strokeStyle.strokeAlign = 'CENTER';
-        strokeStyle.style = 'solid';
+        strokeStyle.strokeLineStyle = 'solid';
         strokeStyle.dashPattern = top.style === 'dash' ? [1, 1] : [0,0],
         strokeStyle.name = name as string;
         return strokeStyle;
     }
 
-    transformToService(stroke: StrokeStyle): Partial<gql.Border>{
-        const { name, style, strokeWeight } = stroke;
+    transformToService(stroke: MinimalStrokesMixin & Partial<{ name: string }>): Partial<gql.Border>{
+        const { name = '默认名称', strokeLineStyle, strokeWeight } = stroke;
         return {
             name,
-            top: {style, weight: strokeWeight},
-            bottom: {style, weight: strokeWeight},
-            left: {style, weight: strokeWeight},
-            right: {style, weight: strokeWeight},
+            top: {style: strokeLineStyle, weight: strokeWeight + ''},
+            bottom: {style: strokeLineStyle, weight: strokeWeight  + ''},
+            left: {style: strokeLineStyle, weight: strokeWeight  + ''},
+            right: {style: strokeLineStyle, weight: strokeWeight  + ''},
         };
     }
 
-    public async saveStyle(id: string) {
-        const style = this.transformToService(this.get(id));
+    public async saveStyle(style: MinimalStrokesMixin) {
+        const serviceStyle = this.transformToService(style);
         const team = await this.teamService.getCurrentUserTeam();
-        const { data } = await this.borderDao.create({...style, team: team?.id});
+        const { data } = await this.borderDao.create({...serviceStyle, team: team?.id});
         
         if (data?.createBorder) {
             await this.queryList();
@@ -74,7 +74,7 @@ export default class StrokeStyleService extends BaseService<StrokeStyle> {
         
     }
 
-    public async updateStyle(style: StrokeStyle) {
+    public async updateStyle(style: MinimalStrokesMixin) {
         const serviceStyle = this.transformToService(style);
         const {data} = await this.borderDao.update({...serviceStyle, id: style.id});
         if (data?.updateBorder) {

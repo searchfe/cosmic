@@ -5,14 +5,16 @@ import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service 
 import GlyphContent from './glyph-content.vue';
 import TextLayout from './layout.vue';
 
-withDefaults(defineProps<{
-    isStandard: boolean,
+const props = withDefaults(defineProps<{
+    isLocalStyle: boolean,
     textStyle: object,
     styleList: object[],
     isRepeat: boolean,
 }>(), {
     isRepeat: false,
 });
+
+console.log(props.isLocalStyle);
 
 const textStyleSevice = inject<service.TextStyleSevice>(service.TOKENS.TextStyle);
 
@@ -67,7 +69,7 @@ function unRef() {
 
 <template>
     <div ref="containerRef">
-        <div v-if="!isStandard">
+        <div v-if="isLocalStyle">
             <m-title
                 title="字形"
                 @on-click="(event) => openStandardModal(event.currentTarget)"
@@ -75,7 +77,7 @@ function unRef() {
                 <i-cosmic-grid v-if="isRepeat" :class="$style.repeat" />
                 <i-cosmic-grid-outline v-else />
             </m-title>
-            <glyph-content :text-style="textStyle" @change="() => emits('change', textStyle)" />
+            <glyph-content :text-style="textStyle" @change="(event) => emits('change', event)" />
             <text-layout />
         </div>
         <template v-else>

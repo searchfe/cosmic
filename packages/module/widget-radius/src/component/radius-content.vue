@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
 import { RadioGroup, RadioButton, InputNumber} from 'cosmic-vue';
 
 withDefaults(defineProps<{
-    radiusStyle: any,
-}>(), {
-    radiusStyle: () => ({}),
-});
+    radiusStyle: Internal.RectangleCornerMixin,
+}>(), {});
 
 const emits = defineEmits(['change']);
 
@@ -16,16 +14,17 @@ const changeHandler = () => {
     multiple.value = !multiple.value;
 };
 
-function changeStyle(event: {value: any},  style: any, field: string) {
-    const value = event.value || '0';
-    style[field] = value;
+function changeStyle(event: {value: any},  style: any, key: keyof Internal.RectangleCornerMixin) {
+    const value = parseInt(event.value || '0');
+    const originStyle = toRaw(style);
+    originStyle[key] = value;
     if (!multiple.value) {
-        style.tl = value;
-        style.tr = value;
-        style.bl = value;
-        style.br = value;
+        originStyle.topLeftRadius = value;
+        originStyle.topRightRadius = value;
+        originStyle.bottomLeftRadius = value;
+        originStyle.bottomRightRadius= value;
     }
-    emits('change');
+    emits('change', originStyle);
 }
 
 </script>
@@ -50,30 +49,30 @@ function changeStyle(event: {value: any},  style: any, field: string) {
                 <div>
                     <input-number
                         size="sm"
-                        :value="radiusStyle.tl"
-                        @on-input="event => changeStyle(event, radiusStyle, 'tl')"
+                        :value="radiusStyle.topLeftRadius"
+                        @on-input="event => changeStyle(event, radiusStyle, 'topLeftRadius')"
                     />
                 </div>
                 <div>
                     <input-number
                         v-if="multiple"
                         size="sm"
-                        :value="radiusStyle.tr"
-                        @on-input="event => changeStyle(event, radiusStyle, 'tr')"
+                        :value="radiusStyle.topRightRadius"
+                        @on-input="event => changeStyle(event, radiusStyle, 'topRightRadius')"
                     />
                 </div>
                 <div v-if="multiple">
                     <input-number
                         size="sm"
-                        :value="radiusStyle.bl"
-                        @on-input="event => changeStyle(event, radiusStyle, 'bl')"
+                        :value="radiusStyle.bottomLeftRadius"
+                        @on-input="event => changeStyle(event, radiusStyle, 'bottomLeftRadius')"
                     />
                 </div>
                 <div v-if="multiple">
                     <input-number
                         size="sm"
-                        :value="radiusStyle.br"
-                        @on-input="event => changeStyle(event, radiusStyle, 'br')"
+                        :value="radiusStyle.bottomRightRadius"
+                        @on-input="event => changeStyle(event, radiusStyle, 'bottomRightRadius')"
                     />
                 </div>
             </div>

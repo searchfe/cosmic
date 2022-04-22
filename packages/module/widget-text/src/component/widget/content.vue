@@ -1,162 +1,169 @@
 <script lang="ts" setup>
-import { ref, watchEffect } from 'vue';
-import { FillStyle, inject, TextNode, TextStyle } from '@cosmic/core/parts';
+import { ref, onUnmounted } from 'vue';
+import { inject, TextNode, BaseNodeMixin, util, SolidPaint } from '@cosmic/core/parts';
 import { MClolorWidget, service } from '@cosmic/core/browser';
 import Glyph from './glyph.vue';
+import { type Subject } from '@cosmic/core/rxjs';
 
 
 const textStyleSevice = inject<service.TextStyleSevice>(service.TOKENS.TextStyle);
 const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillStyle);
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
-let textNode = nodeService.getSelection().find(item => item.type === 'TEXT') as TextNode;
+let textNode = nodeService.getSelection().find(item => item instanceof TextNode) as TextNode;
 
-const styleId = ref(getTextStyle(textNode).id);
-
-const fillStyleId = ref(getFillStyle(textNode)?.id);
-
-const textStyle = ref();
-
-const isStandard = ref(false);
-
-const isLocalFillStyle = ref(false);
+let subject: Subject<BaseNodeMixin>;
 
 const styleList = ref(textStyleSevice.getServiceStyles());
 
-const fillStyle = ref();
+const textStyle = ref<Partial<Internal.TextStyle>>(util.transformTextStyleFromNode(textNode));
+
+const isLocalStyle = ref<boolean>(!!textNode.textStyleId);
+
+const isLocalFillStyle = ref<boolean>(!!textNode.fillStyleId);
+
+const fillStyle = ref<Partial<Internal.SolidPaint>>(util.transformSolidFromNode(textNode));
 
 const fillStyleList = ref(fillStyleService.getServiceStyles());
 
-const isFillRepeat = ref(false);
+// 创建监控
+watchNode(textNode);
 
-const isRepeat = ref(false);
-
-watchEffect(() => {
-    resetTextStyle(styleId.value);
-    isStandard.value  =  !textStyleSevice.isLocalStyle(styleId.value);
+onUnmounted(() => {
+    nodeService.unwatch(subject);
 });
 
-watchEffect(() =>  {
-    resetFillStyle(fillStyleId.value);
-    isLocalFillStyle.value = fillStyleService.isLocalStyle(fillStyleId.value);
-});
-
-nodeService.selection.subscribe((nodes) => {
-    textNode = nodes.find(item => item.type === 'TEXT') as TextNode;
-    if (!textNode) return;
-    getTextStyle(textNode);
-    getFillStyle(textNode);
-    styleId.value = textNode.getRangeTextStyleId(0,0);
-    fillStyleId.value = textNode.getRangeFillStyleId(0,0);
-});
-
-textStyleSevice.subject.subscribe((source: any) => {
-    const  { type, data } = source;
+textStyleSevice.subject.subscribe((res: service.SubjectSourceType) => {
     styleList.value = textStyleSevice.getServiceStyles();
+    const { type, data } = res;
     switch(type) {
         case 'C':
+            textNode.textStyleId = data as string;
+            break;
         case 'U':
-            selectStyle({id: data as string});
-            resetTextStyle(data as string);
+            if (textNode.textStyleId) {
+                const style = textStyleSevice.get(textNode.textStyleId as string) as Internal.TextStyle;
+                changeStyle(style);
+            }
+            
+            
     }
-
 });
 
-fillStyleService.subject.subscribe((source: any) => {
-    const  { type, data } = source;
+fillStyleService.subject.subscribe((res: service.SubjectSourceType) => {
     fillStyleList.value = fillStyleService.getServiceStyles();
+    const { type, data } = res;
     switch(type) {
         case 'C':
+            textNode.fillStyleId = data as string;
+            break;
         case 'U':
-            selectFillStyle({id: data as string});
-            resetFillStyle(data as string);
+            if (textNode.fillStyleId) {
+                const style = fillStyleService.get(textNode.fillStyleId as string) as Internal.SolidPaint;
+                changeFillStyle(style);
+            }
     }
-
 });
 
-function resetTextStyle(id: string) {
-    textStyle.value = textStyleSevice.get(id);
-}
-
-function resetFillStyle(id: string) {
-    fillStyle.value = fillStyleService.get(id);
-}
-
-function getTextStyle(node: TextNode): TextStyle {
-    if (!node) return {} as TextStyle;
-    const textStyle = textStyleSevice.get(node.getRangeTextStyleId(0,0) ?? Date.now() + '');
-    if (node.getRangeTextStyleId(0,0) !== textStyle.id) {
-        node.setRangeTextStyleId(0, 0, textStyle.id);
+nodeService.selection.subscribe(nodes => {
+    const selectNode = nodes.find(item => item instanceof TextNode) as TextNode;
+    if (!selectNode || !textNode) {
+        return;
     }
-    return textStyle;
+    if (selectNode.id === textNode.id) return;
+    resetTextStyle(textNode);
+    resetFillStyle(textNode);
+    watchNode(textNode);
+});
+
+function watchNode(node: TextNode) {
+    nodeService.unwatch(subject);
+    subject = nodeService.watch(node);
+    subject.subscribe(() => {
+        resetTextStyle(node);
+        resetFillStyle(node);
+    });
+    resetTextStyle(node);
+    resetFillStyle(node);
 }
 
-function getFillStyle(node: TextNode): FillStyle {
-    if (!node) return {} as FillStyle;
-    const fillStyle = fillStyleService.get(node.getRangeFillStyleId(0,0) ?? Date.now() + '');
-    if (node.getRangeFillStyleId(0,0) !== fillStyle.id) {
-        node.setRangeFillStyleId(0, 0, fillStyle.id);
+function resetFillStyle(node: TextNode) {
+    if(node.fillStyleId) {
+        isLocalFillStyle.value = false;
+        fillStyle.value = fillStyleService.get(node.fillStyleId as string);
+    } else {
+        fillStyle.value = util.transformSolidFromNode(node);
+        isLocalFillStyle.value = true;
     }
-    return fillStyle;
 }
 
-function textChange() {
-    const style = textStyleSevice.get(textNode.getRangeTextStyleId(0,0));
-    isRepeat.value = textStyleSevice.isRepeat(textNode.getRangeTextStyleId(0,0));
-    textNode.setRangeFontSize(0, 0, style.fontSize);
-    textNode.setRangeFontName(0, 0, {family: style.fontName.family ?? '宋体', style: style.fontName.style ?? ''});
-    textNode.setRangeTextDecoration(0 , 0, style.textDecoration);
-    textNode.setRangeLineHeight(0, 0, {...style.lineHeight});
-    textNode.setRangeLetterSpacing(0, 0, style.letterSpacing);
-    textNode.setParagraphSpacing(style.paragraphSpacing);
-    textNode.update();
-}
-
-function fillChage() {
-    const style = fillStyleService.get(textNode.getRangeFillStyleId(0, 0));
-    isFillRepeat.value =  fillStyleService.isRepeat(fillStyleId.value);
-    textNode.setRangeFills(0, 0, [style as unknown as any]);
-    textNode.update();
-}
-
-function saveStyle() {
-    textStyleSevice.saveStyle(styleId.value);
+function resetTextStyle(node: TextNode) {
+    isLocalStyle.value = !node.textStyleId;
+    if (isLocalStyle.value) {
+        textStyle.value = util.transformTextStyleFromNode(node);
+    } else {
+        textStyle.value = textStyleSevice.cloneById(node.textStyleId as string, false);
+    }
+    
 }
 
 function selectStyle(data: {id: string}) {
-    styleId.value = data.id;
-    textNode.setRangeTextStyleId(0, 0, data.id);
-    textChange();
+    textNode.textStyleId = data.id;
+    changeStyle(textStyleSevice.cloneById(data.id as string));
+    textNode.update();
 }
-
-function selectFillStyle(data: {id: string}) {
-    fillStyleId.value = data.id;
-    textNode.setRangeFillStyleId(0, 0, data.id);
-    fillChage();
-}   
 
 function unSelectStyle() {
-    const textStyle = textStyleSevice.cloneById(styleId.value);
-    textStyleSevice.addLocalStyle(textStyle);
-    selectStyle({id: textStyle.id});
-} 
-
-function updateStyle(style: TextStyle) {
-    textStyleSevice.updateStyle(style);
+    Reflect.deleteProperty(textNode, 'textStyleId');
+    textNode.update();
 }
 
-function updateFillStyle(style: FillStyle) {
-    fillStyleService.updateStyle(style);
+function changeStyle(changeTextStyle: Internal.TextStyle) {
+    textNode.fontSize = changeTextStyle.fontSize;
+    textNode.paragraphSpacing = changeTextStyle.paragraphIndent;
+    textNode.fontName = {...changeTextStyle.fontName};
+    textNode.letterSpacing = {...changeTextStyle.letterSpacing};
+    textNode.lineHeight = {...changeTextStyle.lineHeight};
+    textNode.textDecoration = changeTextStyle.textDecoration;
+    textNode.update();
 }
 
-function unFillSelectStyle() {
-    const cloneStyle = fillStyleService.cloneById(fillStyleId.value);
-    fillStyleService.addLocalStyle(cloneStyle);
-    selectFillStyle({id: cloneStyle.id});
+function saveTextStyle() {
+    textStyleSevice.saveStyle(util.transformTextStyleFromNode(textNode) as Internal.TextStyle);
+}
+
+function updateStyle(textStyle: Internal.TextStyle) {
+    textStyleSevice.updateStyle(textStyle);
+}
+
+function selectFillStyle(fill: {id: string}) {
+    textNode.fillStyleId = fill.id;
+    const style = fillStyleService.get(fill.id);
+    changeFillStyle(style);
+    textNode.update();
 }
 
 function saveFillStyle() {
-    fillStyleService.saveStyle(styleId.value);
+    fillStyleService.saveStyle(util.transformSolidFromNode(textNode) as Internal.SolidPaint);
+}
+
+function changeFillStyle(data: Partial<Internal.SolidPaint>) {
+    const { opacity, color } = data;
+    const solidPaint = new SolidPaint();
+    solidPaint.opacity = opacity;
+    solidPaint.color = color as Internal.RGB;
+    textNode.fills = [solidPaint];
+    textNode.update();
+}
+
+function updateFillStyle(solidPaint: Internal.SolidPaint & {id: string, name: string}){
+    console.log(solidPaint);
+    fillStyleService.updateStyle(solidPaint);
+}
+
+function unFillSelectStyle() {
+    Reflect.deleteProperty(textNode, 'fillStyleId');
+    textNode.update();
 }
 
 </script>
@@ -164,26 +171,14 @@ function saveFillStyle() {
 <template>
     <div class="mb-10">
         <Glyph 
-            :is-standard="isStandard"
-            :text-style="textStyle"
-            :style-list="styleList"
-            :is-repeat="isRepeat"
-            @add-style="saveStyle"
-            @change="selectStyle"
-            @select-style="selectStyle"
-            @update-style="updateStyle"
-            @un-select-style="unSelectStyle"
+            :is-local-style="isLocalStyle" :text-style="textStyle" :style-list="styleList" :is-repeat="isRepeat"
+            @add-style="saveTextStyle" @change="changeStyle" @select-style="selectStyle" @update-style="updateStyle"
+            @un-select-style="unSelectStyle" 
         />
         <m-clolor-widget 
-            :is-local-style="isLocalFillStyle"
-            :fill-style="fillStyle"
-            :style-list="fillStyleList"
-            :is-repeat="isFillRepeat"
-            @add-style="saveFillStyle"
-            @change="fillChage"
-            @select-style="selectFillStyle"
-            @update-style="updateFillStyle"
-            @un-select-style="unFillSelectStyle"
+            :is-local-style="isLocalFillStyle" :fill-style="fillStyle" :style-list="fillStyleList"
+            :is-repeat="isFillRepeat" @add-style="saveFillStyle" @change="changeFillStyle" @select-style="selectFillStyle"
+            @update-style="updateFillStyle" @un-select-style="unFillSelectStyle" 
         />
     </div>
 </template>

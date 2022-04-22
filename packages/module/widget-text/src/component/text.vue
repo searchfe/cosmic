@@ -2,7 +2,7 @@
 import {ref} from 'vue';
 import { MTitle, MWidget, service } from '@cosmic/core/browser';
 import Content from './widget/content.vue';
-import { inject } from '@cosmic/core/parts';
+import { inject, TextNode } from '@cosmic/core/parts';
 
  const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
@@ -12,7 +12,7 @@ const boardSwitch = () => {
     open.value = !open.value;
 };
  nodeService.selection.subscribe(selections => {
-     open.value = selections.some(item => item.type === 'TEXT');
+     open.value = selections.some(item => item instanceof TextNode);
  });
 
 </script>

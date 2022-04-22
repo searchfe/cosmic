@@ -13,13 +13,12 @@ interface TextLayout {
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 let subject: Subject<BaseNodeMixin>;
 
+let node: TextNode = nodeService.getSelection().find(item => item instanceof TextNode) as TextNode;
 
 const data= reactive<TextLayout>({
-    textAlignHorizontal: 'LEFT',
-    textAutoResize: 'NONE',
+    textAlignHorizontal: node.textAlignHorizontal,
+    textAutoResize: node.textAutoResize,
 });
-
-let node: TextNode = nodeService.getSelection().find(item => item instanceof TextNode) as TextNode;
 
 nodeService.selection.subscribe(nodes => {
     nodeService.unwatch(subject);
@@ -30,6 +29,7 @@ nodeService.selection.subscribe(nodes => {
     subject.subscribe(value => {
         toData(value as TextNode);
     });
+    toData(node);
 });
 
 
@@ -41,7 +41,6 @@ function toData(value: TextNode) {
 function update(key: 'textAlignHorizontal' | 'textAutoResize', value: any) {
     if (!node) return;
     node[key] = value;
-    console.log(node[key]);
     node.update();
 }
 

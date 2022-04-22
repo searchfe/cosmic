@@ -70,6 +70,11 @@ function unRef() {
     emits('unSelectStyle');
 }
 
+function editColorChange(event: {color: {r: number, g: number, b: number}, opacity: number}) {
+    editStyle.value.color = {...event.color};
+    editStyle.value.opacity = Math.round(event.opacity);
+}
+
 </script>
 
 <template>
@@ -102,8 +107,8 @@ function unRef() {
                     </span>
                 </m-title>
                 <m-color
-                    :color-style="fillStyle"
-                    @on-change="() => emits('change')"
+                    :fill-style="fillStyle"
+                    @change="(event) => emits('change', event)"
                 />
             </div>
             <m-standard
@@ -167,7 +172,10 @@ function unRef() {
         @ok="updateStyle"
     >
         <div :class="$style['color-content']">
-            <m-color :color-style="editStyle" />
+            <m-color
+                :fill-style="editStyle"
+                @change="(event) => editColorChange(event)"
+            />
         </div>
     </m-detail-modal>
 </template>

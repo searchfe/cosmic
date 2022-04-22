@@ -1,4 +1,6 @@
 import BaseStyle from './base-style';
+import { serializable } from '../serialize';
+
 export class TextStyle extends BaseStyle implements Internal.TextStyle {
     type: 'TEXT';
     fontSize: number;
@@ -12,7 +14,6 @@ export class TextStyle extends BaseStyle implements Internal.TextStyle {
 
     constructor(id: string) {
         super(id, 'TEXT');
-        // TODO:
         this.type = 'TEXT';
     }
 

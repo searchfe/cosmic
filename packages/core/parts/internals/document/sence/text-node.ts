@@ -46,6 +46,10 @@ export default class TextNode
         this.fontName = value;
     }
 
+    getRangeFontName(start: number, end: number) {
+        return this.fontName;
+    }
+
     setRangeTextDecoration(start: number, end: number, value: Internal.TextDecoration) {
         //  'STRIKETHROUGH' ? 'line-through'
         this.textDecoration = value;

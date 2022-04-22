@@ -1,7 +1,7 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { BaseService } from './base.service';
 import { service } from '@cosmic/core/browser';
-import { TextStyle } from '@cosmic/core/parts';
+import { TextNode, TextStyle } from '@cosmic/core/parts';
 import { fontDao } from '@cosmic/core/parts';
 import { TOKENS } from '../token';
 import { v4, v5 } from 'uuid';
@@ -21,18 +21,13 @@ const DEFAULT_STYLES = {
  */
 
 @injectable()
-export default class TextService extends BaseService<TextStyle> {
+export default class TextService extends BaseService<Internal.TextStyle> {
     private fontDao: ReturnType<typeof fontDao>;
     constructor(@inject(TOKENS.GqlClient) private client: service.GqlClient) {
         super();
         this.fontDao = fontDao(this.client);
         this.setType('TEXT');
         this.queryList();
-    }
-
-    public create(): TextStyle  {
-        const style = this.transformToLocal(DEFAULT_STYLES);
-        return style;
     }
 
     public cloneById(styleId: string, isChangeId = true): TextStyle {
@@ -64,34 +59,7 @@ export default class TextService extends BaseService<TextStyle> {
         });
     }
 
-    public async queryList() {
-        const { data } = await this.fontDao.query({});
-        const fonts = data?.fonts || [] as gql.Font[];
-        this.serviceStyles.clear();
-        fonts.map(font => this.transformToLocal(font)).forEach(font => this.addServiceStyle(font));
-        this.subject.next({type: 'R', data: ''});
-    }
-
-    public async saveStyle(id: string) {
-        const style = this.transformToService(this.get(id));
-        const team = await this.teamService.getCurrentUserTeam();
-        const { data } = await this.fontDao.create({...style, team: team?.id});
-        if (data?.createFont) {
-            await this.queryList();
-            this.subject.next({type: 'C', data: data.createFont?.id as string});
-        }
-    }
-
-    public async updateStyle(style: TextStyle) {
-        const serviceStyle = this.transformToService(style);
-        const {data} = await this.fontDao.update({...serviceStyle, id: style.id});
-        if (data?.updateFont) {
-            await this.queryList();
-            this.subject.next({type: 'U', data: style.id});
-        }
-    }
-
-    public transformToLocal(fontStyle: Partial<gql.Font>): TextStyle {
+    public transformToLocal(fontStyle: Partial<gql.Font>): Internal.TextStyle & {name: string, id: string} {
         const { id, name, size, family, style = '400', lineHeight } = fontStyle;
         const textStyle = new TextStyle(id!);
         textStyle.description = '默认描述';
@@ -105,10 +73,10 @@ export default class TextService extends BaseService<TextStyle> {
         return textStyle;
     }
 
-    public transformToService(target: Partial<TextStyle>): Partial<gql.Font> {
-        const { name, fontSize, fontName, lineHeight, letterSpacing, paragraphSpacing } = target as TextStyle & { lineHeight: {value: number}};
+    public transformToService(target: Partial<Internal.TextStyle>): Partial<gql.Font> {
+        const { name ='默认名称', fontSize, fontName, lineHeight, letterSpacing, paragraphSpacing } = target as TextStyle & { lineHeight: {value: number}};
         return {
-            name: name!,
+            name,
             size: fontSize ? fontSize + '' : '',
             weight: '10',
             lineHeight: String(lineHeight?.value),
@@ -117,6 +85,33 @@ export default class TextService extends BaseService<TextStyle> {
             team: '6166bd9cc13b026875181927',
             variant: '121212',
         };
+    }
+
+    public async queryList() {
+        const { data } = await this.fontDao.query({});
+        const fonts = data?.fonts || [] as gql.Font[];
+        this.serviceStyles.clear();
+        fonts.map(font => this.transformToLocal(font)).forEach(font => this.addServiceStyle(font));
+        this.subject.next({type: 'R', data: ''});
+    }
+
+    public async saveStyle(textStyle: Internal.TextStyle) {
+        const style = this.transformToService(textStyle);
+        const team = await this.teamService.getCurrentUserTeam();
+        const { data } = await this.fontDao.create({...style, team: team?.id});
+        if (data?.createFont) {
+            await this.queryList();
+            this.subject.next({type: 'C', data: data.createFont?.id as string});
+        }
+    }
+
+    public async updateStyle(style: Partial<Internal.TextStyle>) {
+        const serviceStyle = this.transformToService(style);
+        const {data} = await this.fontDao.update({...serviceStyle, id: style.id});
+        if (data?.updateFont) {
+            await this.queryList();
+            this.subject.next({type: 'U', data: style.id});
+        }
     }
 
 }

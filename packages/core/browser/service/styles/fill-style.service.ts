@@ -28,15 +28,6 @@ export default class FillStyleService extends BaseService<FillStyle> {
         return style;
     }
 
-    createBySolidPaint(paint: SolidPaint) {
-        const style = new FillStyle(v5('cosmic', v4()));
-        style.name = '默认名称';
-        style.opacity = paint.opacity as number;
-        style.color = {...paint.color, a: 1};
-        this.addLocalStyle(style);
-        return style;
-    }
-
     public cloneById(styleId: string, isChangeId = true): FillStyle {
         const style = this.get(styleId);
         const fillStyle = new FillStyle(isChangeId ? v5('cosmic', v4()) : styleId);
@@ -57,9 +48,9 @@ export default class FillStyleService extends BaseService<FillStyle> {
         return fillStyle;
     }
 
-    transformToService(fillStyle: FillStyle) {
-        const { name, color, opacity } = fillStyle;
-        return { 
+    transformToService(fillStyle: Internal.SolidPaint & Partial<{name: string}>) {
+        const { name = '默认名称', color, opacity } = fillStyle;
+        return {
             name,
             day: `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity})`,
             night: '',
@@ -84,10 +75,10 @@ export default class FillStyleService extends BaseService<FillStyle> {
         colors.filter(color => color.day)
         .map(color => this.transformToLocal(color))
         .forEach(color => this.addServiceStyle(color));
-        this.subject.next({type: 'R', data: this.getServiceStyles()});
+        this.subject.next({type: 'R', data: ''});
     }
 
-    public async updateStyle(fillStyle: FillStyle) {
+    public async updateStyle(fillStyle: Internal.SolidPaint & Partial<{id: string}>) {
         const style =  this.transformToService(fillStyle);
         const update = await this.colorDao.update({...style, id: fillStyle.id});
         const isSeccess = update.data?.updateColor;
@@ -97,8 +88,8 @@ export default class FillStyleService extends BaseService<FillStyle> {
         }
     }
 
-    public async saveStyle(id: string) {
-        const style = this.transformToService(this.get(id));
+    public async saveStyle(fillStyle: Internal.SolidPaint) {
+        const style = this.transformToService(fillStyle);
         const team = await this.teamService.getCurrentUserTeam();
         const { data } = await this.colorDao.create({...style, team: team?.id});
         if (data?.createColor) {
