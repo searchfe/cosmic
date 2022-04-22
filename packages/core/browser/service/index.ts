@@ -16,4 +16,4 @@ export { type default as ToolService, ToolState } from './interactivity/tool.ser
 export type { default as NodeService } from './document/node.service';
 export type { default as ComponentService } from './document/component.service';
 export type { default as DraftService } from './document/draft.service';
-export * from './styles';
+export * from './styles'; 

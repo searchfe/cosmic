@@ -1,11 +1,14 @@
-import { default as  BaseStyle } from './base-style';
+import SolidPaint from '../property/solid-paint';
 
-export class FillStyle extends BaseStyle {
-    color: Internal.RGBA;
-    opacity: number;
+export class FillStyle extends SolidPaint {
+    readonly id: string;
+    name: string;
+    description: string;
+
 
     constructor(id: string) {
-        super(id, 'SOLID' as any);
+        super();
+        this.id = id;
     }
 
     clone(): FillStyle {

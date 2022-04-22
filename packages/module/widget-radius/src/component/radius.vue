@@ -69,7 +69,7 @@ function unRef() {
             <m-title title="边角">
                 <i-cosmic-grid-outline :class="$style.icon" @click.stop="(event) => openStandardModal(event.currentTarget)" />
             </m-title>
-            <radius-content :radius-style="radiusStyle" @change="() => emits('change', radiusStyle)" />
+            <radius-content :radius-style="radiusStyle" @change="(event) => emits('change', event)" />
         </div>
         <template v-else>
             <m-standard :standard="radiusStyle" :can-edit="false" @click="(event) => openStandardModal(event.event.currentTarget)">
@@ -93,7 +93,7 @@ function unRef() {
             :standard-list="styleList"
             :target="standardTarget"
             @cancel="cancelStandardModal"
-            @add="() => emits('addStyle')"
+            @add="() => emits('addStyle', radiusStyle)"
             @select="(event) => selectStyle(event)"
             @show-detail="(event) => editStyleHandler(event.target, event.data.id)"
         >

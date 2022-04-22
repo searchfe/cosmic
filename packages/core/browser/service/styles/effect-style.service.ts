@@ -15,13 +15,9 @@ const DEFAULT_STYLES = {
     blur: '0',
     spread: '0',
 };
-interface SubjectSourceType {
-    type: 'C' | 'U' | 'D' | 'R';
-    data?: Partial<EffectStyle>[] | string;
-}
 
 @injectable()
-export default class EffectStyleService extends BaseService<EffectStyle, SubjectSourceType> {
+export default class EffectStyleService extends BaseService<EffectStyle> {
     private shadowDao: ReturnType<typeof shadowDao>;
     constructor(@inject(TOKENS.GqlClient) private client: service.GqlClient) {
         super();
@@ -61,9 +57,8 @@ export default class EffectStyleService extends BaseService<EffectStyle, Subject
         return effectStyle;
     }
 
-    transformToService(effectStyle: EffectStyle): Partial<gql.Shadow> {
-        const { name , effects } = effectStyle ;
-        const { offset, radius, spread } = (effects[0] || {}) as Internal.DropShadowEffect;
+    transformToService(effectStyle: Internal.DropShadowEffect & Partial<{name: string}>): Partial<gql.Shadow> {
+        const { name = '默认名称' , offset, radius, spread } = effectStyle ;
         return {
             name,
             offsetX: offset.x + '',
@@ -74,15 +69,16 @@ export default class EffectStyleService extends BaseService<EffectStyle, Subject
         };
     }
 
-    public async saveStyle(id: string) {
-        const style = this.transformToService(this.get(id)!);
+    public async saveStyle(s: Internal.DropShadowEffect) {
+        console.log(12);
+        const style = this.transformToService(s);
         const { data } = await this.shadowDao.create(style);
         if (!data?.createShadow) return;
         await this.queryList();
         this.subject.next({type: 'C', data: data?.createShadow.id as string} );
     }
 
-    public async updateStyle(style: EffectStyle) {
+    public async updateStyle(style: Internal.DropShadowEffect & {id: string, name: string}) {
         const serviceStyle = this.transformToService(style);
         const {data} = await this.shadowDao.update({...serviceStyle, id: style.id});
         if (data?.updateShadow) {

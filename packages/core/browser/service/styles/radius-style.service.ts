@@ -35,39 +35,39 @@ export default class RadiusStyleService extends BaseService<RadiusStyle> {
     transformToLocal(radius: gql.Corner) {
         const {tl, tr, bl, br, name, id} = radius; 
         const radiusStyle = new RadiusStyle(id);
-        radiusStyle.tl = parseInt(tl[0], 10);
-        radiusStyle.tr = parseInt(tr[0], 10);
-        radiusStyle.bl = parseInt(bl[0], 10);
-        radiusStyle.br = parseInt(br[0], 10);
+        radiusStyle.topLeftRadius = parseInt(tl[0], 10);
+        radiusStyle.topRightRadius = parseInt(tr[0], 10);
+        radiusStyle.bottomLeftRadius = parseInt(bl[0], 10);
+        radiusStyle.bottomRightRadius = parseInt(br[0], 10);
         radiusStyle.name = name;
         return radiusStyle;
     }
 
-    transformToService(radius: RadiusStyle) {
-       const { name, tl, tr, bl, br } = radius;
+    transformToService(radius: Internal.RectangleCornerMixin & Partial<{name: string}>) {
+       const {name = '默认名称', topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius } = radius;
        return {
             name,
-            tl: [tl + ''],
-            tr: [tr + ''],
-            bl: [bl + ''],
-            br: [br + ''],
+            tl: [topLeftRadius + ''],
+            tr: [topRightRadius + ''],
+            bl: [bottomLeftRadius + ''],
+            br: [bottomRightRadius + ''],
        };
     }
 
     public cloneById(styleId: string, isChangeId = true): RadiusStyle {
         const style = this.get(styleId);
         const radiusStyle = new RadiusStyle(isChangeId ? v5('cosmic', v4()) : styleId);
-        const {id, name, tl, tr, bl, br} = style;
+        const {id, name, topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius} = style;
         radiusStyle.name = name;
-        radiusStyle.tl = tl;
-        radiusStyle.tr = tr;
-        radiusStyle.bl = bl;
-        radiusStyle.br = br;
+        radiusStyle.topLeftRadius = topLeftRadius;
+        radiusStyle.topRightRadius = topRightRadius;
+        radiusStyle.bottomLeftRadius = bottomLeftRadius;
+        radiusStyle.bottomRightRadius = bottomRightRadius;
         return radiusStyle;
     }
 
-    public async saveStyle(id: string) {
-        const style = this.transformToService(this.get(id));
+    public async saveStyle(radiusStyle: Internal.RectangleCornerMixin) {
+        const style = this.transformToService(radiusStyle);
         const team = await this.teamService.getCurrentUserTeam();
         const { data } = await this.cornerDao.create({...style, team: team?.id});
         if (data?.createCorner) {
@@ -76,7 +76,7 @@ export default class RadiusStyleService extends BaseService<RadiusStyle> {
         }
     }
 
-    public async updateStyle(style: RadiusStyle) {
+    public async updateStyle(style: Internal.RectangleCornerMixin & {name: string, id: string}) {
         const serviceStyle = this.transformToService(style);
         const {data} = await this.cornerDao.update({...serviceStyle, id: style.id});
         if (data?.updateCorner) {

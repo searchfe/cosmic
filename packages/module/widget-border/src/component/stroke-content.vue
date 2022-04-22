@@ -2,6 +2,7 @@
 import { Row, Col, Select, SelectOption, RadioGroup, RadioButton, InputNumber } from 'cosmic-vue';
 import type { StrokeStyle } from '@cosmic/core/parts';
 import { Border, BorderStyle } from '../data';
+import { toRaw } from 'vue';
 withDefaults(defineProps<{
     strokeStyle: StrokeStyle
 }>(), {
@@ -10,9 +11,16 @@ withDefaults(defineProps<{
 
 const emits = defineEmits(['change']);
 
-function changeStyle(strokeStyle, field: string, event) {
-    strokeStyle[field] = event.value;
-    emits('change');
+function changeStyle(strokeStyle: any, key: string, data: {value: string}) {
+    let value = data.value;
+    const changeStyle = toRaw(strokeStyle);
+    if (key === 'strokeWeight') {
+        changeStyle[key] = parseInt(value, 10);
+    } else {
+         changeStyle[key] = value;
+    }
+    console.log(changeStyle);
+    emits('change', changeStyle);
 }
 
 </script>
@@ -43,8 +51,8 @@ function changeStyle(strokeStyle, field: string, event) {
             >
                 <Select
                     size="sm"
-                    :value="strokeStyle.style"
-                    @on-change="(event) => changeStyle(strokeStyle, 'style', event)"
+                    :value="strokeStyle.strokeLineStyle"
+                    @on-change="(event) => changeStyle(strokeStyle, 'strokeLineStyle', event)"
                 >
                     <template #prefix>
                         <i-cosmic-border />

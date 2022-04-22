@@ -29,6 +29,7 @@ nodeService.selection.subscribe(nodes => {
     subject.subscribe(value => {
         toData(value as TextNode);
     });
+    toData(node);
 });
 
 
@@ -40,7 +41,6 @@ function toData(value: TextNode) {
 function update(key: 'textAlignHorizontal' | 'textAutoResize', value: any) {
     if (!node) return;
     node[key] = value;
-    console.log(node[key]);
     node.update();
 }
 

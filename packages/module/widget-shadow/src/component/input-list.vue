@@ -1,18 +1,24 @@
 <script lang="ts" setup>
-import type { EffectStyle } from '@cosmic/core/parts';
 import { Row, Col, InputNumber } from 'cosmic-vue';
+import { toRaw } from 'vue';
 
 withDefaults(defineProps<{
-    effectStyle: EffectStyle,
+    effectStyle: Partial<Internal.DropShadowEffect>,
 }>(), {
     effectStyle: () => ({}),
 });
 
 const emits = defineEmits(['change']);
 
-function changeStyle(style, field: string, event) {
-    style[field] = event.value || '0';
-    emits('change');
+function changeStyle(style: any, key: string, event: {value: any}) {
+    const value = event.value;
+    const changeStyle = toRaw(style) as any;
+    if (key === 'x' || key === 'y') {
+        changeStyle.offset = {...changeStyle.offset, [key]: parseInt(value || '0')};
+    } else {
+        changeStyle[key] = parseInt(value || '0');
+    }
+    emits('change', changeStyle);
 }
 
 </script>
@@ -24,7 +30,7 @@ function changeStyle(style, field: string, event) {
                 <input-number
                     :class="[$style['input']]"
                     :value="effectStyle.offset.x"
-                    @on-input="(data) => changeStyle(effectStyle.offset, 'x',data)"
+                    @on-input="(data) => changeStyle(effectStyle, 'x',data)"
                 >
                     <template #prefix>
                         <i-cosmic-x :class="[$style['icon']]" />
@@ -37,7 +43,7 @@ function changeStyle(style, field: string, event) {
                 <input-number
                     :class="[$style['input']]"
                     :value="effectStyle.offset.y"
-                    @on-input="(data) => changeStyle(effectStyle.offset, 'y', data)"
+                    @on-input="(data) => changeStyle(effectStyle, 'y', data)"
                 >
                     <template #prefix>
                         <i-cosmic-y :class="[$style['icon']]" />

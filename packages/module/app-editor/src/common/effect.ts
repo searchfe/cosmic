@@ -1,5 +1,5 @@
 import { toRaw } from 'vue';
-import { BlendMixin, util, Paint } from '@cosmic/core/parts';
+import { util, Paint, SceneNode } from '@cosmic/core/parts';
 
 export default {
     mounted(el: HTMLElement, binding: any) {
@@ -11,15 +11,15 @@ export default {
 };
 
 function changeStyle(el: HTMLElement, binding: any) {
-    const node = toRaw(toRaw(binding.value).target) as BlendMixin & {effectStrokes: Array<any>};
+    const node = toRaw(toRaw(binding.value).target) as SceneNode;
     const field = toRaw(toRaw(binding.value).field) || 'boxShadow';
-    const { effects = [], effectStrokes = [] } = node;
+    const { effects = []} = node;
     const effect = effects[0];
     if (!effect) {
         el.style[field] = 'none';
         return;
     }
-    const [fill] = effectStrokes;
+    const fill = node.getPluginData('effectStores');
     const color = util.toBackgroundStyle(fill as Paint) || '#000000';
     const {offset, spread, radius} = effect as any;
     let shadow = '';

@@ -1,71 +1,40 @@
 <script lang="ts" setup>
+import { computed } from 'vue';
+import { InputNumber } from 'cosmic-vue';
 import Color from 'color';
-import { ref, defineEmits, reactive, computed, watch} from 'vue';
+
 const props = withDefaults(defineProps<{
-    colorStyle: any,
-    theme?: string,
-}>(),  {
-    theme: 'light',
-    colorStyle: () => ({}),
+    fillStyle: Internal.SolidPaint
+}>(), {});
+
+const emits = defineEmits(['change']);
+
+const opacity = computed(() => !props.fillStyle || props.fillStyle.opacity == undefined ? 100 : props.fillStyle.opacity * 100);
+
+const color = computed(() => {
+    const rgb = props.fillStyle.color;
+    const cObj = new Color(rgb).hex();
+    return cObj;
 });
 
-const emits = defineEmits(['onChange']);
-
-const c = props.colorStyle.color && Color.rgb(props.colorStyle.color.r, props.colorStyle.color.g, props.colorStyle.color.b).hex();
-
-const rg = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/;
-
-
-const color = ref(c);
-
-const opacity = ref(Number(props.colorStyle.opacity) * 100 + '%');
-
-const theme = ref(props.theme);
-
-const changeEvent = () => {
-    emits('onChange', {color: color.value, opacity: opacity.value, theme: theme.value, colorObj: new Color(color.value)});
-};
-
-const colorBurHandler = (colorStyle) => {
-    let value = color.value || '';
-    if (!value.startsWith('#')) value = `#${value}`;
+function colorBurHandler(event: InputEvent, opacity: number) {
+    const target = event.target as any;
+    let color;
     try {
-        const colorObj = new Color(value);
+        let v = target.value as string;
+        if (!v.startsWith('#')) v = `#${v}`;
+        color = new Color(v).object();
     } catch {
-        value = '#000000';
+        color = new Color('#000000');
     }
-    color.value = value;
-    colorStyle.color = new Color(value).object();
-    changeEvent();
-};
+    emits('change', {color, opacity});
+}
 
-const opacityBurHandler = (colorStyle) => {
-    let number = Number(opacity.value || 100);
-    if (Object.is(NaN, number)) number = 100;
-    let value = number;
-    if (value > 100 || value < 0) value = 100;
-    opacity.value = `${value}%`;
-    colorStyle.opacity = number / 100;
-    console.log(colorStyle.opacity);
-    changeEvent();
-};
-
-const focusHandler = (event:FocusEvent) => {
-    const target = event.target as HTMLInputElement;
-    target.select();
-};
-
-const themeClickHandler = () => {
-    theme.value = theme.value === 'light' ? 'dark' : 'light';
-    changeEvent();
-};
-
-watch(() => props.colorStyle, (newValue) => {
-    const c = newValue.color && Color.rgb(newValue.color.r, newValue.color.g, newValue.color.b).hex();
-    color.value = c;
-    opacity.value = newValue.opacity;
-});
-
+function opacityBurHandler(data: {value: string}, originOpacity: number, color: string) {
+    const opacity = parseInt(data.value || '100', 10);
+    emits('change', {color: new Color(color).object(), opacity: Math.round(opacity / 100)});
+}
+ 
 </script>
 
 <template>
@@ -92,30 +61,31 @@ watch(() => props.colorStyle, (newValue) => {
                 class="w-14 h-14"
             >
                 <input
-                    v-model="color"
+                    :value="color"
                     :class="$style['input-color']"
                     class="w-12 h-12"
                     type="color"
-                    @input="() => colorBurHandler(colorStyle)"
+                    @input="(event) => colorBurHandler(event, opacity)"
                 >
             </div>
             <input
-                v-model="color"
+                :value="color"
                 :class="[$style.input]"
                 :size="10"
                 @focus="focusHandler"
-                @blur="() => colorBurHandler(colorStyle)"
+                @blur="(event) => colorBurHandler(event, opacity)"
             >
         </div>
         <!-- <div :class="$style.divider" /> -->
         <div :class="$style.opacity">
-            <input
-                v-model="opacity"
-                :class="[$style.input]"
+            <input-number
                 :size="5"
+                :value="opacity"
+                :controls="false"
+                type="percent"
                 @focus="focusHandler"
-                @blur="() => opacityBurHandler(colorStyle)"
-            >
+                @on-input="(event) => opacityBurHandler(event, opacity, color)"
+            />
         </div>
     </div>
 </template>

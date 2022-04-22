@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { ref, computed, watchEffect } from 'vue';
+import { ref } from 'vue';
 import { MTitle, MWidget, MClolorWidget, service} from '@cosmic/core/browser';
-import { inject, FrameNode, hasMixin, MinimalStrokesMixin, BaseNodeMixin, TextNode, FillStyle, StrokeStyle } from '@cosmic/core/parts';
+import { inject, FrameNode, hasMixin, MinimalStrokesMixin, BaseNodeMixin, TextNode, util, SolidPaint } from '@cosmic/core/parts';
+import { type Subject } from '@cosmic/core/rxjs';
 import Stroke from './stroke.vue';
 
 const isShowDetail = ref(false);
@@ -11,147 +12,144 @@ const fillStyleService = inject<service.FillStyleService>(service.TOKENS.FillSty
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 let strokeNode = nodeService.getSelection().find(item => hasMixin(item, MinimalStrokesMixin)) as TextNode | FrameNode;
+let subject: Subject<BaseNodeMixin>;
 
-const strokeId = ref(getStrokeStyle(strokeNode).id);
-
-
-const isLocalStyle = computed(() => strokeStyleSevice.isLocalStyle(strokeId.value));
-
-const strokeStyle = computed(() => strokeStyleSevice.get(strokeId.value));
-
+const strokeStyle = ref<Partial<MinimalStrokesMixin>>();
 const strokeStyleList = ref(strokeStyleSevice.getServiceStyles());
+const isLocalStoreStyle = ref<boolean>();
 
-const fillStyleId = ref(getFillStyle(strokeNode)?.id);
+const strokePainStyle = ref<Partial<Internal.SolidPaint>>();
+const isLocalStrokePainStyle = ref<boolean>();
+const strokePainStyleList = ref(fillStyleService.getServiceStyles());
 
-const fillStyle = ref();
-
-const isLocalFillStyle = ref(false);
-
-const fillStyleList = ref(fillStyleService.getServiceStyles());
-
-watchEffect(() =>  {
-    const id = fillStyleId.value as string;
-    resetFillStyle(id);
-    isLocalFillStyle.value = fillStyleService.isLocalStyle(id);
+strokeStyleSevice.subject.subscribe((res: service.SubjectSourceType) => {
+    strokeStyleList.value = strokeStyleSevice.getServiceStyles();
+    const { type, data } = res;
+    switch(type) {
+        case 'C':
+            strokeNode.strokeStyleId = data as string;
+            break;
+        case 'U':
+            if (strokeNode.strokeStyleId === data) {
+                changeStoreStyle(strokeStyleSevice.get(data as string) as any);
+            }
+    }
 });
 
-nodeService.selection.subscribe((nodes) => {    
+fillStyleService.subject.subscribe((res: service.SubjectSourceType) => {
+    strokePainStyleList.value = fillStyleService.getServiceStyles();
+    const { type, data } = res;
+    switch(type) {
+        case 'C':
+            strokeNode.setPluginData('strokePainId', data);
+            
+            break;
+        case 'U':
+            if (strokeNode.getPluginData('strokePainId') === data) {
+                changeStrokePainStyle(fillStyleService.get(data as string) as any);
+            }
+    }
+
+});
+
+nodeService.selection.subscribe(nodes => {
     const selectNode = nodes.find(item => hasMixin(item, MinimalStrokesMixin)) as TextNode | FrameNode;
     if (!selectNode) return;
-    getStrokeStyle(selectNode);
-    getFillStyle(selectNode);
-    strokeId.value = selectNode.strokeId;
-    fillStyleId.value = selectNode.strokeStyleId;
+    strokeNode = selectNode;
+    resetStorePainStyle(strokeNode);
+    resetStoreStyle(strokeNode);
+    watchNode(strokeNode);
 });
 
-strokeStyleSevice.subject.subscribe(source => {
-    const  { type, data } = source;
-    strokeStyleList.value = strokeStyleSevice.getServiceStyles();
-    switch(type) {
-        case 'C':
-        case 'U':
-            selectStyle({id: data as string});
-            styleChange();
-    }
-});
-
-
-fillStyleService.subject.subscribe((source: any) => {
-    const  { type, data } = source;
-    fillStyleList.value = fillStyleService.getServiceStyles();
-    switch(type) {
-        case 'C':
-        case 'U':
-            selectFillStyle({id: data as string});
-            resetFillStyle(data as string);
-    }
-
-});
+watchNode(strokeNode);
 
 const clickHandler = () => {
     isShowDetail.value = !isShowDetail.value;
 };
 
-function getStrokeStyle(node: TextNode | FrameNode) {
-    if (!node) return {} as TextNode | FrameNode;
-    const strokeStyle = strokeStyleSevice.get((node as any).strokeId || Date.now() + '');
-    if ((node as any).strokeId !== strokeStyle.id) {
-        (node as any).strokeId = strokeStyle.id;
-    }
-    return strokeStyle;
+function watchNode(node: TextNode | FrameNode) {
+    nodeService.unwatch(subject);
+    subject = nodeService.watch(node);
+    subject.subscribe(() => {
+        resetStoreStyle(node);
+        resetStorePainStyle(node);
+    });
+    resetStoreStyle(node);
+    resetStorePainStyle(node);
+    
 }
 
-function styleChange() {
-    const style = strokeStyleSevice.get(strokeNode.strokeId);
-    strokeNode.strokeWeight = Number(style.strokeWeight);
-    strokeNode.strokeLineStyle = style.style;
-    if (hasMixin(strokeNode, BaseNodeMixin)) {
-        strokeNode.update();
+function resetStoreStyle(node: TextNode | FrameNode) {
+    if (node.strokeStyleId) {
+    
+        isLocalStoreStyle.value = false;
+        strokeStyle.value = strokeStyleSevice.cloneById(node.strokeStyleId, false) as Partial<MinimalStrokesMixin>;
+    } else {
+        strokeStyle.value = util.transformStokeFromNode(node);
+        isLocalStoreStyle.value = true;
     }
+}
+
+function resetStorePainStyle(node: TextNode | FrameNode) {
+    if (node.getPluginData('strokePainId')) {
+        isLocalStrokePainStyle.value = false;
+        strokePainStyle.value = fillStyleService.get(node.getPluginData('strokePainId'));
+    } else {
+        isLocalStrokePainStyle.value = true;
+        strokePainStyle.value = util.transformStrokePainFromNode(node);
+    }
+}
+
+function changeStoreStyle(data: MinimalStrokesMixin) {
+    strokeNode.strokeWeight = data.strokeWeight;
+    strokeNode.strokeLineStyle = data.strokeLineStyle;
+    strokeNode.update();
+}
+
+function selectStoreStyle(data: {id: string}) {
+    strokeNode.strokeStyleId = data.id;
+    changeStoreStyle(strokeStyleSevice.get(data.id) as any);
 }
 
 function saveStrokeStyle() {
-    strokeStyleSevice.saveStyle(strokeId.value);
+    strokeStyleSevice.saveStyle(util.transformStokeFromNode(strokeNode) as MinimalStrokesMixin);   
 }
 
-function selectStyle(data: {id: string}) {
-    strokeId.value = data.id;
-    strokeNode.strokeId = data.id; 
-    styleChange();
-}
-
-function updateStyle(style: StrokeStyle) {
+function updateStoreStyle(style: MinimalStrokesMixin) {
     strokeStyleSevice.updateStyle(style);
 }
 
-function unSelectStyle() {
-    const textStyle = strokeStyleSevice.cloneById(strokeId.value);
-    strokeStyleSevice.addLocalStyle(textStyle);
-    selectStyle({id: textStyle.id});
-} 
-
-function getFillStyle(node: TextNode | FrameNode ) {
-    if (!node) return;
-    const fillStyle = fillStyleService.get(node.strokeStyleId ?? Date.now() + '');
-    if (node.strokeStyleId !== fillStyle.id) {
-        node.strokeStyleId = fillStyle.id;
-    }
-    return fillStyle;
+function unSelectStoreStyle() {
+    Reflect.deleteProperty(strokeNode, 'strokeStyleId');
+    strokeNode.update();
 }
 
-function fillChage() {
-    const node = nodeService.getSelection().find(item => hasMixin(item, MinimalStrokesMixin)) as MinimalStrokesMixin;
-    const style = fillStyleService.get(node.strokeStyleId);
-    node.strokes = [style];
-    if (hasMixin(node, BaseNodeMixin)) {
-        node.update();
-    }
+function changeStrokePainStyle(data: Internal.SolidPaint) {
+    const { opacity, color } = data;
+    const solidPaint = new SolidPaint();
+    solidPaint.opacity = opacity;
+    solidPaint.color = color as Internal.RGB;
+    strokeNode.strokes = [solidPaint];
+    strokeNode.update();
 }
 
-function resetFillStyle(id: string) {
-    fillStyle.value = fillStyleService.get(id);
+function selectStrokePainStyle(data: {id: string}) {
+    strokeNode.setPluginData('strokePainId', data.id);
+    changeStrokePainStyle(fillStyleService.get(data.id));
 }
 
-function selectFillStyle(data: {id: string}) {
-    fillStyleId.value = data.id;
-    strokeNode.strokeStyleId = data.id;
-    fillChage();
+function unSelectStrokePainStyle() {
+    strokeNode.setPluginData('strokePainId', void 0);
+    strokeNode.update();
 }
 
-function unFillSelectStyle() {
-    const cloneStyle = fillStyleService.cloneById(fillStyleId.value as string);
-    fillStyleService.addLocalStyle(cloneStyle);
-    selectFillStyle({id: cloneStyle.id});
+function saveStrokePainStyle() {
+    fillStyleService.saveStyle(util.transformStrokePainFromNode(strokeNode));
 }
 
-function saveFillStyle() {
-    fillStyleService.saveStyle(fillStyleId.value as string);
-}
-
-function updateFillStyle(style: FillStyle) {
+function updateStrokePainStyle(style: Internal.SolidPaint) {
     fillStyleService.updateStyle(style);
 }
-
 
 </script>
 
@@ -170,24 +168,24 @@ function updateFillStyle(style: FillStyle) {
             </m-title>
             <div v-if="isShowDetail" :class="$style.detail">
                 <Stroke 
-                    :is-local-style="isLocalStyle"
+                    :is-local-style="isLocalStoreStyle"
                     :stroke-style="strokeStyle" 
                     :style-list="strokeStyleList"
                     @add-style="saveStrokeStyle"
-                    @update-style="updateStyle"
-                    @select-style="selectStyle"
-                    @change="styleChange" 
-                    @un-select-style="unSelectStyle"
+                    @update-style="updateStoreStyle"
+                    @select-style="selectStoreStyle"
+                    @change="changeStoreStyle" 
+                    @un-select-style="unSelectStoreStyle"
                 />
                 <m-clolor-widget 
-                    :is-local-style="isLocalFillStyle"
-                    :fill-style="fillStyle"
-                    :style-list="fillStyleList"
-                    @add-style="saveFillStyle"
-                    @change="fillChage"
-                    @select-style="selectFillStyle"
-                    @update-style="updateFillStyle"
-                    @un-select-style="unFillSelectStyle"
+                    :is-local-style="isLocalStrokePainStyle"
+                    :fill-style="strokePainStyle"
+                    :style-list="strokePainStyleList"
+                    @change="changeStrokePainStyle"
+                    @select-style="selectStrokePainStyle"
+                    @add-style="saveStrokePainStyle"
+                    @update-style="updateStrokePainStyle"
+                    @un-select-style="unSelectStrokePainStyle"
                 />
             </div>
         </m-widget>

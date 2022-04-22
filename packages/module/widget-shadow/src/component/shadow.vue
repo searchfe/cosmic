@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service } from '@cosmic/core/browser';
 import { inject } from '@cosmic/core/parts';
 import InputList from './input-list.vue';
@@ -8,7 +8,7 @@ const effectStyleSevice = inject<service.EffectStyleService>(service.TOKENS.Effe
 
 const emits = defineEmits(['change', 'addStyle', 'selectStyle', 'unSelectStyle', 'updateStyle', 'unSelectStyle']);
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
     insetTitle: string;
     isLocalStyle: boolean,
     shadowStyle: any,
@@ -47,8 +47,6 @@ watchEffect(() => {
 });
 
 
-const effectStyle = computed(() => props.shadowStyle && props.shadowStyle.effects ? props.shadowStyle && props.shadowStyle.effects[0] : {});
-
 function selectStyle(event: {data: Record<string, string>}) {
     cancelStandardModal(),
     cancelDetailModal(),
@@ -80,7 +78,7 @@ function updateStyle() {
                     class="-v-bg-inapparent"
                 />
             </m-title>
-            <input-list :effect-style="effectStyle" @change="() => emits('change', shadowStyle)" />
+            <input-list :effect-style="shadowStyle" @change="(event) => emits('change', event)" />
         </div>
         <template v-else>
             <MStandard
@@ -115,7 +113,7 @@ function updateStyle() {
             :title="insetTitle + '规范'"
             :standard-list="styleList"
             :target="standardTarget"
-            @add="() => emits('addStyle')"
+            @add="() => emits('addStyle', shadowStyle)"
             @cancel="cancelStandardModal"
             @select="selectStyle"
             @show-detail="(event) => editStyleHandler(event.target, event.data.id)"
