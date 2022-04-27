@@ -23,14 +23,4 @@ export default class PageNode
     prototypeBackgrounds = [];
 
     readonly prototypeStartNode = null;
-
-    _serialize() {
-        return {
-            type: this.type,
-            id: this.id,
-            name: this.name,
-            backgrounds: this.backgrounds.map(bg => bg),
-            // children: this.children.map(child => child.serialize()),
-        };
-    }
 }
