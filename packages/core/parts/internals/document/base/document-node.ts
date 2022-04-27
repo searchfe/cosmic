@@ -62,14 +62,4 @@ export default class DocumentNode extends BaseNodeMixin implements Internal.Docu
             return criteria.types.indexOf(node.type) > -1;
         });
     }
-
-    _serialize() {
-        const result = {
-            type: this.type,
-            id: this.id,
-            name: this.name,
-            // children: this.children.map(child => child.serialize()),
-        };
-        return result;
-    }
 }
