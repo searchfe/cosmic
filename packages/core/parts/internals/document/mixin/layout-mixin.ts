@@ -8,8 +8,6 @@ export default class LayoutMixin implements Internal.LayoutMixin {
 
     VerticalStretch = 0;
     HorizontalStretch = 0;
-    VerticalLayout = 0;
-    HorizontalLayout = 0;
     b = 0;
     r = 0;
 
@@ -25,38 +23,38 @@ export default class LayoutMixin implements Internal.LayoutMixin {
 
 
     resize(width: number, height: number) {
-        switch(this.HorizontalLayout) {
-            case 0:
-                this.width = width;
-                break;
-            case 1:
-                this.x = ((this as any).parent.width - this.width - this.r);
-                this.width = width;
-                break;
-            case 2:
-                this.width = ((this as any).parent.width - this.x - this.r);
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-        }
-        switch(this.VerticalLayout) {
-            case 0:
-                this.height = height;
-                break;
-            case 1:
-                this.y = ((this as any).parent.height - this.height - this.b);
-                this.height = height;
-                break;
-            case 2:
-                this.height = ((this as any).parent.height - this.y - this.b);
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-        }
+        // switch(this.HorizontalLayout) {
+        //     case 0:
+        //         this.width = width;
+        //         break;
+        //     case 1:
+        //         this.x = ((this as any).parent.width - this.width - this.r);
+        //         this.width = width;
+        //         break;
+        //     case 2:
+        //         this.width = ((this as any).parent.width - this.x - this.r);
+        //         break;
+        //     case 3:
+        //         break;
+        //     case 4:
+        //         break;
+        // }
+        // switch(this.VerticalLayout) {
+        //     case 0:
+        //         this.height = height;
+        //         break;
+        //     case 1:
+        //         this.y = ((this as any).parent.height - this.height - this.b);
+        //         this.height = height;
+        //         break;
+        //     case 2:
+        //         this.height = ((this as any).parent.height - this.y - this.b);
+        //         break;
+        //     case 3:
+        //         break;
+        //     case 4:
+        //         break;
+        // }
         ((this as any).children || []).forEach((child: any) => {
             child.resize(child.width, child.height);
             child.update();

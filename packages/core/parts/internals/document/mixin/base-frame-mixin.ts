@@ -3,7 +3,7 @@ import BaseNodeMixin from './base-node-mixin';
 import BlendMixin from './blend-mixin';
 import ChildrenMixin from './children-mixin';
 import CornerMixin from './coner-mixin';
-// import ConstraintMixin from './constraint-mixin';
+import ConstraintMixin from './constraint-mixin';
 import ContainerMixin from './container-mixin';
 import ExportMixin from './export-mixin';
 import GeometryMixin from './geometry-mixin';
@@ -12,7 +12,7 @@ import RectangleCornerMixin from './rectangle-corner-mixin';
 import SenceNodeMixin from './scene-node-mixin';
 
 export default class BaseFrameMixin
-    extends Mixin(
+    extends Mixin(Mixin(
         BaseNodeMixin,
         SenceNodeMixin,
         ChildrenMixin,
@@ -21,10 +21,9 @@ export default class BaseFrameMixin
         CornerMixin,
         RectangleCornerMixin,
         BlendMixin,
-        // ConstraintMixin,
         LayoutMixin,
         ExportMixin,
-    ) implements Internal.BaseFrameMixin{
+    ), ConstraintMixin) implements Internal.BaseFrameMixin{
     constraints: Internal.Constraints;        
     layoutMode: 'NONE' | 'HORIZONTAL' | 'VERTICAL';
     primaryAxisSizingMode: 'FIXED' | 'AUTO'; // applicable only if layoutMode != 'NONE'
