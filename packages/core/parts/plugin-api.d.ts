@@ -332,8 +332,8 @@ declare namespace Internal {
   type ConstraintType = 'MIN' | 'CENTER' | 'MAX' | 'STRETCH' | 'SCALE'
   
   interface Constraints {
-    readonly horizontal: ConstraintType
-    readonly vertical: ConstraintType
+    horizontal: ConstraintType
+    vertical: ConstraintType
   }
   
   interface ColorStop {

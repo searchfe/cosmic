@@ -1,26 +1,28 @@
 <script lang="ts" setup>
-import { ref, watchEffect, type Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { type Subject } from '@cosmic/core/rxjs';
 import { MTitle, MWidget, service } from '@cosmic/core/browser';
-import { inject, BaseNodeMixin, LayoutMixin, SceneNode, hasMixin } from '@cosmic/core/parts';
+import { inject, BaseNodeMixin, LayoutMixin, SceneNode, hasMixin, ConstraintType, ConstraintMixin } from '@cosmic/core/parts';
 import { Select, SelectOption, Row, Col} from 'cosmic-vue';
+import StateHelper from './common/state-helper';
 
-import { VerticalStretchValue, HorizontalStretchValue, HorizontalLayoutValue, VerticalLayoutValue } from './data';
+import {
+        VerticalStretchValue,
+        HorizontalStretchValue,
+        HorizontalConstraintOptions, 
+        VerticalConstraintOptions,
+    } from './common/data';
 
 interface LayoutData {
     // layoutAlign: 'MIN' | 'CENTER' | 'MAX' | 'STRETCH' | 'INHERIT';
     HorizontalStretch: number,
     VerticalStretch: number,
-    VerticalLayout: number;
-    HorizontalLayout: number;
 }
 
 
 const data: Ref<LayoutData>  = ref({
     HorizontalStretch: 0,
     VerticalStretch: 0,
-    VerticalLayout: 0,
-    HorizontalLayout: 0,
 
 } as LayoutData);
 
@@ -45,104 +47,56 @@ nodeService.selection.subscribe(nodes => {
         subject.subscribe((n) => {
             toData(n as any);
         });
-        toData(node);
+        toData(node as any);
         isShow.value = true;
     }
 });
 
-const HorizontalLayoutValues = ref(HorizontalLayoutValue);
-const VerticalLayoutValues = ref(VerticalLayoutValue);
-const stateHelper = ref({top: false, right: false, bottom: false, left: false, x: false, y: false});
-
-function toData(node: LayoutMixin) {
-    data.value.VerticalStretch = node.VerticalStretch || 0;
-    data.value.HorizontalStretch = node.HorizontalStretch || 0;
-    data.value.VerticalLayout = node.VerticalLayout || 0;
-    data.value.HorizontalLayout = node.HorizontalLayout || 0;
-    HorizontalLayoutValues.value = HorizontalLayoutValue.slice(0, node.HorizontalStretch ? 3: 5);
-    VerticalLayoutValues.value = VerticalLayoutValue.slice(0, node.VerticalStretch ? 3: 5);
-}
-
-watchEffect(() => {
-    stateHelper.value.top = false;
-    stateHelper.value.y = false;
-    stateHelper.value.bottom = false;
-    switch(data.value.VerticalLayout) {
-        case 0:
-            stateHelper.value.top = true;
-            break;
-        case 1:
-            stateHelper.value.bottom = true;
-            break;
-        case 2:
-            stateHelper.value.top = true;
-            stateHelper.value.bottom = true;
-            break;
-        case 3:
-            stateHelper.value.y = true;
-            break;
-        case 4:
-            stateHelper.value.y = true;
-            stateHelper.value.top = true;
-            stateHelper.value.bottom = true;
-            break;
-    }
-
-    stateHelper.value.left = false;
-    stateHelper.value.x = false;
-    stateHelper.value.right = false;
-    switch(data.value.HorizontalLayout) {
-        case 0:
-            stateHelper.value.left = true;
-            break;
-        case 1:
-            stateHelper.value.right = true;
-            break;
-        case 2:
-            stateHelper.value.left = true;
-            stateHelper.value.right = true;
-            break;
-        case 3:
-            stateHelper.value.x = true;
-            break;
-        case 4:
-            stateHelper.value.x = true;
-            stateHelper.value.left = true;
-            stateHelper.value.right = true;
-            break;
-    }
+const constraints = ref({
+    horizontal: ConstraintType.MIN,
+    vertical: ConstraintType.MIN,
 });
 
-function change() {
-    if (!node) return;
-    switch (node.HorizontalLayout) {
-        case 0:
-            break;
-        case 1:
-            node.r = (node as any)?.parent?.width - node.width - node.x;
-            break;
-        case 2:
-            node.r = (node as any)?.parent?.width - node.width - node.x;
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
+const stateHelper = new StateHelper();
+const helper = stateHelper.state;
+
+function toData(node: LayoutMixin & ConstraintMixin) {
+    data.value.VerticalStretch = node.VerticalStretch || 0;
+    data.value.HorizontalStretch = node.HorizontalStretch || 0;
+    constraints.value.horizontal = node.constraints.horizontal;
+    constraints.value.vertical = node.constraints.vertical;
+    stateHelper.updateHelper(node.constraints);
+}
+function setHelper(type: 'x' | 'y' | 'left' | 'right' | 'top' | 'bottom') {
+    helper.value[type] = !helper.value[type];
+    if(!node || !hasMixin(node, ConstraintMixin)) return;
+    if(helper.value.x && helper.value.left && helper.value.right) {
+        node.constraints.horizontal = ConstraintType.SCALE;
+    } else if(helper.value.x && (helper.value.left || helper.value.right)) {
+        node.constraints.horizontal = helper.value.left ? ConstraintType.MIN : ConstraintType.MAX;
+    } else if(helper.value.left && helper.value.right) {
+        node.constraints.horizontal = ConstraintType.STRETCH;
+    } else if(helper.value.x) {
+        node.constraints.horizontal = ConstraintType.CENTER;
+    } else if (helper.value.right) {
+        node.constraints.horizontal = ConstraintType.MAX;
+    } else if(helper.value.left) {
+        node.constraints.horizontal = ConstraintType.MIN;
     }
-    switch (node.VerticalLayout) {
-        case 0:
-            break;
-        case 1:
-            node.b = (node as any)?.parent?.height - node.height - node.y;
-            break;
-        case 2:
-            node.b = (node as any)?.parent?.height - node.height - node.y;
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
-    }
+    if(helper.value.y && helper.value.top && helper.value.bottom) {
+        node.constraints.vertical = ConstraintType.SCALE;
+    } else if(helper.value.y && (helper.value.top || helper.value.bottom)) {
+        node.constraints.vertical = helper.value.top ? ConstraintType.MIN : ConstraintType.MAX;
+    } else if(helper.value.top && helper.value.bottom) {
+        node.constraints.vertical = ConstraintType.STRETCH;
+    } else if(helper.value.y) {
+        node.constraints.vertical = ConstraintType.CENTER;
+    } else if (helper.value.bottom) {
+        node.constraints.vertical = ConstraintType.MAX;
+    } else if(helper.value.top) {
+        node.constraints.vertical = ConstraintType.MIN;
+    } 
+    node.update();
 }
 
 </script>
@@ -217,67 +171,42 @@ function change() {
                             <rect stroke="#E0E0E0" fill="#FFF" x=".5" y=".5" width="63" height="63" rx="4" />
                             <rect stroke="#25252B" x="20.5" y="20.5" width="23" height="23" rx="4" />
                             <path d="M23 23h18v18H23z" />
-                            <path dir d="M28 32.5v-1h8v1z" :class="stateHelper.x?'active':''" />
-                            <path dir d="M31.5 28h1v8h-1z" :class="stateHelper.y?'active':''" />
-                            <path dir d="M5 32.75v-1.5h10v1.5z" :class="stateHelper.left?'active':''" />
-                            <path dir d="M31.25 50.25h1.5v8h-1.5z" :class="stateHelper.bottom?'active':''" />
-                            <path dir d="M50.25 32.75v-1.5h8v1.5z" :class="stateHelper.right?'active':''" />
-                            <path dir d="M31.25 5.25h1.5v10h-1.5z" :class="stateHelper.top?'active':''" />
+                            <path dirs d="M28 32.5v-1.5h8v1.5z" :class="helper.x?'active':''" @click="() => setHelper('x')" />
+                            <path dirs d="M31.5 28h1.5v8h-1.5z" :class="helper.y?'active':''" @click="() => setHelper('y')" />
+                            <path dirp d="M5 32.75v-1.5h10v1.5z" :class="helper.left?'active':''" @click="() => setHelper('left')" />
+                            <path dirp d="M31.25 50.25h1.5v8h-1.5z" :class="helper.bottom?'active':''" @click="() => setHelper('bottom')" />
+                            <path dirp d="M50.25 32.75v-1.5h8v1.5z" :class="helper.right?'active':''" @click="() => setHelper('right')" />
+                            <path dirp d="M31.25 5.25h1.5v10h-1.5z" :class="helper.top?'active':''" @click="() => setHelper('top')" />
                         </g>
                     </svg>
                 </Col>
+                <!-- Constraints Selection Start -->
                 <Col
                     class="flex flex-col"
                     :class="$style.col"
                     :span="5"
                 >
-                    <template v-if="HorizontalLayoutValues.length == 3">
-                        <Select
-                            size="sm" :value="data.HorizontalLayout"
-                            @on-change="({ value }) => { node.HorizontalLayout = parseInt(value); change(); }"
-                        >
-                            <select-option
-                                v-for="sv of HorizontalLayoutValues" :key="sv.value" :value="sv.value"
-                                :label="sv.label"
-                            />
-                        </Select>
-                    </template>
-                    <template v-else>
-                        <Select
-                            size="sm" :value="data.HorizontalLayout"
-                            @on-change="({ value }) => { node.HorizontalLayout = parseInt(value); change(); }"
-                        >
-                            <select-option
-                                v-for="sv of HorizontalLayoutValues" :key="sv.value" :value="sv.value"
-                                :label="sv.label"
-                            />
-                        </Select>
-                    </template>
-                    <template v-if="HorizontalLayoutValues.length == 3">
-                        <Select
-                            class="mt-6"
-                            size="sm" :value="data.VerticalLayout"
-                            @on-change="({ value }) => { node.VerticalLayout = parseInt(value); change(); }"
-                        >
-                            <select-option
-                                v-for="sv of VerticalLayoutValues" :key="sv.value" :value="sv.value"
-                                :label="sv.label"
-                            />
-                        </Select>
-                    </template>
-                    <template v-else>
-                        <Select
-                            class="mt-6"
-                            size="sm" :value="data.VerticalLayout"
-                            @on-change="({ value }) => { node.VerticalLayout = parseInt(value); change(); }"
-                        >
-                            <select-option
-                                v-for="sv of VerticalLayoutValues" :key="sv.value" :value="sv.value"
-                                :label="sv.label"
-                            />
-                        </Select>
-                    </template>
+                    <Select
+                        size="sm" :value="constraints.horizontal"
+                        @on-change="({ value }) => { node.constraints.horizontal = value; }"
+                    >
+                        <select-option
+                            v-for="sv of HorizontalConstraintOptions" :key="sv.value" :value="sv.value"
+                            :label="sv.label"
+                        />
+                    </Select>
+                    <Select
+                        class="mt-6"
+                        size="sm" :value="constraints.vertical"
+                        @on-change="({ value }) => { node.constraints.vertical = value; }"
+                    >
+                        <select-option
+                            v-for="sv of VerticalConstraintOptions" :key="sv.value" :value="sv.value"
+                            :label="sv.label"
+                        />
+                    </Select>
                 </Col>
+                <!-- Constraints Selection End -->
             </Row>
         </div>
     </m-widget>
@@ -318,11 +247,16 @@ function change() {
     top: -0.4rem;
     --font-sm: 1.3rem;
 }
-.helper [dir]{
+.helper [dirp], .helper [dirs]{
     fill: #25252B;
     cursor: pointer;
+    stroke-width: 3px;
+    stroke: transparent;
 }
-.helper [dir]:global(.active){
+.helper [dirs]{
+    stroke-width: 1.5px;
+}
+.helper [dirp]:global(.active), .helper [dirs]:global(.active){
     fill: var(--color-primary-500);
 }
 </style>
