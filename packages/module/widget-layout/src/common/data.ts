@@ -34,7 +34,7 @@ export const HorizontalConstraintOptions = [
         value: ConstraintType.MAX,
     },
     {
-        label: '左右居中 *',
+        label: '居中固定',
         value: ConstraintType.CENTER,
     },
     {
@@ -42,7 +42,7 @@ export const HorizontalConstraintOptions = [
         value: ConstraintType.STRETCH,
     },
     {
-        label: '水平等比 *',
+        label: '水平等比',
         value: ConstraintType.SCALE,
     },
 ];
@@ -57,7 +57,7 @@ export const VerticalConstraintOptions = [
         value: ConstraintType.MAX,
     },
     {
-        label: '上下居中 *',
+        label: '居中固定',
         value: ConstraintType.CENTER,
     },
     {
@@ -65,7 +65,7 @@ export const VerticalConstraintOptions = [
         value: ConstraintType.STRETCH,
     },
     {
-        label: '垂直缩放 *',
+        label: '垂直等比',
         value: ConstraintType.SCALE,
     },
 ];

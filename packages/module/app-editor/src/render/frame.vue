@@ -26,7 +26,6 @@ subject.subscribe(() => {
 onUnmounted(() => {
     nodeService.unwatch(subject);
 });
-
 </script>
 <template>
     <div

@@ -24,24 +24,23 @@ export default class BaseFrameMixin
         LayoutMixin,
         ExportMixin,
     ), ConstraintMixin) implements Internal.BaseFrameMixin{
-    constraints: Internal.Constraints;        
-    layoutMode: 'NONE' | 'HORIZONTAL' | 'VERTICAL';
+    layoutMode: 'NONE' | 'HORIZONTAL' | 'VERTICAL' = 'NONE';
     primaryAxisSizingMode: 'FIXED' | 'AUTO'; // applicable only if layoutMode != 'NONE'
     counterAxisSizingMode: 'FIXED' | 'AUTO'; // applicable only if layoutMode != 'NONE'
-  
+
     primaryAxisAlignItems: 'MIN' | 'MAX' | 'CENTER' | 'SPACE_BETWEEN'; // applicable only if layoutMode != 'NONE'
     counterAxisAlignItems: 'MIN' | 'MAX' | 'CENTER'; // applicable only if layoutMode != 'NONE'
-  
-  
+
+
     paddingLeft: number; // applicable only if layoutMode != 'NONE'
     paddingRight: number; // applicable only if layoutMode != 'NONE'
     paddingTop: number; // applicable only if layoutMode != 'NONE'
     paddingBottom: number; // applicable only if layoutMode != 'NONE'
     itemSpacing: number; // applicable only if layoutMode != 'NONE'
-  
+
     horizontalPadding: number; // DEPRECATED: use the individual paddings
     verticalPadding: number; // DEPRECATED: use the individual paddings
-  
+
     layoutGrids: ReadonlyArray<Internal.LayoutGrid>;
     gridStyleId: string;
     clipsContent: boolean;

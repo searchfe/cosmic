@@ -1,4 +1,4 @@
-import { hasMixin, SceneNode, BaseFrameMixin, FramePrototypingMixin, LayoutMixin } from '@cosmic/core/parts';
+import { hasMixin, SceneNode, BaseFrameMixin, FramePrototypingMixin, LayoutMixin, ConstraintMixin, ConstraintType } from '@cosmic/core/parts';
 
 interface NodeStyle {
     [index: string]: string,
@@ -58,42 +58,55 @@ export function makeFramePrototypingStyle(node: FramePrototypingMixin) {
     return  styles;
 }
 
-export function  makeLayoutStyle(node: LayoutMixin) {
+export function  makeLayoutStyle(node: LayoutMixin & ConstraintMixin) {
     const styles: NodeStyle = {};
-    switch(node.HorizontalLayout) {
-        case 0:
+    const parentWidth = (node as any)?.parent?.width || 0;
+    const parentHeight = (node as any)?.parent?.height || 0;
+    switch(node.constraints.horizontal) {
+        case ConstraintType.MIN:
             styles.left = node.x + 'px';
             styles.width = node.width + 'px';
             break;
-        case 1:
-            styles.right = node.r + 'px';
+        case ConstraintType.MAX:
+            styles.right = (parentWidth - node.x - node.width) + 'px';
             styles.width = node.width + 'px';
             break;
-        case 2:
+        case ConstraintType.CENTER:
+            styles.left = '50%';
+            styles.marginLeft = (node.x - parentWidth / 2) + 'px';
+            styles.width = node.width + 'px';
+            break;
+        case ConstraintType.STRETCH:
             styles.left = node.x + 'px';
-            styles.width = ((node as any).parent.width - node.x - node.r) + 'px';
+            styles.width = `calc(100% - ${parentWidth - node.width}px)`;
             break;
-        case 3:
-            break;
-        case 4:
+        case ConstraintType.SCALE:
+            styles.left = Math.round(node.x * 1000 / parentWidth) / 10 + '%';
+            styles.width = Math.round(node.width * 1000 / parentWidth) / 10 + '%';
             break;
     }
-    switch(node.VerticalLayout) {
-        case 0:
+
+    switch(node.constraints.vertical) {
+        case ConstraintType.MIN:
             styles.top = node.y + 'px';
             styles.height = node.height + 'px';
             break;
-        case 1:
-            styles.bottom = node.b + 'px';
+        case ConstraintType.MAX:
+            styles.bottom = (parentHeight - node.y - node.height) + 'px';
             styles.height = node.height + 'px';
             break;
-        case 2:
+        case ConstraintType.CENTER:
+            styles.top = '50%';
+            styles.marginTop = (node.y - parentHeight / 2) + 'px';
+            styles.height = node.height + 'px';
+            break;
+        case ConstraintType.STRETCH:
             styles.top = node.y + 'px';
-            styles.height = ((node as any).parent.height - node.y - node.b) + 'px';
+            styles.height = `calc(100% - ${parentHeight - node.height}px)`;
             break;
-        case 3:
-            break;
-        case 4:
+        case ConstraintType.SCALE:
+            styles.top = Math.round(node.x * 1000 / parentHeight) / 10 + '%';
+            styles.height = Math.round(node.height * 1000 / parentHeight) / 10 + '%';
             break;
     }
     return styles;

@@ -86,18 +86,14 @@ export default class NodeControllService {
         const node = data.node;
         node.x = round(x);
         node.y = round(y);
-        node.r = round((node as any)?.parent?.width - node.width - node.x);
-        node.b = round((node as any)?.parent?.height - node.height - node.y);
-        node.width = round(width);
-        node.height = round(height);
-        node.resize(node.width, node.height);
+        node.resize(width, height);
         node.update();
     }
 
     private setNodePosition(event: MouseEvent){
         const originEvent: MouseEvent = this.toolService.data.event;
         const node: SceneNode = this.toolService.data.node;
-        
+
         if (!originEvent || !node) return;
         const offset = {
             x: event.clientX - originEvent.clientX,
@@ -109,8 +105,6 @@ export default class NodeControllService {
         });
         node.x = round(pos.x);
         node.y = round(pos.y);
-        node.r = round((node as any)?.parent?.width - node.width - node.x);
-        node.b = round((node as any)?.parent?.height - node.height - node.y);
         node.update();
     }
 
