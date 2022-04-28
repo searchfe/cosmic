@@ -50,8 +50,8 @@ nodeService.selection.subscribe((nodes) => {
             <div class="border-bottom" />
             <m-component src="@cosmic-module/widget-mask" /> -->
         </div>
-        <div :hidden="activeIdx != '1'">
-            <m-component src="@cosmic-module/widget-case" />
+        <div :hidden="activeIdx !== '1'">
+            <m-component src="@cosmic-module/widget-property" />
             <!-- <m-component src="@cosmic-module/widget-interaction" /> -->
         </div>
     </div>

@@ -1,1 +1,1 @@
-export { round } from 'lodash';
+export { round, isPlainObject, cloneDeep, merge } from 'lodash';
