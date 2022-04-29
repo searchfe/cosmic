@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, watchEffect, type Ref } from 'vue';
+import { InputNumber } from 'cosmic-vue';
 import { type Subject } from '@cosmic/core/rxjs';
 import { MTitle, MWidget, service } from '@cosmic/core/browser';
 import { inject, FramePrototypingMixin, BaseNodeMixin, FrameNode } from '@cosmic/core/parts';
@@ -9,7 +10,12 @@ import ButtoLightStyle from './component/button-light.module.css';
 
 import PaddingInput from './component/padding-input.vue';
 
+import { layoutModeLabel, layoutModeOptions } from './common/layout-mode';
+import InputStyle from './component/input.module.css';
+
+
 interface LayoutProps {
+    ladyoutModeSelectedValue: string,
     paddingTop: number;
     paddingRight: number;
     paddingBottom: number;
@@ -19,6 +25,7 @@ interface LayoutProps {
 
 
 const data: Ref<LayoutProps>  = ref({
+    ladyoutModeSelectedValue: 'NONE',
     paddingTop: 0,
     paddingRight: 0,
     paddingBottom: 0,
@@ -56,6 +63,11 @@ function toData(node: FrameNode & FramePrototypingMixin) {
     data.value.paddingRight = node.paddingRight || 0;
     data.value.paddingBottom = node.paddingBottom || 0;
     data.value.paddingLeft = node.paddingLeft || 0;
+    if (node.layoutMode == 'NONE') {
+        data.value.ladyoutModeSelectedValue = 'absolute';
+    } else if(node.layoutMode == 'HORIZONTAL' || node.layoutMode == 'VERTICAL') {
+        data.value.ladyoutModeSelectedValue = 'flex';
+    }
     if (node.overflowDirection == 'NONE') {
         overflow.value = 'hidden';
     } else {
@@ -109,6 +121,20 @@ function changeOverflow() {
     node.update();
 
 }
+function layoutModeHandler(event: any) {
+    if (!node) return;
+    if (event.value == 'absolute') {
+        node.layoutMode  ='NONE';
+    } else if (event.value == 'flex') {
+        node.layoutMode  ='HORIZONTAL';
+    } else {
+        //
+    }
+    node.resize(node.width, node.height);
+    node.update();
+}
+
+const options = layoutModeOptions.map(item => {return {id: item, label: layoutModeLabel[item]};});
 </script>
 
 <template>
@@ -116,21 +142,17 @@ function changeOverflow() {
     <m-widget v-show="isShow">
         <MTitle style="padding-left: 0;" :is-open="open" @on-click="boardSwitch">
             <template #prefix>
-                <Menu size="sm" value="0" :class="$style.menu" @on-change="handler">
+                <Menu size="sm" :value="data.ladyoutModeSelectedValue" :class="$style.menu" @on-change="layoutModeHandler">
                     <template #activator>
                         <Button class="justify-start" size="sm" :styles="ButtonModeStyle" @click="isOpen = true">
-                            自由布局
+                            {{ layoutModeLabel[data.ladyoutModeSelectedValue] }}
                             <template #subfix>
                                 <i-cosmic-select-up-down />
                             </template>
                         </Button>
                     </template>
                     <MenuOption
-                        v-for="data of [
-                            { id: 'save', label: '自由布局' },
-                            { id: 'new', label: '自适应' },
-                            { id: 'open', label: '栅格' },
-                        ]" :key="data.id" :value="data.id" :label="data.label" :has-check="false"
+                        v-for="d of options" :key="d.id" :value="d.id" :label="d.label" :has-check="false"
                     />
                 </Menu>
             </template>
@@ -138,6 +160,48 @@ function changeOverflow() {
             <i-cosmic-arrow-down v-else @click="isOpen = true" />
         </MTitle>
         <div v-show="isOpen">
+            <Row v-show="data.ladyoutModeSelectedValue == 'flex'" :class="$style.row">
+                <Col
+                    class="flex"
+                    :class="[$style.col]"
+                    :span="3"
+                >
+                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowY? 'active': ''" @click="overflowY = !overflowY">
+                        <i-cosmic-order-x />
+                    </Button>
+                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowX? 'active': ''" @click="overflowX = !overflowX">
+                        <i-cosmic-order-y />
+                    </Button>
+                </Col>
+                <Col
+                    class="flex"
+                    :class="[$style.col]"
+                    :span="3"
+                >
+                    <input-number
+                        size="sm" :controls="false"
+                        :class="isShowPopup? 'active': ''"
+                        :value="sum" :styles="InputStyle"
+                        @on-change="onChange"
+                    >
+                        <template #prefix>
+                            <i-cosmic-spacing-x />
+                        </template>
+                    </input-number>
+                </Col>
+                <Col
+                    class="flex flex-row-reverse relative"
+                    :class="[$style.col, $style['flow-icons']]"
+                    :span="7"
+                >
+                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowY? 'active': ''" @click="overflowY = !overflowY">
+                        <i-cosmic-arrange />
+                    </Button>
+                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowX? 'active': ''" @click="overflowX = !overflowX">
+                        <i-cosmic-auto-break />
+                    </Button>
+                </Col>
+            </Row>
             <Row :class="$style.row">
                 <Col
                     class="flex"

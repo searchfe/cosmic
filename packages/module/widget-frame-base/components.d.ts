@@ -4,14 +4,19 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ICosmicArrange: typeof import('~icons/cosmic/arrange')['default']
     ICosmicArrowDown: typeof import('~icons/cosmic/arrow-down')['default']
     ICosmicArrowUp: typeof import('~icons/cosmic/arrow-up')['default']
+    ICosmicAutoBreak: typeof import('~icons/cosmic/auto-break')['default']
     ICosmicBoard: typeof import('~icons/cosmic/board')['default']
+    ICosmicOrderX: typeof import('~icons/cosmic/order-x')['default']
+    ICosmicOrderY: typeof import('~icons/cosmic/order-y')['default']
     ICosmicScrollX: typeof import('~icons/cosmic/scroll-x')['default']
     ICosmicScrollY: typeof import('~icons/cosmic/scroll-y')['default']
     ICosmicSelectOff: typeof import('~icons/cosmic/select-off')['default']
     ICosmicSelectOn: typeof import('~icons/cosmic/select-on')['default']
     ICosmicSelectUpDown: typeof import('~icons/cosmic/select-up-down')['default']
+    ICosmicSpacingX: typeof import('~icons/cosmic/spacing-x')['default']
   }
 }
 
