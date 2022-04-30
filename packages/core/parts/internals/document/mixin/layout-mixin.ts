@@ -2,6 +2,8 @@ type Transform = Internal.Transform;
 type Rect = Internal.Rect;
 import ConstraintMixin, { Constraints, ConstraintType } from './constraint-mixin';
 import { round } from '@cosmic/core/lodash';
+import type BaseFrameMixin from './base-frame-mixin';
+import { hasMixin } from 'ts-mixer';
 export default class LayoutMixin implements Internal.LayoutMixin {
     readonly absoluteTransform: Transform;
     relativeTransform: Transform;
@@ -35,6 +37,11 @@ export default class LayoutMixin implements Internal.LayoutMixin {
         for (const child of childs) {
             child.resize(child.width, child.height);
             child.update(true);
+        }
+        const parent = (this as any).parent as any;
+        if ((deltaX || deltaY) && hasMixin(parent, LayoutMixin)) {
+            parent.resize(parent.width, parent.height);
+            // (parent as any)?.update(true);
         }
     }
     resizeWithoutConstraints(width: number, height: number) {
@@ -78,6 +85,40 @@ function layoutAbsoluteChild(parent: Internal.BaseFrameMixin,node: LayoutMixin &
     }
 }
 
-function layoutFlex(parent: Internal.BaseFrameMixin, node: LayoutMixin & ConstraintMixin) {
+function layoutFlex(parent: BaseFrameMixin, childs: Array<LayoutMixin & ConstraintMixin>) {
+    let offsetX = parent.paddingLeft, offsetY =  parent.paddingTop;
+    const maxWidth = parent.width - parent.paddingLeft - parent.paddingRight;
+    const maxHeight = parent.height - parent.paddingTop - parent.paddingBottom;
+    let lineHeight = 0;
+    let lineWidth = 0;
+    let cursor = 0;
+    for(const child of childs) {
+        if (parent.layoutMode === 'HORIZONTAL') {
+            child.x = offsetX;
+            if (parent.layoutWrap == 'WRAP') {
+                if (child.x + child.width > maxWidth && cursor > 0) {
+                    child.x = parent.paddingLeft;
+                    offsetY += lineHeight;
+                    lineHeight = 0;
+                }
+            }
+            lineHeight = Math.max(child.height, lineHeight);
+            child.y = offsetY;
+            offsetX += child.width;
+        } else if (parent.layoutMode === 'VERTICAL') {
+            child.y = offsetY;
+            if (parent.layoutWrap == 'WRAP') {
+                if (child.y + child.height > maxHeight && cursor > 0) {
+                    child.y =  parent.paddingTop;
+                    offsetX += lineWidth;
+                    lineWidth = 0;
+                }
+            }
+            lineWidth = Math.max(child.width, lineWidth);
+            child.x = offsetX;
+            offsetY += child.height;
+        }
+        cursor++;
+    }
     //
 }

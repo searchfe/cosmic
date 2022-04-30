@@ -38,6 +38,9 @@ export function makeBaseFrameStyle(node: BaseFrameMixin) {
     if (node.layoutMode === 'HORIZONTAL' || node.layoutMode === 'VERTICAL') {
         styles.display = 'flex';
         styles['flex-direction'] = node.layoutMode === 'VERTICAL' ? 'column': '';
+        styles['align-content'] = {
+            'MIN': 'flex-start', 'CENTER': 'center', 'MAX': 'flex-start', 'SPACE_BETWEEN': 'space-between',
+        }[node.primaryAxisAlignContent];
         if (node.layoutWrap === 'WRAP') styles['flex-wrap'] = 'wrap';
     }
     return  styles;
@@ -68,55 +71,58 @@ export function  makeLayoutStyle(node: LayoutMixin & ConstraintMixin) {
     const parent = (node as any)?.parent;
     const parentWidth = parent.width || 0;
     const parentHeight = parent.height || 0;
-    switch(node.constraints.horizontal) {
-        case ConstraintType.MIN:
-            styles.left = node.x + 'px';
-            styles.width = node.width + 'px';
-            break;
-        case ConstraintType.MAX:
-            styles.right = (parentWidth - node.x - node.width) + 'px';
-            styles.width = node.width + 'px';
-            break;
-        case ConstraintType.CENTER:
-            styles.left = '50%';
-            styles.marginLeft = (node.x - parentWidth / 2) + 'px';
-            styles.width = node.width + 'px';
-            break;
-        case ConstraintType.STRETCH:
-            styles.left = node.x + 'px';
-            styles.width = `calc(100% - ${parentWidth - node.width}px)`;
-            break;
-        case ConstraintType.SCALE:
-            styles.left = Math.round(node.x * 1000 / parentWidth) / 10 + '%';
-            styles.width = Math.round(node.width * 1000 / parentWidth) / 10 + '%';
-            break;
-    }
-
-    switch(node.constraints.vertical) {
-        case ConstraintType.MIN:
-            styles.top = node.y + 'px';
-            styles.height = node.height + 'px';
-            break;
-        case ConstraintType.MAX:
-            styles.bottom = (parentHeight - node.y - node.height) + 'px';
-            styles.height = node.height + 'px';
-            break;
-        case ConstraintType.CENTER:
-            styles.top = '50%';
-            styles.marginTop = (node.y - parentHeight / 2) + 'px';
-            styles.height = node.height + 'px';
-            break;
-        case ConstraintType.STRETCH:
-            styles.top = node.y + 'px';
-            styles.height = `calc(100% - ${parentHeight - node.height}px)`;
-            break;
-        case ConstraintType.SCALE:
-            styles.top = Math.round(node.x * 1000 / parentHeight) / 10 + '%';
-            styles.height = Math.round(node.height * 1000 / parentHeight) / 10 + '%';
-            break;
-    }
-    if (parent?.layoutMode === 'NONE' || parent?.type == 'PAGE') {
+    if(parent.layoutMode === 'NONE'|| parent?.type == 'PAGE') {
         styles.position = 'absolute';
+        switch(node.constraints.horizontal) {
+            case ConstraintType.MIN:
+                styles.left = node.x + 'px';
+                styles.width = node.width + 'px';
+                break;
+            case ConstraintType.MAX:
+                styles.right = (parentWidth - node.x - node.width) + 'px';
+                styles.width = node.width + 'px';
+                break;
+            case ConstraintType.CENTER:
+                styles.left = '50%';
+                styles.marginLeft = (node.x - parentWidth / 2) + 'px';
+                styles.width = node.width + 'px';
+                break;
+            case ConstraintType.STRETCH:
+                styles.left = node.x + 'px';
+                styles.width = `calc(100% - ${parentWidth - node.width}px)`;
+                break;
+            case ConstraintType.SCALE:
+                styles.left = Math.round(node.x * 1000 / parentWidth) / 10 + '%';
+                styles.width = Math.round(node.width * 1000 / parentWidth) / 10 + '%';
+                break;
+        }
+
+        switch(node.constraints.vertical) {
+            case ConstraintType.MIN:
+                styles.top = node.y + 'px';
+                styles.height = node.height + 'px';
+                break;
+            case ConstraintType.MAX:
+                styles.bottom = (parentHeight - node.y - node.height) + 'px';
+                styles.height = node.height + 'px';
+                break;
+            case ConstraintType.CENTER:
+                styles.top = '50%';
+                styles.marginTop = (node.y - parentHeight / 2) + 'px';
+                styles.height = node.height + 'px';
+                break;
+            case ConstraintType.STRETCH:
+                styles.top = node.y + 'px';
+                styles.height = `calc(100% - ${parentHeight - node.height}px)`;
+                break;
+            case ConstraintType.SCALE:
+                styles.top = Math.round(node.x * 1000 / parentHeight) / 10 + '%';
+                styles.height = Math.round(node.height * 1000 / parentHeight) / 10 + '%';
+                break;
+        }
+    } else {
+        styles.width = node.width + 'px';
+        styles.height = node.height + 'px';
     }
     return styles;
 }
