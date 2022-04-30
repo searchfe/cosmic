@@ -25,13 +25,17 @@ export default class LayoutMixin implements Internal.LayoutMixin {
 
         this.width = width;
         this.height = height;
-        ((this as any).children || []).forEach((child: any) => {
+        const childs = ((this as any).children || []);
+        childs.forEach((child: any) => {
             if(child.constraints && child.layoutAlign) {
-                layoutChild(this as any, child, deltaX, deltaY);
+                layoutAbsoluteChild(this as any, child, deltaX, deltaY);
             }
-            child.resize(child.width, child.height);
-            child.update();
         });
+        layoutFlex(this as any, childs);
+        for (const child of childs) {
+            child.resize(child.width, child.height);
+            child.update(true);
+        }
     }
     resizeWithoutConstraints(width: number, height: number) {
         // TODO
@@ -40,7 +44,7 @@ export default class LayoutMixin implements Internal.LayoutMixin {
         // TODO
     }
 }
-function layoutChild(parent: Internal.BaseFrameMixin,node: LayoutMixin & ConstraintMixin, deltaX: number, deltaY: number) {
+function layoutAbsoluteChild(parent: Internal.BaseFrameMixin,node: LayoutMixin & ConstraintMixin, deltaX: number, deltaY: number) {
     if (parent.layoutMode !== 'NONE') return;
     switch(node.constraints.horizontal) {
         case ConstraintType.MAX:
@@ -72,4 +76,8 @@ function layoutChild(parent: Internal.BaseFrameMixin,node: LayoutMixin & Constra
             node.y = round(node.y / (parent.height - deltaY) * parent.height, 1);
             break;
     }
+}
+
+function layoutFlex(parent: Internal.BaseFrameMixin, node: LayoutMixin & ConstraintMixin) {
+    //
 }

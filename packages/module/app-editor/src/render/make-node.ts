@@ -20,7 +20,7 @@ export function makeNode(node: SceneNode): NodeData {
     if (hasMixin(node, FramePrototypingMixin)) {
         styles = { ...styles, ...makeFramePrototypingStyle(node) };
     }
-    if (hasMixin(node, LayoutMixin) && node.parent) {
+    if (hasMixin(node, LayoutMixin) && hasMixin(node, ConstraintMixin) && node.parent) {
         styles = { ...styles, ...makeLayoutStyle(node)};
     }
 
@@ -34,6 +34,11 @@ export function makeBaseFrameStyle(node: BaseFrameMixin) {
     const styles: NodeStyle = {};
     if(node.paddingLeft || node.paddingRight || node.paddingTop || node.paddingBottom) {
         styles.padding = [node.paddingTop + 'px'  || 0, node.paddingRight + 'px'  || 0, node.paddingBottom + 'px'  || 0, node.paddingLeft + 'px' || 0].join(' ');
+    }
+    if (node.layoutMode === 'HORIZONTAL' || node.layoutMode === 'VERTICAL') {
+        styles.display = 'flex';
+        styles['flex-direction'] = node.layoutMode === 'VERTICAL' ? 'column': '';
+        if (node.layoutWrap === 'WRAP') styles['flex-wrap'] = 'wrap';
     }
     return  styles;
 }
@@ -60,8 +65,9 @@ export function makeFramePrototypingStyle(node: FramePrototypingMixin) {
 
 export function  makeLayoutStyle(node: LayoutMixin & ConstraintMixin) {
     const styles: NodeStyle = {};
-    const parentWidth = (node as any)?.parent?.width || 0;
-    const parentHeight = (node as any)?.parent?.height || 0;
+    const parent = (node as any)?.parent;
+    const parentWidth = parent.width || 0;
+    const parentHeight = parent.height || 0;
     switch(node.constraints.horizontal) {
         case ConstraintType.MIN:
             styles.left = node.x + 'px';
@@ -108,6 +114,9 @@ export function  makeLayoutStyle(node: LayoutMixin & ConstraintMixin) {
             styles.top = Math.round(node.x * 1000 / parentHeight) / 10 + '%';
             styles.height = Math.round(node.height * 1000 / parentHeight) / 10 + '%';
             break;
+    }
+    if (parent?.layoutMode === 'NONE' || parent?.type == 'PAGE') {
+        styles.position = 'absolute';
     }
     return styles;
 }

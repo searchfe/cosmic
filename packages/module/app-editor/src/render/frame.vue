@@ -35,7 +35,6 @@ onUnmounted(() => {
         v-radius="{target: node}"
         class="frame-render"
         :style="{
-            position: 'absolute', // 需要根据模式切换
             background: util.toBackgroundStyle(node?.backgrounds[0]),
             ...makeNode(node).styles,
         }"
