@@ -7,6 +7,7 @@ import { inject, FramePrototypingMixin, BaseNodeMixin, FrameNode } from '@cosmic
 import { Button, Menu, MenuOption, Row, Col} from 'cosmic-vue';
 import ButtonModeStyle from './component/button-mode.module.css';
 import ButtoLightStyle from './component/button-light.module.css';
+import { round } from '@cosmic/core/lodash';
 
 import PaddingInput from './component/padding-input.vue';
 
@@ -20,6 +21,8 @@ interface LayoutProps {
     paddingRight: number;
     paddingBottom: number;
     paddingLeft: number;
+    flexDirection: string; // 'HORIZONTAL' | 'VERTICAL'
+    layoutWrap: string;
 
 }
 
@@ -30,6 +33,8 @@ const data: Ref<LayoutProps>  = ref({
     paddingRight: 0,
     paddingBottom: 0,
     paddingLeft: 0,
+    flexDirection: 'HORIZONTAL',
+    layoutWrap: 'NONE',
 });
 
 
@@ -73,17 +78,9 @@ function toData(node: FrameNode & FramePrototypingMixin) {
     } else {
         overflow.value = 'visible';
     }
+    data.value.layoutWrap = node.layoutWrap;
 }
 
-// function change(event) {
-//     const [r, g, b] = event.colorObj.color;
-//     node.backgrounds = [{
-//         color: {r, g, b},
-//         opacity: event.opacity,
-//         type: 'SOLID',
-//     }];
-//     if(node) node.update();
-// }
 type OverflowType = 'visible' | 'hidden' | 'overflow-x' | 'overflow-y';
 const isOpen = ref(true);
 const overflow = ref('visible') as Ref<OverflowType>;
@@ -133,6 +130,26 @@ function layoutModeHandler(event: any) {
     node.resize(node.width, node.height);
     node.update();
 }
+function changeFlexDirection(dir: 'HORIZONTAL' | 'VERTICAL') {
+    if (!node) return;
+    data.value.flexDirection = dir;
+    node.layoutMode = dir;
+    node.resize(node.width, node.height);
+    node.update();
+}
+function changeItemSpacing({event}: {event: InputEvent}) {
+    if (!node) return;
+    const val = round(parseFloat((event?.target as HTMLInputElement)?.value),  1);
+    node.itemSpacing = val;
+    node.resize(node.width, node.height);
+    node.update();
+}
+function changeFlexWrap() {
+    if (!node) return;
+    node.layoutWrap = node.layoutWrap == 'NONE' ? 'WRAP' : 'NONE';
+    node.resize(node.width, node.height);
+    node.update();
+}
 
 const options = layoutModeOptions.map(item => {return {id: item, label: layoutModeLabel[item]};});
 </script>
@@ -140,6 +157,7 @@ const options = layoutModeOptions.map(item => {return {id: item, label: layoutMo
 <template>
     <div v-show="isShow" class="border-bottom" />
     <m-widget v-show="isShow">
+        <!-- Widgrt Head Start -->
         <MTitle style="padding-left: 0;" :is-open="open" @on-click="boardSwitch">
             <template #prefix>
                 <Menu size="sm" :value="data.ladyoutModeSelectedValue" :class="$style.menu" @on-change="layoutModeHandler">
@@ -159,6 +177,7 @@ const options = layoutModeOptions.map(item => {return {id: item, label: layoutMo
             <i-cosmic-arrow-up v-if="isOpen" @click="isOpen = flase" />
             <i-cosmic-arrow-down v-else @click="isOpen = true" />
         </MTitle>
+        <!-- Widgrt Head End -->
         <div v-show="isOpen">
             <Row v-show="data.ladyoutModeSelectedValue == 'flex'" :class="$style.row">
                 <Col
@@ -166,38 +185,64 @@ const options = layoutModeOptions.map(item => {return {id: item, label: layoutMo
                     :class="[$style.col]"
                     :span="3"
                 >
-                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowY? 'active': ''" @click="overflowY = !overflowY">
+                    <!-- Layout Direction Start -->
+                    <Button
+                        size="sm -v-mx" class="square"
+                        :styles="ButtoLightStyle"
+                        :class="data.flexDirection == 'HORIZONTAL'? 'active': ''"
+                        @click="() => changeFlexDirection('HORIZONTAL')"
+                    >
                         <i-cosmic-order-x />
                     </Button>
-                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowX? 'active': ''" @click="overflowX = !overflowX">
+                    <Button
+                        size="sm -v-mx" class="square"
+                        :styles="ButtoLightStyle"
+                        :class="data.flexDirection == 'VERTICAL'? 'active': ''"
+                        @click="() => changeFlexDirection('VERTICAL')"
+                    >
                         <i-cosmic-order-y />
                     </Button>
+                    <!-- Layout Direction End-->
                 </Col>
                 <Col
                     class="flex"
                     :class="[$style.col]"
                     :span="3"
                 >
+                    <!-- Item Spacing Start -->
                     <input-number
                         size="sm" :controls="false"
                         :class="isShowPopup? 'active': ''"
                         :value="sum" :styles="InputStyle"
-                        @on-change="onChange"
+                        @on-change="changeItemSpacing"
                     >
                         <template #prefix>
                             <i-cosmic-spacing-x />
                         </template>
                     </input-number>
+                    <!-- Layout Direction End-->
                 </Col>
                 <Col
                     class="flex flex-row-reverse relative"
                     :class="[$style.col, $style['flow-icons']]"
                     :span="7"
                 >
-                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowY? 'active': ''" @click="overflowY = !overflowY">
+                    <Button
+                        size="sm -v-mx"
+                        class="square"
+                        :styles="ButtoLightStyle"
+                        :class="data.layoutWrap == 'WRAP'? 'active': ''"
+                        @click="() => changeFlexWrap()"
+                    >
                         <i-cosmic-arrange />
                     </Button>
-                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowX? 'active': ''" @click="overflowX = !overflowX">
+                    <Button
+                        size="sm -v-mx"
+                        class="square"
+                        :styles="ButtoLightStyle"
+                        :class="data.layoutWrap == 'WRAP'? 'active': ''"
+                        @click="() => changeFlexWrap()"
+                    >
                         <i-cosmic-auto-break />
                     </Button>
                 </Col>

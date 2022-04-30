@@ -45,4 +45,6 @@ export default class BaseFrameMixin
     gridStyleId: string;
     clipsContent: boolean;
     guides: ReadonlyArray<Internal.Guide>;
+
+    layoutWrap: 'NONE' | 'WRAP' = 'NONE'; // COSMIC PROP
 }

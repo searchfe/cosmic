@@ -38,7 +38,6 @@ const style = {
     <div
         class="component-render"
         :style="{
-            position: 'absolute', // 需要根据模式切换
             ...makeNode(node).styles,
         }"
     >
