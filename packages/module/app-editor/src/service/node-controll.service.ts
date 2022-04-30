@@ -76,7 +76,11 @@ export default class NodeControllService {
         const page = this.nodeService.getCurrentPage();
         const pos = this.canvasService.getPosition(event.clientX, event.clientY);
         const node = util.getSelectionInPageNode(page, pos);
-        this.toolService.set(service.ToolState.MoveNode, {event, node, x: node?.x || 0, y: node?.y || 0});
+        if (node) {
+            const layoutMode = (node.parent as any)?.layoutMode;
+            if (layoutMode === 'HORIZONTAL' || layoutMode === 'VERTICAL') return;
+            this.toolService.set(service.ToolState.MoveNode, {event, node, x: node?.x || 0, y: node?.y || 0});
+        }
     }
 
     private setNodeSize(event: MouseEvent) {

@@ -105,6 +105,7 @@ function changePadding(event: any) {
     node.paddingRight = event.value.right;
     node.paddingBottom = event.value.bottom;
     node.paddingLeft = event.value.left;
+    node.resize(node.width, node.height);
     node.update();
 }
 function changeOverflow() {
