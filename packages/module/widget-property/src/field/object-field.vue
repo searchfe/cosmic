@@ -9,6 +9,7 @@ const props = withDefaults(defineProps<{
     layer: number,
     propertyIndex: number;
     propertyKey: string;
+    index: number;
 }>(), {});
 
 const propertyKeys = computed(() => getPropertyKey(props.schema));
@@ -25,18 +26,17 @@ const curSchema = computed(() =>  props.schema);
 //     return {};
 // }
 
-function getPropertyKey(schema: SchemaType) {
-    if (!schema) return [];
-    let propertyKeys = [] as string[];
-    if (schema.properties) {
-        propertyKeys = Object.getOwnPropertyNames(schema.properties);
+function getPropertyKey(curSchemas: SchemaType) {
+    if (!curSchemas) return [];
+    let curPropertyKeys = [] as string[];
+    if (curSchemas.properties) {
+        curPropertyKeys = Object.getOwnPropertyNames(curSchemas.properties);
     }
 
-    if (schema.title === 'table') {
-        propertyKeys = ['isRowJump', 'layout', 'cols', 'rows', 'scroll'];
+    if (curSchemas.title === 'table') {
+        curPropertyKeys = ['isRowJump', 'layout', 'cols', 'rows', 'scroll'];
     }
-    console.log(propertyKeys);
-    return propertyKeys;
+    return curPropertyKeys;
 }
 
 function isRequired(schema: SchemaType, key: string) {
@@ -50,12 +50,20 @@ function change(model: Record<string, any>, key: string, data: {value: any}) {
     model[key] = data.value;
 }
 
+const renderDescription = computed(() => {
+    if (props.index === undefined) return props.schema.description;
+    return props.schema.description.replace('${index}', (props.index + 1).toString());
+});
+
+function dataTypeChange(model: Record<string, any>, event: Record<string, string>) {
+    model.customNewDataType = {...(model.customNewDataType || {}), ...event};
+}
 
 </script>
 
 <template>
     <div v-if="curSchema.properties">
-        <MTitle :title="curSchema.description" />
+        <MTitle :title="renderDescription" />
         
         <div 
             v-for="key of propertyKeys"
@@ -70,6 +78,7 @@ function change(model: Record<string, any>, key: string, data: {value: any}) {
                 :model="model[key]"
                 :layer="layer + 1"
                 @change="(event) => change(model, key, event)"
+                @data-type-change="(event) => dataTypeChange(model, event)"
             />
         </div>
     </div>

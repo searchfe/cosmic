@@ -25,12 +25,16 @@ function change(event) {
         </div>
         <div class="w-full">
             <c-input
-                size="md"
+                size="sm"
                 :class="$style.border"
-                :placeholder="propertyKey"
+                :placeholder="请输入"
                 :value="model"
                 @on-change="change"
-            />
+            >
+                <template #prefix>
+                    <i-cosmic-link-circles />
+                </template>
+            </c-input>
         </div>
     </div>
 </template>
@@ -39,11 +43,11 @@ function change(event) {
 .description {
     color: var(--color-gray-300);
 }
-
+/* 
 .border {
     border-width: .1rem;
     border-style: solid;
     border-color: var(--color-gray-300);
-}
+} */
 
 </style>

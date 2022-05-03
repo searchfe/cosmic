@@ -11,7 +11,7 @@ withDefaults(defineProps<{
 
 const emits = defineEmits(['change']);
 
-function change(event) {
+function change(event: any) {
     emits('change', event);
 }
 

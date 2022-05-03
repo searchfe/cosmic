@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
+import { cloneDeep } from '@cosmic/core/lodash';
 import type { SchemaType } from '../type/index';
 import FormNode from './form-node.vue';
+import { MTitle } from '@cosmic/core/browser';
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
     schema: SchemaType,
     model: any[];
     layer: number
@@ -11,40 +13,35 @@ withDefaults(defineProps<{
 
 const model = computed(() => {
     if (!props.schema) return [];
-    const { model, maxItems} = props;
+    const { model } = props;
     if (model && model.length > 0) {
-        props.model.slice(0, maxItems || model.length);
+        return props.model.slice(0, model.length);
     }
     return [];
+});
+
+const renderItems = computed(() => {
+    return props.model && props.model.length ? props.model.map(() => {
+        return cloneDeep(props.schema.items);
+    }) :[];
 });
 
 </script>
 
 <template>
     <div>
-        <!-- <template v-if="isItemArray"> -->
+        <MTitle :title="schema.description" />
         <div 
-            v-for="(property, index) of schema.items"
+            v-for="(item, index) of renderItems"
             :key="index"
         >
-            <Form-node
+            <form-node
                 :property-index="index"
-                :schema="property"
-                :model="model"
+                :schema="item"
+                :model="model[index]"
                 :laye="layer + 1"
+                :index="index"
             />
         </div>
-        <!-- </template> -->
-        <!-- <template v-else>
-            <div 
-                v-for="(property, index) in arrayItems"
-                :key="index"
-            >
-                <field-node 
-                    :property-key="index"
-                    :schema="property"
-                />   
-            </div>
-        </template> -->
     </div>
 </template>
