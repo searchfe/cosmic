@@ -10,6 +10,7 @@ import ButtoLightStyle from './component/button-light.module.css';
 import { round } from '@cosmic/core/lodash';
 
 import PaddingInput from './component/padding-input.vue';
+import FlexArrange from './component/flex-arrange.vue';
 
 import { layoutModeLabel, layoutModeOptions } from './common/layout-mode';
 import InputStyle from './component/input.module.css';
@@ -23,6 +24,8 @@ interface LayoutProps {
     paddingLeft: number;
     flexDirection: string; // 'HORIZONTAL' | 'VERTICAL'
     layoutWrap: string;
+    primaryAxisAlignItems: string;
+    counterAxisAlignItems: string;
 
 }
 
@@ -35,6 +38,8 @@ const data: Ref<LayoutProps>  = ref({
     paddingLeft: 0,
     flexDirection: 'HORIZONTAL',
     layoutWrap: 'NONE',
+    primaryAxisAlignItems: 'MIN',
+    counterAxisAlignItems: 'MIN',
 });
 
 
@@ -63,22 +68,24 @@ nodeService.selection.subscribe(nodes => {
 
 });
 
-function toData(node: FrameNode & FramePrototypingMixin) {
-    data.value.paddingTop = node.paddingTop || 0;
-    data.value.paddingRight = node.paddingRight || 0;
-    data.value.paddingBottom = node.paddingBottom || 0;
-    data.value.paddingLeft = node.paddingLeft || 0;
-    if (node.layoutMode == 'NONE') {
+function toData(n: FrameNode & FramePrototypingMixin) {
+    data.value.paddingTop = n.paddingTop || 0;
+    data.value.paddingRight = n.paddingRight || 0;
+    data.value.paddingBottom = n.paddingBottom || 0;
+    data.value.paddingLeft = n.paddingLeft || 0;
+    if (n.layoutMode == 'NONE') {
         data.value.ladyoutModeSelectedValue = 'absolute';
-    } else if(node.layoutMode == 'HORIZONTAL' || node.layoutMode == 'VERTICAL') {
+    } else if(n.layoutMode == 'HORIZONTAL' || n.layoutMode == 'VERTICAL') {
         data.value.ladyoutModeSelectedValue = 'flex';
     }
-    if (node.overflowDirection == 'NONE') {
+    if (n.overflowDirection == 'NONE') {
         overflow.value = 'hidden';
     } else {
         overflow.value = 'visible';
     }
-    data.value.layoutWrap = node.layoutWrap;
+    data.value.layoutWrap = n.layoutWrap;
+    data.value.primaryAxisAlignItems = n.primaryAxisAlignItems;
+    data.value.counterAxisAlignItems = n.counterAxisAlignItems;
 }
 
 type OverflowType = 'visible' | 'hidden' | 'overflow-x' | 'overflow-y';
@@ -148,6 +155,19 @@ function changeItemSpacing({event}: {event: InputEvent}) {
 function changeFlexWrap() {
     if (!node) return;
     node.layoutWrap = node.layoutWrap == 'NONE' ? 'WRAP' : 'NONE';
+    node.resize(node.width, node.height);
+    node.update();
+}
+function changePrimaryAxisAlignItems(value: any) {
+    if (!node) return;
+    node.primaryAxisAlignItems = value;
+    node.resize(node.width, node.height);
+    node.update();
+}
+function changeItems({justify, align}: {justify: any, align: any}) {
+    if (!node) return;
+    node.primaryAxisAlignItems = justify;
+    node.counterAxisAlignItems = align;
     node.resize(node.width, node.height);
     node.update();
 }
@@ -228,15 +248,13 @@ const options = layoutModeOptions.map(item => {return {id: item, label: layoutMo
                     :class="[$style.col, $style['flow-icons']]"
                     :span="7"
                 >
-                    <Button
-                        size="sm -v-mx"
-                        class="square"
-                        :styles="ButtoLightStyle"
-                        :class="data.layoutWrap == 'WRAP'? 'active': ''"
-                        @click="() => changeFlexWrap()"
-                    >
-                        <i-cosmic-arrange />
-                    </Button>
+                    <flex-arrange
+                        :flex-direction="data.flexDirection"
+                        :primary-axis-align-items="data.primaryAxisAlignItems"
+                        :counter-axis-align-items="data.counterAxisAlignItems"
+                        @primary-axis-align-items="changePrimaryAxisAlignItems"
+                        @change="changeItems"
+                    />
                     <Button
                         size="sm -v-mx"
                         class="square"

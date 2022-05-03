@@ -1,0 +1,51 @@
+.tabs {
+    background-color: hsla(var(--hsl-dark), 0.08);
+    border-radius: 0.4rem;
+}
+
+.cursor {
+    display: none;
+    /* transition: 0.8s ease; */
+}
+
+.tab-pane {
+    composes:  -v-text from global;
+    opacity: .6;
+    border-radius: 0.4rem;
+    line-height: 2.6rem;
+    justify-content: center;
+}
+.tab-pane:hover, .tab-pane:global(.hover){
+    opacity: .9;
+}
+
+.tab-pane:active, .tab-pane:global(.active) {
+    opacity: 1;
+    background-color: hsla(var(--hsl-dark), 0.1);
+}
+
+.label {
+    display: block;
+    user-select:none;
+}
+
+.tabs-nav {
+    display: flex;
+}
+
+.tabs-nav-item {
+    padding-left: var(--padding-xs);
+    padding-right: var(--padding-xs);
+}
+
+.tabs-nav-selected {
+    composes: -v-color-primary from global;
+}
+
+.tabs-divider {
+    display: none;
+}
+
+.tabs-cursor {
+    display: none;
+}
