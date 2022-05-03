@@ -38,9 +38,19 @@ export function makeBaseFrameStyle(node: BaseFrameMixin) {
     if (node.layoutMode === 'HORIZONTAL' || node.layoutMode === 'VERTICAL') {
         styles.display = 'flex';
         styles['flex-direction'] = node.layoutMode === 'VERTICAL' ? 'column': '';
+
         styles['align-content'] = {
-            'MIN': 'flex-start', 'CENTER': 'center', 'MAX': 'flex-start', 'SPACE_BETWEEN': 'space-between',
+            'MIN': 'flex-start', 'CENTER': 'center', 'MAX': 'flex-end', 'SPACE_BETWEEN': 'space-between',
         }[node.primaryAxisAlignContent];
+
+        styles['justify-content'] = {
+            'MIN': 'flex-start', 'CENTER': 'center', 'MAX': 'flex-end', 'SPACE_BETWEEN': 'space-between',
+        }[node.primaryAxisAlignItems];
+
+        styles['align-items'] = {
+            'MIN': 'flex-start', 'CENTER': 'center', 'MAX': 'flex-end',
+        }[node.counterAxisAlignItems];
+
         if (node.layoutWrap === 'WRAP') styles['flex-wrap'] = 'wrap';
     }
     return  styles;
@@ -71,7 +81,7 @@ export function  makeLayoutStyle(node: LayoutMixin & ConstraintMixin) {
     const parent = (node as any)?.parent;
     const parentWidth = parent.width || 0;
     const parentHeight = parent.height || 0;
-    if(parent.layoutMode === 'NONE'|| parent?.type == 'PAGE') {
+    if(parent.layoutMode !== 'VERTICAL' && parent.layoutMode !== 'HORIZONTAL') {
         styles.position = 'absolute';
         switch(node.constraints.horizontal) {
             case ConstraintType.MIN:
@@ -123,6 +133,7 @@ export function  makeLayoutStyle(node: LayoutMixin & ConstraintMixin) {
     } else {
         styles.width = node.width + 'px';
         styles.height = node.height + 'px';
+        styles['flex-shrink'] = '0';
     }
     return styles;
 }
