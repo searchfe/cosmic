@@ -3,7 +3,7 @@ import Tabs from './tab/tabs.vue';
 import { watchEffect, ref, type Ref, onMounted, onUnmounted } from 'vue';
 import { Button } from 'cosmic-vue';
 import ButtoLightStyle from './button-light.module.css';
-import { DirectionData, AlignItemsData } from '../common/flex-arrange';
+import { DirectionData, AlignItemsData, BetweenData } from '../common/flex-arrange';
 
 interface Porps {
     flexDirection: string;
@@ -113,8 +113,25 @@ onMounted(() => {
                 <div
                     v-for="align in ['MIN', 'CENTER', 'MAX']"
                     :key="align"
+                    class="flex"
+                    :class="[
+                        BetweenData[flexDirection].line,
+                        $style['box-item'],
+                        counterAxisAlignItems === align ? 'active': ''
+                    ]"
                 >
-                    1
+                    <div
+                        v-for="justify in ['between-0', 'between-1', 'between-2']"
+                        :key="justify"
+                        class="w-32 h-32 flex flex-wrap flex-shrink-0 content-around"
+                        :class="[
+                            BetweenData[flexDirection].container,
+                            AlignItemsData[align].container,
+                        ]"
+                        @click="() => onChange('SPACE_BETWEEN', align)"
+                    >
+                        <div :class="[BetweenData[flexDirection][justify], $style['a-item']]" />
+                    </div>
                 </div>
             </div>
         </div>
