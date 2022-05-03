@@ -1,17 +1,22 @@
 <script lang="ts" setup>
 import { Select as CSelect, SelectOption } from 'cosmic-vue';
-import type { SchemaType } from '../type/index';
-withDefaults(defineProps<{
-    componentName: string;
-    model: string | number | boolean;
-    schema: SchemaType;
-    propertyKey: string;
-}>(), {});
+ withDefaults(defineProps<{
+    value: string;
+}>(), {
+    value: 'var',
+});
 
 const emits = defineEmits(['change']);
 
+const items = [{
+    label: '动态数据',
+    value: 'var',
+}, {
+    label: '静态数据',
+    value: 'const',
+}];
 
-function change(event: {value: any}) {
+function change(event: {value: string}) {
     emits('change', event.value);
 }
 
@@ -22,25 +27,22 @@ function change(event: {value: any}) {
             :class="$style.description"
             class="h-16 w-full mb-4"
         >
-            {{ schema.description }}
+            动态/静态数据
         </div>
         <div class="w-full">
             <c-select
                 size="sm"
                 :class="$style.border"
                 :placeholder="propertyKey"
-                :value="model"
+                :value="value"
                 @on-change="change"
             >
                 <select-option
-                    v-for="(value, index) of schema.enum"
-                    :key="value"
-                    :value="value"
-                    :label="schema.enumName[index]"
+                    v-for="item of items"
+                    :key="item.value"
+                    :value="item.value"
+                    :label="item.label"
                 />
-                <template #prefix>
-                    <i-cosmic-link-circles />
-                </template>
             </c-select>
         </div>
     </div>
@@ -56,6 +58,7 @@ function change(event: {value: any}) {
     border-style: solid;
     border-color: var(--color-gray-300);
     border-radius: .4rem;
+    margin: -1px;
 } */
 
 </style>

@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import FloatInput from '../form/float-input.vue';
 import FloatCheck from '../form/float-check.vue';
 import FloatSelect from '../form/float-select.vue';
+import FloatDatatype from '../form/float-datatype.vue';
 import type { SchemaType } from '../type/index';
 
 const props = withDefaults(defineProps<{
@@ -12,7 +13,7 @@ const props = withDefaults(defineProps<{
     layer: number
 }>(), {});
 
-const emits = defineEmits(['change']);
+const emits = defineEmits(['change', 'dataTypeChange']);
 
 const Type2Component = {
     'text': FloatInput,
@@ -30,7 +31,7 @@ const componentData = computed(() =>  {
     }
     if (schema.enum) {
         componentName = 'select';
-    } 
+    }
     if (schema.type === 'string') {
         switch (schema.format) {
             case 'data-time':
@@ -56,34 +57,33 @@ const componentData = computed(() =>  {
         }
     }
 
-    if (schema.type === 'boolean') {
+    if (schema.type === 'boolean' && !schema.enum) {
         componentName = 'check';
     }
-
     return {componentName, prop};
 });
 
 // 计算当前节点的model
 const model = ref<ReturnType<typeof getCurrentModel>>(getCurrentModel(props.model, props.schema, undefined));
 
-function getCurrentModel(model: string | boolean | number, schema: SchemaType, unset: any) {
-    if (!schema || unset) return;
-    if (schema.const !== undefined) {
-        return schema.const;
+function getCurrentModel(model: string | boolean | number, curSchema: SchemaType, unset: any) {
+    if (!curSchema || unset) return;
+    if (curSchema.const !== undefined) {
+        return curSchema.const;
     }
     let newModel: string | number | boolean = '';
     if (model != null && typeof model !== 'object') {
-        if (!schema.enum) newModel = model;
-        if (schema.enum && schema.enum.includes(model as string | number)) {
+        if (!curSchema.enum) newModel = model;
+        if (curSchema.enum && curSchema.enum.includes(model as string | number)) {
              newModel = model;
-        } else if (schema.enum && schema.enum.length > 0) {
-            newModel = schema.enum[0];
+        } else if (curSchema.enum && curSchema.enum.length > 0) {
+            newModel = curSchema.enum[0];
         }
-    } else if (schema.default || schema.example) {
-        newModel = schema.default ?? schema.example as string;
-    } else if (schema.enum && schema.enum.length > 0) {
-        newModel = schema.enum[0];
-    } else if (schema.type === 'boolean' && model === undefined && schema.default === undefined) {
+    } else if (curSchema.default || curSchema.example) {
+        newModel = curSchema.default ?? curSchema.example as string;
+    } else if (curSchema.enum && curSchema.enum.length > 0) {
+        newModel = curSchema.enum[0];
+    } else if (curSchema.type === 'boolean' && model === undefined && curSchema.default === undefined) {
         newModel = false;
     }
     return newModel;
@@ -93,10 +93,14 @@ function change(key: string, value: any) {
     emits('change', {propertyKey:key, value: value});
 }
 
+function dataTypeChange(key: string, value: string) {
+    emits('dataTypeChange', {[key]: value});
+}
+
 </script>
 
 <template>
-    <div class="flex">
+    <div class="flex items-center">
         <component
             :is="Type2Component[componentData.componentName]"
             :type="schema.type"
@@ -107,6 +111,13 @@ function change(key: string, value: any) {
             :schema="schema"
             @change="(event) => change(propertyKey, event)"
         />
-        <template v-if="schema.dataType === 'both'" />
+        <template v-if="schema.dataType === 'both'">
+            <div class="w-120 ml-8">
+                <float-datatype
+                    :value="schema.newDataType"
+                    @change="(event) => dataTypeChange(propertyKey, event)"
+                />
+            </div>
+        </template>
     </div>
 </template>

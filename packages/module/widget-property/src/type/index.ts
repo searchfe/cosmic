@@ -8,5 +8,8 @@ export interface SchemaType {
     oneOf?: Record<string, any>;
     then?: Record<string, string>;
     else?: Record<string, string>;
+    maxItems?: number;
+    items?: Array<SchemaType>;
+    newDataType?: string;
     [key: string]: any;
 }

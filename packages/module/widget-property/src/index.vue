@@ -9,13 +9,8 @@ const {schema: resetSchema, model: resetModel} = getRenderSchemaAndModel(schema,
 const renderSchema = ref(resetSchema);
 const renderModel = ref(resetModel);
 
-// function update() {
-//     const {schema: updateSchema, model: updateModel } = getRenderSchemaAndModel(schema, renderModel.value);
-//     renderModel.value = updateModel;
-//     renderSchema.value = updateSchema;
-// }
 
-// provide('update', update);
+console.log(resetModel);
 
 </script>
 
