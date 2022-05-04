@@ -27,6 +27,8 @@ const layoutKeys = [
     'bottomLeftRadius',
     'bottomRightRadius',
     'overflowDirection',
+    'primaryAxisAlignContent',
+    'layoutWrap',
 ];
 
 const excludeKeys = [
@@ -36,13 +38,13 @@ const excludeKeys = [
 
 
 
-export function transformUiShema(root: FrameNode | ComponentNode, model: Record<string, any>, type: 'pc' | 'wise') {
+export function transformUiShema(root: FrameNode | ComponentNode, type: 'pc' | 'wise') {
     const uiSchema = {
         title: 'wuji_template',
         type: 'array',
         flatten: true,
         items: [
-            ...transformTreeNode(root, model, type),
+            ...transformTreeNode(root, type),
         ],
     };
     return uiSchema;
@@ -74,49 +76,47 @@ function transformTreeNodeLayout(treeNode: FrameNode | ComponentNode) {
     }, {});
 }
 
-function transformTreeNode(treeNode: FrameNode | ComponentNode, model: Record<string, any>, type: 'pc' | 'wise'): Array<Record<string, any>> {
-    if (!treeNode.children) return [];
-    return treeNode.children.map((child) => {
-        if (child instanceof ComponentNode) {
-            return transformComponent(child, model, type);
-        } else {
-            return {
-                type: 'object',
-                properties: {
-                    component: {
-                        type: 'string',
-                        dataType: 'const',
-                        const: 'container',
-                    },
-                    data: {
-                        type: 'object',
-                        title: 'container',
-                        description: '布局区域',
-                        required: [
-                            'designProperty',
-                            'children',
-                        ],
-                        properties: {
-                            designProperty: {
-                                type: 'object',
-                                dataType: 'const',
-                                properties: transformTreeNodeLayout(treeNode),
-                            },
-                            children: {
-                                flatten: true,
-                                type: 'array',
-                                items: [...transformTreeNode(child as FrameNode, model, type)],
-                            },
+function transformTreeNode(treeNode: FrameNode | ComponentNode, type: 'pc' | 'wise'): Array<Record<string, any>> {
+    if (!treeNode) return [];
+    if (treeNode instanceof ComponentNode) {
+        return [transformComponent(treeNode, type)];
+    } else {
+        return [{
+            type: 'object',
+            properties: {
+                component: {
+                    type: 'string',
+                    dataType: 'const',
+                    const: 'container',
+                },
+                data: {
+                    type: 'object',
+                    title: 'container',
+                    description: '布局区域',
+                    required: [
+                        'designProperty',
+                        'children',
+                    ],
+                    properties: {
+                        designProperty: {
+                            type: 'object',
+                            dataType: 'const',
+                            properties: transformTreeNodeLayout(treeNode),
+                        },
+                        children: {
+                            flatten: true,
+                            type: 'array',
+                            items: treeNode.children.reduce((pre: any[], child: any) => ([...pre, ...transformTreeNode(child, type)]), []),
                         },
                     },
                 },
-            };
-        }
-    });
+            },
+        }];
+    }
 }
 
-function transformComponent(treeNode: ComponentNode, model:Record<string, any>, type: 'pc' | 'wise'): Record<string, any> {
-    const schema = {};
+function transformComponent(treeNode: ComponentNode, type: 'pc' | 'wise'): Record<string, any> {
+    const { schema, model } = treeNode.getPluginData('wise');
     return {
         type: 'object',
         properties: {
@@ -125,7 +125,10 @@ function transformComponent(treeNode: ComponentNode, model:Record<string, any>, 
                 dataType: 'const',
                 const: 'poster',
             },
-            data: transFormSchema(schema, model),
+            data: {
+                type: 'object',
+                properties: transFormSchema(cloneDeep(schema), cloneDeep(model)),
+            },
         },
     };
 }
@@ -134,16 +137,17 @@ function transFormSchema(schema: SchemaType, model: Record<string, any>) {
     const { properties } = schema;
     if (!properties) return schema;
     const keys = Reflect.ownKeys(schema.properties as Record<string, any>) as string[];
-    keys.reduce((pre: SchemaType, key: string) => {
-        if (pre[key].type === 'object') {
-            pre[key] = transFormSchema(pre[key], model[key]);
+    const res = keys.reduce((pre: SchemaType, key: string) => {
+        if (pre[key].type === 'object' && pre[key].properties) {
+            pre[key].flatten = true;
+            pre[key].properties = transFormSchema(pre[key], model[key]);
         } else if (pre[key].type === 'array') {
             const original = pre[key];
-            pre[key] = {
-                type: 'array',
-                description: original.description,
-                items: model[key].map((value: Record<string, any>) => transFormSchema(original.items, value)),
-            };
+            pre[key].flatten = true;
+            pre[key].items = model[key].map((value: Record<string, any>) => ({
+                type: 'object',
+                properties: transFormSchema(original.items, value),
+            }));
         } else {
             if (model[key] != null) {
                 pre[key].const = model[key];
@@ -155,7 +159,7 @@ function transFormSchema(schema: SchemaType, model: Record<string, any>) {
         return pre;
     }, properties);
     excludeKeys.forEach(key => Reflect.deleteProperty(schema, key));
-    
+    return res;
 }
 
 // 根据schema对model进行更行
