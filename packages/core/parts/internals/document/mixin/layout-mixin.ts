@@ -85,40 +85,63 @@ function layoutAbsoluteChild(parent: Internal.BaseFrameMixin,node: LayoutMixin &
     }
 }
 
-function layoutFlex(parent: BaseFrameMixin, childs: Array<LayoutMixin & ConstraintMixin>) {
-    let offsetX = parent.paddingLeft, offsetY =  parent.paddingTop;
-    const maxWidth = parent.width - parent.paddingLeft - parent.paddingRight;
-    const maxHeight = parent.height - parent.paddingTop - parent.paddingBottom;
-    let lineHeight = 0;
-    let lineWidth = 0;
-    let cursor = 0;
-    for(const child of childs) {
-        if (parent.layoutMode === 'HORIZONTAL') {
-            child.x = offsetX;
-            if (parent.layoutWrap == 'WRAP') {
-                if (child.x + child.width > maxWidth && cursor > 0) {
-                    child.x = parent.paddingLeft;
-                    offsetY += lineHeight;
-                    lineHeight = 0;
-                }
-            }
-            lineHeight = Math.max(child.height, lineHeight);
-            child.y = offsetY;
-            offsetX += child.width;
-        } else if (parent.layoutMode === 'VERTICAL') {
-            child.y = offsetY;
-            if (parent.layoutWrap == 'WRAP') {
-                if (child.y + child.height > maxHeight && cursor > 0) {
-                    child.y =  parent.paddingTop;
-                    offsetX += lineWidth;
-                    lineWidth = 0;
-                }
-            }
-            lineWidth = Math.max(child.width, lineWidth);
-            child.x = offsetX;
-            offsetY += child.height;
-        }
-        cursor++;
+function getAttrs(layoutMode: string) {
+    if (layoutMode === 'HORIZONTAL') {
+        return { primary : 'x', counter : 'y', primarySize : 'width', counterSize : 'height', paddingMin: 'paddingLeft', paddingMax: 'paddingRight'};
     }
-    //
+    return { primary : 'y', counter : 'x', primarySize : 'height', counterSize : 'width', paddingMin: 'paddingTop', paddingMax: 'paddingBottom'};
+}
+
+function layoutFlex(parent: BaseFrameMixin, childs: Array<LayoutMixin & ConstraintMixin>) {
+    const p = parent as any;
+    const { primary, counter, primarySize, counterSize, paddingMin, paddingMax} = getAttrs(parent.layoutMode);
+    const primaryMaxSize = p[primarySize] - p[paddingMin] - p[paddingMax];
+    const matrix: number[][] = [[]];
+    const primarySizeSum: number[] = [0];
+    const counterSizeMax: number[] = [0];
+    let currentPos = p[paddingMin];
+    childs.forEach((child: any, index) => {
+        if (parent.layoutWrap == 'WRAP') {
+            if (currentPos + child[primarySize] > primaryMaxSize) {
+                matrix.push([]);
+                counterSizeMax.push(0);
+                primarySizeSum.push(0);
+                currentPos = p[paddingMin];
+            }
+        }
+        currentPos += child[primarySize];
+        primarySizeSum.push((primarySizeSum.pop()|| 0) + child[primarySize]);
+        matrix[matrix.length - 1].push(index);
+        counterSizeMax.push(Math.max(counterSizeMax.pop() || 0, child[counterSize]));
+    });
+    let counterOffset = 0;
+    matrix.forEach((cols, rowNum) => {
+        let primaryOffset = p[paddingMin];
+        let primarySpacing = 0;
+        if(parent.primaryAxisAlignItems === 'MIN') {
+            // do nothing
+        } else if(parent.primaryAxisAlignItems === 'CENTER') {
+            primaryOffset += (primaryMaxSize - primarySizeSum[rowNum]) / 2;
+        } else if(parent.primaryAxisAlignItems === 'MAX') {
+            primaryOffset += primaryMaxSize - primarySizeSum[rowNum];
+        } else if(parent.primaryAxisAlignItems === 'SPACE_BETWEEN') {
+            primarySpacing = cols.length > 1 ? (primaryMaxSize - primarySizeSum[rowNum]) / (cols.length - 1) : 0;
+        }
+        cols.forEach(idx => {
+            const child = childs[idx] as any;
+            child[primary] = round(primaryOffset, 1);
+            primaryOffset += child[primarySize] + primarySpacing;
+
+            let counterSpacing = 0;
+            if(parent.counterAxisAlignItems === 'MIN') {
+                // do nothing
+            } else if(parent.counterAxisAlignItems === 'CENTER') {
+                counterSpacing =  (counterSizeMax[rowNum] - child[counterSize]) / 2;
+            } else if(parent.counterAxisAlignItems === 'MAX') {
+                counterSpacing = counterSizeMax[rowNum] - child[counterSize];
+            }
+            child[counter] = round(counterOffset + counterSpacing);
+        });
+        counterOffset += counterSizeMax[rowNum];
+    });
 }
