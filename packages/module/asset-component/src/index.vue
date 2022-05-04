@@ -3,11 +3,35 @@ import { ref } from 'vue';
 import { Input as CInput } from 'cosmic-vue';
 import Collapse from './component/collapse.vue';
 import { mock } from './component/data';
+import { schema as DataShema, mock as DataModel } from './data';
+
+
+import { service } from '@cosmic/core/browser';
+import { inject, SceneNode, getRenderSchemaAndModel, FrameNode } from '@cosmic/core/parts';
+
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+
+let node: SceneNode;
+
+nodeService.selection.subscribe(nodes => {
+    if (nodes.length === 0) return;
+    node = nodes[0] as SceneNode;
+    
+});
 
 const collapseIndex = ref<number>();
 
 function collapseChange(event:boolean, index: number) {
     collapseIndex.value = event ? index : -1;
+}
+
+function add() {
+    const componentNode = nodeService.addComponent(node as FrameNode);
+    const {schema, model} = getRenderSchemaAndModel(DataShema, DataModel);
+    componentNode.setPluginData('wise', {
+        schema,
+        model,
+    });
 }
 
 </script>
@@ -36,7 +60,7 @@ function collapseChange(event:boolean, index: number) {
                     :key="child.name"
                     :class="$style['grid-item']"
                 >
-                    <img class="w-50" :src="child.poster">
+                    <img class="w-50" :src="child.poster" @click="add">
                 </div>
             </div>
         </collapse>
