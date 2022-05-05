@@ -1,8 +1,18 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { MTitle } from '@cosmic/core/browser';
+import { MTitle, service } from '@cosmic/core/browser';
 import type { SchemaType } from '../type/index';
 import FormNode from './form-node.vue';
+import { inject, SceneNode } from '@cosmic/core/parts';
+
+let node: SceneNode;
+
+const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+
+nodeService.selection.subscribe(nodes => {
+    node = nodes[0];
+});
+
 const props = withDefaults(defineProps<{
     model: Record<string, any>,
     schema: SchemaType,
@@ -14,17 +24,7 @@ const props = withDefaults(defineProps<{
 
 const propertyKeys = computed(() => getPropertyKey(props.schema));
 
-// const curModel = ref(getModel(props.schema, props.model));
-
 const curSchema = computed(() =>  props.schema);
-
-// function getModel(schema, model){
-//     if (!schema) return null;
-//     if (model != null && typeof model === 'object') {
-//         return props.model;
-//     }
-//     return {};
-// }
 
 function getPropertyKey(curSchemas: SchemaType) {
     if (!curSchemas) return [];
@@ -48,6 +48,9 @@ function isRequired(schema: SchemaType, key: string) {
 
 function change(model: Record<string, any>, key: string, data: {value: any}) {
     model[key] = data.value;
+    // 触发更新
+    node.setPluginData('isPropertyUpdate', true);
+    node.update();
 }
 
 const renderDescription = computed(() => {
