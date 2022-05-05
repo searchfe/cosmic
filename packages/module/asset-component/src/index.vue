@@ -29,6 +29,8 @@ function add() {
     const componentNode = nodeService.addComponent(node as FrameNode);
     const {schema, model} = getRenderSchemaAndModel(DataShema, DataModel);
     componentNode.setPluginData('wise', {
+        // 保留原始数据，后期计算会用到
+        originSchema: DataShema,
         schema,
         model,
     });

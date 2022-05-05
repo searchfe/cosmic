@@ -1,5 +1,5 @@
 import { cloneDeep } from '../../lodash';
-import { ComponentNode, FrameNode, SceneNode } from '../internals';
+import { ComponentNode, FrameNode, PageNode, SceneNode } from '../internals';
 import { SchemaType } from './type';
 
 const layoutKeys = [
@@ -38,13 +38,13 @@ const excludeKeys = [
 
 
 
-export function transformUiShema(root: FrameNode | ComponentNode, type: 'pc' | 'wise') {
+export function transformUiShema(root: PageNode, type: 'pc' | 'wise') {
     const uiSchema = {
         title: 'wuji_template',
         type: 'array',
         flatten: true,
         items: [
-            ...transformTreeNode(root, type),
+            ...root.children.reduce((pre: any[], child) => [...pre, ...transformTreeNode(child as FrameNode, type)], []),
         ],
     };
     return uiSchema;
@@ -116,7 +116,7 @@ function transformTreeNode(treeNode: FrameNode | ComponentNode, type: 'pc' | 'wi
 }
 
 function transformComponent(treeNode: ComponentNode, type: 'pc' | 'wise'): Record<string, any> {
-    const { schema, model } = treeNode.getPluginData('wise');
+    const { schema, model } = treeNode.getPluginData(type);
     return {
         type: 'object',
         properties: {

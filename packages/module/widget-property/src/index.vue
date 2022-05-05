@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { BaseNodeMixin, SceneNode } from '@cosmic/core/parts';
+import { BaseNodeMixin, SceneNode, getRenderSchemaAndModel } from '@cosmic/core/parts';
 import FormBySchema from './form-by-schema.vue';
 // import { schema as DataShema, mock as DataModel } from './data';
 import { service } from '@cosmic/core/browser';
@@ -26,8 +26,11 @@ nodeService.selection.subscribe(nodes => {
     subject.subscribe(() => {
         const isPropertyUpdate = node.getPluginData('isPropertyUpdate');
         if (!isPropertyUpdate) return;
+        node.setPluginData('isPropertyUpdate', false);
         isSelected.value = true;
-        const { schema, model } = node.getPluginData('wise');
+        const { model: currentModel, originSchema } = node.getPluginData('wise');
+        // 重新获取需要渲染的数据
+        const { schema, model } = getRenderSchemaAndModel(currentModel, originSchema);
         renderSchema.value = schema;
         renderModel.value = model;
     });
@@ -39,10 +42,31 @@ nodeService.selection.subscribe(nodes => {
     renderModel.value = model;
 });
 
+// function test() {
+
+//     const uiSchema = transformUiShema(nodeService.getCurrentPage(), 'wise');
+//     console.log(uiSchema);
+
+//     fetch('http://172.24.132.16:8849/api/card/getMirror?user=maxuelong', {
+//         method: 'POST',
+//         mode: 'cors',
+//         headers: {
+//             'Content-Type': 'application/json'
+//             // 'Content-Type': 'application/x-www-form-urlencoded',
+//         },
+//         body: JSON.stringify({
+//             pcUiSchema: uiSchema,
+//             wiseUiSchema: uiSchema
+//         })
+//     }).then(res => {
+//         console.log(res);
+//     });
+// }
 
 
 </script>
 
 <template>
+    <!-- <button @click="test">测试接口</button> -->
     <form-by-schema v-if="isSelected" :index="isUpdate" :schema="renderSchema" :model="renderModel" />
 </template>
