@@ -13,5 +13,6 @@ export const TOKENS = {
     Draft: Symbol.for('DraftService'),
     Canvas: Symbol.for('CanvasService'),
     User: Symbol.for('UserService'),
+    Renderer: Symbol.for('RendererService'),
     Teams: Symbol.for('Teams'),
 };
