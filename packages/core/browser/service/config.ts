@@ -15,6 +15,7 @@ import DraftService from './document/draft.service';
 import CanvasService from './interactivity/canvas.service';
 import { UserService } from './user/index.service';
 import { TeamService } from './team/index.service';
+import RendererService from './document/renderer.service';
 
 
 /**
@@ -45,6 +46,7 @@ export function load(options: interfaces.ContainerOptions) {
     container.bind<EffectStyleService>(TOKENS.EffectStyle).to(EffectStyleService);
     container.bind<StrokeStyleService>(TOKENS.StrokeStyle).to(StrokeStyleService);
     container.bind<ComponentService>(TOKENS.Component).to(ComponentService);
+    container.bind<RendererService>(TOKENS.Renderer).to(RendererService);
 
     return container;
 }
