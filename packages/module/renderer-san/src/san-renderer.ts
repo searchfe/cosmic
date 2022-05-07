@@ -1,10 +1,10 @@
-import { type SceneNode } from '@cosmic/core/parts';
+import { type FrameNode } from '@cosmic/core/parts';
 import { type Renderer } from '@cosmic/core/browser';
 import san from 'san';
 
 class SanRenderer implements Renderer {
-  create (root: HTMLElement, childs: SceneNode[]) {
-    console.log(root, childs, san);
+  create (root: HTMLElement, frameNode: FrameNode) {
+    console.log(root, frameNode, san);
     return;
   }
   dispose(){
