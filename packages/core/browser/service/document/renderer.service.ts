@@ -5,21 +5,28 @@ const sanRendererPath = '@cosmic-module/renderer-san';
 
 @injectable()
 export default class RendererService {
-    private rendererModule: {[index:string]: Promise<new () => Renderer> } = {};
+    private rendererCache: {[index:string]: Promise<new () => Renderer> } = {};
+    private rendererModule: {[index:string]: new () => Renderer } = {};
     constructor() {
         this.load(sanRendererPath);
     }
     load(path: string) {
-        if (!this.rendererModule[path]) {
-            this.rendererModule[path] = import(
+        if (!this.rendererCache[path]) {
+            this.rendererCache[path] = import(
                 /* @vite-ignore */
                 moduleAssetPath(path, 'index') || ''
-            ).then(module => module.default);
+            ).then(module => {
+                this.rendererModule[path] = module.default;
+                return module.default;
+            });
         }
     }
-    async getRenderer(engine: string = sanRendererPath) {
-        this.load(engine);
-        return this.rendererModule[engine];
-        // import('')
+    getRenderer(callback: (Render: new () => Renderer) => void, engine: string = sanRendererPath) {
+        if (this.rendererModule[engine]) {
+            callback(this.rendererModule[engine]);
+        } else {
+            this.load(engine);
+            this.rendererCache[engine].then(callback);
+        }
     }
 }

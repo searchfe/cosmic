@@ -1,8 +1,9 @@
 import type { CosmicNode } from './types';
 import { ChildrenMixin, type SceneNode } from '../document';
-import { makeStyle }from './make-style';
+import { makeStyle }from './style/make-style';
 import { hasMixin } from '../';
-export default class NodeTransform {
+
+export class NodeTransform {
     private node: CosmicNode;
     private editTimeList: {[id: string]: number} = {};
     private childTransform: {[id: string]: NodeTransform} = {};
@@ -16,14 +17,8 @@ export default class NodeTransform {
         if (this.dom.editTime === this.editTimeList[this.dom.id]) return;
         this.editTimeList[this.dom.id] = this.dom.editTime;
         const style = makeStyle(this.dom);
-        if (!equal(style, this.node.props.style)) {
+        if (!equal(this.node.props.style, style)) {
             this.node.props.style = style;
-        }
-        if (!equal(style, this.node.props.style)) {
-            this.node.props.style = style;
-        }
-        if (!equal(style, this.node.props.style)) {
-                this.node.props.style = style;
         }
         this.node.props.class = [];
         this._getUpdateChildren();
@@ -60,19 +55,19 @@ export default class NodeTransform {
         });
         this.node.children = transforms.map(transform => transform.transfer());
         if (Object.keys(list).length !== Object.keys(this.childTransform).length) dirty = true;
-        if (dirty) {
+        // if (dirty) {
             this.node = {...this.node};
-        }
+        // }
     }
 
 }
 
 type SimpleProps = {[index: string]: string};
 
-function equal(style: SimpleProps, target: SimpleProps = {}) {
+function equal(style: SimpleProps = {}, target: SimpleProps = {}) {
     const keys = Object.keys(style);
     if (keys.length !== Object.keys(target).length) return false;
-    for(const key in keys) {
+    for(const key of keys) {
         if (style[key] !== target[key]) {
             return false;
         }

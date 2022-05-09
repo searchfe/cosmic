@@ -1,6 +1,7 @@
-import { type FrameNode } from '@cosmic/core/parts';
+import { type CosmicNode } from '@cosmic/core/parts';
 interface Renderer {
-    create: (root: HTMLElement, frameNode: FrameNode) => void;
+    create: (root: HTMLElement, node: CosmicNode) => void;
+    update: (node: CosmicNode) => void;
     dispose: () => void;
 }
 export { Renderer };

@@ -67,7 +67,7 @@ export interface CosmicProps {
     /**
      * 其它原生 props 或自定义 props
      */
-    [key: string]: Record<string, any>;
+    [key: string]: any;
 }
 
 /**

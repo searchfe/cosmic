@@ -1,28 +1,24 @@
 <script setup lang="ts">
 import { inject } from '@cosmic/core/parts';
-import { service } from '@cosmic/core/browser';
-import { ref, type Ref } from 'vue';
+import {service } from '@cosmic/core/browser';
+import { ref } from 'vue';
 
 import WidgetProperties from './properties/index.vue';
 import WidgetAssets from './assets/index.vue';
 import WidgetCanvas from './canvas/index.vue';
 import PageNodeRender from './render/page.vue';
 import CanvasHelper from './canvas/helper.vue';
+// import NodeRenderer from './node-renderer.vue';
 import NodeControllService from './service/node-controll.service';
 
 const page = ref();
-
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-const rendererService = inject<service.RendererService>(service.TOKENS.Renderer);
-nodeService.currentPage.subscribe(pageNode => {
+nodeService.currentPage.subscribe(async pageNode => {
     page.value = pageNode;
 });
 
 const nodeControllService = inject(NodeControllService);
-const rendererRoot = ref() as Ref<HTMLElement>;
-rendererService.getRenderer().then(Renderer => {
-    new Renderer().create(rendererRoot.value, []);
-});
+
 </script>
 
 <template>
@@ -37,7 +33,9 @@ rendererService.getRenderer().then(Renderer => {
             v-creator="{target: page, container: 'base-point'}" :node="page" class="h-full w-full"
         >
             <widget-canvas class="h-full w-full overflow-hidden">
-                <div ref="rendererRoot" />
+                <!-- <template v-for="child in page.children" :key="child.id">
+                    <node-renderer :node="child" />
+                </template> -->
                 <children-render :node="page" />
                 <canvas-helper />
             </widget-canvas>

@@ -13,7 +13,7 @@ export default class BaseNodeMixin extends PluginDataMixinx implements Internal.
     }
     parent: (Internal.BaseNode & ChildrenMixin) | null;
     name: string; // Note: setting this also sets `autoRename` to false on TextNodes
-    readonly removed: boolean = false;
+    removed = false;
     public editTime: number;
     toString() {
         // TODO
@@ -27,6 +27,7 @@ export default class BaseNodeMixin extends PluginDataMixinx implements Internal.
                 this.update();
             }
             this.parent = null;
+            this.removed = true;
         }
         // TODO
     }
