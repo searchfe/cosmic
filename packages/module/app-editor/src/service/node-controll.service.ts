@@ -1,10 +1,6 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { service } from '@cosmic/core/browser';
-import { SceneNode, util } from '@cosmic/core/parts';
-
-// export enum NodeControllState {
-//     ResizeNode = 'ResizeNode',
-// }
+import { SceneNode, util, hasMixin, ChildrenMixin } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeControllService {
@@ -18,8 +14,9 @@ export default class NodeControllService {
     }
 
     public mousedown(event: MouseEvent) {
+        const state = this.toolService.getState();
         if (
-            this.toolService.getState() === service.ToolState.Null &&
+            state === service.ToolState.Null &&
             this.canvasService.inCanvas(event.clientX, event.clientY)
         ) {
             // 处理点击节点
@@ -27,6 +24,12 @@ export default class NodeControllService {
             this._deferDargTimer = setTimeout(() => {
                 this.startDragNode(event);
             }, 200);
+        } else if (
+            state === service.ToolState.Frame ||
+            state === service.ToolState.Text ||
+            state === service.ToolState.Component
+        ) {
+            this.appendChild(event);
         }
    }
 
@@ -40,6 +43,10 @@ export default class NodeControllService {
             this.setNodePosition(event);
             this.toolService.set(service.ToolState.Null);
         }
+        if (this.editingChild) {
+            this.editingChild = undefined;
+            this.toolService.cancel(this.toolService.getState());
+        }
     }
     public mousemove(event: MouseEvent) {
         const state = this.toolService.getState();
@@ -47,20 +54,73 @@ export default class NodeControllService {
             this.setNodePosition(event);
         } else if(state === service.ToolState.ResizeNode) {
             this.setNodeSize(event);
+        } else if (state === service.ToolState.Frame ||
+            state === service.ToolState.Text ||
+            state === service.ToolState.Component
+        ) {
+            if(this.editingChild) {
+                this.setNodeSize(event);
+            }
         }
     }
 
+    resizeData: ResizeData;
     public startResize(node: SceneNode, direction: number, event: MouseEvent) {
         if (this.toolService.getState() === service.ToolState.Null) {
-            this.toolService.set(service.ToolState.ResizeNode, {
-                direction, event,
+            this.resizeData = {
+                direction,
+                startX: event.clientX,
+                startY: event.clientY,
                 node,
                 width: node?.width || 0,
                 height: node?.height || 0,
                 x: node?.x || 0,
                 y: node?.y || 0,
-            });
+            };
+            this.toolService.set(service.ToolState.ResizeNode);
         }
+    }
+
+    editingChild: SceneNode | undefined;
+    private appendChild(event: MouseEvent, width = 10, height = 10) {
+        const {clientX, clientY} = event;
+        const page = this.nodeService.getCurrentPage();
+        const pos = this.canvasService.getPosition(clientX, clientY);
+        const targetNode = util.getSelectionInPageNode(page, pos);
+        if (!targetNode || !hasMixin(targetNode, ChildrenMixin)) return;
+        const {x, y} = util.canvasPosToFrame(targetNode, pos);
+
+        switch(this.toolService.getState()) {
+            case service.ToolState.Frame:
+                this.editingChild = this.nodeService.addFrame(targetNode as any);
+                this.editingChild.x = x;
+                this.editingChild.y = y;
+                this.editingChild.resize(width, height);
+                break;
+            case service.ToolState.Text:
+                this.editingChild = this.nodeService.addText(targetNode as any);
+                this.editingChild.x = x;
+                this.editingChild.y = y;
+                this.editingChild.resize(width, height);
+                break;
+            default:
+                console.error('Unsupport AppendChild Type', this.toolService.getState());
+                return;
+                break;
+
+        }
+        const canvasPos = util.toCanvasPos(this.editingChild);
+        const clientPos = this.canvasService.getClient(canvasPos.x, canvasPos.y);
+        this.resizeData = {
+            direction: 4, 
+            startX: clientPos.x,
+            startY: clientPos.y,
+            node: this.editingChild,
+            width: this.editingChild?.width || 0,
+            height: this.editingChild?.height || 0,
+            x: this.editingChild?.x || 0,
+            y: this.editingChild?.y || 0,
+        };
     }
 
     private clickNode(event: MouseEvent) {
@@ -79,33 +139,49 @@ export default class NodeControllService {
         if (node) {
             const layoutMode = (node.parent as any)?.layoutMode;
             if (layoutMode === 'HORIZONTAL' || layoutMode === 'VERTICAL') return;
-            this.toolService.set(service.ToolState.MoveNode, {event, node, x: node?.x || 0, y: node?.y || 0});
+            this.resizeData = {
+                direction: 4,
+                startX: event.clientX,
+                startY: event.clientY,
+                node,
+                width: node?.width || 0,
+                height: node?.height || 0,
+                x: node?.x || 0,
+                y: node?.y || 0,
+            };
+            this.toolService.set(service.ToolState.MoveNode);
         }
     }
 
     private setNodeSize(event: MouseEvent) {
-        const data = this.toolService.data as ResizeData;
+        const data = this.resizeData;
         if (!data || data.direction === undefined) return;
         const {x, y, width, height } = getNewLayout(data, {x: event.clientX, y: event.clientY});
         const node = data.node;
-        node.x = round(x);
-        node.y = round(y);
+        if((node?.parent as any).layoutMode == 'NONE') {
+            node.x = round(x);
+            node.y = round(y);
+        } else {
+            // const canvasPos = util.toCanvasPos(node);
+            // const clientPos = this.canvasService.getClient(canvasPos.x, canvasPos.y);
+            // this.resizeData.startX = clientPos.x;
+            // this.resizeData.startY = clientPos.y;
+        }
         node.resize(width, height);
         node.update();
     }
 
     private setNodePosition(event: MouseEvent){
-        const originEvent: MouseEvent = this.toolService.data.event;
-        const node: SceneNode = this.toolService.data.node;
+        const node: SceneNode = this.resizeData.node;
 
-        if (!originEvent || !node) return;
+        if (!this.resizeData || !node) return;
         const offset = {
-            x: event.clientX - originEvent.clientX,
-            y: event.clientY - originEvent.clientY,
+            x: event.clientX - this.resizeData.startX,
+            y: event.clientY - this.resizeData.startY,
         };
         const pos = util.offsetNodePos(node, offset, {
-            x: this.toolService.data.x,
-            y: this.toolService.data.y,
+            x: this.resizeData.x,
+            y: this.resizeData.y,
         });
         node.x = round(pos.x);
         node.y = round(pos.y);
@@ -116,7 +192,8 @@ export default class NodeControllService {
 
 interface ResizeData {
     direction: number,
-    event: MouseEvent,
+    startX: number,
+    startY: number,
     node: SceneNode,
     x: number,
     y: number,
@@ -128,8 +205,8 @@ type Pos = {x: number, y: number};
 function getNewLayout(data: ResizeData, target: Pos) {
     const layout = {x: data.x, y: data.y, width: data.width, height: data.height};
     const offset = {
-        x: target.x - data.event.clientX,
-        y: target.y - data.event.clientY,
+        x: target.x - data.startX,
+        y: target.y - data.startY,
     };
     switch(data.direction){
         case 0:

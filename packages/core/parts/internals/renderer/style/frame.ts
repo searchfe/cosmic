@@ -22,8 +22,9 @@ export function makeBaseFrameStyle(node: BaseFrameMixin) {
         styles['align-items'] = {
             'MIN': 'flex-start', 'CENTER': 'center', 'MAX': 'flex-end',
         }[node.counterAxisAlignItems];
-
         if (node.layoutWrap === 'WRAP') styles['flex-wrap'] = 'wrap';
+    } else if(node.children && node.children.length) {
+        styles.position = 'relative';
     }
     return  styles;
 }

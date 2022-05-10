@@ -37,7 +37,6 @@ function inArea(node: SceneNode, {x, y}: Pos) {
     if (y - 4 > node.y + node.height) return false;
     return true;
 }
-
 export function toCanvasPos(node: LayoutMixin & BaseNodeMixin) : Pos {
     const parentPos = (node.parent && hasMixin(node.parent, LayoutMixin)) ? toCanvasPos(node.parent as any) : {x: 0, y: 0};
     const offset = {x: 0, y: 0};
