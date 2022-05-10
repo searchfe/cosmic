@@ -2,9 +2,9 @@
     height: 2.4rem;
     font-weight: bold;
     color: var(--color-dark);
-
     composes: cos-btn -v-text -v-px -v-border-none rounded from global;
 }
+
 .button:hover {
     background: var(--color-gray-50);
 }
@@ -12,9 +12,11 @@
 .prefix {
     composes: -v-mr from global;
 }
+
 .content {
     composes: -v-mr from global;
 }
+
 .suffix {
     composes: -v-ml from global;
 }

@@ -1,26 +1,25 @@
 {
-  "env": {
-    "browser": true,
-    "node": true,
-    "vue/setup-compiler-macros": true
-  },
-  "extends": [
-    "../../.eslintrc.json",
-    /** @see https://eslint.vuejs.org/rules/ */
-    "plugin:vue/vue3-recommended"
-
-  ],
-  "rules": {
-    "vue/multi-word-component-names": ["off"],
-    "vue/valid-template-root": ["off"],
-    "vue/max-attributes-per-line": "off",
-    "vue/html-indent": ["warn", 4],
-    "vue/singleline-html-element-content-newline": ["off"],
-    "vue/no-v-html": ["off"]
-  },
-  "parserOptions": {
-    "parser": "@typescript-eslint/parser",
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  }
+    "env": {
+        "browser": true,
+        "node": true,
+        "vue/setup-compiler-macros": true
+    },
+    "extends": [
+        "../../.eslintrc.json",
+        /** @see https://eslint.vuejs.org/rules/ */
+        "plugin:vue/vue3-recommended"
+    ],
+    "rules": {
+        "vue/multi-word-component-names": ["off"],
+        "vue/valid-template-root": ["off"],
+        "vue/max-attributes-per-line": "off",
+        "vue/html-indent": ["warn", 4],
+        "vue/singleline-html-element-content-newline": ["off"],
+        "vue/no-v-html": ["off"]
+    },
+    "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    }
 }

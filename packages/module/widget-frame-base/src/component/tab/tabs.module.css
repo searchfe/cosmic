@@ -5,6 +5,7 @@
 
 .cursor {
     display: none;
+
     /* transition: 0.8s ease; */
 }
 
@@ -12,10 +13,10 @@
     line-height: 2.6rem;
     opacity: .6;
     border-radius: .4rem;
-
     composes: -v-text from global;
     justify-content: center;
 }
+
 .tab-pane:hover,
 .tab-pane:global(.hover) {
     opacity: .9;

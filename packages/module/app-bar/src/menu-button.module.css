@@ -1,6 +1,5 @@
 .button {
     opacity: .9;
-
     composes: cos-btn -v-color-dark -v-bg-inapparent -v-text -v-h -v-px -v-border-none rounded from global;
 }
 
