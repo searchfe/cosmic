@@ -1,16 +1,16 @@
 {
-  "env": {
-    "browser": true,
-    "node": false,
-    "vue/setup-compiler-macros": true
-  },
-  "extends": [
-    /** @see https://eslint.vuejs.org/rules/ */
-    "plugin:vue/vue3-recommended"
-  ],
-  "parserOptions": {
-    "parser": "@typescript-eslint/parser",
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  }
+    "env": {
+        "browser": true,
+        "node": false,
+        "vue/setup-compiler-macros": true
+    },
+    "extends": [
+        /** @see https://eslint.vuejs.org/rules/ */
+        "plugin:vue/vue3-recommended"
+    ],
+    "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    }
 }

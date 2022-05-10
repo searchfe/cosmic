@@ -2,7 +2,6 @@
     height: 2.4rem;
     font-weight: bold;
     color: var(--color-dark);
-
     composes: cos-btn -v-text -v-px -v-border-none rounded from global;
 }
 

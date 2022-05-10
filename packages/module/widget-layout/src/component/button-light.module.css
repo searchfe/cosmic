@@ -1,11 +1,12 @@
 .button {
     color: var(--color-dark);
-
     composes: cos-btn -v-text -v-h -v-px -v-border-none rounded from global;
 }
+
 .button:hover {
     background: var(--color-gray-50);
 }
+
 .button:active,
 .button:global(.active) {
     background: var(--color-gray-50);

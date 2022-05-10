@@ -1,6 +1,5 @@
 .root {
     border-radius: .4rem;
-
     composes: -v-bg-inapparent -v-h -v-px -v-text from global;
 }
 
@@ -15,7 +14,6 @@
     outline: none;
     background-color: transparent;
     user-select: none;
-
     composes: -v-text from global;
 }
 
@@ -27,7 +25,6 @@
 .root:hover .prefix {
     color: var(--color-dark);
 }
-
 
 .subfix {
     visibility: hidden;
