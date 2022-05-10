@@ -1,23 +1,24 @@
 .button {
-    composes: cos-btn -v-color-dark -v-bg-inapparent -v-text -v-h -v-px -v-border-none rounded from global;
     opacity: .9;
+
+    composes: cos-btn -v-color-dark -v-bg-inapparent -v-text -v-h -v-px -v-border-none rounded from global;
 }
 
 .prefix {
     composes: -v-mr from global;
 }
-.content {
 
-}
 .suffix {
     composes: -v-ml from global;
 }
 
-.button.hover, .button:hover {
-    background-color: var(--color-gray-300);
+.button.hover,
+.button:hover {
     opacity: 1;
+    background-color: var(--color-gray-300);
 }
 
-.button.active, .button:active {
+.button.active,
+.button:active {
     background-color: var(--color-gray-400);
 }

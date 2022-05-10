@@ -1,17 +1,19 @@
 .root {
-    composes: -v-h -v-px -v-text from global;
     color: var(--color-gray-300);
+
+    composes: -v-h -v-px -v-text from global;
 }
 
 .input {
-    composes: -v-text from global;
+    border: none;
     color: var(--color-gray-700);
     outline: none;
-    border: none;
     background-color: transparent;
     user-select: none;
+
+    composes: -v-text from global;
 }
-.input::placeholder{
+.input::placeholder {
     color: var(--color-gray-300);
 }
 

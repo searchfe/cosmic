@@ -1,6 +1,6 @@
 .tabs {
-    background-color: hsla(var(--hsl-dark), 0.08);
-    border-radius: 0.4rem;
+    border-radius: .4rem;
+    background-color: hsla(var(--hsl-dark), .08);
 }
 
 .cursor {
@@ -9,24 +9,27 @@
 }
 
 .tab-pane {
-    composes:  -v-text from global;
-    opacity: .6;
-    border-radius: 0.4rem;
     line-height: 2.6rem;
+    opacity: .6;
+    border-radius: .4rem;
+
+    composes: -v-text from global;
     justify-content: center;
 }
-.tab-pane:hover, .tab-pane:global(.hover){
+.tab-pane:hover,
+.tab-pane:global(.hover) {
     opacity: .9;
 }
 
-.tab-pane:active, .tab-pane:global(.active) {
+.tab-pane:active,
+.tab-pane:global(.active) {
     opacity: 1;
-    background-color: hsla(var(--hsl-dark), 0.1);
+    background-color: hsla(var(--hsl-dark), .1);
 }
 
 .label {
     display: block;
-    user-select:none;
+    user-select: none;
 }
 
 .tabs-nav {
@@ -34,8 +37,8 @@
 }
 
 .tabs-nav-item {
-    padding-left: var(--padding-xs);
     padding-right: var(--padding-xs);
+    padding-left: var(--padding-xs);
 }
 
 .tabs-nav-selected {
