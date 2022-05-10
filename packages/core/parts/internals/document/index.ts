@@ -50,7 +50,7 @@ export { default as LayoutMixin} from './mixin/layout-mixin';
 export { default as DefaultFrameMixin } from './mixin/default-frame-mixin';
 export { default as FramePrototypingMixin } from './mixin/frame-prototyping-mixin';
 export { default as ConstraintMixin, ConstraintType, type Constraints } from './mixin/constraint-mixin';
-
+export { default as RectangleCornerMixin } from './mixin/rectangle-corner-mixin';
 
 export * from './style/text-style';
 export * from './style/fill-style';

@@ -37,6 +37,12 @@ export default class CanvasService {
             y: round(clientY) - this.clientY - this.contentOffsetY,
         };
     }
+    getClient(x: number, y: number) {
+        return {
+            x: x + this.clientX + this.contentOffsetY,
+            y: y + this.clientY + this.contentOffsetY,
+        };
+    }
 
     inCanvas(clientX: number, clientY: number) {
         if ( clientX < this.clientX) return false;

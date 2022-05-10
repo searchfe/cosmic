@@ -93,6 +93,7 @@ function getAttrs(layoutMode: string) {
 }
 
 function layoutFlex(parent: BaseFrameMixin, childs: Array<LayoutMixin & ConstraintMixin>) {
+    if (parent.layoutMode != 'HORIZONTAL' && parent.layoutMode != 'VERTICAL') return;
     const p = parent as any;
     const { primary, counter, primarySize, counterSize, paddingMin, paddingMax} = getAttrs(parent.layoutMode);
     const primaryMaxSize = p[primarySize] - p[paddingMin] - p[paddingMax];
