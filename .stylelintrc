@@ -1,0 +1,5 @@
+{
+    "extends": "@ecomfe/stylelint-config",
+    "ignoreFiles": ["**/dist/**", "**/node_modules/**"]
+
+}

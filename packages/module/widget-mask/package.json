@@ -7,8 +7,6 @@
         "build": "vite build",
         "clean": "rimraf dist"
     },
-    "devDependencies": {
-    },
-    "dependencies": {
-    }
+    "devDependencies": {},
+    "dependencies": {}
 }

@@ -1,6 +1,5 @@
 .root {
     color: var(--color-gray-300);
-
     composes: -v-h -v-px -v-text from global;
 }
 
@@ -10,9 +9,9 @@
     outline: none;
     background-color: transparent;
     user-select: none;
-
     composes: -v-text from global;
 }
+
 .input::placeholder {
     color: var(--color-gray-300);
 }
