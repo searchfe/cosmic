@@ -1,7 +1,6 @@
 import { createApp, ref, type App as VueApp } from 'vue';
 
 import { MComponent } from '@cosmic-module/core';
-import { SanComponent } from '@cosmic-module/san-loader';
 import { createContainer, TOKENS, type RouterService } from './service/index';
 import App from './app.vue';
 import Preview from './component/preview/preview.vue';
@@ -35,7 +34,6 @@ function bootstrap(option: BootstrapOption) {
     }
     // eslint-disable-next-line vue/component-definition-name-casing
     app.component('m-component', MComponent);
-    app.component('SComponent', SanComponent);
     app.directive('stroke', stroke);
     app.directive('effect', effect);
     app.directive('radius', radius);
@@ -68,6 +66,5 @@ export { MColor, MTitle, MWidget, MStandardModal, MStandard, MDetailModal, MClol
 
 export * from './use';
 export * as service from './service/index';
-export * as esl from './esl.js';
 export * from './types';
 

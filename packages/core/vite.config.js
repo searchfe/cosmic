@@ -99,7 +99,6 @@ const config = {
                 '@cosmic/core/router',
                 '@cosmic/core/lodash',
                 '@cosmic-module/core',
-                '@cosmic-module/san-loader',
                 ...builtinModules.flatMap(p => [p, `node:${p}`]),
             ],
         },
