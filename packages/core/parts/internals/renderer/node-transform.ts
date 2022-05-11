@@ -7,7 +7,7 @@ export class NodeTransform {
     private node: CosmicNode;
     private editTimeList: {[id: string]: number} = {};
     private childTransform: {[id: string]: NodeTransform} = {};
-    constructor(private dom: SceneNode) {}
+    constructor(private dom: SceneNode, private parentId?: string) {}
     transfer() {
         this.makeFrameNode();
         return this.node;
@@ -28,9 +28,9 @@ export class NodeTransform {
         if (this.node === undefined) {
             this.node = {
                 id: this.dom.id,
-                name: 'frame',
+                name: this.dom.name,
                 type: this.dom.type.toLowerCase(),
-                parent: '-1',
+                parent: this.parentId ?? '-1',
                 props: {
                     style: {},
                 },
@@ -47,7 +47,7 @@ export class NodeTransform {
             if(list[child.id]){
                 transform = list[child.id];
             } else {
-                transform = new NodeTransform(child);
+                transform = new NodeTransform(child, this.node.id);
                 dirty = true;
             }
             this.childTransform[child.id] = transform;

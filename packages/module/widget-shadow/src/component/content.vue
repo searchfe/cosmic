@@ -89,7 +89,6 @@ function resetEffectStore(node: SceneNode) {
 }
 
 function changeEffectStyle(style: Internal.DropShadowEffect) {
-    console.log(style);
     effectNode.effects = [style];
     effectNode.update();
 }
