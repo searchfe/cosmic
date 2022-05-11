@@ -7,6 +7,8 @@ import { makeBackgroundStyle } from './background';
 import { makeStrokeStyle  } from './stroke';
 import { makeRadiusStyle  } from './radius';
 import { makeEffectStyle  } from './effect';
+import { makeTextStyle } from './text';
+import TextSublayerNode from '../../document/sence/text-sublayer-node';
 
 
 export function makeStyle(node: SceneNode): NodeStyle {
@@ -35,6 +37,9 @@ export function makeStyle(node: SceneNode): NodeStyle {
     }
     if (hasMixin(node, BlendMixin)) {
         styles = { ...styles, ...makeEffectStyle(node) };
+    }
+    if (hasMixin(node, TextSublayerNode)) {
+        styles = { ...styles, ...makeTextStyle(node) };
     }
     return styles;
 }

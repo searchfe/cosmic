@@ -16,7 +16,7 @@ export interface CosmicNode {
     /**
      * 节点类型
      */
-    type: string; // 'container' | 'component'
+    type: string; // 'container' | 'component' | 'frame' | 'text'
 
     /**
      * 父级节点索引，根节点值为-1

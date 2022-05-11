@@ -4,8 +4,8 @@ import { type CosmicNode } from '@cosmic/core/parts';
 
 export class Frame extends Component {
     static template = `<div style="{{style}}" class="{{class}}">
-        <fragment s-for="child in children">
-            <renderer-child node="{{child}}" />
+        <fragment s-for="child in renderChildren">
+            <renderer-child node="{{ {...child} }}" />
         </fragment>
     </div>`;
     initData() {
@@ -15,6 +15,14 @@ export class Frame extends Component {
             children: [] as CosmicNode[],
         };
     }
+
+    static computed = {
+        // 触发子组件的更新
+        renderChildren(this: Frame) {
+            return this.data.get('children').map((child: CosmicNode) => ({...child}));
+        },
+    };
+
     components = {
         'renderer-child': Child,
     };
