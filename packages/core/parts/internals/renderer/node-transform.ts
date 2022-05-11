@@ -28,9 +28,9 @@ export class NodeTransform {
         if (this.node === undefined) {
             this.node = {
                 id: this.dom.id,
-                name: 'frame',
+                name: this.dom.name,
                 type: this.dom.type.toLowerCase(),
-                parent: '-1',
+                parent: this.dom.parent?.id ?? '-1',
                 props: {
                     style: {},
                 },

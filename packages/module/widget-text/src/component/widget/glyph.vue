@@ -5,7 +5,7 @@ import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service 
 import GlyphContent from './glyph-content.vue';
 import TextLayout from './layout.vue';
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
     isLocalStyle: boolean,
     textStyle: object,
     styleList: object[],
@@ -13,8 +13,6 @@ const props = withDefaults(defineProps<{
 }>(), {
     isRepeat: false,
 });
-
-console.log(props.isLocalStyle);
 
 const textStyleSevice = inject<service.TextStyleSevice>(service.TOKENS.TextStyle);
 
