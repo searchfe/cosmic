@@ -1,6 +1,6 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { service } from '@cosmic/core/browser';
-import { SceneNode, util, hasMixin, ChildrenMixin, LayoutMixin, BaseNodeMixin } from '@cosmic/core/parts';
+import { SceneNode, util, hasMixin, ChildrenMixin, LayoutMixin, BaseNodeMixin, TextNode } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeControllService {
@@ -15,21 +15,33 @@ export default class NodeControllService {
 
     public mousedown(event: MouseEvent) {
         const state = this.toolService.getState();
+        const inCanvas = this.canvasService.inCanvas(event.clientX, event.clientY);
         if (
-            state === service.ToolState.Null &&
-            this.canvasService.inCanvas(event.clientX, event.clientY)
+            state === service.ToolState.Null && inCanvas
         ) {
-            // 处理点击节点
-            this.clickNode(event);
+            const oldTarget = this.nodeService.getSelection()[0];
+            const node = this.getNode(event);
+            this.nodeService.setSelection(node ? [node.id] : []);
+    
             this._deferDargTimer = setTimeout(() => {
                 this.startDragNode(event);
             }, 200);
+            if (oldTarget && oldTarget === node && hasMixin(oldTarget, TextNode)) {
+                this.toolService.set(service.ToolState.TextEdit);
+            }
         } else if (
             state === service.ToolState.Frame ||
             state === service.ToolState.Text ||
             state === service.ToolState.Component
         ) {
             this.appendChild(event);
+        } else if (state === service.ToolState.TextEdit && inCanvas) {
+            const oldTarget = this.nodeService.getSelection()[0];
+            const node = this.getNode(event);
+            this.toolService.cancel(service.ToolState.TextEdit);
+            if (node !== oldTarget) {
+                this.nodeService.setSelection(node ? [node.id] : []);
+            }
         }
    }
 
@@ -42,6 +54,9 @@ export default class NodeControllService {
         } else if(state === service.ToolState.MoveNode) {
             this.setNodePosition(event);
             this.toolService.set(service.ToolState.Null);
+        } else if (state === service.ToolState.Null) {
+            // console.log(this.nodeService.getSelection());
+            // service.ToolState.TextEdit
         }
         if (this.editingChild) {
             this.editingChild = undefined;
@@ -123,13 +138,13 @@ export default class NodeControllService {
         };
     }
 
-    private clickNode(event: MouseEvent) {
+    private getNode(event: MouseEvent) {
         const page = this.nodeService.getCurrentPage();
         // 转换canvas坐标系`
         const pos = this.canvasService.getPosition(event.clientX, event.clientY);
         // 获得点击节点
         const node = util.getSelectionInPageNode(page, pos);
-        this.nodeService.setSelection(node ? [node.id] : []);
+        return node;
     }
 
     private startDragNode(event: MouseEvent) {
