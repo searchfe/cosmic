@@ -1,6 +1,6 @@
 import { injectable, inject } from '@cosmic/core/inversify';
 import { service } from '@cosmic/core/browser';
-import { SceneNode, util, hasMixin, ChildrenMixin } from '@cosmic/core/parts';
+import { SceneNode, util, hasMixin, ChildrenMixin, LayoutMixin, BaseNodeMixin } from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeControllService {
@@ -86,9 +86,9 @@ export default class NodeControllService {
         const {clientX, clientY} = event;
         const page = this.nodeService.getCurrentPage();
         const pos = this.canvasService.getPosition(clientX, clientY);
-        const targetNode = util.getSelectionInPageNode(page, pos);
+        const targetNode = util.getSelectionInPageNode(page, pos) || page;
         if (!targetNode || !hasMixin(targetNode, ChildrenMixin)) return;
-        const {x, y} = util.canvasPosToFrame(targetNode, pos);
+        const {x, y} = hasMixin(targetNode, LayoutMixin) && hasMixin(targetNode, BaseNodeMixin) ?  util.canvasPosToFrame(targetNode, pos) : pos;
 
         switch(this.toolService.getState()) {
             case service.ToolState.Frame:
