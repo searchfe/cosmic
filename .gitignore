@@ -13,3 +13,4 @@ thumbs.db
 # File-based project format
 *.iws
 
+/local/

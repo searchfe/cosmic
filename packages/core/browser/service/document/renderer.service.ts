@@ -14,7 +14,7 @@ export default class RendererService {
         if (!this.rendererCache[path]) {
             this.rendererCache[path] = import(
                 /* @vite-ignore */
-                moduleAssetPath(path, 'index') || ''
+                moduleAssetPath(path, 'index.mjs') || ''
             ).then(module => {
                 this.rendererModule[path] = module.default;
                 return module.default;

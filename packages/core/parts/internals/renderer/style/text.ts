@@ -1,4 +1,5 @@
 import { TextNode } from '../../document';
+import { paintToRgbaString } from './color';
 import type { NodeStyle } from './types';
 
 export function makeTextStyle(node: TextNode) {
@@ -9,5 +10,8 @@ export function makeTextStyle(node: TextNode) {
     styles['font-family'] = `${(fontName as Internal.FontName).family ?? ''}`;
     styles['font-weiget'] = `${(fontName as Internal.FontName).style ?? 400}`;
     styles['letter-spacing'] = `${(letterSpacing as {value: number}).value ?? 0}px`;
+    if(node.fills && Array.isArray(node.fills)) {
+        styles['color'] = paintToRgbaString(node.fills[0]);
+    }
     return styles;
 }
