@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import { Button, Menu, MenuOption } from 'cosmic-vue';
 import { ref } from 'vue';
 import buttonMenu from './menu-button.module.css';

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import  { type PageNode } from '@cosmic/core/parts';
 import { getCurrentInstance, onUnmounted } from 'vue';
-import { service } from '@cosmic/core/browser';
-import { inject, util } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
+import { util } from '@cosmic/core/parts';
 
 interface PageProps {
     node: PageNode,

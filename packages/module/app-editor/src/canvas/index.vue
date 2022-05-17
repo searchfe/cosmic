@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import { ref, onMounted, type Ref } from 'vue';
 import WidgetGuides from 'vue-guides';
 import { Gesturer } from './gesturer';

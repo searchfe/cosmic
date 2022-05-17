@@ -2,8 +2,8 @@
 import {ref} from 'vue';
 import { MTitle, MWidget } from '@cosmic/core/browser';
 import Content from './component/index.vue';
-import { service } from '@cosmic/core/browser';
-import { CornerMixin , FrameNode, inject, hasMixin} from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
+import { CornerMixin , FrameNode, hasMixin} from '@cosmic/core/parts';
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 

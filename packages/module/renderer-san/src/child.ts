@@ -7,7 +7,7 @@ export class Child extends Component {
     static template = `
         <fragment>
             <renderer-frame s-if="node.type === 'frame'" children="{{node.children}}" style="{{node.props.style}}" class="{{node.props.class}}" />
-            <renderer-text s-else-if="node.type === 'text'" style="{{node.props.style}}" class="{{node.props.class}}" value="{{node.name}}" />
+            <renderer-text s-else-if="node.type === 'text'" style="{{node.props.style}}" class="{{node.props.class}}" value="{{node.props.value}}" />
         </fragment>
             
         

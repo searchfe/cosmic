@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { watchEffect, ref } from 'vue';
-import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service } from '@cosmic/core/browser';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service, inject } from '@cosmic/core/browser';
 import RadiusContent from './radius-content.vue';
-import { inject } from '@cosmic/core/parts';
 
 const radiusStyleService = inject<service.RadiusStyleService>(service.TOKENS.RadiusStyle);
 

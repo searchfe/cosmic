@@ -5,8 +5,7 @@ import Region from '../../common/component/region.vue';
 import DesignCard from '../../design/component/summary-card.vue';
 import ProjectCard from '../../project/component/micro-card.vue';
 import { useProjects, useDeleteProject } from '../../project/api';
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject} from '@cosmic/core/browser';
 
 
 const userService = inject<service.UserService>(service.TOKENS.User);

@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { BaseNodeMixin, FrameNode, PageNode, SceneNode } from '@cosmic/core/parts';
+import { BaseNodeMixin, FrameNode, PageNode, SceneNode, util } from '@cosmic/core/parts';
 import { round } from '@cosmic/core/lodash';
-import { service } from '@cosmic/core/browser';
-import { inject, util } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import { onUnmounted, ref } from 'vue';
 
 import NodeControllService from '../../service/node-controll.service';

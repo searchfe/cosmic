@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { inject, type PageNode } from '@cosmic/core/parts';
-import { service } from '@cosmic/core/browser';
+import { type PageNode } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import { onMounted, ref, type Ref } from 'vue';
 import { Button as CButton } from 'cosmic-vue';
 import FrameRender from './render/frame.vue';

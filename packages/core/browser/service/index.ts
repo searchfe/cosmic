@@ -17,4 +17,5 @@ export type { default as NodeService } from './document/node.service';
 export type { default as ComponentService } from './document/component.service';
 export type { default as DraftService } from './document/draft.service';
 export type { default as RendererService } from './document/renderer.service';
+export { inject } from './inject';
 export * from './styles'; 

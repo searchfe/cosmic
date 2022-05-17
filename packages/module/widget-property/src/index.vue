@@ -3,8 +3,7 @@ import { ref } from 'vue';
 import { BaseNodeMixin, SceneNode, getRenderSchemaAndModel } from '@cosmic/core/parts';
 import FormBySchema from './form-by-schema.vue';
 // import { schema as DataShema, mock as DataModel } from './data';
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import { type Subject } from '@cosmic/core/rxjs';
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);

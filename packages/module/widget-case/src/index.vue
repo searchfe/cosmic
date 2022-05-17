@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { type Subject } from '@cosmic/core/rxjs';
-import { service } from '@cosmic/core/browser';
-import { inject, BaseNodeMixin, ComponentNode } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
+import { BaseNodeMixin, ComponentNode } from '@cosmic/core/parts';
  import { Select, SelectOption, Input } from 'cosmic-vue';
 
 import { Images, Avatars } from './data';

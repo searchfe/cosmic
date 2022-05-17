@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue';
 import StrokeContent from './stroke-content.vue';
-import { inject } from '@cosmic/core/parts';
-import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service} from '@cosmic/core/browser';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service, inject} from '@cosmic/core/browser';
 
 withDefaults(defineProps<{
     isLocalStyle: boolean,

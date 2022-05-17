@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { service } from '@cosmic/core/browser';
-import { inject, util, hasMixin, ChildrenMixin } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
+import { util, hasMixin, ChildrenMixin } from '@cosmic/core/parts';
 import { Button } from 'cosmic-vue';
 import { buttonLight } from 'cosmic-ui';
 import { onMounted, ref } from 'vue';

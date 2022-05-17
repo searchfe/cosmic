@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {ref, type Ref} from 'vue';
-import { MTitle, MWidget, service } from '@cosmic/core/browser';
-import { inject, PageNode, hasMixin, ContainerMixin, type SceneNode, type Paint, SolidPaint, BaseNodeMixin } from '@cosmic/core/parts';
+import { MTitle, MWidget, service, inject } from '@cosmic/core/browser';
+import { PageNode, hasMixin, ContainerMixin, type SceneNode, type Paint, SolidPaint, BaseNodeMixin } from '@cosmic/core/parts';
 import { Row, Col, InputNumber } from 'cosmic-vue';
 import { type Subject } from '@cosmic/core/rxjs';
 

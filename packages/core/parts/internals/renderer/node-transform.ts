@@ -1,5 +1,5 @@
 import type { CosmicNode } from './types';
-import { ChildrenMixin, type SceneNode } from '../document';
+import { ChildrenMixin, TextNode, type SceneNode } from '../document';
 import { makeStyle }from './style/make-style';
 import { hasMixin } from '../';
 
@@ -10,6 +10,7 @@ export class NodeTransform {
     constructor(private dom: SceneNode) {}
     transfer() {
         this.makeFrameNode();
+        this.makeText();
         return this.node;
     }
     makeFrameNode() {
@@ -23,6 +24,11 @@ export class NodeTransform {
         this.node.props.class = [];
         this._getUpdateChildren();
 
+    }
+    makeText() {
+        if(hasMixin(this.dom, TextNode)) {
+            this.node.props.value = this.dom.characters;
+        }
     }
     _initNode() {
         if (this.node === undefined) {

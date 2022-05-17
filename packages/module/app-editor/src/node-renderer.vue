@@ -2,8 +2,7 @@
 import  { type SceneNode, NodeTransform} from '@cosmic/core/parts';
 
 import { ref, onUnmounted, onMounted } from 'vue';
-import { service, type Renderer as RendererType} from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject, type Renderer as RendererType} from '@cosmic/core/browser';
 
 interface NodeRendererProps {
     node: SceneNode,

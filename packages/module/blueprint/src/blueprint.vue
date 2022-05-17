@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
 import { Space, Input, Button } from 'cosmic-vue';
-import { inject, createComponentQuery, KeyNode, Property, Variant, type QueryComponentResult, updateComponentQuery } from '@cosmic/core/parts';
-import { service } from '@cosmic/core/browser';
+import { createComponentQuery, KeyNode, Property, Variant, type QueryComponentResult, updateComponentQuery } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import Panel from './components/panel.vue';
 import { useMutation } from '@cosmic/core/urql';
 

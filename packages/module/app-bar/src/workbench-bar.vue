@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { inject } from '@cosmic/core/parts';
-import { service } from '@cosmic/core/browser';
+import { service, inject } from '@cosmic/core/browser';
 import { Button, Menu, MenuOption } from 'cosmic-vue';
 import buttonText from './workbench-button.module.css';
 import { WorkbenchBarService, type WorkbenchBarItem } from './workbench-bar.service';

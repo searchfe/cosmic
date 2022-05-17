@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { type ComponentNode } from '@cosmic/core/parts';
 import { getCurrentInstance, onUnmounted } from 'vue';
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import { Button } from 'cosmic-vue';
 import { makeNode } from './make-node';
 import { IImage, IAvatar, IImageList } from '@cosmic/core/browser';
