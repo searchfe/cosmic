@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { service } from '@cosmic/core/browser';
-import  { type SceneNode, inject} from '@cosmic/core/parts';
-import { ref, computed } from 'vue';
+// import { service, inject } from '@cosmic/core/browser';
+import  { type SceneNode } from '@cosmic/core/parts';
+// import { ref, computed } from 'vue';
 import FrameRender from './frame.vue';
 import TextRender from './text.vue';
 import ComponentRender from './component.vue';

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import {ref} from 'vue';
-import { MTitle, MWidget, service } from '@cosmic/core/browser';
+import { MTitle, MWidget, service, inject } from '@cosmic/core/browser';
 import Content from './widget/content.vue';
-import { inject, TextNode } from '@cosmic/core/parts';
+import { TextNode } from '@cosmic/core/parts';
 
  const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {ref} from 'vue';
-import { MClolorWidget, service } from '@cosmic/core/browser';
-import { FrameNode, inject, SolidPaint, hasMixin, CornerMixin, BaseNodeMixin, util } from '@cosmic/core/parts';
+import { MClolorWidget, service, inject } from '@cosmic/core/browser';
+import { FrameNode, SolidPaint, hasMixin, CornerMixin, BaseNodeMixin, util } from '@cosmic/core/parts';
 import { type Subject } from '@cosmic/core/rxjs';
 import Raduis from './radius.vue';
 

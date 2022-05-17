@@ -2,8 +2,8 @@
 import { Tree, TreeNodeState, type TreeChangeEvent } from 'cosmic-vue';
 import { treeSecondary } from 'cosmic-ui';
 import { ref } from 'vue';
-import { service } from '@cosmic/core/browser';
-import { type PageNode, inject, SceneNode, ChildrenMixin, BaseNodeMixin } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
+import { type PageNode, SceneNode, ChildrenMixin, BaseNodeMixin } from '@cosmic/core/parts';
 import { type LayerTreeData, nodeToTree, updateSelection } from './layer-tree';
 import { type Subject } from '@cosmic/core/rxjs';
 

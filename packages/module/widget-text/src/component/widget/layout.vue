@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import { Row, Col, RadioGroup, RadioButton } from 'cosmic-vue';
-import { service } from '@cosmic/core/browser';
-import { inject, TextNode,  BaseNodeMixin } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
+import { TextNode,  BaseNodeMixin } from '@cosmic/core/parts';
 import { type Subject } from '@cosmic/core/rxjs';
 
 interface TextLayout {

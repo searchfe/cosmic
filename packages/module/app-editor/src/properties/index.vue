@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { Tabs, TabPane } from 'cosmic-vue';
-import { inject, hasMixin, MinimalStrokesMixin, BlendMixin, DefaultFrameMixin } from '@cosmic/core/parts';
-import { service } from '@cosmic/core/browser';
+import { hasMixin, MinimalStrokesMixin, BlendMixin, DefaultFrameMixin } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import MComponent from '@cosmic-module/core/src/m-component.vue';
 
 

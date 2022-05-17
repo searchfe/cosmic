@@ -6,8 +6,8 @@ import { mock } from './component/data';
 import { schema as DataShema, mock as DataModel } from './data';
 
 
-import { service } from '@cosmic/core/browser';
-import { inject, SceneNode, getRenderSchemaAndModel, FrameNode } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
+import { SceneNode, getRenderSchemaAndModel, FrameNode } from '@cosmic/core/parts';
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 

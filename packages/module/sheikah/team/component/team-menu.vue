@@ -6,9 +6,7 @@ import { useRoute, useRouter } from '@cosmic/core/router';
 import TeamItem from './team-menu-item.vue';
 import { generateProjectForest } from '../../common/util/tree';
 import { useCreateProject } from '../../project/api';
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
-
+import { service, inject } from '@cosmic/core/browser';
 
 interface Team extends gql.Team{
     avatar?: string;

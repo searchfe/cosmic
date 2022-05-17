@@ -1,6 +1,4 @@
-import { reactive, ref, watch, computed, nextTick, toRaw, watch, watchEffect, toRefs, type WatchStopHandle } from 'vue';
-import { inject } from '@cosmic/core/parts';
-import type { BaseStyle } from '@cosmic/core/parts';
+import { reactive, ref, watch, computed, nextTick, toRaw, watchEffect, toRefs, type WatchStopHandle } from 'vue';
 import type { interfaces } from '@cosmic/core/inversify';
 import type { BaseService, NodeService } from '../service';
 import { TOKENS } from '../service';

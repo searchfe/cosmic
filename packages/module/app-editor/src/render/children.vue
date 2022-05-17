@@ -5,8 +5,7 @@ import TextRender from './text.vue';
 import ComponentRender from './component.vue';
 
 import { getCurrentInstance, onUnmounted } from 'vue';
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 
 interface RenderNodeProps {
     node: SceneNode,

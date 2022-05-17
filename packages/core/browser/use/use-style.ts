@@ -1,6 +1,5 @@
 import { reactive, ref, watch, toRaw } from 'vue';
-import { inject } from '@cosmic/core/parts';
-import type { BaseStyle } from '@cosmic/core/parts';
+import { inject } from '@cosmic/core/browser';
 import type { interfaces, TextStyle } from '@cosmic/core/inversify';
 import type { BaseService, NodeService } from '../service';
 import { TOKENS } from '../service';

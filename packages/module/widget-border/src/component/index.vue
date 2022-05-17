@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { MTitle, MWidget, MClolorWidget, service} from '@cosmic/core/browser';
-import { inject, FrameNode, hasMixin, MinimalStrokesMixin, BaseNodeMixin, TextNode, util, SolidPaint } from '@cosmic/core/parts';
+import { MTitle, MWidget, MClolorWidget, service, inject} from '@cosmic/core/browser';
+import { FrameNode, hasMixin, MinimalStrokesMixin, BaseNodeMixin, TextNode, util, SolidPaint } from '@cosmic/core/parts';
 import { type Subject } from '@cosmic/core/rxjs';
 import Stroke from './stroke.vue';
 

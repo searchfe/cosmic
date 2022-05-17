@@ -4,10 +4,10 @@ import { Input, Dialog, Button, Space } from 'cosmic-vue';
 import { useRoute } from '@cosmic/core/router';
 import CompFilter from '../component/filter.vue';
 import Region from '../../common/component/region.vue';
-import { service } from '@cosmic/core/browser';
+import { service, inject } from '@cosmic/core/browser';
 import CompCard from '../component/card/comp.vue';
 
-import { inject, type QueryComponentResult, createFetchTeamComponentsRequest } from '@cosmic/core/parts';
+import { type QueryComponentResult, createFetchTeamComponentsRequest } from '@cosmic/core/parts';
 // import { inject, type QueryComponentResult, createFetchTeamComponentsRequest, deleteComponentQuery } from '@cosmic/core/parts';
 import { useQuery } from '@cosmic/core/urql';
 

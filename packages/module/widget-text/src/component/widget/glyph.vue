@@ -1,7 +1,6 @@
  <script lang="ts" setup>
  import { ref, watchEffect } from 'vue';
- import { inject } from '@cosmic/core/parts';
-import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service } from '@cosmic/core/browser';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service, inject } from '@cosmic/core/browser';
 import GlyphContent from './glyph-content.vue';
 import TextLayout from './layout.vue';
 

@@ -2,7 +2,8 @@ import { injectable, inject } from 'inversify';
 import { UserService } from '../user/index.service';
 import { TOKENS } from '../token';
 import { GqlClient } from '../gql-client/index.service';
-import { teamDao, inject as injectFun} from '@cosmic/core/parts';
+import { inject as injectFun } from '../';
+import { teamDao } from '@cosmic/core/parts';
 
 @injectable()
 export class TeamService {

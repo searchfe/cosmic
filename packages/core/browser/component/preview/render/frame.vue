@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { type FrameNode, util } from '@cosmic/core/parts';
 import { onMounted, ref } from 'vue';
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import { makeNode } from './make-node';
 
 interface FrameProps {

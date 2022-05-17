@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue';
-import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { MTitle, MStandard, MStandardModal, MDetailModal, usePropterty, service, inject } from '@cosmic/core/browser';
 import InputList from './input-list.vue';
 
 const effectStyleSevice = inject<service.EffectStyleService>(service.TOKENS.EffectStyle);

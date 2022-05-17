@@ -2,7 +2,7 @@ import { injectable } from '@cosmic/core/inversify';
 import { Subject } from '@cosmic/core/rxjs';
 import { TOKENS } from '../token';
 import { TeamService } from '../team/index.service';
-import { inject } from '@cosmic/core/parts';
+import { inject } from '../';
 
 export interface SubjectSourceType {
     type: 'C' | 'U' | 'D' | 'R';

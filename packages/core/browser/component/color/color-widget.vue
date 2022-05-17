@@ -6,8 +6,7 @@ import MStandard from '../standard/standard.vue';
 import MStandardModal from '../modal/standard-modal.vue';
 import MDetailModal from '../modal/detail-modal.vue';
 import { usePropterty } from '../../use/use-property';
-import { service } from '@cosmic/core/browser';
- import { inject } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 
 const props = withDefaults(defineProps<{
     type?: string | string[],

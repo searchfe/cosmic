@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, ref, watchEffect, toRefs } from 'vue';
-import { MTitle, MWidget, service } from '@cosmic/core/browser';
-import { inject, PageNode, FrameNode } from '@cosmic/core/parts';
+import { MTitle, MWidget, service, inject } from '@cosmic/core/browser';
+import { PageNode, FrameNode } from '@cosmic/core/parts';
 import BreakPointPanel from './break-point-panel.vue';
 import { BreakPointProps } from './types';
 

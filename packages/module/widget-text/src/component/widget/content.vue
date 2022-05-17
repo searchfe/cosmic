@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, onUnmounted } from 'vue';
-import { inject, TextNode, BaseNodeMixin, util, SolidPaint } from '@cosmic/core/parts';
-import { MClolorWidget, service } from '@cosmic/core/browser';
+import { TextNode, BaseNodeMixin, util, SolidPaint } from '@cosmic/core/parts';
+import { MClolorWidget, service, inject } from '@cosmic/core/browser';
 import Glyph from './glyph.vue';
 import { type Subject } from '@cosmic/core/rxjs';
 

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { MTitle, service } from '@cosmic/core/browser';
+import { MTitle, service, inject } from '@cosmic/core/browser';
 import type { SchemaType } from '../type/index';
 import FormNode from './form-node.vue';
-import { inject, SceneNode } from '@cosmic/core/parts';
+import { SceneNode } from '@cosmic/core/parts';
 
 let node: SceneNode;
 

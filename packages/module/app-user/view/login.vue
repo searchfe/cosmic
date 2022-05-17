@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { Input, Button } from 'cosmic-vue';
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 
 
 const rootRouterService = inject<service.RouterService>(service.TOKENS.Router);

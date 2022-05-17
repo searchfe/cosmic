@@ -2,8 +2,7 @@
 <script lang="ts" setup>
 import { getCurrentInstance, onUnmounted, Ref, ref } from 'vue';
 import  { type TextNode, util } from '@cosmic/core/parts';
-import { service } from '@cosmic/core/browser';
-import { inject } from '@cosmic/core/parts';
+import { service, inject } from '@cosmic/core/browser';
 import { makeNode } from './make-node';
 
 interface TextProps {
