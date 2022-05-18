@@ -3,7 +3,7 @@ import { Component } from 'san';
 export class Text extends Component {
     static template =  `
         <div style="{{style}}" class="{{class}}">
-           {{ value }}
+           {{ value | raw }}
         </div>
     `;
     initData() {
