@@ -13,8 +13,8 @@ export default class ToolService {
     public  data : ToolData = {};
     constructor(@inject(TOKENS.Keyboard) private keyboardService: KeyboardService) {
         this.subject = new Subject();
-        keyboardService.keydown('SPACE').subscribe(() => this.set(ToolState.Hand));
-        keyboardService.keyup('SPACE').subscribe(() => this.cancel(ToolState.Hand));
+        keyboardService.keydown('SPACE').subscribe(() => this.trySet(ToolState.Hand));
+        keyboardService.keyup('SPACE').subscribe(() => this.tryCancel(ToolState.Hand));
         this.initShortcutKey();
     }
     getState() {
@@ -32,6 +32,16 @@ export default class ToolService {
         this.data = data || {};
         this._states.push(state);
         this.subject.next(state);
+    }
+    trySet(state: ToolState, data?: ToolData) {
+        if (this.getState() === ToolState.Null) {
+            this.set(state, data);
+        }
+    }
+    tryCancel(state: ToolState, data?: ToolData) {
+        if (this.getState() === ToolState.Null) {
+            this.cancel(state, data);
+        }
     }
     cancel(state: ToolState, data?: ToolData) {
         const last = this._states.pop();

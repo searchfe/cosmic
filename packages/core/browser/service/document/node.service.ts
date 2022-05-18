@@ -45,6 +45,7 @@ export default class NodeService {
         if (ids.length === 0) {
             this._selection = [];
         } else if (ids.length === 1) {
+            if(ids[0] === this._selection?.[0]?.id) return;
             this._selection = [this._currentPage.findOne(node => node.id == ids[0])];
         } else {
             this._selection = this._currentPage.findAll(node => ids.indexOf(node.id) > -1);

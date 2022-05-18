@@ -38,9 +38,9 @@ export default class NodeControllService {
         } else if (state === service.ToolState.TextEdit && inCanvas) {
             const oldTarget = this.nodeService.getSelection()[0];
             const node = this.getNode(event);
-            this.toolService.cancel(service.ToolState.TextEdit);
             if (node !== oldTarget) {
-                this.nodeService.setSelection(node ? [node.id] : []);
+                this.toolService.cancel(service.ToolState.TextEdit);
+                // this.nodeService.setSelection(node ? [node.id] : []);
             }
         }
    }
