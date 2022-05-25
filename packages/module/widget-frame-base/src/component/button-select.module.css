@@ -9,7 +9,12 @@
 }
 
 .prefix {
+    color: var(--color-gray-300);
     composes: -v-mr from global;
+}
+
+.button:hover .prefix {
+    color: var(--color-dark);
 }
 
 .content {
@@ -17,5 +22,10 @@
 }
 
 .subfix {
+    color: var(--color-gray-300);
     composes: -v-ml from global;
+}
+
+.button:hover .subfix {
+    color: var(--color-dark);
 }

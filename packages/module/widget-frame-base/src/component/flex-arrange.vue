@@ -31,7 +31,7 @@ const emits = defineEmits(['change', 'primaryAxisAlignItems']);
 
 function changeTab(value:string) {
     const rs = value == '1' ? 'SPACE_BETWEEN': 'MIN';
-    if (value !== props.primaryAxisAlignItems) {             
+    if (value !== props.primaryAxisAlignItems) {
         emits('primaryAxisAlignItems', rs);
     }
 }
@@ -40,6 +40,7 @@ function onChange(justify: string, align: string) {
 }
 
 function autoClose(event: MouseEvent) {
+    if (!isShowPopup.value) return;
     const currentTarget = event.target as HTMLElement;
     const isIncludes = wrapper.value && wrapper.value.contains(currentTarget);
     if (isIncludes) {

@@ -1,11 +1,12 @@
 export const layoutModeLabel: {[index: string]: string} = {
     'absolute': '自由布局',
     'flex' : '自适应布局',
-    'grid' : '栅格布局',
+    'fence' : '栅格布局',
+    'grid' : '网格布局',
 };
 // export enum layoutModeValue {
 //     'absolute '= '自由布局',
 //     'flex' = '自适应布局',
 //     'grid' = '栅格布局',
 // }
-export const layoutModeOptions = ['absolute', 'flex', 'grid'];
+export const layoutModeOptions = ['absolute', 'flex', 'fence'];

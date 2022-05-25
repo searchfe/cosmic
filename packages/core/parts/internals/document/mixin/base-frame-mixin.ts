@@ -11,6 +11,8 @@ import LayoutMixin from './layout-mixin';
 import RectangleCornerMixin from './rectangle-corner-mixin';
 import SenceNodeMixin from './scene-node-mixin';
 
+import type { LayoutGrid } from '../';
+
 export default class BaseFrameMixin
     extends Mixin(Mixin(
         BaseNodeMixin,
@@ -51,7 +53,7 @@ export default class BaseFrameMixin
     horizontalPadding: number; // DEPRECATED: use the individual paddings
     verticalPadding: number; // DEPRECATED: use the individual paddings
 
-    layoutGrids: ReadonlyArray<Internal.LayoutGrid>;
+    layoutGrids: Array<LayoutGrid> = [];
     gridStyleId: string;
     clipsContent: boolean;
     guides: ReadonlyArray<Internal.Guide>;

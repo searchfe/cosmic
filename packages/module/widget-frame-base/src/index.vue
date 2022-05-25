@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-import { ref, watchEffect, type Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { InputNumber } from 'cosmic-vue';
 import { type Subject } from '@cosmic/core/rxjs';
 import { MTitle, MWidget, service, inject } from '@cosmic/core/browser';
-import { FramePrototypingMixin, BaseNodeMixin, FrameNode } from '@cosmic/core/parts';
+import { FramePrototypingMixin, BaseNodeMixin, FrameNode, RowsColsLayoutGrid } from '@cosmic/core/parts';
 import { Button, Menu, MenuOption, Row, Col} from 'cosmic-vue';
 import ButtonModeStyle from './component/button-mode.module.css';
-import ButtoLightStyle from './component/button-light.module.css';
+import ButtonLightStyle from './component/button-light.module.css';
+import ButtonSelectStyle from './component/button-select.module.css';
 import { round } from '@cosmic/core/lodash';
 
 import PaddingInput from './component/padding-input.vue';
@@ -14,6 +15,7 @@ import FlexArrange from './component/flex-arrange.vue';
 
 import { layoutModeLabel, layoutModeOptions } from './common/layout-mode';
 import InputStyle from './component/input.module.css';
+
 
 
 interface LayoutProps {
@@ -26,6 +28,9 @@ interface LayoutProps {
     layoutWrap: string;
     primaryAxisAlignItems: string;
     counterAxisAlignItems: string;
+    fenceGutterSize: number,
+    fenceCount: number,
+    fenceVisible: boolean,
 
 }
 
@@ -40,6 +45,9 @@ const data: Ref<LayoutProps>  = ref({
     layoutWrap: 'NONE',
     primaryAxisAlignItems: 'MIN',
     counterAxisAlignItems: 'MIN',
+    fenceGutterSize: 10,
+    fenceCount: 12,
+    fenceVisible: true,
 });
 
 
@@ -73,7 +81,17 @@ function toData(n: FrameNode & FramePrototypingMixin) {
     data.value.paddingRight = n.paddingRight || 0;
     data.value.paddingBottom = n.paddingBottom || 0;
     data.value.paddingLeft = n.paddingLeft || 0;
-    if (n.layoutMode == 'NONE') {
+
+    if(n.layoutGrids?.length) {
+        const g = n.layoutGrids[0];
+        if (g.pattern === 'ROWS' || g.pattern === 'COLUMNS') {
+            data.value.ladyoutModeSelectedValue = 'fence';
+            data.value.fenceCount = g.count;
+            data.value.fenceGutterSize = g.gutterSize;
+            data.value.fenceVisible = g.visible || false;
+        }
+
+    } else if (n.layoutMode == 'NONE') {
         data.value.ladyoutModeSelectedValue = 'absolute';
     } else if(n.layoutMode == 'HORIZONTAL' || n.layoutMode == 'VERTICAL') {
         data.value.ladyoutModeSelectedValue = 'flex';
@@ -95,17 +113,6 @@ const overflow = ref('visible') as Ref<OverflowType>;
 const overflowX = ref(false);
 const overflowY = ref(false);
 
-watchEffect(() => {
-    // if(overflowX.value == false && overflowY.value == false) {
-    //     // overflow.value ='visible';
-    // } else if(overflowX.value == true && overflowY.value == true) {
-    //     overflow.value = 'hidden';
-    // } else if (overflowX.value == true) {
-    //     overflow.value = 'overflow-x';
-    // } else {
-    //     overflow.value = 'overflow-y';
-    // }
-});
 function changePadding(event: any) {
     if(!node) return;
     node.paddingTop = event.value.top;
@@ -130,10 +137,14 @@ function layoutModeHandler(event: any) {
     if (!node) return;
     if (event.value == 'absolute') {
         node.layoutMode  ='NONE';
+        node.layoutGrids = [];
     } else if (event.value == 'flex') {
         node.layoutMode  ='HORIZONTAL';
-    } else {
-        //
+        node.layoutGrids = [];
+    } else if (event.value == 'fence') {
+        const fence = new RowsColsLayoutGrid();
+        node.layoutGrids = [fence];
+        // node.layoutMode  ='FENCE';
     }
     node.resize(node.width, node.height);
     node.update();
@@ -172,6 +183,29 @@ function changeItems({justify, align}: {justify: any, align: any}) {
     node.update();
 }
 
+function changeFence({count, gutterSize, visible}: {count?:number, gutterSize?: number, visible?: boolean}) {
+    if (!node) return;
+    let updated = false;
+    const f = node.layoutGrids[0];
+    if (f.pattern !== 'ROWS' && f.pattern !=='COLUMNS' ) return;
+    if (count && count > 0 && count !== f.count) {
+        updated = true;
+        f.count = count;
+    }
+    if (gutterSize && gutterSize > 0 && gutterSize !== f.gutterSize) {
+        updated = true;
+        f.gutterSize = gutterSize;
+    }
+    if (visible !== undefined && visible !== f.visible) {
+        updated = true;
+        f.visible = visible;
+    }
+    if (updated) {
+        node.resize(node.width, node.height);
+        node.update();
+    }
+}
+
 const options = layoutModeOptions.map(item => {return {id: item, label: layoutModeLabel[item]};});
 </script>
 
@@ -179,11 +213,11 @@ const options = layoutModeOptions.map(item => {return {id: item, label: layoutMo
     <div v-show="isShow" class="border-bottom" />
     <m-widget v-show="isShow">
         <!-- Widgrt Head Start -->
-        <MTitle style="padding-left: 0;" :is-open="open" @on-click="boardSwitch">
+        <MTitle style="padding-left: 0;" :is-open="open">
             <template #prefix>
                 <Menu size="sm" :value="data.ladyoutModeSelectedValue" :class="$style.menu" @on-change="layoutModeHandler">
                     <template #activator>
-                        <Button class="justify-start" size="sm" :styles="ButtonModeStyle" @click="isOpen = true">
+                        <Button class="justify-start font-bold" size="sm" :styles="ButtonModeStyle" @click="isOpen = true">
                             {{ layoutModeLabel[data.ladyoutModeSelectedValue] }}
                             <template #subfix>
                                 <i-cosmic-select-up-down />
@@ -209,7 +243,7 @@ const options = layoutModeOptions.map(item => {return {id: item, label: layoutMo
                     <!-- Layout Direction Start -->
                     <Button
                         size="sm -v-mx" class="square"
-                        :styles="ButtoLightStyle"
+                        :styles="ButtonLightStyle"
                         :class="data.flexDirection == 'HORIZONTAL'? 'active': ''"
                         @click="() => changeFlexDirection('HORIZONTAL')"
                     >
@@ -217,7 +251,7 @@ const options = layoutModeOptions.map(item => {return {id: item, label: layoutMo
                     </Button>
                     <Button
                         size="sm -v-mx" class="square"
-                        :styles="ButtoLightStyle"
+                        :styles="ButtonLightStyle"
                         :class="data.flexDirection == 'VERTICAL'? 'active': ''"
                         @click="() => changeFlexDirection('VERTICAL')"
                     >
@@ -258,11 +292,61 @@ const options = layoutModeOptions.map(item => {return {id: item, label: layoutMo
                     <Button
                         size="sm -v-mx"
                         class="square"
-                        :styles="ButtoLightStyle"
+                        :styles="ButtonLightStyle"
                         :class="data.layoutWrap == 'WRAP'? 'active': ''"
                         @click="() => changeFlexWrap()"
                     >
                         <i-cosmic-auto-break />
+                    </Button>
+                </Col>
+            </Row>
+            <Row v-show="data.ladyoutModeSelectedValue == 'fence'" :class="$style.row">
+                <Col :span="4" class="mr-8">
+                    <div :class="[$style['glyph-item']]">
+                        <Menu size="sm" :value="data.ladyoutModeSelectedValue" :class="$style.menu" @on-change="(event) => {changeFence({count: Number(event.value)}); }">
+                            <template #activator>
+                                <Button class="justify-start" size="sm" :styles="ButtonSelectStyle" @click="isOpen = true">
+                                    <template #prefix>
+                                        <i-cosmic-line class="mr-6" style="transform:rotate(-90deg);" />
+                                    </template>
+                                    <span class="block min-w-20">{{ data.fenceCount }}N</span>
+                                    <template #subfix>
+                                        <i-cosmic-arrow-down class="ml-8" style="font-size:8px;" />
+                                    </template>
+                                </Button>
+                            </template>
+                            <MenuOption
+                                v-for="d of [6, 8, 10, 12, 16, 18, 20, 24]" :key="d" :value="d" :label="'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+d+'N'" :has-check="false" :selected="data.fenceCount==d"
+                            />
+                        </Menu>
+                    </div>
+                </Col>
+                <Col :span="1" />
+                <Col :span="4" class="mr-8">
+                    <div :class="[$style['glyph-item']]">
+                        <InputNumber
+                            size="sm"
+                            :value="data.fenceGutterSize"
+                            @on-input="(event) => {changeFence({gutterSize: Number(event.value)}); }"
+                        >
+                            <template #prefix>
+                                <i-cosmic-spacing-x :class="[$style.icon]" />
+                            </template>
+                        </InputNumber>
+                    </div>
+                </Col>
+                <Col
+                    class="flex flex-row-reverse relative"
+                    :class="[$style.col]"
+                    :span="2"
+                >
+                    <Button size="sm -v-mx" class="square" :styles="ButtonLightStyle" @click="() => {changeFence({visible: !data.fenceVisible}); }">
+                        <template v-if="data.fenceVisible">
+                            <i-cosmic-eye-open />
+                        </template>
+                        <template v-else>
+                            <i-cosmic-eye-closed />
+                        </template>
                     </Button>
                 </Col>
             </Row>
@@ -301,10 +385,10 @@ const options = layoutModeOptions.map(item => {return {id: item, label: layoutMo
                     :class="[$style.col, $style['flow-icons']]"
                     :span="7"
                 >
-                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowY? 'active': ''" @click="overflowY = !overflowY">
+                    <Button size="sm -v-mx" class="square" :styles="ButtonLightStyle" :class="overflowY? 'active': ''" @click="overflowY = !overflowY">
                         <i-cosmic-scroll-y />
                     </Button>
-                    <Button size="sm -v-mx" class="square" :styles="ButtoLightStyle" :class="overflowX? 'active': ''" @click="overflowX = !overflowX">
+                    <Button size="sm -v-mx" class="square" :styles="ButtonLightStyle" :class="overflowX? 'active': ''" @click="overflowX = !overflowX">
                         <i-cosmic-scroll-x />
                     </Button>
                 </Col>
