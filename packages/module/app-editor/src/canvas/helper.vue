@@ -15,7 +15,7 @@ nodeService.selection.subscribe(sels => {
 
 </script>
 <template>
-    <div class="absolute w-0 h-0">
+    <div class="absolute w-0 h-0" style="z-index: 10">
         <textarea-editor />
         <canvas-wrapper v-for="node in selections" :key="node.id" :node="node" />
     </div>

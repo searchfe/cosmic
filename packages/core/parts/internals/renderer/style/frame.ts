@@ -7,7 +7,21 @@ export function makeBaseFrameStyle(node: BaseFrameMixin) {
     if(node.paddingLeft || node.paddingRight || node.paddingTop || node.paddingBottom) {
         styles.padding = [node.paddingTop + 'px'  || 0, node.paddingRight + 'px'  || 0, node.paddingBottom + 'px'  || 0, node.paddingLeft + 'px' || 0].join(' ');
     }
-    if (node.layoutMode === 'HORIZONTAL' || node.layoutMode === 'VERTICAL') {
+    const layoutGrid = node.layoutGrids[0];
+    if (layoutGrid) {
+        styles.display = 'grid';
+        styles.position = 'relative';
+        if (layoutGrid.pattern === 'ROWS') {
+            styles['grid-template-columns'] = `repeat(${layoutGrid.count}, 1fr)`;
+            styles['grid-column-gap'] = `${layoutGrid.gutterSize}px`;
+        } else if (layoutGrid.pattern === 'COLUMNS') {
+            styles['grid-template-rows'] = `repeat(${layoutGrid.count}, 1fr)`;
+            styles['grid-row-gap'] = `${layoutGrid.gutterSize}px`;
+        } else if (layoutGrid.pattern === 'GRID') {
+            styles['grid-template-columns'] = '1fr';
+        }
+        //
+    } else if (node.layoutMode === 'HORIZONTAL' || node.layoutMode === 'VERTICAL') {
         styles.display = 'flex';
         styles['flex-direction'] = node.layoutMode === 'VERTICAL' ? 'column': '';
 
@@ -24,7 +38,7 @@ export function makeBaseFrameStyle(node: BaseFrameMixin) {
         }[node.counterAxisAlignItems];
         if (node.layoutWrap === 'WRAP') styles['flex-wrap'] = 'wrap';
     } else if(node.children && node.children.length) {
-        styles.position = 'relative';
+        styles.position = 'absolute';
     }
     return  styles;
 }

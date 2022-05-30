@@ -8,5 +8,5 @@ export default class RowsColsLayoutGrid implements Internal.RowsColsLayoutGrid {
     offset? = 0;     // Not set for alignment: 'CENTER'
 
     visible?: boolean = true;
-    rcolor?: Internal.RGBA = {r: 0, g: 36, b: 255, a: 10};
+    rcolor?: Internal.RGBA = {r: 0, g: 36, b: 255, a: 0.1};
 }

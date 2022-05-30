@@ -1,0 +1,31 @@
+.button {
+    height: 2.4rem;
+    color: var(--color-dark);
+    composes: cos-btn -v-text -v-px -v-border-none rounded from global;
+}
+
+.button:hover {
+    background: var(--color-gray-50);
+}
+
+.prefix {
+    color: var(--color-gray-300);
+    composes: -v-mr from global;
+}
+
+.button:hover .prefix {
+    color: var(--color-dark);
+}
+
+.content {
+    composes: -v-mr from global;
+}
+
+.subfix {
+    color: var(--color-gray-300);
+    composes: -v-ml from global;
+}
+
+.button:hover .subfix {
+    color: var(--color-dark);
+}
