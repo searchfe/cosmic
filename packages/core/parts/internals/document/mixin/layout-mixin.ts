@@ -20,6 +20,9 @@ export default class LayoutMixin implements Internal.LayoutMixin {
     layoutAlign: 'MIN' | 'CENTER' | 'MAX' | 'STRETCH' | 'INHERIT' = 'INHERIT'; // applicable only inside auto-layout frames
     layoutGrow: number;
 
+    colSize = 1;
+    rowSize = 1;
+
 
     resize(width: number, height: number) {
         const deltaX = width - this.width;

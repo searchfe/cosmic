@@ -3,15 +3,15 @@ import { Child } from './child';
 import { type CosmicNode } from '@cosmic/core/parts';
 
 export class Frame extends Component {
-    static template = `<div style="{{style}}" class="{{class}}">
+    static template = `<div>
         <fragment s-for="child in renderChildren">
             <renderer-child node="{{ {...child} }}" />
         </fragment>
     </div>`;
     initData() {
         return {
-            class: [] as string[],
-            style: {} as {[index: string]: string},
+            // class: [] as string[],
+            // style: {} as {[index: string]: string},
             children: [] as CosmicNode[],
         };
     }

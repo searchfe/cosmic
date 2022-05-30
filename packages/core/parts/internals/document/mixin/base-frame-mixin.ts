@@ -44,11 +44,11 @@ export default class BaseFrameMixin
     // stretch（默认值）：轴线占满整个交叉轴。
 
 
-    paddingLeft: number; // applicable only if layoutMode != 'NONE'
-    paddingRight: number; // applicable only if layoutMode != 'NONE'
-    paddingTop: number; // applicable only if layoutMode != 'NONE'
-    paddingBottom: number; // applicable only if layoutMode != 'NONE'
-    itemSpacing: number; // applicable only if layoutMode != 'NONE'
+    paddingLeft = 0; // applicable only if layoutMode != 'NONE'
+    paddingRight = 0; // applicable only if layoutMode != 'NONE'
+    paddingTop = 0; // applicable only if layoutMode != 'NONE'
+    paddingBottom = 0; // applicable only if layoutMode != 'NONE'
+    itemSpacing = 0; // applicable only if layoutMode != 'NONE'
 
     horizontalPadding: number; // DEPRECATED: use the individual paddings
     verticalPadding: number; // DEPRECATED: use the individual paddings

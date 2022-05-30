@@ -12,7 +12,15 @@ class SanRenderer implements Renderer {
             data: {class: node.props.class, style: node.props.style, children: node.children},
         });
         this.element.attach(root);
-        return;
+        // return;
+        // const comp  = new Test({
+        //         data: {styleData: {
+        //             display: 'grid',
+        //             width: '10px',
+        //         },
+        //     },
+        // });
+        // comp.attach(root);
     }
     update(node: CosmicNode) {
         if(!this.element) return;

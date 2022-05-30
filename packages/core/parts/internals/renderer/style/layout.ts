@@ -6,7 +6,15 @@ export function  makeLayoutStyle(node: LayoutMixin & ConstraintMixin) {
     const parent = (node as any)?.parent;
     const parentWidth = parent.width || 0;
     const parentHeight = parent.height || 0;
-    if(parent.layoutMode !== 'VERTICAL' && parent.layoutMode !== 'HORIZONTAL') {
+    const layoutGrid = parent.layoutGrids?.[0];
+    if (layoutGrid) {
+        if (layoutGrid.pattern === 'ROWS' || layoutGrid.pattern === 'COLUMNS') {
+            styles['grid-column'] = `span ${node.colSize}`;
+            styles['grid-row'] = `span ${node.rowSize}`;
+        // } else if (layoutGrid.pattern === 'COLUMNS') {
+        //     styles['grid-row'] = `span ${node.rowSize}`;
+        }
+    } else if(parent.layoutMode !== 'VERTICAL' && parent.layoutMode !== 'HORIZONTAL') {
         styles.position = 'absolute';
         switch(node.constraints.horizontal) {
             case ConstraintType.MIN:
