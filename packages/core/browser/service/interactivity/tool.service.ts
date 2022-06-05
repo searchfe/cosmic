@@ -39,7 +39,7 @@ export default class ToolService {
         }
     }
     tryCancel(state: ToolState, data?: ToolData) {
-        if (this.getState() === ToolState.Null) {
+        if (this.getState() === state) {
             this.cancel(state, data);
         }
     }
