@@ -2,6 +2,7 @@ export default class RowsColsLayoutGrid implements Internal.RowsColsLayoutGrid {
     pattern: 'ROWS' | 'COLUMNS' = 'ROWS';
     alignment: 'MIN' | 'MAX' | 'STRETCH' | 'CENTER' = 'STRETCH';
     gutterSize = 10;
+    counterGutterSize = 0;
 
     count  = 12;      // Infinity when 'Auto' is set in the UI
     sectionSize? = 0; // Not set for alignment: 'STRETCH'
