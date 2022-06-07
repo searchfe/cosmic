@@ -4,8 +4,9 @@ import { InputNumber } from 'cosmic-vue';
 import Color from 'color';
 
 const props = withDefaults(defineProps<{
-    fillStyle: Internal.SolidPaint
-}>(), {});
+    fillStyle: Internal.SolidPaint,
+    showMode: boolean
+}>(), {showMode: true});
 
 const emits = defineEmits(['change']);
 
@@ -42,6 +43,7 @@ function opacityBurHandler(data: {value: string}, originOpacity: number, color: 
         :class="[$style.color, $style['color-border']]"
     >
         <div 
+            v-if="showMode"
             :class="$style.theme"
             @click="themeClickHandler"
         >
