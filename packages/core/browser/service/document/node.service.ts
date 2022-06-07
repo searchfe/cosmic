@@ -151,6 +151,7 @@ export default class NodeService {
                 item.dirty = true;
                 item.lastEditTime = item.node.editTime;
             }
+
         });
         requestAnimationFrame(() => {
             Object.keys(this._watchList).forEach(id => {

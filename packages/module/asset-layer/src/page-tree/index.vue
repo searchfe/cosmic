@@ -17,6 +17,7 @@ const isShowArrow = ref(true);
 let doc: DocumentNode;
 let selection: PageNode;
 let subject: Subject<BaseNodeMixin>;
+const displayName = ref('');
 
 nodeService.document.subscribe(document => {
     nodeService.unwatch(subject);
@@ -41,6 +42,7 @@ nodeService.document.subscribe(document => {
 nodeService.currentPage.subscribe((page) => {
     if (doc) {
         selection = page;
+        displayName.value = page.name;
         treedata.value = updateSelection(treedata.value, [selection]);
     }
 });
@@ -72,7 +74,7 @@ function moveTo(event: TreeChangeEvent) {
 <template>
     <div class="flex-grow-0 flex-shrink-0">
         <div class="px-20 py-8 h-40 border-bottom flex items-center text-sm">
-            <span class="flex-grow-0 flex-shrink-0">页面</span>
+            <span class="flex-grow-0 flex-shrink-0">{{ displayName }}</span>
             <div
                 v-if="isShowArrow"
                 class="ml-12 flex-grow-0 flex-shrink-0 w-20 text-center"
