@@ -170,7 +170,8 @@ export default class NodeControllService {
         const node = util.getSelectionInPageNode(page, pos);
         if (node) {
             const layoutMode = (node.parent as any)?.layoutMode;
-            if (layoutMode === 'HORIZONTAL' || layoutMode === 'VERTICAL') return;
+            const layoutGrid = (node.parent as any)?.layoutGrids?.[0];
+            if (layoutMode === 'HORIZONTAL' || layoutMode === 'VERTICAL' || layoutGrid) return;
             this.resizeData = {
                 direction: 4,
                 startX: event.clientX,

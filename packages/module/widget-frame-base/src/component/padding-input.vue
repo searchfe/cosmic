@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Input, InputNumber } from 'cosmic-vue';
-import { watchEffect, ref, type Ref, onMounted, onUnmounted} from 'vue';
+import { watchEffect, ref, type Ref} from 'vue';
 import InputStyle from './input.module.css';
 
 type PaddingData = {
@@ -55,24 +55,12 @@ const wrapper = ref() as Ref<HTMLElement>;
 const emits = defineEmits(['onCancel', 'onChange']);
 
 function autoClose(event: MouseEvent) {
-    if (!isShowPopup.value) return;
-    const currentTarget = event.target as HTMLElement;
-    const isIncludes = wrapper.value && wrapper.value.contains(currentTarget);
-    if (isIncludes) {
-        return;
-    }
-    emitChange();
     isShowPopup.value = false;
+    event.stopPropagation();
+    emitChange();
 }
 
-
-onUnmounted(() =>  {
-    window.document.body.removeEventListener('click', autoClose);
-});
-
-onMounted(() => {
-    window.document.body.addEventListener('click', autoClose, false);
-});
+const mask = ref();
 
 function onChange() {
     emitChange();
@@ -89,6 +77,7 @@ function checkTab() {
 
 <template>
     <div ref="wrapper" class="relative">
+        <div v-show="isShowPopup" ref="mask" :class="$style.mask" @mousedown="autoClose" />
         <Input
             size="sm" :controls="false"
             :class="isShowPopup? 'active': ''"
@@ -171,5 +160,12 @@ function checkTab() {
 .msketch :global(.item.active){
     opacity: 1;
 }
-
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color:red; */
+}
 </style>
