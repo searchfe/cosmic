@@ -54,6 +54,7 @@ function moveTo(event: TreeChangeEvent) {
     const index = target.parent?.children.findIndex(node => node.id === event.id) || 0;
     if (target.parent) {
         target.parent.insertChild(index + 1, selection);
+        (target.parent as any)?.relayout();
         selection.update();
     }
 }
@@ -64,6 +65,7 @@ function moveInto(event: TreeChangeEvent) {
     if(target) {
         selection.remove();
         target.insertChild(0, selection);
+        (target as any).parent?.relayout();
         selection.update();
     }
 }
