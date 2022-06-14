@@ -32,8 +32,7 @@ export default class LayoutMixin implements Internal.LayoutMixin {
     set rowSize(size: number) {
         const equaled = size == this._rowSize;
         this._rowSize = size;
-        console.log(2, this._rowSize, size);
-        // if (!equaled) this.resizeParent();
+        if (!equaled) this.resizeParent();
     }
     get rowSize() { return this._rowSize; }
 
@@ -241,6 +240,7 @@ function layoutFence(parent: BaseFrameMixin, childs: Array<LayoutMixin>) {
     rects.forEach(rect => {
         counterCount = Math.max(rect.y + rect.height, counterCount);
     });
+    console.log(rects);
     const counterMaxSize = p[counterSize] - p[counterOffsetStart] - p[counterOffsetEnd];
     const counterSectionSize =  round((counterMaxSize - counterGutterSize * (counterCount - 1))  / counterCount, 2);
     rects.forEach((rect, index) => {
