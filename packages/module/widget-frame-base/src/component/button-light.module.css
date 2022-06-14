@@ -16,6 +16,6 @@
     composes: -v-mr from global;
 }
 
-.suffix {
+.subfix {
     composes: -v-ml from global;
 }

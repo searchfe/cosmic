@@ -59,6 +59,7 @@ export default class NodeControllService {
             // service.ToolState.TextEdit
         }
         if (this.editingChild) {
+            this.resetDefaultSize(event);
             this.editingChild = undefined;
             this.toolService.cancel(this.toolService.getState());
         }
@@ -136,6 +137,22 @@ export default class NodeControllService {
             x: this.editingChild?.x || 0,
             y: this.editingChild?.y || 0,
         };
+    }
+    private resetDefaultSize(event: MouseEvent) {
+        // if(this.toolService.getState() === service.ToolState.;
+        if(
+            !this.editingChild || 
+            Math.abs(this.resizeData.startX - event.clientX) > 10 &&
+            Math.abs(this.resizeData.startY - event.clientY) > 10) {
+                return;
+        }
+        if(this.editingChild.parent?.type === 'PAGE'){
+            this.editingChild.resize(414, 736);
+            this.editingChild.update();
+        } else {
+            this.editingChild.resize(100, 100);
+            this.editingChild.update();
+        }
     }
 
     private getNode(event: MouseEvent) {

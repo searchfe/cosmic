@@ -11,7 +11,7 @@ interface NodeRendererProps {
 const props = withDefaults(defineProps<NodeRendererProps>(), {});
 const wrapper = ref();
 
-const nodeTransform = new NodeTransform(props.node);
+const nodeTransform = new NodeTransform(props.node, {needGuide: true});
 let renderer: RendererType;
 
 const rendererService = inject<service.RendererService>(service.TOKENS.Renderer);

@@ -20,10 +20,27 @@ export default class LayoutMixin implements Internal.LayoutMixin {
     layoutAlign: 'MIN' | 'CENTER' | 'MAX' | 'STRETCH' | 'INHERIT' = 'INHERIT'; // applicable only inside auto-layout frames
     layoutGrow: number;
 
+    private _colSize = 1;
+    private _rowSize = 1;
+
+    set colSize(size: number) {
+        const equaled = size == this._colSize;
+        this._colSize = size;
+        if (!equaled) this.resizeParent();
+    }
+    get colSize() { return this._colSize; }
+    set rowSize(size: number) {
+        const equaled = size == this._rowSize;
+        this._rowSize = size;
+        console.log(2, this._rowSize, size);
+        // if (!equaled) this.resizeParent();
+    }
+    get rowSize() { return this._rowSize; }
 
     resize(width: number, height: number) {
         const deltaX = width - this.width;
         const deltaY = height - this.height;
+        const resized = !!(deltaX || deltaY);
 
         this.width = width;
         this.height = height;
@@ -34,14 +51,13 @@ export default class LayoutMixin implements Internal.LayoutMixin {
             }
         });
         layoutFlex(this as any, childs);
+        layoutFence(this as any, childs);
         for (const child of childs) {
             child.resize(child.width, child.height);
             child.update(true);
         }
-        const parent = (this as any).parent as any;
-        if ((deltaX || deltaY) && hasMixin(parent, LayoutMixin)) {
-            parent.resize(parent.width, parent.height);
-            // (parent as any)?.update(true);
+        if (resized) {
+            this.resizeParent();
         }
     }
     resizeWithoutConstraints(width: number, height: number) {
@@ -49,6 +65,13 @@ export default class LayoutMixin implements Internal.LayoutMixin {
     }
     rescale(scale: number) {
         // TODO
+    }
+
+    private resizeParent() {
+        const parent = (this as any).parent as any;
+        if (parent && hasMixin(parent, LayoutMixin)) {
+            parent.resize(parent.width, parent.height);
+        }
     }
 }
 function layoutAbsoluteChild(parent: Internal.BaseFrameMixin,node: LayoutMixin & ConstraintMixin, deltaX: number, deltaY: number) {
@@ -85,29 +108,48 @@ function layoutAbsoluteChild(parent: Internal.BaseFrameMixin,node: LayoutMixin &
     }
 }
 
-function getAttrs(layoutMode: string) {
-    if (layoutMode === 'HORIZONTAL') {
-        return { primary : 'x', counter : 'y', primarySize : 'width', counterSize : 'height', paddingMin: 'paddingLeft', paddingMax: 'paddingRight'};
+function getAttrs(primaryDirection: 'HORIZONTAL' | 'VERTICAL') {
+    if (primaryDirection === 'HORIZONTAL') {
+        return {
+            primary : 'x', counter : 'y',
+            primarySize : 'width', counterSize : 'height',
+            primaryOffsetStart: 'paddingLeft', primaryOffsetEnd: 'paddingRight',
+            counterOffsetStart: 'paddingTop', counterOffsetEnd: 'paddingBottom',
+            primaryN: 'colSize', counterN: 'rowSize',
+        };
     }
-    return { primary : 'y', counter : 'x', primarySize : 'height', counterSize : 'width', paddingMin: 'paddingTop', paddingMax: 'paddingBottom'};
+    return {
+        primary : 'y', counter : 'x',
+
+        primarySize : 'height', counterSize : 'width',
+        primaryOffsetStart: 'paddingTop', primaryOffsetEnd: 'paddingBottom',
+        counterOffsetStart: 'paddingLeft', counterOffsetEnd: 'paddingRight',
+        primaryN: 'rowSize', counterN: 'colSize',
+    };
 }
 
 function layoutFlex(parent: BaseFrameMixin, childs: Array<LayoutMixin & ConstraintMixin>) {
+    /** Flex 布局思路 先定每行列的元素分布情况 第一轮计算根据主轴分拆多行 第二轮再计算精准位置和行内分布 */
     if (parent.layoutMode != 'HORIZONTAL' && parent.layoutMode != 'VERTICAL') return;
     const p = parent as any;
-    const { primary, counter, primarySize, counterSize, paddingMin, paddingMax} = getAttrs(parent.layoutMode);
-    const primaryMaxSize = p[primarySize] - p[paddingMin] - p[paddingMax];
+    const {
+        primary, counter,
+        primarySize, counterSize,
+        primaryOffsetStart, primaryOffsetEnd,
+        counterOffsetStart, counterOffsetEnd,
+    } = getAttrs(parent.layoutMode);
+    const primaryMaxSize = p[primarySize] - p[primaryOffsetStart] - p[primaryOffsetEnd];
     const matrix: number[][] = [[]];
     const primarySizeSum: number[] = [0];
     const counterSizeMax: number[] = [0];
-    let currentPos = p[paddingMin];
+    let currentPos = p[primaryOffsetStart];
     childs.forEach((child: any, index) => {
         if (parent.layoutWrap == 'WRAP') {
             if (currentPos + child[primarySize] > primaryMaxSize) {
                 matrix.push([]);
                 counterSizeMax.push(0);
                 primarySizeSum.push(0);
-                currentPos = p[paddingMin];
+                currentPos = p[primaryOffsetStart];
             }
         }
         currentPos += child[primarySize];
@@ -115,9 +157,9 @@ function layoutFlex(parent: BaseFrameMixin, childs: Array<LayoutMixin & Constrai
         matrix[matrix.length - 1].push(index);
         counterSizeMax.push(Math.max(counterSizeMax.pop() || 0, child[counterSize]));
     });
-    let counterOffset = 0;
+    let counterOffset = p[counterOffsetStart];
     matrix.forEach((cols, rowNum) => {
-        let primaryOffset = p[paddingMin];
+        let primaryOffset = p[primaryOffsetStart];
         let primarySpacing = 0;
         if(parent.primaryAxisAlignItems === 'MIN') {
             // do nothing
@@ -145,4 +187,82 @@ function layoutFlex(parent: BaseFrameMixin, childs: Array<LayoutMixin & Constrai
         });
         counterOffset += counterSizeMax[rowNum];
     });
+}
+
+function layoutFence(parent: BaseFrameMixin, childs: Array<LayoutMixin>) {
+    /** 栅格 布局思路 按格子填元素 */
+    const layoutGrid  = parent?.layoutGrids?.[0];
+    if (!layoutGrid || (layoutGrid.pattern !== 'ROWS' && layoutGrid.pattern !== 'COLUMNS')) return;
+    const {
+        primary, counter,
+        primarySize, counterSize,
+        primaryOffsetStart, primaryOffsetEnd,
+        counterOffsetStart, counterOffsetEnd,
+        primaryN, counterN,
+    } = getAttrs(layoutGrid.pattern === 'ROWS'? 'HORIZONTAL': 'VERTICAL');
+    const gird = layoutGrid;
+    const gutterSize = layoutGrid.gutterSize || 0;
+    const counterGutterSize = layoutGrid.counterGutterSize || 0;
+    const p = parent as any;
+    const primaryMaxSize = p[primarySize] - p[primaryOffsetStart] - p[primaryOffsetEnd];
+    const primarySectionSize = round((primaryMaxSize - gutterSize * (layoutGrid.count -1))  / layoutGrid.count, 2);
+    const rects: Rect[] = []; // 栅格计算结果
+    let counterPos = 0;
+    let primaryPos = 0;
+
+    childs.forEach((child: any, index) => {
+        let inserted = false;
+        for(let pos = primaryPos; pos <= gird.count - child[primaryN]; pos++) {
+            const r = {x: pos, y: counterPos, width: child[primaryN], height: child[counterN]};
+            let overlap = false;
+            for(let i = 0;i < rects.length; i++) {
+                overlap = isOverlap(r, rects[i]);
+                if (overlap) break;
+            }
+            if (!inserted && !overlap) {
+                rects.push(r);
+                primaryPos = pos;
+                inserted = true;
+            }
+            if (inserted) break;
+            if (pos === gird.count - child[primaryN]) {
+                primaryPos = 0;
+                counterPos ++;
+                pos = -1;
+            }
+        }
+        if (!inserted) {
+            primaryPos = 0;
+            counterPos ++;
+            rects.push({x: primaryPos, y: counterPos, width: child[primaryN], height: child[counterN]});
+        }
+    });
+    let counterCount = 0;
+    rects.forEach(rect => {
+        counterCount = Math.max(rect.y + rect.height, counterCount);
+    });
+    const counterMaxSize = p[counterSize] - p[counterOffsetStart] - p[counterOffsetEnd];
+    const counterSectionSize =  round((counterMaxSize - counterGutterSize * (counterCount - 1))  / counterCount, 2);
+    rects.forEach((rect, index) => {
+        const child = childs[index] as any;
+        child[primary] = round(p[primaryOffsetStart] + rect.x * (primarySectionSize + gutterSize), 2);
+        child[counter] = round(p[counterOffsetStart] + rect.y * (counterSectionSize + counterGutterSize), 2);
+        child[primarySize] = round(rect.width * (primarySectionSize + gutterSize) - gutterSize);
+        child[counterSize] = round(rect.height * (counterSectionSize + counterGutterSize) - counterGutterSize, 2);
+    });
+}
+
+function isOverlap(rect1: Rect, rect2: Rect) {
+    // 判断 Rect 是否重合
+    const l1 = { x: rect1.x, y: rect1.y };
+    const r1 = { x: rect1.x + rect1.width, y: rect1.y + rect1.height };
+    const l2 = { x: rect2.x, y: rect2.y };
+    const r2 = { x: rect2.x + rect2.width, y: rect2.y + rect2.height };
+    if (
+        l1.x >= r2.x ||
+        l2.x >= r1.x ||
+        l1.y >= r2.y ||
+        l2.y >= r1.y
+    ) return false;
+    return true;
 }

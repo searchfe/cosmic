@@ -8,5 +8,5 @@ export function paintToRgbaString(paint: Paint) {
 
 export function solidToRgbaString(paint: SolidPaint) {
     if(!paint.color) return '';
-    return `rgba(${paint.color.r}, ${paint.color.g}, ${paint.color.b}, ${paint.opacity})`;
+    return `rgba(${paint.color.r}, ${paint.color.g}, ${paint.color.b}, ${paint.opacity || 1})`;
 }

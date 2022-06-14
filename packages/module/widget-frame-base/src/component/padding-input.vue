@@ -55,6 +55,7 @@ const wrapper = ref() as Ref<HTMLElement>;
 const emits = defineEmits(['onCancel', 'onChange']);
 
 function autoClose(event: MouseEvent) {
+    if (!isShowPopup.value) return;
     const currentTarget = event.target as HTMLElement;
     const isIncludes = wrapper.value && wrapper.value.contains(currentTarget);
     if (isIncludes) {

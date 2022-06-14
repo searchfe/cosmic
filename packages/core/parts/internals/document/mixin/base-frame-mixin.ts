@@ -11,6 +11,8 @@ import LayoutMixin from './layout-mixin';
 import RectangleCornerMixin from './rectangle-corner-mixin';
 import SenceNodeMixin from './scene-node-mixin';
 
+import type { LayoutGrid } from '../';
+
 export default class BaseFrameMixin
     extends Mixin(Mixin(
         BaseNodeMixin,
@@ -42,16 +44,16 @@ export default class BaseFrameMixin
     // stretch（默认值）：轴线占满整个交叉轴。
 
 
-    paddingLeft: number; // applicable only if layoutMode != 'NONE'
-    paddingRight: number; // applicable only if layoutMode != 'NONE'
-    paddingTop: number; // applicable only if layoutMode != 'NONE'
-    paddingBottom: number; // applicable only if layoutMode != 'NONE'
-    itemSpacing: number; // applicable only if layoutMode != 'NONE'
+    paddingLeft = 0; // applicable only if layoutMode != 'NONE'
+    paddingRight = 0; // applicable only if layoutMode != 'NONE'
+    paddingTop = 0; // applicable only if layoutMode != 'NONE'
+    paddingBottom = 0; // applicable only if layoutMode != 'NONE'
+    itemSpacing = 0; // applicable only if layoutMode != 'NONE'
 
     horizontalPadding: number; // DEPRECATED: use the individual paddings
     verticalPadding: number; // DEPRECATED: use the individual paddings
 
-    layoutGrids: ReadonlyArray<Internal.LayoutGrid>;
+    layoutGrids: Array<LayoutGrid> = [];
     gridStyleId: string;
     clipsContent: boolean;
     guides: ReadonlyArray<Internal.Guide>;

@@ -9,8 +9,8 @@ export class Child extends Component {
             <renderer-frame s-if="node.type === 'frame'" children="{{node.children}}" style="{{node.props.style}}" class="{{node.props.class}}" />
             <renderer-text s-else-if="node.type === 'text'" style="{{node.props.style}}" class="{{node.props.class}}" value="{{node.props.value}}" />
         </fragment>
-            
-        
+
+
     `;
     initData() {
         return {
@@ -26,7 +26,11 @@ export class Child extends Component {
         'renderer-frame': Frame,
         'renderer-text': Text,
     };
-
+    filters = {
+        ss: function (v: object) {
+            return JSON.stringify(v);
+        },
+    };
     // static components: {
     //     'renderer-frame': Frame
     // };

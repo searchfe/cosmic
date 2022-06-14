@@ -1,13 +1,18 @@
 import type { CosmicNode } from './types';
-import { ChildrenMixin, TextNode, type SceneNode } from '../document';
+import { BaseFrameMixin, BaseNodeMixin, ChildrenMixin, FrameNode, TextNode, type SceneNode } from '../document';
 import { makeStyle }from './style/make-style';
 import { hasMixin } from '../';
+import { makeFenceGuide } from './guide/fence';
+
+interface NodeTransformOptions {
+    needGuide: boolean,
+}
 
 export class NodeTransform {
     private node: CosmicNode;
     private editTimeList: {[id: string]: number} = {};
     private childTransform: {[id: string]: NodeTransform} = {};
-    constructor(private dom: SceneNode, private parentId?: string) {}
+    constructor(private dom: SceneNode, private options: NodeTransformOptions = {needGuide: false}) {}
     transfer() {
         this.makeFrameNode();
         this.makeText();
@@ -45,21 +50,36 @@ export class NodeTransform {
     }
     _getUpdateChildren() {
         if (!hasMixin(this.dom, ChildrenMixin)) return;
+        const children = this.dom.children || [];
         let dirty = false;
         const list = this.childTransform;
         this.childTransform = {};
-        const transforms: NodeTransform[] = this.dom.children?.map(child => {
+        const transforms: NodeTransform[] = children.map(child => {
             let transform: NodeTransform;
             if(list[child.id]){
                 transform = list[child.id];
             } else {
-                transform = new NodeTransform(child, this.node.id);
+                transform = new NodeTransform(child, this.options);
                 dirty = true;
             }
             this.childTransform[child.id] = transform;
             return transform;
         });
         this.node.children = transforms.map(transform => transform.transfer());
+        // add guide dom
+        if (hasMixin(this.dom, BaseFrameMixin) && hasMixin(this.dom, BaseNodeMixin) && this.options.needGuide) {
+            const guide = makeFenceGuide(this.dom);
+            if (guide) {
+                this.node.children.forEach(node => {
+                    node.props.style = node.props.style || {};
+                    node.props.style['z-index'] = node.props.style?.['z-index'] || '1';
+                });
+                this.node.children.unshift(new NodeTransform(guide, {
+                    ...this.options,
+                    needGuide: false,
+                }).transfer());
+            }
+        }
         if (Object.keys(list).length !== Object.keys(this.childTransform).length) dirty = true;
         // if (dirty) {
             this.node = {...this.node};

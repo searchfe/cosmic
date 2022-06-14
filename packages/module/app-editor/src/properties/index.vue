@@ -34,6 +34,7 @@ nodeService.selection.subscribe((nodes) => {
             <TabPane class="mx-2" label="发布" value="2" />
         </Tabs>
         <div :hidden="activeIdx != '0'">
+            <m-component src="@cosmic-module/widget-page" />
             <m-component src="@cosmic-module/widget-frame" />
 
             <m-component src="@cosmic-module/widget-break-point" />
