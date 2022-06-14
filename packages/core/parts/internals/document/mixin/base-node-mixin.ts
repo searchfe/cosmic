@@ -23,13 +23,14 @@ export default class BaseNodeMixin extends PluginDataMixinx implements Internal.
         if(this.parent?.children) {
             this.parent.children = this.parent.children.filter(child => child.id !== (this.id));
             if(hasMixin(this.parent, BaseNodeMixin) || this.parent instanceof BaseNodeMixin) {
-                // console.log('remove update', this.parent);
+                if((this.parent as any)?.relayout)  {
+                    (this.parent as any).relayout();
+                }
                 this.update();
             }
             this.parent = null;
             this.removed = true;
         }
-        // TODO
     }
     update(slient = false) {
         const time = new Date();

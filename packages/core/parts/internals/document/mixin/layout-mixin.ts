@@ -36,17 +36,27 @@ export default class LayoutMixin implements Internal.LayoutMixin {
     }
     get rowSize() { return this._rowSize; }
 
+    private deltaX = 0;
+    private deltaY = 0;
     resize(width: number, height: number) {
-        const deltaX = width - this.width;
-        const deltaY = height - this.height;
-        const resized = !!(deltaX || deltaY);
-
+        this.deltaX = width - this.width;
+        this.deltaY = height - this.height;
+        let resized = !!(this.deltaX || this.deltaY);
         this.width = width;
         this.height = height;
+        this.relayout();
+        if (this.width !== width || this.height !== height) {
+            resized = true;
+        }
+        if (resized) {
+            this.resizeParent();
+        }
+    }
+    relayout() {
         const childs = ((this as any).children || []);
         childs.forEach((child: any) => {
             if(child.constraints && child.layoutAlign) {
-                layoutAbsoluteChild(this as any, child, deltaX, deltaY);
+                layoutAbsoluteChild(this as any, child, this.deltaX, this.deltaY);
             }
         });
         layoutFlex(this as any, childs);
@@ -54,9 +64,6 @@ export default class LayoutMixin implements Internal.LayoutMixin {
         for (const child of childs) {
             child.resize(child.width, child.height);
             child.update(true);
-        }
-        if (resized) {
-            this.resizeParent();
         }
     }
     resizeWithoutConstraints(width: number, height: number) {
@@ -240,7 +247,6 @@ function layoutFence(parent: BaseFrameMixin, childs: Array<LayoutMixin>) {
     rects.forEach(rect => {
         counterCount = Math.max(rect.y + rect.height, counterCount);
     });
-    console.log(rects);
     const counterMaxSize = p[counterSize] - p[counterOffsetStart] - p[counterOffsetEnd];
     const counterSectionSize =  round((counterMaxSize - counterGutterSize * (counterCount - 1))  / counterCount, 2);
     rects.forEach((rect, index) => {
