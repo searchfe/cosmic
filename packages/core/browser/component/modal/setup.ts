@@ -44,12 +44,12 @@ export function useModal(
 
 
     onUnmounted(() =>  {
-        window.document.body.removeEventListener('click', autoClose);
+        window.document.body.removeEventListener('mousedown', autoClose);
     });
 
     onMounted(() => {
         toolService.set(service.ToolState.Modal);
-        window.document.body.addEventListener('click', autoClose);
+        window.document.body.addEventListener('mousedown', autoClose);
     });
 
     return {
