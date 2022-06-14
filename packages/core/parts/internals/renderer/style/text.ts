@@ -13,5 +13,19 @@ export function makeTextStyle(node: TextNode) {
     if(node.fills && Array.isArray(node.fills)) {
         styles['color'] = paintToRgbaString(node.fills[0]);
     }
+    switch(node.textAlignHorizontal) {
+        case 'LEFT':
+            break;
+        case 'CENTER':
+            styles['text-align'] = 'center';
+            break;
+        case 'RIGHT':
+            styles['text-align'] = 'right';
+            break;
+        case 'JUSTIFIED':
+            styles['text-align'] = 'justify';
+            break;
+    }
+    if(node.textAlignHorizontal)
     return styles;
 }
