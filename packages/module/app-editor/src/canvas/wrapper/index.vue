@@ -13,7 +13,19 @@ interface WrapperProps {
 const props = withDefaults(defineProps<WrapperProps>(), {});
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 const toolService = inject<service.ToolService>(service.TOKENS.Tool);
+const keyboardService = inject<service.KeyboardService>(service.TOKENS.Keyboard);
 const nodeControllService = inject(NodeControllService);
+
+const showHelper = ref(false);
+
+keyboardService.keydown('ALT').subscribe(() => {
+    showHelper.value = true;
+});
+
+keyboardService.keyup('ALT').subscribe(() => {
+    showHelper.value = false;
+});
+
 
 const subject = nodeService.watch(props.node);
 subject.subscribe((node: any) => {
@@ -82,28 +94,28 @@ function checkDistanceTop(node: SceneNode) {
         :style="wrapperStyle"
     >
         <div
-            v-show="distance.top"
+            v-show="showHelper && distance.top"
             :class="[$style['d-x'], node.VerticalLayout == 0 || node.VerticalLayout == 2? 'limit': '' ]"
             :style="{top: (distance.top * -1) + 'px', height: distance.top + 'px'}"
         >
             <div :class="[$style.info]">{{ distance.top }}</div>
         </div>
         <div
-            v-show="distance.bottom"
+            v-show="showHelper && distance.bottom"
             :class="[$style['d-x'], node.VerticalLayout == 1 || node.VerticalLayout == 2? 'limit': '']"
             :style="{bottom: (distance.bottom * -1) + 'px', height: distance.bottom + 'px'}"
         >
             <div :class="[$style.info]">{{ distance.bottom }}</div>
         </div>
         <div
-            v-show="distance.left"
+            v-show="showHelper && distance.left"
             :class="[$style['d-y'], $style['d-y-l'], node.HorizontalLayout == 0 || node.HorizontalLayout == 2? 'limit': '']" 
             :style="{left: (distance.left * -1) + 'px', width: distance.left + 'px'}"
         >
             <div :class="[$style.info]">{{ distance.left }}</div>
         </div>
         <div
-            v-show="distance.right"
+            v-show="showHelper && distance.right"
             :class="[$style['d-y'], $style['d-y-r'], , node.HorizontalLayout == 1 || node.HorizontalLayout == 2? 'limit': '']"
             :style="{right: (distance.right * -1) + 'px', width: distance.right + 'px'}"
         >
