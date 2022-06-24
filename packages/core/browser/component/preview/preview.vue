@@ -74,6 +74,9 @@ onMounted(() => {
     --bg-hover-color: var(--color-gray-50);
 }
 
+:root .cos-mode-dark, :root .cos-mode-black, :root .cos-mode-reverse{
+    --color-gray-50: #25252B;
+}   
 
 :root .cos-mode-reverse {
     --bg-hover-color: rgba(255, 255, 255, 0.09)

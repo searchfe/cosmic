@@ -20,6 +20,7 @@ const showHelper = ref(false);
 
 keyboardService.keydown('ALT').subscribe(() => {
     showHelper.value = true;
+    if (currentNode.value) checkDistanceTop(currentNode.value as any);
 });
 
 keyboardService.keyup('ALT').subscribe(() => {
@@ -31,6 +32,7 @@ const subject = nodeService.watch(props.node);
 subject.subscribe((node: any) => {
     wrapperStyle.value = getWapperStyle(node);
     checkDistanceTop(node);
+    currentNode.value = node;
 });
 
 const showInfo = ref(true);
@@ -54,6 +56,7 @@ function getWapperStyle(node: SceneNode) {
     };
 }
 const distance = ref({top: 0, right: 0, bottom: 0, left: 0});
+let currentNode = ref(props.node);
 function checkDistanceTop(node: SceneNode) {
     distance.value.top = distance.value.bottom = distance.value.left = distance.value.right = 0;
     const parent = node.parent as FrameNode | PageNode;

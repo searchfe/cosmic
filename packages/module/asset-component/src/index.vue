@@ -10,6 +10,7 @@ import { service, inject } from '@cosmic/core/browser';
 import { SceneNode, getRenderSchemaAndModel, FrameNode } from '@cosmic/core/parts';
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+// const componentService = inject<service.ComponentService>(service.TOKENS.Component);
 
 let node: SceneNode;
 

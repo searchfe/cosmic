@@ -57,6 +57,7 @@ const config = {
         '@cosmic/core/router':  APP_ROOT + 'packages/core/dist/es/router.mjs',
         '@cosmic/core/inversify':  APP_ROOT + 'packages/core/dist/es/inversify.mjs',
         '@cosmic/core/lodash':  APP_ROOT + 'packages/core/dist/es/lodash.mjs',
+        'san':  APP_ROOT + 'packages/module/renderer-san/dist/index.mjs',
         ...moduleImports(),
         ...development? {} :{
           'cosmic-ui': resolveLib('cosmic-ui-alpha/dist/index.es.js'),
