@@ -1,14 +1,19 @@
-import { injectable } from '@cosmic/core/inversify';
+import { injectable, inject } from '@cosmic/core/inversify';
 import {moduleAssetPath } from '@cosmic-module/core';
 import { type Renderer } from '../../types';
+import { TOKENS } from '../token';
+import ComponentService from './component.service';
 const sanRendererPath = '@cosmic-module/renderer-san';
 
 @injectable()
 export default class RendererService {
     private rendererCache: {[index:string]: Promise<new () => Renderer> } = {};
     private rendererModule: {[index:string]: new () => Renderer } = {};
-    constructor() {
+    constructor(
+        @inject(TOKENS.Component) private componentService: ComponentService,
+    ) {
         this.load(sanRendererPath);
+        // console.log(service);
     }
     load(path: string) {
         if (!this.rendererCache[path]) {
@@ -16,8 +21,9 @@ export default class RendererService {
                 /* @vite-ignore */
                 moduleAssetPath(path, 'index.mjs') || ''
             ).then(module => {
-                this.rendererModule[path] = module.default;
-                return module.default;
+                this.rendererModule[path] = module.renderer;
+                this.componentService.loadComponentLibrary();
+                return module.renderer;
             });
         }
     }

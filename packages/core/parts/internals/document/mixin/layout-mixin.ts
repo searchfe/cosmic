@@ -247,7 +247,6 @@ function layoutFence(parent: BaseFrameMixin, childs: Array<LayoutMixin>) {
     rects.forEach(rect => {
         counterCount = Math.max(rect.y + rect.height, counterCount);
     });
-    console.log(rects);
     const counterMaxSize = p[counterSize] - p[counterOffsetStart] - p[counterOffsetEnd];
     const counterSectionSize =  round((counterMaxSize - counterGutterSize * (counterCount - 1))  / counterCount, 2);
     rects.forEach((rect, index) => {
