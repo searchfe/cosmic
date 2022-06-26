@@ -17,9 +17,8 @@ let renderer: RendererType;
 const rendererService = inject<service.RendererService>(service.TOKENS.Renderer);
 
 onMounted(() => {
-    rendererService.getRenderer(RendererConstrutor => {
-        renderer = new RendererConstrutor();
-        renderer.create(wrapper.value, nodeTransform.transfer());
+    rendererService.create(wrapper.value, nodeTransform.transfer()).then(r => {
+        renderer = r;
     });
 });
 
@@ -27,6 +26,7 @@ const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 
 nodeService.watch(props.node).subscribe(() => {
     if(!renderer) return;
+    console.log();
     renderer.update(nodeTransform.transfer());
 });
 
