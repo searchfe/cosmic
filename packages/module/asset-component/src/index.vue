@@ -1,23 +1,51 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { Input as CInput } from 'cosmic-vue';
 import Collapse from './component/collapse.vue';
-import { mock } from './component/data';
+// import { mock } from './component/data';
 import { schema as DataShema, mock as DataModel } from './data';
 
 
 import { service, inject } from '@cosmic/core/browser';
 import { SceneNode, getRenderSchemaAndModel, FrameNode } from '@cosmic/core/parts';
 
+interface Data {
+    title: string;
+    children: Array<{poster: string, name: string}>
+}
+
+const mock: Ref<Data[]> = ref([]);
+
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
-// const componentService = inject<service.ComponentService>(service.TOKENS.Component);
+const componentService = inject<service.ComponentService>(service.TOKENS.Component);
+
+componentService.loaded.subscribe(name => {
+    const conf = componentService.getComponentLibrary(name);
+    const rs : Data[] = [];
+    const store: any = {};
+    Object.keys(conf.schema).forEach(name => {
+        const c = conf.schema[name];
+        const n = { poster: c.preview.image, name: c.schema?.description || name};
+        c.preview.tags.forEach(tag => {
+            store[tag] = store[tag] || {
+                title: tag,
+                children: [],
+            };
+            store[tag].children.push(n);
+        });
+    });
+    Object.keys(store).forEach(key => {
+        rs.push(store[key]);
+    });
+    mock.value = rs;
+});
 
 let node: SceneNode;
 
 nodeService.selection.subscribe(nodes => {
     if (nodes.length === 0) return;
     node = nodes[0] as SceneNode;
-    
+
 });
 
 const collapseIndex = ref<number>();
@@ -50,7 +78,7 @@ function add() {
         </c-input>
     </div>
     <div class="mb-12">
-        <collapse 
+        <collapse
             v-for="(item, index) of mock"
             :key="item.title"
             :title="item.title"
@@ -58,7 +86,7 @@ function add() {
             @change="(event) => collapseChange(event, index)"
         >
             <div :class="$style.grid">
-                <div 
+                <div
                     v-for="child of item.children"
                     :key="child.name"
                     :class="$style['grid-item']"
@@ -82,6 +110,6 @@ function add() {
     composes: h-120 flex items-center justify-center from global;
     background-color: var(--color-gray-50);
     border-radius: .8rem;
-    
+
 }
 </style>
