@@ -46,13 +46,16 @@ export default class RendererService {
         const renderer = new RendererConstrutor_1();
 
         const af = document.createElement('artboard-frame') as ArtboardFrame;
+        let css = '';
         const libs = this.componentService.getComponentLibraries();
-        const config = libs[Object.keys(libs)[0]];
-        if (config) {
-            af.css.innerHTML = config.css;
+        Object.keys(libs).forEach(item => {
+            css += libs[item].css;
+        });
+        if (css) {
+            af.css.innerHTML = css;
         }
         root.appendChild(af);
-        renderer.create(af.body, node);
+        renderer.create(af.body, node, this.componentService.getComponents());
         return renderer;
     }
 }

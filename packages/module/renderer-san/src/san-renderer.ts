@@ -1,16 +1,21 @@
 import { type CosmicNode } from '@cosmic/core/parts';
-import { type Renderer } from '@cosmic/core/browser';
-import {type Component } from 'san';
-import { Frame } from './frame';
+import { type Renderer, type ComponentList} from '@cosmic/core/browser';
+import { Component } from 'san';
+import { ChildFactory } from './child';
 
 class SanRenderer implements Renderer {
     private element: Component;
-    create (root: HTMLElement, node: CosmicNode) {
-        const ComponentConstructor = getComponentCreator(node);
-        if(!ComponentConstructor) return;
-        this.element = new ComponentConstructor({
-            data: {class: node.props.class, style: node.props.style, children: node.children},
+    create (root: HTMLElement, node: CosmicNode,  components: ComponentList = {}) {
+        const list: Record<string, Component> = {};
+        Object.keys(components).forEach(id => {
+            list[id] = components[id].component;
         });
+        const Child = ChildFactory({components: list});
+
+        this.element = new Child({
+            data: { node },
+        });
+
         this.element.attach(root);
         // return;
         // const comp  = new Test({
@@ -24,21 +29,11 @@ class SanRenderer implements Renderer {
     }
     update(node: CosmicNode) {
         if(!this.element) return;
-        this.element.data.set('class', node.props.class);
-        this.element.data.set('style', node.props.style);
-        this.element.data.set('children', node.children);
+        console.log(node);
+        this.element.data.set('node', node);
     }
     dispose(){
         this.element && this.element.dispose();
-    }
-}
-
-function getComponentCreator(node: CosmicNode) {
-    switch(node.type) {
-        case 'frame':
-            return Frame;
-        default:
-            return;
     }
 }
 
