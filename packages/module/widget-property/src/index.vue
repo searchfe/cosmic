@@ -1,25 +1,27 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { BaseNodeMixin, SceneNode, getRenderSchemaAndModel } from '@cosmic/core/parts';
+import { BaseNodeMixin, getRenderSchemaAndModel, ComponentNode } from '@cosmic/core/parts';
 import FormBySchema from './form-by-schema.vue';
 // import { schema as DataShema, mock as DataModel } from './data';
 import { service, inject } from '@cosmic/core/browser';
 import { type Subject } from '@cosmic/core/rxjs';
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+const componentService = inject<service.ComponentService>(service.TOKENS.Component);
 
 const renderSchema = ref();
 const renderModel = ref();
 
 let subject: Subject<BaseNodeMixin>;
 
-let node: SceneNode;
+let node: ComponentNode;
 const isSelected = ref(false);
 
 nodeService.selection.subscribe(nodes => {
     isSelected.value = false;
     if (nodes.length === 0) return;
-    node = nodes[0] as SceneNode;
+    if(!(nodes[0] instanceof ComponentNode)) return;
+    node = nodes[0];
     nodeService.unwatch(subject);
     subject = nodeService.watch(node);
     subject.subscribe(() => {
@@ -27,16 +29,17 @@ nodeService.selection.subscribe(nodes => {
         if (!isPropertyUpdate) return;
         node.setPluginData('isPropertyUpdate', false);
         isSelected.value = true;
-        const { model: currentModel, originSchema } = node.getPluginData('wise');
+        const currentModel =  componentService.getData(node);
+        const originSchema = componentService.getSchema(node);
         // 重新获取需要渲染的数据
         const { schema, model } = getRenderSchemaAndModel(currentModel, originSchema);
         renderSchema.value = schema;
         renderModel.value = model;
     });
-    const wise = node.getPluginData('wise');
-    if (!wise) return;
+    const model =  componentService.getData(node);
+    const schema = componentService.getSchema(node);
+    console.log(model, schema);
     isSelected.value = true;
-    const { schema, model } = wise;
     renderSchema.value = schema;
     renderModel.value = model;
 });

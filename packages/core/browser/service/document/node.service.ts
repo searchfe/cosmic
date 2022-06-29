@@ -2,7 +2,11 @@ import { type Observable, Subject, BehaviorSubject, of } from '@cosmic/core/rxjs
 import { injectable } from '@cosmic/core/inversify';
 
 
-import { type SceneNode, FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, SolidPaint, GroupNode, BaseNodeMixin } from '@cosmic/core/parts';
+import {
+    type SceneNode,
+    FrameNode, DocumentNode, PageNode, ComponentNode, TextNode, GroupNode,
+    BaseNodeMixin, SolidPaint, util,
+} from '@cosmic/core/parts';
 
 @injectable()
 export default class NodeService {
@@ -107,11 +111,18 @@ export default class NodeService {
         this.setSelection([comp.id]);
         return comp;
     }
-    addNode(node: SceneNode, target?: PageNode | FrameNode | GroupNode) {
+    addNode(
+        node: SceneNode,
+        options: {
+            target?: PageNode | FrameNode | GroupNode
+            x?: number, y?: number,
+        } = {},
+    ) {
         if(this._selection[0] && this._selection[0].type === 'FRAME') {
-            target = target || this._selection[0];
+            const target = options.target || this._selection[0];
             node.parent = target;
             target.appendChild(node);
+            util.initLayoutChild(node);
             node.update();
             this.setSelection([node.id]);
             return node;

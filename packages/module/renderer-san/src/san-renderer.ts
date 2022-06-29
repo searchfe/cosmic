@@ -17,19 +17,9 @@ class SanRenderer implements Renderer {
         });
 
         this.element.attach(root);
-        // return;
-        // const comp  = new Test({
-        //         data: {styleData: {
-        //             display: 'grid',
-        //             width: '10px',
-        //         },
-        //     },
-        // });
-        // comp.attach(root);
     }
     update(node: CosmicNode) {
         if(!this.element) return;
-        console.log(node);
         this.element.data.set('node', node);
     }
     dispose(){
