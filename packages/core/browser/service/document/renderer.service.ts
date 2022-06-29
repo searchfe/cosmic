@@ -67,10 +67,11 @@ class ArtboardFrame extends HTMLElement {
         super();
         const shadow = this.attachShadow({mode: 'open'});
         const styleDom = document.createElement('style');
-        styleDom.innerHTML = '*{box-sizing: border-box; user-select: none;}';
+        styleDom.innerHTML = '*{box-sizing: border-box; user-select: none;}.cos-body {font-size: 10px;}';
         shadow.appendChild(styleDom);
         this.css = document.createElement('style');
         this.body = document.createElement('section');
+        this.body.className = 'cos-body';
         shadow.appendChild(this.css);
         shadow.appendChild(this.body);
     }

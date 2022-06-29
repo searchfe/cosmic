@@ -33,7 +33,6 @@ export default class ComponentService {
             /* @vite-ignore */
             configUrl
         );
-        const prefix = 'cos' + data.config.name.replace(/\W/g, '-');
         const config: ComponentLibraryItem = {
             name: data.config.name,
             css: data.css,
@@ -61,6 +60,7 @@ export default class ComponentService {
             }
         });
         this._library[config.name] = config;
+        console.log(this._list);
         this.loaded.next(config.name);
     }
 
@@ -82,7 +82,6 @@ export default class ComponentService {
         const node = new ComponentNode();
         const c = this._list[id];
         node.name = c.description;
-    
 
         node.setSharedPluginData('cosmic', 'component', {
             id,
@@ -92,5 +91,13 @@ export default class ComponentService {
     }
     getComponents() {
         return this._list;
+    }
+    getData(node: ComponentNode) {
+        const d = node.getSharedPluginData('cosmic', 'component');
+        return d.data;
+    }
+    getSchema(node: ComponentNode) {
+        const d = node.getSharedPluginData('cosmic', 'component');
+        return this._list[d.id].schema;
     }
 }
