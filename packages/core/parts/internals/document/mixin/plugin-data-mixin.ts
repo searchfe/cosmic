@@ -1,5 +1,6 @@
 export default class PluginDataMixinx implements Internal.PluginDataMixin {
     public _pluginData: any = {};
+    public _sharedPluginData: any = {};
 
     getPluginData(key: string) {
         // TODO
@@ -14,11 +15,15 @@ export default class PluginDataMixinx implements Internal.PluginDataMixin {
         return [];
     }
     getSharedPluginData(namespace: string, key: string) {
+        this._sharedPluginData[namespace] = this._sharedPluginData[namespace] || {};
+        this._sharedPluginData[namespace][key] = this._sharedPluginData[namespace][key] || {};
         // TODO
-        return '';
+        return this._sharedPluginData[namespace] == undefined ?
+            undefined: this._sharedPluginData[namespace][key];
     }
-    setSharedPluginData(namespace: string, key: string, value: string) {
-        // TODO
+    setSharedPluginData(namespace: string, key: string, value: any) {
+        this._sharedPluginData[namespace] = this._sharedPluginData[namespace] || {};
+        this._sharedPluginData[namespace][key] = value;
     }
     getSharedPluginDataKeys(namespace: string) {
         // TODO

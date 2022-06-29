@@ -107,6 +107,17 @@ export default class NodeService {
         this.setSelection([comp.id]);
         return comp;
     }
+    addNode(node: SceneNode, target?: PageNode | FrameNode | GroupNode) {
+        if(this._selection[0] && this._selection[0].type === 'FRAME') {
+            target = target || this._selection[0];
+            node.parent = target;
+            target.appendChild(node);
+            node.update();
+            this.setSelection([node.id]);
+            return node;
+        }
+        return;
+    }
     deletePage(id?: string) {
         id = id || this._currentPage?.id;
         const page = this._document.findChild(node => node.id === id);

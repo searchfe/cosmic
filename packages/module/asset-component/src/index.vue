@@ -2,51 +2,48 @@
 import { ref, type Ref } from 'vue';
 import { Input as CInput } from 'cosmic-vue';
 import Collapse from './component/collapse.vue';
-// import { mock } from './component/data';
-import { schema as DataShema, mock as DataModel } from './data';
 
 
-import { service, inject } from '@cosmic/core/browser';
-import { SceneNode, getRenderSchemaAndModel, FrameNode } from '@cosmic/core/parts';
+import { service, inject, ComponentListItem } from '@cosmic/core/browser';
 
-interface Data {
+interface TagData {
     title: string;
-    children: Array<{poster: string, name: string}>
+    children: ComponentListItem[],
 }
 
-const mock: Ref<Data[]> = ref([]);
+const tagDatas: Ref<TagData[]> = ref([]);
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
 const componentService = inject<service.ComponentService>(service.TOKENS.Component);
 
-componentService.loaded.subscribe(name => {
-    const conf = componentService.getComponentLibrary(name);
-    const rs : Data[] = [];
+componentService.loaded.subscribe(() => { // packageName
+    const list = componentService.getComponents();
+    const rs : TagData[] = [];
     const store: any = {};
-    Object.keys(conf.schema).forEach(name => {
-        const c = conf.schema[name];
-        const n = { poster: c.preview.image, name: c.schema?.description || name};
-        c.preview.tags.forEach(tag => {
+
+    Object.keys(list).forEach(componentId => {
+        const c = list[componentId];
+        c.tags.forEach(tag => {
             store[tag] = store[tag] || {
                 title: tag,
                 children: [],
             };
-            store[tag].children.push(n);
+            store[tag].children.push(c);
         });
     });
     Object.keys(store).forEach(key => {
         rs.push(store[key]);
     });
-    mock.value = rs;
+    tagDatas.value = rs;
 });
 
-let node: SceneNode;
+// let node: SceneNode;
 
-nodeService.selection.subscribe(nodes => {
-    if (nodes.length === 0) return;
-    node = nodes[0] as SceneNode;
+// nodeService.selection.subscribe(nodes => {
+//     if (nodes.length === 0) return;
+//     node = nodes[0] as SceneNode;
 
-});
+// });
 
 const collapseIndex = ref<number>();
 
@@ -54,15 +51,9 @@ function collapseChange(event:boolean, index: number) {
     collapseIndex.value = event ? index : -1;
 }
 
-function add() {
-    const componentNode = nodeService.addComponent(node as FrameNode);
-    const {schema, model} = getRenderSchemaAndModel(DataShema, DataModel);
-    componentNode.setPluginData('wise', {
-        // 保留原始数据，后期计算会用到
-        originSchema: DataShema,
-        schema,
-        model,
-    });
+function add(data: ComponentListItem) {
+    const node = componentService.createComponentNode(data.id);
+    nodeService.addNode(node);
 }
 
 </script>
@@ -79,7 +70,7 @@ function add() {
     </div>
     <div class="mb-12">
         <collapse
-            v-for="(item, index) of mock"
+            v-for="(item, index) of tagDatas"
             :key="item.title"
             :title="item.title"
             :is-open="collapseIndex === index"
@@ -88,10 +79,10 @@ function add() {
             <div :class="$style.grid">
                 <div
                     v-for="child of item.children"
-                    :key="child.name"
+                    :key="child.id"
                     :class="$style['grid-item']"
                 >
-                    <img class="w-50" :src="child.poster" @click="add">
+                    <img class="w-80" :src="child.image" @click="() => { add(child); }">
                 </div>
             </div>
         </collapse>

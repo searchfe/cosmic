@@ -1,5 +1,5 @@
 import type { CosmicNode } from './types';
-import { BaseFrameMixin, BaseNodeMixin, ChildrenMixin, FrameNode, TextNode, type SceneNode } from '../document';
+import { BaseFrameMixin, BaseNodeMixin, ChildrenMixin, ComponentNode, FrameNode, TextNode, type SceneNode } from '../document';
 import { makeStyle }from './style/make-style';
 import { hasMixin } from '../';
 import { makeFenceGuide } from './guide/fence';
@@ -16,6 +16,7 @@ export class NodeTransform {
     transfer() {
         this.makeFrameNode();
         this.makeText();
+        this.makeComponent();
         return this.node;
     }
     makeFrameNode() {
@@ -33,6 +34,16 @@ export class NodeTransform {
     makeText() {
         if(hasMixin(this.dom, TextNode)) {
             this.node.props.value = this.dom.characters;
+        }
+    }
+    makeComponent() {
+        if(hasMixin(this.dom, ComponentNode)) {
+            const {
+                id,
+                data,
+            } = this.dom.getSharedPluginData('cosmic', 'component');
+            this.node.data = data;
+            this.node.props.componentId = id;
         }
     }
     _initNode() {
