@@ -32,12 +32,13 @@ nodeService.selection.subscribe(nodes => {
         const currentModel =  componentService.getData(node);
         const originSchema = componentService.getSchema(node);
         // 重新获取需要渲染的数据
-        const { schema, model } = getRenderSchemaAndModel(currentModel, originSchema);
+        const { schema, model } = getRenderSchemaAndModel(originSchema, currentModel);
         renderSchema.value = schema;
         renderModel.value = model;
     });
-    const model =  componentService.getData(node);
-    const schema = componentService.getSchema(node);
+    const currentModel =  componentService.getData(node);
+    const originSchema = componentService.getSchema(node);
+    const { schema, model } = getRenderSchemaAndModel(originSchema, currentModel);
     console.log(model, schema);
     isSelected.value = true;
     renderSchema.value = schema;

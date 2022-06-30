@@ -1,5 +1,5 @@
 import { injectable } from '@cosmic/core/inversify';
-import { type QueryComponentResult, ComponentNode } from '@cosmic/core/parts';
+import { type QueryComponentResult, ComponentNode, getRenderSchemaAndModel } from '@cosmic/core/parts';
 import { Subject } from '@cosmic/core/rxjs';
 import type { ComponentLibrary, ComponentLibraryItem, ComponentList, ComponentListItem } from '../../';
 
@@ -82,10 +82,10 @@ export default class ComponentService {
         const node = new ComponentNode();
         const c = this._list[id];
         node.name = c.description;
-
+        const { model } = getRenderSchemaAndModel(c.schema, c.data);
         node.setSharedPluginData('cosmic', 'component', {
             id,
-            data: c.data,
+            data: model,
         });
         return node;
     }
