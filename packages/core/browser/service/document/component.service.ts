@@ -86,9 +86,13 @@ export default class ComponentService {
         node.setSharedPluginData('cosmic', 'component', {
             id,
             data: model,
+            slot: {
+                default: model.default ?? '',
+            }, // 创建默认slot
         });
         return node;
     }
+
     getComponents() {
         return this._list;
     }
@@ -96,8 +100,27 @@ export default class ComponentService {
         const d = node.getSharedPluginData('cosmic', 'component');
         return d.data;
     }
+
+    setData(node: ComponentNode, data:  Record<string, unknown>) {
+        const d =  node.getSharedPluginData('cosmic', 'component');
+        d.data = data;
+        node.setSharedPluginData('cosmic', 'component', d);
+    }
+
     getSchema(node: ComponentNode) {
         const d = node.getSharedPluginData('cosmic', 'component');
         return this._list[d.id].schema;
     }
+
+    setSlot(node: ComponentNode, slot: Record<string, unknown>) {
+        const d =  node.getSharedPluginData('cosmic', 'component');
+        d.slot = slot;
+        node.setSharedPluginData('cosmic', 'component', d);
+    }
+
+    getSlot(node: ComponentNode) {
+        const s = node.getSharedPluginData('cosmic', 'component');
+        return s.slot;
+    }
+
 }

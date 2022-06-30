@@ -15,7 +15,7 @@ const Type2Component = {
 
 type fileType = keyof typeof Type2Component;
 
-const emits = defineEmits(['change', 'dataTypeChange']);
+const emits = defineEmits(['change', 'dataTypeChange', 'slotTypeChange']);
 
 const props = withDefaults(defineProps<{
      schema: SchemaType;
@@ -37,6 +37,10 @@ function dataTypeChange(event: Record<string, string>) {
     emits('dataTypeChange', event);
 }
 
+function slotTypeChange(event: Record<string, string>) {
+    emits('slotTypeChange', event);
+}
+
 </script>
 
 <template>
@@ -46,6 +50,7 @@ function dataTypeChange(event: Record<string, string>) {
             v-bind="props"
             @change="(event) => emits('change', event)"
             @data-type-change="(event) => dataTypeChange(event)"
+            @slot-type-change="(event) => slotTypeChange(event)"
         />
     </div>
 </template>

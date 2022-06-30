@@ -4,6 +4,7 @@ import FloatInput from '../form/float-input.vue';
 import FloatCheck from '../form/float-check.vue';
 import FloatSelect from '../form/float-select.vue';
 import FloatDatatype from '../form/float-datatype.vue';
+import SlotDatatype from '../form/slot-datatype.vue';
 import type { SchemaType } from '../type/index';
 
 const props = withDefaults(defineProps<{
@@ -13,7 +14,7 @@ const props = withDefaults(defineProps<{
     layer: number
 }>(), {});
 
-const emits = defineEmits(['change', 'dataTypeChange']);
+const emits = defineEmits(['change', 'dataTypeChange', 'slotTypeChange']);
 
 const Type2Component = {
     'text': FloatInput,
@@ -97,10 +98,22 @@ function dataTypeChange(key: string, value: string) {
     emits('dataTypeChange', {[key]: value});
 }
 
+function slotTypeChange(key: string, value: string) {
+    emits('slotTypeChange', {[key]: value});
+}
+
 </script>
 
 <template>
     <div class="flex items-center">
+        <template v-if="schema.dataType === 'slot'">
+            <div class="w-120 mr-8">
+                <slot-datatype
+                    :value="model[propertyKey]"
+                    @change="event => slotTypeChange(propertyKey, event)"
+                />
+            </div>
+        </template>
         <component
             :is="Type2Component[componentData.componentName]"
             :type="schema.type"
