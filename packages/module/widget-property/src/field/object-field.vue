@@ -3,11 +3,12 @@ import { computed } from 'vue';
 import { MTitle, service, inject } from '@cosmic/core/browser';
 import type { SchemaType } from '../type/index';
 import FormNode from './form-node.vue';
-import { SceneNode } from '@cosmic/core/parts';
-
-let node: SceneNode;
+import { ComponentNode } from '@cosmic/core/parts';
 
 const nodeService = inject<service.NodeService>(service.TOKENS.Node);
+const componentService = inject<service.ComponentService>(service.TOKENS.Component);
+
+let node = nodeService.getSelection()[0];
 
 nodeService.selection.subscribe(nodes => {
     node = nodes[0];
@@ -46,10 +47,14 @@ function isRequired(schema: SchemaType, key: string) {
     return true;
 }
 
-function change(model: Record<string, any>, key: string, data: {value: any}) {
+function change(model: Record<string, any>, key: string, data: {value: any}, properties: Record<string, any>) {
     model[key] = data.value;
-    // 触发更新
-    node.setPluginData('isPropertyUpdate', true);
+    if (properties[key].dataType === 'slot') {
+        const slot = {...componentService.getSlot(node as ComponentNode)};
+        slot[key] = data.value;
+        componentService.setSlot(node as ComponentNode, slot);
+    }
+    componentService.setData(node as ComponentNode, model);
     node.update();
 }
 
@@ -60,6 +65,14 @@ const renderDescription = computed(() => {
 
 function dataTypeChange(model: Record<string, any>, event: Record<string, string>) {
     model.customNewDataType = {...(model.customNewDataType || {}), ...event};
+    componentService.setData(node as ComponentNode, model);
+    node.update();
+}
+
+function slotTypeChange(model: Record<string, any>, event: Record<string, string>) {
+    model.customSlotType = {...(model.customSlotType || {}), ...event};
+    componentService.setData(node as ComponentNode, model);
+    node.update();
 }
 
 </script>
@@ -80,8 +93,9 @@ function dataTypeChange(model: Record<string, any>, event: Record<string, string
                 :schema="curSchema.properties[key]"
                 :model="model[key]"
                 :layer="layer + 1"
-                @change="(event) => change(model, key, event)"
+                @change="(event) => change(model, key, event, curSchema.properties)"
                 @data-type-change="(event) => dataTypeChange(model, event)"
+                @slot-type-change="(event) => slotTypeChange(model, event)"
             />
         </div>
     </div>

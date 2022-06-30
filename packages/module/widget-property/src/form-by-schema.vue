@@ -26,5 +26,6 @@ withDefaults(defineProps<{
     display: block;
     overflow-y: auto;
     max-height: calc(100vh - 100px);
+    min-height: calc(100vh - 100px);
 }
 </style>

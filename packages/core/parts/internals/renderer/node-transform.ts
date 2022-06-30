@@ -41,8 +41,10 @@ export class NodeTransform {
             const {
                 id,
                 data,
+                slot,
             } = this.dom.getSharedPluginData('cosmic', 'component');
             this.node.data = data;
+            this.node.slot = slot;
             this.node.props.componentId = id;
         }
     }

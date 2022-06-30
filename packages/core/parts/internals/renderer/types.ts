@@ -44,6 +44,11 @@ export interface CosmicNode {
     data?: CosmicData;
 
     /**
+     * 用于保存slot信息
+     */
+    slot?: Record<string, string| Record<string, unknown>>;
+
+    /**
      * 绑定事件，仅在根节点生效，需要额外开发事件回调函数
      */
     events?: CosmicEvent[];

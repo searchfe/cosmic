@@ -25,21 +25,17 @@ nodeService.selection.subscribe(nodes => {
     nodeService.unwatch(subject);
     subject = nodeService.watch(node);
     subject.subscribe(() => {
-        const isPropertyUpdate = node.getPluginData('isPropertyUpdate');
-        if (!isPropertyUpdate) return;
-        node.setPluginData('isPropertyUpdate', false);
+        console.log(122321);
         isSelected.value = true;
-        const currentModel =  componentService.getData(node);
         const originSchema = componentService.getSchema(node);
         // 重新获取需要渲染的数据
-        const { schema, model } = getRenderSchemaAndModel(originSchema, currentModel);
+        const { schema, model } = getRenderSchemaAndModel(originSchema, {...renderModel.value});
         renderSchema.value = schema;
         renderModel.value = model;
     });
     const currentModel =  componentService.getData(node);
     const originSchema = componentService.getSchema(node);
     const { schema, model } = getRenderSchemaAndModel(originSchema, currentModel);
-    console.log(model, schema);
     isSelected.value = true;
     renderSchema.value = schema;
     renderModel.value = model;
@@ -71,5 +67,10 @@ nodeService.selection.subscribe(nodes => {
 
 <template>
     <!-- <button @click="test">测试接口</button> -->
-    <form-by-schema v-if="isSelected" :index="isUpdate" :schema="renderSchema" :model="renderModel" />
+    <form-by-schema
+        v-if="isSelected"
+        :index="isUpdate"
+        :schema="renderSchema"
+        :model="renderModel"
+    />
 </template>
