@@ -66,15 +66,16 @@ class ArtboardFrame extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({mode: 'open'});
-        const styleDom = document.createElement('style');
-        styleDom.innerHTML = '*{box-sizing: border-box; user-select: none;}';
-        shadow.appendChild(styleDom);
         this.css = document.createElement('style');
         this.body = document.createElement('section');
-        this.body.setAttributeNode(document.createAttribute('data-pmd'));
-        this.body.setAttribute('data-pmd', 'wise');
+        // this.body.setAttributeNode(document.createAttribute('data-pmd'));
+        // this.body.setAttribute('data-pmd', 'wise');
         this.body.className = 'c-container';
         shadow.appendChild(this.css);
+
+        const styleDom = document.createElement('style');
+        styleDom.innerHTML = '*{box-sizing: border-box; user-select: none;}.c-container{margin:0;padding:0;width:0;height:0;}';
+        shadow.appendChild(styleDom);
         shadow.appendChild(this.body);
     }
 
