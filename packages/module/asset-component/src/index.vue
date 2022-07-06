@@ -45,7 +45,7 @@ componentService.loaded.subscribe(() => { // packageName
 
 // });
 
-const collapseIndex = ref<number>();
+const collapseIndex = ref<number>(0);
 
 function collapseChange(event:boolean, index: number) {
     collapseIndex.value = event ? index : -1;
@@ -93,7 +93,7 @@ function add(data: ComponentListItem) {
                     :key="child.id"
                     :class="$style['grid-item']"
                 >
-                    <img class="w-80" :src="child.image" @click="() => { add(child); }">
+                    <img class="w-80" :src="child.image" :alt="child.description" @click="() => { add(child); }">
                 </div>
             </div>
         </collapse>

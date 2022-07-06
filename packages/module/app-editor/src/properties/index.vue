@@ -30,7 +30,7 @@ nodeService.selection.subscribe((nodes) => {
     <div>
         <Tabs size="sm" class="h-40 px-10 border-bottom" default-active-tab="0" @on-change="change">
             <TabPane class="mx-2" label="设计" value="0" />
-            <TabPane class="mx-2" label="交互" value="1" />
+            <TabPane class="mx-2" label="数据" value="1" />
             <TabPane class="mx-2" label="发布" value="2" />
         </Tabs>
         <div :hidden="activeIdx != '0'">
