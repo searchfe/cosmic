@@ -8,16 +8,12 @@ import StateHelper from './common/state-helper';
 import ButtonSelectStyle from './component/button-select.module.css';
 
 import {
-        VerticalStretchValue,
-        HorizontalStretchValue,
         HorizontalConstraintOptions,
         VerticalConstraintOptions,
     } from './common/data';
 
 interface LayoutData {
     // layoutAlign: 'MIN' | 'CENTER' | 'MAX' | 'STRETCH' | 'INHERIT';
-    HorizontalStretch: number,
-    VerticalStretch: number,
     layoutMode: 'NONE' | 'FLEX' | 'FENCE' | 'GRID',
     colSize: number,
     colSizes: number[],
@@ -27,8 +23,6 @@ interface LayoutData {
 
 
 const data: Ref<LayoutData>  = ref({
-    HorizontalStretch: 0,
-    VerticalStretch: 0,
     layoutMode: 'NONE',
 
 } as LayoutData);
@@ -68,8 +62,6 @@ const stateHelper = new StateHelper();
 const helper = stateHelper.state;
 
 function toData(node: LayoutMixin & ConstraintMixin & BaseNodeMixin) {
-    // data.value.VerticalStretch = node.VerticalStretch || 0;
-    // data.value.HorizontalStretch = node.HorizontalStretch || 0;
     constraints.value.horizontal = node.constraints.horizontal;
     constraints.value.vertical = node.constraints.vertical;
     stateHelper.updateHelper(node.constraints);
@@ -156,53 +148,6 @@ function changeFence({colSize, rowSize}: {colSize?: number, rowSize?: number}) {
         </MTitle>
         <div v-show="isOpen">
             <template v-if="data.layoutMode == 'NONE'">
-                <Row v-show="false" :class="$style.row">
-                    <Col
-                        class="flex"
-                        :class="$style.col"
-                        :span="5"
-                    >
-                        <Select
-                            size="sm"
-                            :value="data.HorizontalStretch"
-                            @on-change="({value}) => {node.HorizontalStretch = parseInt(value); node.update();}"
-                        >
-                            <template #prefix>
-                                <i-cosmic-offset-x v-if="data.HorizontalStretch == 0" />
-                                <i-cosmic-scale-x v-else />
-                            </template>
-                            <select-option
-                                v-for="sv of HorizontalStretchValue"
-                                :key="sv.value"
-                                :value="sv.value"
-                                :label="sv.label"
-                            />
-                        </Select>
-                    </Col>
-                    <!-- <Col :span="1" /> -->
-                    <Col
-                        class="flex"
-                        :class="$style.col"
-                        :span="5"
-                    >
-                        <Select
-                            size="sm"
-                            :value="data.VerticalStretch"
-                            @on-change="({value}) => {node.VerticalStretch = parseInt(value); node.update();}"
-                        >
-                            <template #prefix>
-                                <i-cosmic-offset-y v-if="data.VerticalStretch == 0" />
-                                <i-cosmic-scale-y v-else />
-                            </template>
-                            <select-option
-                                v-for="sv of VerticalStretchValue"
-                                :key="sv.value"
-                                :value="sv.value"
-                                :label="sv.label"
-                            />
-                        </Select>
-                    </Col>
-                </Row>
                 <Row :class="$style.row">
                     <Col
                         class="flex ml-6"

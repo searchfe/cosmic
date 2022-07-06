@@ -57,6 +57,7 @@ export class NodeTransform {
                 parent: this.dom.parent?.id ?? '-1',
                 props: {
                     style: {},
+                    id: this.dom.id,
                 },
             };
         }

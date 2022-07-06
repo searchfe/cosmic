@@ -1,28 +1,4 @@
 import { ConstraintType } from '@cosmic/core/parts';
-export const HorizontalStretchValue = [
-    {
-        label: '宽度固定',
-        value: 0,
-    },
-    {
-        label: '适应内容',
-        value: 1,
-    },
-];
-
-
-
-export const VerticalStretchValue = [
-    {
-        label: '高度固定',
-        value: 0,
-    },
-    {
-        label: '适应内容',
-        value: 1,
-    },
-];
-
 
 export const HorizontalConstraintOptions = [
     {
