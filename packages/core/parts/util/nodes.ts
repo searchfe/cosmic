@@ -1,4 +1,4 @@
-import { BaseNodeMixin, ChildrenMixin, PageNode, SceneNode, hasMixin, LayoutMixin } from '../internals';
+import { BaseNodeMixin, ChildrenMixin, PageNode, SceneNode, hasMixin, LayoutMixin, BaseFrameMixin } from '../internals';
 
 type Pos = {x: number, y: number};
 
@@ -81,4 +81,16 @@ export function findParent(node: LayoutMixin & BaseNodeMixin | undefined, callba
     if (!node) return;
     if(callback(node as any)) return node as any;
     return findParent(node.parent as any, callback);
+}
+export type LayoutMode = 'NONE' | 'FLEX' | 'FENCE' | 'GRID';
+
+export function getLayoutMode(node: BaseFrameMixin): LayoutMode {
+    if (node.layoutGrids && node.layoutGrids.length) {
+        return 'FENCE';
+    } else if (node.layoutMode === 'HORIZONTAL' || node.layoutMode === 'VERTICAL') {
+        return 'FLEX';
+    } else if (node.layoutMode === 'NONE') {
+        return 'NONE';
+    }
+    return 'NONE';
 }
