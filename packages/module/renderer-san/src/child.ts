@@ -9,7 +9,7 @@ export function ChildFactory(options: any) {
             <fragment>
                 <renderer-frame s-if="node.type === 'frame'" children="{{node.children}}" style="{{node.props.style}}" class="{{node.props.class}}" />
                 <renderer-text s-else-if="node.type === 'text'" style="{{node.props.style}}" class="{{node.props.class}}" value="{{node.props.value}}" />
-                <x-label s-else s-is="node.props.componentId" s-bind="{{node.props}}">
+                <x-label s-else s-is="node.props.componentId" s-bind="{{node.data}}" style="{{node.props.style}}" class="{{node.props.class}}">
                     {{node.slot.default}}
                 </x-label>
             </fragment>

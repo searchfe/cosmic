@@ -20,6 +20,7 @@ class SanRenderer implements Renderer {
     }
     update(node: CosmicNode) {
         if(!this.element) return;
+        // console.log(node);
         this.element.data.set('node', node);
     }
     dispose(){

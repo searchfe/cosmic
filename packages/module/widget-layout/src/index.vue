@@ -284,14 +284,14 @@ function changeFence({colSize, rowSize}: {colSize?: number, rowSize?: number}) {
                                         <template #prefix>
                                             <i-cosmic-line class="mr-6" />
                                         </template>
-                                        <span class="block min-w-20">{{ data.rowSize }}N</span>
+                                        <span class="block min-w-20">{{ data.rowSize }} 行</span>
                                         <template #subfix>
                                             <i-cosmic-arrow-down class="ml-8" style="font-size:8px;" />
                                         </template>
                                     </Button>
                                 </template>
                                 <MenuOption
-                                    v-for="d of data.rowSizes" :key="d" :value="d" :label="'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+d+'N'" :has-check="false" :selected="data.rowSize==d"
+                                    v-for="d of data.rowSizes" :key="d" :value="d" :label="'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+d+' 行'" :has-check="false" :selected="data.rowSize==d"
                                 />
                             </Menu>
                         </div>

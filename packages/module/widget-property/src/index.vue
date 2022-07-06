@@ -25,7 +25,6 @@ nodeService.selection.subscribe(nodes => {
     nodeService.unwatch(subject);
     subject = nodeService.watch(node);
     subject.subscribe(() => {
-        console.log(122321);
         isSelected.value = true;
         const originSchema = componentService.getSchema(node);
         // 重新获取需要渲染的数据

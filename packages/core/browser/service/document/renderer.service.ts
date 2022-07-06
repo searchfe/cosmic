@@ -74,7 +74,7 @@ class ArtboardFrame extends HTMLElement {
         shadow.appendChild(this.css);
 
         const styleDom = document.createElement('style');
-        styleDom.innerHTML = '*{box-sizing: border-box; user-select: none;}.c-container{margin:0;padding:0;width:0;height:0;}';
+        styleDom.innerHTML = '*{box-sizing: border-box; user-select: none;}.c-container{margin:0;padding:0;width:0;height:0;}a{text-decoration:none;}';
         shadow.appendChild(styleDom);
         shadow.appendChild(this.body);
     }

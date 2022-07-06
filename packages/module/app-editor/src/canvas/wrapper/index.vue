@@ -17,6 +17,7 @@ const keyboardService = inject<service.KeyboardService>(service.TOKENS.Keyboard)
 const nodeControllService = inject(NodeControllService);
 
 const showHelper = ref(false);
+const allowPointer = ref(props.node.type === 'TEXT');
 
 keyboardService.keydown('ALT').subscribe(() => {
     showHelper.value = true;
@@ -49,6 +50,7 @@ const wrapperStyle = ref(getWapperStyle(props.node as any));
 function getWapperStyle(node: SceneNode) {
     const canvasPos = util.toCanvasPos(node);
     return {
+            pointerEvents: allowPointer.value ? 'none' : 'auto',
             left: round(canvasPos.x) + 'px',
             top: round(canvasPos.y) + 'px',
             width: round(node.width) + 'px',
@@ -197,7 +199,6 @@ function checkDistanceTop(node: SceneNode) {
 .root {
     border: 1px solid var(--color-primary-500);
     top: 0;
-    pointer-events :none;
     letter-spacing: 0;
 }
 
