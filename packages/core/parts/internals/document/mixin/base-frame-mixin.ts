@@ -25,11 +25,12 @@ export default class BaseFrameMixin
         BlendMixin,
         LayoutMixin,
         ExportMixin,
-    ), ConstraintMixin) implements Internal.BaseFrameMixin{
+    ), ConstraintMixin) {
     layoutMode: 'NONE' | 'HORIZONTAL' | 'VERTICAL' = 'NONE';
-    primaryAxisSizingMode: 'FIXED' | 'AUTO'; // applicable only if layoutMode != 'NONE'
-    counterAxisSizingMode: 'FIXED' | 'AUTO'; // applicable only if layoutMode != 'NONE'
+    primaryAxisSizingMode: 'FIXED' | 'AUTO' | 'NONE' = 'NONE'; // applicable only if layoutMode != 'NONE'
+    counterAxisSizingMode: 'FIXED' | 'AUTO' | 'NONE' = 'NONE'; // applicable only if layoutMode != 'NONE'
 
+    
     primaryAxisAlignItems: 'MIN' | 'MAX' | 'CENTER' | 'SPACE_BETWEEN' = 'MIN'; // applicable only if layoutMode != 'NONE'  flex-start  等距 space-between justify-content: flex-start | flex-end | center | space-between | space-around; 行内分布
     counterAxisAlignItems: 'MIN' | 'MAX' | 'CENTER'  = 'MIN'; // applicable only if layoutMode != 'NONE' align-items: flex-start | flex-end | center | baseline | stretch; 行内 上中下
 

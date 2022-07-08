@@ -9,7 +9,7 @@ export function getAxisSizingOptions(
         label: '适应容器',
         value: 'FIXED',
     };
-    const noneOption: AxisSizingType = {
+    const staticOption: AxisSizingType = {
         label: `${direction === 'counter' ? '高度' : '宽度'}固定`,
         value: 'NONE',
     };
@@ -17,17 +17,29 @@ export function getAxisSizingOptions(
         label: '适应内容',
         value: 'AUTO',
     };
-    if (mode === 'NONE') {
-        return [noneOption];
+    //'NONE' | 'FLEX' | 'FENCE' | 'GRID'
+    const rs: AxisSizingType[] = [];
+    if (direction === 'primary') {
+        if (parentMode === 'NONE') {
+            rs.push(staticOption);
+        } else {
+            rs.push(fixedOption);
+        }
+        if (mode !== 'NONE') {
+            rs.push(autoOption);
+        }
+    } else {
+        if (parentMode === 'NONE') {
+            if (mode === 'NONE') {
+                rs.push(staticOption);
+                rs.push(autoOption);
+            } else {
+                rs.push(staticOption, autoOption);
+            }
+        } else {
+            rs.push(staticOption, autoOption);
+        }
     }
-    switch(parentMode) {
-        case 'FENCE':
-            return [fixedOption, autoOption];
-        case 'FLEX':
-            return [noneOption, autoOption];
-        case 'NONE':
-            return [noneOption, autoOption];
-    }
-    return [noneOption];
+    return rs;
 }
 

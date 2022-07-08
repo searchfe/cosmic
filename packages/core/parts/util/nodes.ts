@@ -85,6 +85,7 @@ export function findParent(node: LayoutMixin & BaseNodeMixin | undefined, callba
 export type LayoutMode = 'NONE' | 'FLEX' | 'FENCE' | 'GRID';
 
 export function getLayoutMode(node: BaseFrameMixin): LayoutMode {
+    if (!node) return 'NONE';
     if (node.layoutGrids && node.layoutGrids.length) {
         return 'FENCE';
     } else if (node.layoutMode === 'HORIZONTAL' || node.layoutMode === 'VERTICAL') {
